@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة التعليم - مذكرات وامتحانات</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            direction: rtl;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .glass-card {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.8),
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 30px 55px -12px rgba(0, 0, 0, 0.9),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            transition: all 0.2s ease;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(51, 65, 85, 0.9);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            transform: translateY(-1px);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 6px 15px rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            transition: all 0.2s ease;
+        }
+        
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+            transform: translateY(-1px);
+        }
+        
+        .input-field {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            color: #e2e8f0;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+        
+        .input-field:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            outline: none;
+        }
+        
+        .stats-glow-blue {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.15) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.05);
+        }
+        
+        .stats-glow-green {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(22, 163, 74, 0.15) 100%);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.05);
+        }
+        
+        .stats-glow-red {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.15) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.05);
+        }
+        
+        .stats-glow-purple {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(147, 51, 234, 0.15) 100%);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.05);
+        }
+        
+        .header-glow {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cyber-border {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cyber-border:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            .header-glow .max-w-7xl {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .header-glow .flex {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+            
+            .header-glow h1 {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+            
+            .header-glow p {
+                text-align: center;
+                font-size: 0.875rem;
+            }
+            
+            .glass-card {
+                margin: 0.5rem;
+                padding: 1rem;
+            }
+            
+            .glass-card h3 {
+                font-size: 1.25rem;
+            }
+            
+            .stats-glow-green,
+            .stats-glow-red,
+            .stats-glow-purple {
+                padding: 0.75rem;
+            }
+            
+            .stats-glow-green .text-3xl,
+            .stats-glow-red .text-3xl,
+            .stats-glow-purple .text-3xl {
+                font-size: 1.5rem;
+            }
+            
+            .btn-primary,
+            .btn-secondary,
+            .btn-danger {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .input-field {
+                padding: 0.75rem;
+                font-size: 0.875rem;
+            }
+            
+            .modal-backdrop .glass-card {
+                margin: 1rem;
+                max-height: 85vh;
+                width: calc(100% - 2rem);
+            }
+            
+            .modal-backdrop .glass-card .p-8 {
+                padding: 1rem;
+            }
+            
+            .modal-backdrop .glass-card .p-6 {
+                padding: 1rem;
+            }
+            
+            .grid-cols-3 {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+                gap: 0.75rem;
+            }
+            
+            @media (min-width: 640px) {
+                .grid-cols-3 {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                }
+            }
+            
+            .text-5xl {
+                font-size: 2rem;
+            }
+            
+            .text-3xl {
+                font-size: 1.5rem;
+            }
+            
+            .text-2xl {
+                font-size: 1.25rem;
+            }
+            
+            .text-xl {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glass-card {
+                margin: 0.25rem;
+                padding: 0.75rem;
+            }
+            
+            .header-glow .py-6 {
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+            }
+            
+            .py-12 {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+            
+            .mb-12 {
+                margin-bottom: 2rem;
+            }
+            
+            .gap-8 {
+                gap: 1rem;
+            }
+            
+            .gap-6 {
+                gap: 0.75rem;
+            }
+            
+            .gap-4 {
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen text-white">
+    <!-- Student View -->
+    <div id="studentView" class="min-h-screen">
+        <!-- Header -->
+        <header class="header-glow sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-gradient-to-br from-blue-500 to-purple-600 p-3 rounded-xl shadow-lg">
+                            <i data-lucide="graduation-cap" class="h-8 w-8 text-white"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-3xl font-black gradient-text">منصة التعليم</h1>
+                            <p class="text-slate-400 font-medium">مذكرات وامتحانات تعليمية</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <div class="flex items-center gap-3 text-cyan-400 glass-card px-4 py-2 rounded-lg">
+                            <i data-lucide="book-open" class="h-5 w-5"></i>
+                            <span class="font-bold" id="subjectCount">0 مادة متاحة</span>
+                        </div>
+                        <button onclick="showAdminLogin()" class="btn-secondary text-slate-300 hover:text-white font-medium px-4 py-2 rounded-lg">
+                            دخول الأدمن
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-6 sm:py-12">
+            <div class="mb-8 sm:mb-12 text-center">
+                <h2 class="text-3xl sm:text-5xl font-black text-white mb-4 gradient-text">المواد الدراسية</h2>
+                <p class="text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed px-4">اختر المادة التي تريد دراستها وتصفح المذكرات والامتحانات المتاحة</p>
+            </div>
+
+            <div id="subjectsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
+                <!-- Subjects will be loaded here -->
+            </div>
+
+            <div id="noSubjects" class="text-center py-20 hidden">
+                <div>
+                    <i data-lucide="book-open" class="h-20 w-20 text-slate-600 mx-auto mb-6"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-300 mb-4">لا توجد مواد متاحة حالياً</h3>
+                <p class="text-slate-500 text-lg">سيتم إضافة المواد الدراسية قريباً</p>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="header-glow border-t border-slate-800 mt-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="text-center text-slate-400">
+                    <p class="text-lg">© 2024 منصة التعليم - جميع الحقوق محفوظة</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="fixed inset-0 modal-backdrop flex items-center justify-center hidden z-50">
+        <div class="glass-card rounded-2xl p-8 max-w-md w-full mx-4 cyber-border">
+            <h2 class="text-3xl font-bold text-white mb-8 text-center gradient-text">دخول الأدمن</h2>
+            <form onsubmit="adminLogin(event)">
+                <div class="mb-6">
+                    <label class="block text-slate-300 text-sm font-bold mb-3">كلمة المرور</label>
+                    <input type="password" id="adminPassword" class="input-field w-full px-4 py-3 rounded-lg" placeholder="أدخل كلمة المرور" required>
+                </div>
+                <div class="flex gap-4">
+                    <button type="submit" class="btn-primary flex-1 py-3 rounded-lg font-bold text-white">دخول</button>
+                    <button type="button" onclick="hideAdminLogin()" class="btn-secondary flex-1 py-3 rounded-lg font-bold text-slate-300">إلغاء</button>
+                </div>
+            </form>
+            <div id="loginError" class="text-red-400 text-sm mt-4 text-center font-medium hidden">كلمة المرور غير صحيحة</div>
+        </div>
+    </div>
+
+    <!-- Admin View -->
+    <div id="adminView" class="min-h-screen hidden">
+        <!-- Admin Header -->
+        <header class="header-glow sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-gradient-to-br from-green-500 to-emerald-600 p-3 rounded-xl shadow-lg">
+                            <i data-lucide="settings" class="h-8 w-8 text-white"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-3xl font-black gradient-text">لوحة تحكم الأدمن</h1>
+                            <p class="text-slate-400 font-medium">إدارة المواد والمحتوى التعليمي</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button onclick="showStudentView()" class="btn-secondary text-slate-300 hover:text-white font-medium px-4 py-2 rounded-lg">عرض الموقع</button>
+                        <button onclick="adminLogout()" class="btn-danger font-medium px-4 py-2 rounded-lg">تسجيل خروج</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Admin Content -->
+        <main class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-6 sm:py-12">
+            <!-- Add Subject Section -->
+            <div class="glass-card rounded-2xl p-4 sm:p-8 mb-8 sm:mb-12 cyber-border">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-6 sm:mb-8 gradient-text">إضافة مادة جديدة</h2>
+                <form onsubmit="addSubject(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                    <div>
+                        <label class="block text-slate-300 text-sm font-bold mb-3">اسم المادة</label>
+                        <input type="text" id="subjectName" class="input-field w-full px-4 py-3 rounded-lg" placeholder="مثال: الرياضيات" required>
+                    </div>
+                    <div>
+                        <label class="block text-slate-300 text-sm font-bold mb-3">وصف المادة</label>
+                        <input type="text" id="subjectDescription" class="input-field w-full px-4 py-3 rounded-lg" placeholder="وصف مختصر للمادة" required>
+                    </div>
+                    <div class="md:col-span-2">
+                        <button type="submit" class="btn-primary px-8 py-3 rounded-lg font-bold text-white">
+                            <i data-lucide="plus" class="h-5 w-5 inline mr-2"></i>
+                            إضافة المادة
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Subjects Management -->
+            <div class="glass-card rounded-2xl p-8 cyber-border">
+                <h2 class="text-3xl font-bold text-white mb-8 gradient-text">إدارة المواد</h2>
+                <div id="adminSubjectsList">
+                    <!-- Admin subjects list will be loaded here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Subject Details Modal -->
+    <div id="subjectModal" class="fixed inset-0 modal-backdrop flex items-center justify-center hidden z-50">
+        <div class="glass-card rounded-2xl max-w-6xl w-full mx-2 sm:mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="p-4 sm:p-6 border-b border-slate-700">
+                <div class="flex items-center justify-between">
+                    <h2 id="modalSubjectTitle" class="text-xl sm:text-3xl font-bold gradient-text"></h2>
+                    <button onclick="closeSubjectModal()" class="text-slate-400 hover:text-white transition-colors">
+                        <i data-lucide="x" class="h-6 w-6 sm:h-8 sm:w-8"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-4 sm:p-8">
+                <div id="modalSubjectContent">
+                    <!-- Subject content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Management Modal -->
+    <div id="contentModal" class="fixed inset-0 modal-backdrop flex items-center justify-center hidden z-50">
+        <div class="glass-card rounded-2xl max-w-4xl w-full mx-2 sm:mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="p-4 sm:p-6 border-b border-slate-700">
+                <div class="flex items-center justify-between">
+                    <h2 id="contentModalTitle" class="text-xl sm:text-3xl font-bold gradient-text"></h2>
+                    <button onclick="closeContentModal()" class="text-slate-400 hover:text-white transition-colors">
+                        <i data-lucide="x" class="h-6 w-6 sm:h-8 sm:w-8"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-4 sm:p-8">
+                <div id="contentModalBody">
+                    <!-- Content forms will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+
+         const supabaseUrl = 'https://qgtjbiatssjthbjujhke.supabase.co'  
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFndGpiaWF0c3NqdGhianVqaGtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzNDQ2NzMsImV4cCI6MjA3MTkyMDY3M30.K2KqgNZjqKcMYezhEihM884rzQgxAhDs9zv61nVCZfM'
+        let supabase = null;
+        let useLocalStorage = true;
+
+
+        // Try to initialize Supabase, fallback to localStorage if it fails     
+        try {
+            if (supabaseUrl !== 'https://qgtjbiatssjthbjujhke.supabase.co' && supabaseKey !== 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFndGpiaWF0c3NqdGhianVqaGtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzNDQ2NzMsImV4cCI6MjA3MTkyMDY3M30.K2KqgNZjqKcMYezhEihM884rzQgxAhDs9zv61nVCZfM'   ) {  
+                useLocalStorage = false;
+                console.log('[v0] Using Supabase database');
+            } else {
+                console.log('[v0] Using localStorage fallback');
+            }
+        } catch (error) {
+            console.log('[v0] Supabase initialization failed, using localStorage');
+            useLocalStorage = true;
+        }
+
+        // Global variables
+        let currentSubjectId = null;
+        let isAdmin = false;
+
+        function getLocalData(key) {
+            try {
+                return JSON.parse(localStorage.getItem(key) || '[]');
+            } catch {
+                return [];
+            }
+        }
+
+        function setLocalData(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        function generateId() {
+            return Date.now().toString() + Math.random().toString(36).substr(2, 9);
+        }
+
+        async function loadSubjectsFromDB() {
+            if (useLocalStorage) {
+                return getLocalData('subjects');
+            }
+            
+            try {
+                const { data: subjects, error } = await supabase
+                    .from('subjects')
+                    .select('*')
+                    .order('created_at', { ascending: true });
+                
+                if (error) throw error;
+                return subjects || [];
+            } catch (error) {
+                console.error('Error loading subjects:', error);
+                return getLocalData('subjects');
+            }
+        }
+
+        async function loadNotesFromDB(subjectId) {
+            if (useLocalStorage) {
+                return getLocalData('notes').filter(note => note.subject_id === subjectId);
+            }
+            
+            try {
+                const { data: notes, error } = await supabase
+                    .from('notes')
+                    .select('*')
+                    .eq('subject_id', subjectId)
+                    .order('created_at', { ascending: true });
+                
+                if (error) throw error;
+                return notes || [];
+            } catch (error) {
+                console.error('Error loading notes:', error);
+                return getLocalData('notes').filter(note => note.subject_id === subjectId);
+            }
+        }
+
+        async function loadPlaylistsFromDB(subjectId) {
+            if (useLocalStorage) {
+                return getLocalData('playlists').filter(playlist => playlist.subject_id === subjectId);
+            }
+            
+            try {
+                const { data: playlists, error } = await supabase
+                    .from('youtube_playlists')
+                    .select('*')
+                    .eq('subject_id', subjectId)
+                    .order('created_at', { ascending: true });
+                
+                if (error) throw error;
+                return playlists || [];
+            } catch (error) {
+                console.error('Error loading playlists:', error);
+                return getLocalData('playlists').filter(playlist => playlist.subject_id === subjectId);
+            }
+        }
+
+        async function loadExamsFromDB(subjectId) {
+            if (useLocalStorage) {
+                return getLocalData('exams').filter(exam => exam.subject_id === subjectId);
+            }
+            
+            try {
+                const { data: exams, error } = await supabase
+                    .from('exams')
+                    .select('*')
+                    .eq('subject_id', subjectId)
+                    .order('created_at', { ascending: true });
+                
+                if (error) throw error;
+                return exams || [];
+            } catch (error) {
+                console.error('Error loading exams:', error);
+                return getLocalData('exams').filter(exam => exam.subject_id === subjectId);
+            }
+        }
+
+        // Admin authentication
+        function showAdminLogin() {
+            console.log('[v0] Showing admin login modal');
+            document.getElementById('adminLoginModal').classList.remove('hidden');
+        }
+
+        function hideAdminLogin() {
+            console.log('[v0] Hiding admin login modal');
+            document.getElementById('adminLoginModal').classList.add('hidden');
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('loginError').classList.add('hidden');
+        }
+
+        function adminLogin(event) {
+            event.preventDefault();
+            console.log('[v0] Admin login attempt started');
+            
+            const password = document.getElementById('adminPassword').value;
+            console.log('[v0] Password entered:', password ? 'Yes' : 'No');
+            console.log('[v0] Password value:', password);
+            
+            if (password === '123') {
+                console.log('[v0] Password correct, logging in as admin');
+                isAdmin = true;
+                hideAdminLogin();
+                showAdminView();
+                console.log('[v0] Admin view should now be visible');
+            } else {
+                console.log('[v0] Password incorrect, expected: 123, got:', password);
+                document.getElementById('loginError').classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('loginError').classList.add('hidden');
+                }, 3000);
+            }
+        }
+
+        function adminLogout() {
+            console.log('[v0] Admin logout');
+            isAdmin = false;
+            showStudentView();
+        }
+
+        function showStudentView() {
+            console.log('[v0] Switching to student view');
+            document.getElementById('studentView').classList.remove('hidden');
+            document.getElementById('adminView').classList.add('hidden');
+            loadSubjects();
+        }
+
+        function showAdminView() {
+            console.log('[v0] Switching to admin view');
+            document.getElementById('studentView').classList.add('hidden');
+            document.getElementById('adminView').classList.remove('hidden');
+            loadAdminSubjects();
+        }
+
+        async function addSubject(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('subjectName').value;
+            const description = document.getElementById('subjectDescription').value;
+            
+            try {
+                if (useLocalStorage) {
+                    const subjects = getLocalData('subjects');
+                    const newSubject = {
+                        id: generateId(),
+                        name,
+                        description,
+                        created_at: new Date().toISOString()
+                    };
+                    subjects.push(newSubject);
+                    setLocalData('subjects', subjects);
+                } else {
+                    const { data, error } = await supabase
+                        .from('subjects')
+                        .insert([{ name, description }])
+                        .select();
+                    
+                    if (error) throw error;
+                }
+                
+                // Reset form
+                document.getElementById('subjectName').value = '';
+                document.getElementById('subjectDescription').value = '';
+                
+                loadAdminSubjects();
+                alert('تم إضافة المادة بنجاح!');
+            } catch (error) {
+                console.error('Error adding subject:', error);
+                alert('حدث خطأ في إضافة المادة');
+            }
+        }
+
+        async function deleteSubject(subjectId) {
+            if (confirm('هل أنت متأكد من حذف هذه المادة؟ سيتم حذف جميع المحتويات المرتبطة بها.')) {
+                try {
+                    if (useLocalStorage) {
+                        const subjects = getLocalData('subjects').filter(s => s.id !== subjectId);
+                        const notes = getLocalData('notes').filter(n => n.subject_id !== subjectId);
+                        const playlists = getLocalData('playlists').filter(p => p.subject_id !== subjectId);
+                        const exams = getLocalData('exams').filter(e => e.subject_id !== subjectId);
+                        
+                        setLocalData('subjects', subjects);
+                        setLocalData('notes', notes);
+                        setLocalData('playlists', playlists);
+                        setLocalData('exams', exams);
+                    } else {
+                        const { error } = await supabase
+                            .from('subjects')
+                            .delete()
+                            .eq('id', subjectId);
+                        
+                        if (error) throw error;
+                    }
+                    
+                    loadAdminSubjects();
+                    alert('تم حذف المادة بنجاح!');
+                } catch (error) {
+                    console.error('Error deleting subject:', error);
+                    alert('حدث خطأ في حذف المادة');
+                }
+            }
+        }
+
+        async function loadSubjects() {
+            const grid = document.getElementById('subjectsGrid');
+            const noSubjects = document.getElementById('noSubjects');
+            const subjectCount = document.getElementById('subjectCount');
+            
+            try {
+                console.log('[v0] Attempting to load subjects from database...');
+                const subjects = await loadSubjectsFromDB();
+                console.log('[v0] Loaded subjects:', subjects.length);
+                
+                if (subjects.length === 0) {
+                    grid.innerHTML = '';
+                    noSubjects.classList.remove('hidden');
+                    subjectCount.textContent = '0 مادة متاحة';
+                    return;
+                }
+                
+                noSubjects.classList.add('hidden');
+                subjectCount.textContent = `${subjects.length} مادة متاحة`;
+                
+                // Load content counts for each subject
+                const subjectsWithCounts = await Promise.all(subjects.map(async (subject) => {
+                    const [notes, playlists, exams] = await Promise.all([
+                        loadNotesFromDB(subject.id),
+                        loadPlaylistsFromDB(subject.id),
+                        loadExamsFromDB(subject.id)
+                    ]);
+                    
+                    return {
+                        ...subject,
+                        notesCount: notes.length,
+                        playlistsCount: playlists.length,
+                        examsCount: exams.length
+                    };
+                }));
+                
+                grid.innerHTML = subjectsWithCounts.map(subject => `
+                    <div class="glass-card rounded-2xl p-6 cursor-pointer cyber-border fade-in" onclick="openSubject('${subject.id}')">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="bg-gradient-to-br from-blue-500 to-purple-600 p-3 rounded-xl shadow-lg">
+                                <i data-lucide="book" class="h-8 w-8 text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-white mb-1">${subject.name}</h3>
+                                <p class="text-slate-400">${subject.description}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="stats-glow-green rounded-xl p-4 text-center">
+                                <div class="flex items-center justify-center gap-2 text-green-400 mb-2">
+                                    <i data-lucide="file-text" class="h-5 w-5"></i>
+                                    <span class="font-bold">مذكرات</span>
+                                </div>
+                                <div class="text-3xl font-black text-green-300">${subject.notesCount}</div>
+                            </div>
+                            
+                            <div class="stats-glow-red rounded-xl p-4 text-center">
+                                <div class="flex items-center justify-center gap-2 text-red-400 mb-2">
+                                    <i data-lucide="play-circle" class="h-5 w-5"></i>
+                                    <span class="font-bold">شرح</span>
+                                </div>
+                                <div class="text-3xl font-black text-red-300">${subject.playlistsCount}</div>
+                            </div>
+                            
+                            <div class="stats-glow-purple rounded-xl p-4 text-center">
+                                <div class="flex items-center justify-center gap-2 text-purple-400 mb-2">
+                                    <i data-lucide="clipboard-check" class="h-5 w-5"></i>
+                                    <span class="font-bold">امتحانات</span>
+                                </div>
+                                <div class="text-3xl font-black text-purple-300">${subject.examsCount}</div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Re-initialize icons
+                lucide.createIcons();
+            } catch (error) {
+                console.error('[v0] Error loading subjects:', error);
+                // Show fallback message
+                grid.innerHTML = '<div class="glass-card rounded-2xl p-8 text-center"><p class="text-yellow-400 text-lg mb-4">تعذر الاتصال بقاعدة البيانات</p><p class="text-slate-400">تأكد من إعدادات Supabase أو استخدم النسخة المحلية</p></div>';
+                subjectCount.textContent = 'خطأ في التحميل';
+            }
+        }
+
+        async function loadAdminSubjects() {
+            const container = document.getElementById('adminSubjectsList');
+            
+            try {
+                const subjects = await loadSubjectsFromDB();
+                
+                if (subjects.length === 0) {
+                    container.innerHTML = '<p class="text-slate-400 text-center py-12 text-xl">لا توجد مواد مضافة بعد</p>';
+                    return;
+                }
+                
+                // Load content counts for each subject
+                const subjectsWithCounts = await Promise.all(subjects.map(async (subject) => {
+                    const [notes, playlists, exams] = await Promise.all([
+                        loadNotesFromDB(subject.id),
+                        loadPlaylistsFromDB(subject.id),
+                        loadExamsFromDB(subject.id)
+                    ]);
+                    
+                    return {
+                        ...subject,
+                        notesCount: notes.length,
+                        playlistsCount: playlists.length,
+                        examsCount: exams.length
+                    };
+                }));
+                
+                container.innerHTML = subjectsWithCounts.map(subject => `
+                    <div class="glass-card rounded-xl p-6 mb-6 cyber-border">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-2xl font-bold text-white mb-2">${subject.name}</h3>
+                                <p class="text-slate-400 mb-3">${subject.description}</p>
+                                <div class="flex gap-6 text-sm">
+                                    <span class="text-green-400 font-medium">${subject.notesCount} مذكرة</span>
+                                    <span class="text-red-400 font-medium">${subject.playlistsCount} قائمة تشغيل</span>
+                                    <span class="text-purple-400 font-medium">${subject.examsCount} امتحان</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <button onclick="manageSubjectContent('${subject.id}')" class="btn-primary px-6 py-3 rounded-lg font-bold">
+                                    إدارة المحتوى
+                                </button>
+                                <button onclick="deleteSubject('${subject.id}')" class="btn-danger px-4 py-3 rounded-lg font-bold">
+                                    حذف
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading admin subjects:', error);
+                container.innerHTML = '<p class="text-red-400 text-center py-12">حدث خطأ في تحميل المواد</p>';
+            }
+        }
+
+        async function openSubject(subjectId) {
+            try {
+                let subject, notes, playlists, exams;
+                
+                // Try to get data from database first, fallback to localStorage
+                try {
+                    const { data: subjectData, error: subjectError } = await supabase
+                        .from('subjects')
+                        .select('*')
+                        .eq('id', subjectId)
+                        .single();
+                    
+                    if (subjectError) throw subjectError;
+                    subject = subjectData;
+                    
+                    [notes, playlists, exams] = await Promise.all([
+                        loadNotesFromDB(subjectId),
+                        loadPlaylistsFromDB(subjectId),
+                        loadExamsFromDB(subjectId)
+                    ]);
+                } catch (dbError) {
+                    console.log('[v0] Database failed, using localStorage:', dbError);
+                    // Fallback to localStorage
+                    const subjects = JSON.parse(localStorage.getItem('subjects') || '[]');
+                    subject = subjects.find(s => s.id === subjectId);
+                    
+                    if (!subject) {
+                        alert('المادة غير موجودة');
+                        return;
+                    }
+                    
+                    const allNotes = JSON.parse(localStorage.getItem('notes') || '[]');
+                    const allPlaylists = JSON.parse(localStorage.getItem('playlists') || '[]');
+                    const allExams = JSON.parse(localStorage.getItem('exams') || '[]');
+                    
+                    notes = allNotes.filter(note => note.subject_id === subjectId);
+                    playlists = allPlaylists.filter(playlist => playlist.subject_id === subjectId);
+                    exams = allExams.filter(exam => exam.subject_id === subjectId);
+                }
+                
+                if (!subject) {
+                    alert('المادة غير موجودة');
+                    return;
+                }
+                
+                currentSubjectId = subjectId;
+                document.getElementById('modalSubjectTitle').textContent = subject.name;
+
+                const content = `
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
+                        <!-- Notes Section -->
+                        <div class="stats-glow-green rounded-2xl p-4 sm:p-6">
+                            <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                                <i data-lucide="file-text" class="h-5 w-5 sm:h-6 sm:w-6 text-green-400"></i>
+                                <h3 class="text-xl sm:text-2xl font-bold text-green-300">المذكرات</h3>
+                            </div>
+                            ${notes.length > 0 ? notes.map(note => `
+                                <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
+                                    <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${note.title}</h4>
+                                    <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${note.description}</p>
+                                    <a href="${note.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                        <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                        تحميل المذكرة
+                                    </a>
+                                </div>
+                            `).join('') : '<p class="text-slate-500 text-center py-6 sm:py-8 text-sm sm:text-base">لا توجد مذكرات متاحة</p>'}
+                        </div>
+                        
+                        <!-- Playlists Section -->
+                        <div class="stats-glow-red rounded-2xl p-4 sm:p-6">
+                            <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                                <i data-lucide="play-circle" class="h-5 w-5 sm:h-6 sm:w-6 text-red-400"></i>
+                                <h3 class="text-xl sm:text-2xl font-bold text-red-300">شرح الدروس</h3>
+                            </div>
+                            ${playlists.length > 0 ? playlists.map(playlist => `
+                                <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
+                                    <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${playlist.title}</h4>
+                                    <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${playlist.description}</p>
+                                    <a href="${playlist.youtube_url}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-rose-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                        <i data-lucide="play" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                        مشاهدة الشرح
+                                    </a>
+                                </div>
+                            `).join('') : '<p class="text-slate-500 text-center py-6 sm:py-8 text-sm sm:text-base">لا توجد قوائم تشغيل متاحة</p>'}
+                        </div>
+                        
+                        <!-- Exams Section -->
+                        <div class="stats-glow-purple rounded-2xl p-4 sm:p-6">
+                            <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                                <i data-lucide="clipboard-check" class="h-5 w-5 sm:h-6 sm:w-6 text-purple-400"></i>
+                                <h3 class="text-xl sm:text-2xl font-bold text-purple-300">الامتحانات</h3>
+                            </div>
+                            ${exams.length > 0 ? exams.map(exam => `
+                                <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
+                                    <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${exam.title}</h4>
+                                    <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${exam.description}</p>
+                                    <a href="${exam.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                        <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                        تحميل الامتحان
+                                    </a>
+                                </div>
+                            `).join('') : '<p class="text-slate-500 text-center py-6 sm:py-8 text-sm sm:text-base">لا توجد امتحانات متاحة</p>'}
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('modalSubjectContent').innerHTML = content;
+                document.getElementById('subjectModal').classList.remove('hidden');
+                
+                // Re-initialize icons
+                lucide.createIcons();
+            } catch (error) {
+                console.error('[v0] Error opening subject:', error);
+                alert('حدث خطأ أثناء فتح بيانات المادة. جاري المحاولة مرة أخرى...');
+                
+                // Try localStorage as final fallback
+                try {
+                    const subjects = JSON.parse(localStorage.getItem('subjects') || '[]');
+                    const subject = subjects.find(s => s.id === subjectId);
+                    
+                    if (subject) {
+                        currentSubjectId = subjectId;
+                        document.getElementById('modalSubjectTitle').textContent = subject.name;
+                        
+                        const allNotes = JSON.parse(localStorage.getItem('notes') || '[]');
+                        const allPlaylists = JSON.parse(localStorage.getItem('playlists') || '[]');
+                        const allExams = JSON.parse(localStorage.getItem('exams') || '[]');
+                        
+                        const notes = allNotes.filter(note => note.subject_id === subjectId);
+                        const playlists = allPlaylists.filter(playlist => playlist.subject_id === subjectId);
+                        const exams = allExams.filter(exam => exam.subject_id === subjectId);
+                        
+                        const content = `
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
+                                <!-- Notes Section -->
+                                <div class="stats-glow-green rounded-2xl p-4 sm:p-6">
+                                    <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                                        <i data-lucide="file-text" class="h-5 w-5 sm:h-6 sm:w-6 text-green-400"></i>
+                                        <h3 class="text-xl sm:text-2xl font-bold text-green-300">المذكرات</h3>
+                                    </div>
+                                    ${notes.length > 0 ? notes.map(note => `
+                                        <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
+                                            <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${note.title}</h4>
+                                            <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${note.description}</p>
+                                            <a href="${note.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                                <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                                تحميل المذكرة
+                                            </a>
+                                        </div>
+                                    `).join('') : '<p class="text-slate-500 text-center py-6 sm:py-8 text-sm sm:text-base">لا توجد مذكرات متاحة</p>'}
+                                </div>
+                                
+                                <!-- Playlists Section -->
+                                <div class="stats-glow-red rounded-2xl p-4 sm:p-6">
+                                    <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                                        <i data-lucide="play-circle" class="h-5 w-5 sm:h-6 sm:w-6 text-red-400"></i>
+                                        <h3 class="text-xl sm:text-2xl font-bold text-red-300">شرح الدروس</h3>
+                                    </div>
+                                    ${playlists.length > 0 ? playlists.map(playlist => `
+                                        <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
+                                            <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${playlist.title}</h4>
+                                            <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${playlist.description}</p>
+                                            <a href="${playlist.youtube_url}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-rose-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                                <i data-lucide="play" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                                مشاهدة الشرح
+                                            </a>
+                                        </div>
+                                    `).join('') : '<p class="text-slate-500 text-center py-6 sm:py-8 text-sm sm:text-base">لا توجد قوائل تشغيل متاحة</p>'}
+                                </div>
+                                
+                                <!-- Exams Section -->
+                                <div class="stats-glow-purple rounded-2xl p-4 sm:p-6">
+                                    <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                                        <i data-lucide="clipboard-check" class="h-5 w-5 sm:h-6 sm:w-6 text-purple-400"></i>
+                                        <h3 class="text-xl sm:text-2xl font-bold text-purple-300">الامتحانات</h3>
+                                    </div>
+                                    ${exams.length > 0 ? exams.map(exam => `
+                                        <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
+                                            <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${exam.title}</h4>
+                                            <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${exam.description}</p>
+                                            <a href="${exam.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                                <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                                تحميل الامتحان
+                                            </a>
+                                        </div>
+                                    `).join('') : '<p class="text-slate-500 text-center py-6 sm:py-8 text-sm sm:text-base">لا توجد امتحانات متاحة</p>'}
+                                </div>
+                            </div>
+                        `;
+                        
+                        document.getElementById('modalSubjectContent').innerHTML = content;
+                        document.getElementById('subjectModal').classList.remove('hidden');
+                        
+                        // Re-initialize icons
+                        lucide.createIcons();
+                    } else {
+                        alert('المادة غير موجودة');
+                    }
+                } catch (localError) {
+                    console.error('[v0] localStorage fallback failed:', localError);
+                    alert('حدث خطأ في تحميل البيانات');
+                }
+            }
+        }
+
+        // Content management functions would continue here...
+        async function manageSubjectContent(subjectId) {
+            console.log('[v0] Managing content for subject:', subjectId);
+            
+            try {
+                const subjects = await loadSubjectsFromDB();
+                const subject = subjects.find(s => s.id === subjectId);
+                
+                if (!subject) {
+                    alert('المادة غير موجودة');
+                    return;
+                }
+                
+                currentSubjectId = subjectId;
+                document.getElementById('contentModalTitle').textContent = `إدارة محتوى: ${subject.name}`;
+                
+                const [notes, playlists, exams] = await Promise.all([
+                    loadNotesFromDB(subjectId),
+                    loadPlaylistsFromDB(subjectId),
+                    loadExamsFromDB(subjectId)
+                ]);
+                
+                const contentHTML = `
+                    <div class="space-y-8">
+                        <!-- Add Content Forms -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <!-- Add Note Form -->
+                            <div class="stats-glow-green rounded-xl p-6">
+                                <h3 class="text-xl font-bold text-green-300 mb-4 flex items-center gap-2">
+                                    <i data-lucide="file-text" class="h-5 w-5"></i>
+                                    إضافة مذكرة
+                                </h3>
+                                <form onsubmit="addNote(event)" class="space-y-4">
+                                    <input type="text" id="noteTitle" class="input-field w-full px-3 py-2 rounded-lg text-sm" placeholder="عنوان المذكرة" required>
+                                    <textarea id="noteDescription" class="input-field w-full px-3 py-2 rounded-lg text-sm" rows="2" placeholder="وصف المذكرة" required></textarea>
+                                    <input type="url" id="noteLink" class="input-field w-full px-3 py-2 rounded-lg text-sm" placeholder="رابط Dropbox للتحميل" required>
+                                    <button type="submit" class="btn-primary w-full py-2 rounded-lg font-bold text-sm">إضافة مذكرة</button>
+                                </form>
+                            </div>
+                            
+                            <!-- Add Playlist Form -->
+                            <div class="stats-glow-red rounded-xl p-6">
+                                <h3 class="text-xl font-bold text-red-300 mb-4 flex items-center gap-2">
+                                    <i data-lucide="play-circle" class="h-5 w-5"></i>
+                                    إضافة قائمة تشغيل
+                                </h3>
+                                <form onsubmit="addPlaylist(event)" class="space-y-4">
+                                    <input type="text" id="playlistTitle" class="input-field w-full px-3 py-2 rounded-lg text-sm" placeholder="عنوان قائمة التشغيل" required>
+                                    <textarea id="playlistDescription" class="input-field w-full px-3 py-2 rounded-lg text-sm" rows="2" placeholder="وصف قائمة التشغيل" required></textarea>
+                                    <input type="url" id="playlistLink" class="input-field w-full px-3 py-2 rounded-lg text-sm" placeholder="رابط YouTube Playlist" required>
+                                    <button type="submit" class="btn-primary w-full py-2 rounded-lg font-bold text-sm">إضافة قائمة</button>
+                                </form>
+                            </div>
+                            
+                            <!-- Add Exam Form -->
+                            <div class="stats-glow-purple rounded-xl p-6">
+                                <h3 class="text-xl font-bold text-purple-300 mb-4 flex items-center gap-2">
+                                    <i data-lucide="clipboard-check" class="h-5 w-5"></i>
+                                    إضافة امتحان
+                                </h3>
+                                <form onsubmit="addExam(event)" class="space-y-4">
+                                    <input type="text" id="examTitle" class="input-field w-full px-3 py-2 rounded-lg text-sm" placeholder="عنوان الامتحان" required>
+                                    <textarea id="examDescription" class="input-field w-full px-3 py-2 rounded-lg text-sm" rows="2" placeholder="وصف الامتحان" required></textarea>
+                                    <input type="url" id="examLink" class="input-field w-full px-3 py-2 rounded-lg text-sm" placeholder="رابط Dropbox للتحميل" required>
+                                    <button type="submit" class="btn-primary w-full py-2 rounded-lg font-bold text-sm">إضافة امتحان</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Existing Content Lists -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <!-- Notes List -->
+                            <div class="stats-glow-green rounded-xl p-6">
+                                <h3 class="text-xl font-bold text-green-300 mb-4">المذكرات الموجودة</h3>
+                                <div class="space-y-3 max-h-60 overflow-y-auto">
+                                    ${notes.length > 0 ? notes.map(note => `
+                                        <div class="glass-card rounded-lg p-3">
+                                            <h4 class="font-bold text-white text-sm mb-1">${note.title}</h4>
+                                            <p class="text-slate-400 text-xs mb-2">${note.description}</p>
+                                            <div class="flex gap-2">
+                                                <a href="${note.dropbox_link}" target="_blank" class="text-green-400 text-xs hover:text-green-300">عرض</a>
+                                                <button onclick="deleteNote('${note.id}')" class="text-red-400 text-xs hover:text-red-300">حذف</button>
+                                            </div>
+                                        </div>
+                                    `).join('') : '<p class="text-slate-500 text-sm">لا توجد مذكرات</p>'}
+                                </div>
+                            </div>
+                            
+                            <!-- Playlists List -->
+                            <div class="stats-glow-red rounded-xl p-6">
+                                <h3 class="text-xl font-bold text-red-300 mb-4">قوائم التشغيل الموجودة</h3>
+                                <div class="space-y-3 max-h-60 overflow-y-auto">
+                                    ${playlists.length > 0 ? playlists.map(playlist => `
+                                        <div class="glass-card rounded-lg p-3">
+                                            <h4 class="font-bold text-white text-sm mb-1">${playlist.title}</h4>
+                                            <p class="text-slate-400 text-xs mb-2">${playlist.description}</p>
+                                            <div class="flex gap-2">
+                                                <a href="${playlist.youtube_url}" target="_blank" class="text-red-400 text-xs hover:text-red-300">عرض</a>
+                                                <button onclick="deletePlaylist('${playlist.id}')" class="text-red-400 text-xs hover:text-red-300">حذف</button>
+                                            </div>
+                                        </div>
+                                    `).join('') : '<p class="text-slate-500 text-sm">لا توجد قوائم تشغيل</p>'}
+                                </div>
+                            </div>
+                            
+                            <!-- Exams List -->
+                            <div class="stats-glow-purple rounded-xl p-6">
+                                <h3 class="text-xl font-bold text-purple-300 mb-4">الامتحانات الموجودة</h3>
+                                <div class="space-y-3 max-h-60 overflow-y-auto">
+                                    ${exams.length > 0 ? exams.map(exam => `
+                                        <div class="glass-card rounded-lg p-3">
+                                            <h4 class="font-bold text-white text-sm mb-1">${exam.title}</h4>
+                                            <p class="text-slate-400 text-xs mb-2">${exam.description}</p>
+                                            <div class="flex gap-2">
+                                                <a href="${exam.dropbox_link}" target="_blank" class="text-purple-400 text-xs hover:text-purple-300">عرض</a>
+                                                <button onclick="deleteExam('${exam.id}')" class="text-red-400 text-xs hover:text-red-300">حذف</button>
+                                            </div>
+                                        </div>
+                                    `).join('') : '<p class="text-slate-500 text-sm">لا توجد امتحانات</p>'}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('contentModalBody').innerHTML = contentHTML;
+                document.getElementById('contentModal').classList.remove('hidden');
+                
+                // Re-initialize icons
+                lucide.createIcons();
+            } catch (error) {
+                console.error('Error managing subject content:', error);
+                alert('حدث خطأ في تحميل محتوى المادة');
+            }
+        }
+
+        async function addNote(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('noteTitle').value;
+            const description = document.getElementById('noteDescription').value;
+            const dropbox_link = document.getElementById('noteLink').value;
+            
+            try {
+                if (useLocalStorage) {
+                    const notes = getLocalData('notes');
+                    const newNote = {
+                        id: generateId(),
+                        subject_id: currentSubjectId,
+                        title,
+                        description,
+                        dropbox_link,
+                        created_at: new Date().toISOString()
+                    };
+                    notes.push(newNote);
+                    setLocalData('notes', notes);
+                } else {
+                    const { data, error } = await supabase
+                        .from('notes')
+                        .insert([{ subject_id: currentSubjectId, title, description, dropbox_link }])
+                        .select();
+                    
+                    if (error) throw error;
+                }
+                
+                // Reset form
+                document.getElementById('noteTitle').value = '';
+                document.getElementById('noteDescription').value = '';
+                document.getElementById('noteLink').value = '';
+                
+                // Refresh content
+                manageSubjectContent(currentSubjectId);
+                alert('تم إضافة المذكرة بنجاح!');
+            } catch (error) {
+                console.error('Error adding note:', error);
+                alert('حدث خطأ في إضافة المذكرة');
+            }
+        }
+
+        async function addPlaylist(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('playlistTitle').value;
+            const description = document.getElementById('playlistDescription').value;
+            const youtube_url = document.getElementById('playlistLink').value;
+            
+            try {
+                if (useLocalStorage) {
+                    const playlists = getLocalData('playlists');
+                    const newPlaylist = {
+                        id: generateId(),
+                        subject_id: currentSubjectId,
+                        title,
+                        description,
+                        youtube_url,
+                        created_at: new Date().toISOString()
+                    };
+                    playlists.push(newPlaylist);
+                    setLocalData('playlists', playlists);
+                } else {
+                    const { data, error } = await supabase
+                        .from('youtube_playlists')
+                        .insert([{ subject_id: currentSubjectId, title, description, youtube_url }])
+                        .select();
+                    
+                    if (error) throw error;
+                }
+                
+                // Reset form
+                document.getElementById('playlistTitle').value = '';
+                document.getElementById('playlistDescription').value = '';
+                document.getElementById('playlistLink').value = '';
+                
+                // Refresh content
+                manageSubjectContent(currentSubjectId);
+                alert('تم إضافة قائمة التشغيل بنجاح!');
+            } catch (error) {
+                console.error('Error adding playlist:', error);
+                alert('حدث خطأ في إضافة قائمة التشغيل');
+            }
+        }
+
+        async function addExam(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('examTitle').value;
+            const description = document.getElementById('examDescription').value;
+            const dropbox_link = document.getElementById('examLink').value;
+            
+            try {
+                if (useLocalStorage) {
+                    const exams = getLocalData('exams');
+                    const newExam = {
+                        id: generateId(),
+                        subject_id: currentSubjectId,
+                        title,
+                        description,
+                        dropbox_link,
+                        created_at: new Date().toISOString()
+                    };
+                    exams.push(newExam);
+                    setLocalData('exams', exams);
+                } else {
+                    const { data, error } = await supabase
+                        .from('exams')
+                        .insert([{ subject_id: currentSubjectId, title, description, dropbox_link }])
+                        .select();
+                    
+                    if (error) throw error;
+                }
+                
+                // Reset form
+                document.getElementById('examTitle').value = '';
+                document.getElementById('examDescription').value = '';
+                document.getElementById('examLink').value = '';
+                
+                // Refresh content
+                manageSubjectContent(currentSubjectId);
+                alert('تم إضافة الامتحان بنجاح!');
+            } catch (error) {
+                console.error('Error adding exam:', error);
+                alert('حدث خطأ في إضافة الامتحان');
+            }
+        }
+
+        async function deleteNote(noteId) {
+            if (confirm('هل أنت متأكد من حذف هذه المذكرة؟')) {
+                try {
+                    if (useLocalStorage) {
+                        const notes = getLocalData('notes').filter(n => n.id !== noteId);
+                        setLocalData('notes', notes);
+                    } else {
+                        const { error } = await supabase
+                            .from('notes')
+                            .delete()
+                            .eq('id', noteId);
+                        
+                        if (error) throw error;
+                    }
+                    
+                    manageSubjectContent(currentSubjectId);
+                    alert('تم حذف المذكرة بنجاح!');
+                } catch (error) {
+                    console.error('Error deleting note:', error);
+                    alert('حدث خطأ في حذف المذكرة');
+                }
+            }
+        }
+
+        async function deletePlaylist(playlistId) {
+            if (confirm('هل أنت متأكد من حذف قائمة التشغيل هذه؟')) {
+                try {
+                    if (useLocalStorage) {
+                        const playlists = getLocalData('playlists').filter(p => p.id !== playlistId);
+                        setLocalData('playlists', playlists);
+                    } else {
+                        const { error } = await supabase
+                            .from('youtube_playlists')
+                            .delete()
+                            .eq('id', playlistId);
+                        
+                        if (error) throw error;
+                    }
+                    
+                    manageSubjectContent(currentSubjectId);
+                    alert('تم حذف قائمة التشغيل بنجاح!');
+                } catch (error) {
+                    console.error('Error deleting playlist:', error);
+                    alert('حدث خطأ في حذف قائمة التشغيل');
+                }
+            }
+        }
+
+        async function deleteExam(examId) {
+            if (confirm('هل أنت متأكد من حذف هذا الامتحان؟')) {
+                try {
+                    if (useLocalStorage) {
+                        const exams = getLocalData('exams').filter(e => e.id !== examId);
+                        setLocalData('exams', exams);
+                    } else {
+                        const { error } = await supabase
+                            .from('exams')
+                            .delete()
+                            .eq('id', examId);
+                        
+                        if (error) throw error;
+                    }
+                    
+                    manageSubjectContent(currentSubjectId);
+                    alert('تم حذف الامتحان بنجاح!');
+                } catch (error) {
+                    console.error('Error deleting exam:', error);
+                    alert('حدث خطأ في حذف الامتحان');
+                }
+            }
+        }
+
+        // Modal closing functions
+        function closeSubjectModal() {
+            document.getElementById('subjectModal').classList.add('hidden');
+            currentSubjectId = null;
+        }
+
+        function closeContentModal() {
+            document.getElementById('contentModal').classList.add('hidden');
+            currentSubjectId = null;
+        }
+
+        function initializeSampleData() {
+            if (!useLocalStorage) return;
+            
+            const subjects = getLocalData('subjects');
+            if (subjects.length > 0) return; // Data already exists
+            
+            console.log('[v0] Initializing sample data...');
+            
+            // Sample subjects
+            const sampleSubjects = [
+                { id: '1', name: 'ب', description: 'مادة الرياضيات للثانوية العامة', created_at: new Date().toISOString() },
+                { id: '2', name: 'الفيزياء', description: 'مادة الفيزياء للثانوية العامة', created_at: new Date().toISOString() },
+                { id: '3', name: 'الكيمياء', description: 'مادة الكيمياء للثانوية العامة', created_at: new Date().toISOString() },
+                { id: '4', name: 'الأحياء', description: 'مادة الأحياء للثانوية العامة', created_at: new Date().toISOString() },
+                { id: '5', name: 'اللغة العربية', description: 'مادة اللغة العربية للثانوية العامة', created_at: new Date().toISOString() },
+                { id: '6', name: 'اللغة الإنجليزية', description: 'مادة اللغة الإنجليزية للثانوية العامة', created_at: new Date().toISOString() },
+                { id: '7', name: 'التاريخ', description: 'مادة التاريخ للثانوية العامة', created_at: new Date().toISOString() }
+            ];
+            
+            setLocalData('subjects', sampleSubjects);
+            setLocalData('notes', []);
+            setLocalData('playlists', []);
+            setLocalData('exams', []);
+            
+            console.log('[v0] Sample data initialized');
+        }
+
+        async function initApp() {
+            console.log('[v0] Starting app initialization...');
+            
+            try {
+                initializeSampleData();
+                console.log('[v0] Loading subjects...');
+                await loadSubjects();
+                console.log('[v0] App initialized successfully');
+            } catch (error) {
+                console.error('[v0] Error initializing app:', error);
+                // Fallback to show empty state
+                document.getElementById('noSubjects').classList.remove('hidden');
+                document.getElementById('subjectCount').textContent = '0 مادة متاحة';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('[v0] DOM loaded, initializing app...');
+            initApp();
+        });
+    </script>
+</body>
+</html>
