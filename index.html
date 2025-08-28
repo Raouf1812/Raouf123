@@ -1406,78 +1406,79 @@
             
             // Sample subjects
             const sampleSubjects = [
-                { id: '1', name: 'تك ورش الكترونية ', description: 'مادة الرياضيات للثانوية العامة', created_at: new Date().toISOString() },
-                { id: '2', name: 'مكونات حاسب', description: 'مادة الفيزياء للثانوية العامة', created_at: new Date().toISOString() },
-                { id: '3', name: 'أساسيات شبكات حاسب', description: 'مادة الكيمياء للثانوية العامة', created_at: new Date().toISOString() },
-                { id: '4', name: 'الكترونات قوى كهربية', description: 'مادة الأحياء للثانوية العامة', created_at: new Date().toISOString() },
-                { id: '5', name: 'اللغة الكترونيات رقمية', description: 'مادة اللغة العربية للثانوية العامة', created_at: new Date().toISOString() },
-                { id: '6', name: 'معالجات ومتحكمات دقيقة ', description: 'مادة اللغة الإنجليزية للثانوية العامة', created_at: new Date().toISOString() },
-                { id: '7', name: 'دوائر الكترونية', description: 'مادة التاريخ للثانوية العامة', created_at: new Date().toISOString() }
+                { id: '1', name: 'تك ورش الكترونية ', description: 'مادة تك ورش الكترونية', created_at: new Date().toISOString() },
+                { id: '3', name: 'أساسيات شبكات حاسب', description: 'مادة أساسيات شبكات حاسب', created_at: new Date().toISOString() },
+                { id: '4', name: 'الكترونات قوى كهربية', description: 'مادة الكترونات قوى كهربية', created_at: new Date().toISOString() },
+                { id: '5', name: ' الكترونيات رقمية', description: 'مادة الكترونيات رقمية', created_at: new Date().toISOString() },
+                { id: '6', name: 'معالجات ومتحكمات دقيقة ', description: 'مادة معالجات ومتحكمات دقيقة', created_at: new Date().toISOString() },
+                  { id: '2', name: 'مكونات حاسب', description: 'مادة مكونات حاسب', created_at: new Date().toISOString() },
+                { id: '7', name: 'دوائر الكترونية', description: 'مادة دوائر الكترونية', created_at: new Date().toISOString() }
             ];
 
-
-
-          
-
-
-            
-            
                                                     setLocalData('subjects', sampleSubjects);
 
                                             setLocalData('notes', [
-                                                {
+                                            {
                                                     id: 'n1',
                                                     subject_id: '1', // مذكرة للمادة الأولى
-                                                    title: 'MBIتك ورش إلكترونية متقدمه',
+                                                    title: '  كتاب تك ورش إلكترونية ',
                                                     description: '1',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/mcydl0822cfw1n3ibei30/.pdf?rlkey=wxf6h7w0xdk90nlyy36dg9oen&st=iu5el7ny&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n2',
+                                                    subject_id: '1', // مذكرة للمادة الأولى
+                                                    title: 'MBIتك ورش إلكترونية متقدمه',
+                                                    description: '2',
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/s6nu4veb2p0lafrqk0ihi/MBI.pdf?rlkey=4rtyg2n4a2ljsrt9xbp1cj53h&st=kchu3ibc&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
                                                   {
-                                                    id: 'n1',
+                                                    id: 'n3',
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: 'تك ورش إلكترونية بشمهندسه سمر صبحي.',
-                                                    description: '2',
+                                                    description: '3',
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/3jkv9l5wzou2mzij99ai9/_-_-_-_-_.pdf?rlkey=3msxt9ds56sdw5n05bwq7sxf1&e=1&st=zc6wpgzc&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
-                                                    id: 'n1',
+                                                    id: 'n4',
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: 'ورش باب 1 و 2',
-                                                    description: '3',
+                                                    description: '4',
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/cvcsc4nn7vhbrjoerjltw/1-2.pdf?rlkey=f1fwqdtycw30884dktw1bs55o&e=1&st=0l253usz&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
-                                                    id: 'n1',
+                                                    id: 'n5',
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: 'ورش باب 3',
-                                                    description: '4',
+                                                    description: '5',
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/eec25mwkuqmt4ae487vyi/3.pdf?rlkey=85wnyqoakzxw9hc2omskzbegn&e=1&st=g625i5m6&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
-                                                    id: 'n1',
+                                                    id: 'n6',
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: 'ورش باب 4',
-                                                    description: '5',
+                                                    description: '6',
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/u78a1w584sa5fvoo1fjkq/4.pdf?rlkey=u00w02oyy9nd76idpfdq0x17f&e=1&st=2xs6wo66&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
-                                                    id: 'n1',
+                                                    id: 'n7',
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: 'ورش باب 5',
-                                                    description: '6',
+                                                    description: '7',
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/64dzbrza25oqw2e8qrrsy/5.pdf?rlkey=ys6jig64p8y6bakmjxs890srl&e=1&st=i5oz1a0c&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
-                                                    id: 'n1',
+                                                    id: 'n8',
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: 'ورش باب 6',
-                                                    description: '7',
+                                                    description: '8',
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/t1ohw8w0k9r5js2pd4ul9/6.pdf?rlkey=glh6vg9pcamuqi7bgbrqmhlq2&e=1&st=vo0lcl8d&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
@@ -1492,12 +1493,83 @@
                                                 }
                                             ]); // ← هنا لازم تقفل المصفوفة والقوس
 
-                                            setLocalData('playlists', []);
-                                            setLocalData('exams', []);
+                                 setLocalData('playlists', [
+                                {
+                                    id: 'p1',
+                                    subject_id: '1', // المادة الأولى: تك ورش الكترونية
+                                    title: 'شرح ماده تك ورش الكترونية',
+                                    description: 'قائمه يوتيوب تشرح ماده تك ورش الكترونية',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLXvLsH8q7jCh_WHPhJefolRrLQClarq6H&si=WV511BtUmC2y_uAE',
+                                    created_at: new Date().toISOString()
+                                },
+                                {
+                                    id: 'p1',
+                                    subject_id: '3', 
+                                    title: 'شرح ماده تك أساسيات شبكات حاسب',
+                                    description: 'قائمه يوتيوب تشرح ماده أساسيات شبكات حاسب',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLMtGXqqv8Y-o39k2pvp2d5dFE_s9Gn3Rx&si=brN7UxOuANYXDYb-',
+                                    created_at: new Date().toISOString()
+                                },
+                                 {
+                                    id: 'p1',
+                                    subject_id: '4', 
+                                    title: 'شرح ماده الكترونات قوى كهربية',
+                                    description: 'قائمه يوتيوب تشرح ماده الكترونات قوى كهربية',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLGc5yhl36AZobbpLAROi9eJHyhG1B5p0u&si=34NYXCq-TWKs23G0',
+                                    created_at: new Date().toISOString()
+                                },
+                                      {
+                                    id: 'p1',
+                                    subject_id: '4', 
+                                    title: 'شرح ماده الكترونات قوى كهربية',
+                                    description: 'قائمه يوتيوب تشرح ماده الكترونات قوى كهربية',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLXvLsH8q7jCjrRtRissA49Wbp3Ls_AAsI&si=1tLeone1usZbZupj',
+                                    created_at: new Date().toISOString()
+                                },
+                                     {
+                                    id: 'p1',
+                                    subject_id: '5', 
+                                    title: 'شرح ماده ماده الكترونيات رقمية',
+                                    description: 'قائمه يوتيوب تشرح ماده الكترونيات رقمية',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLrCcWQykzyF5KUMqDo6mTWYE-KFMX3rX1&si=6J0AdIUss6VM4kPC',
+                                    created_at: new Date().toISOString()
+                                },
+                                   {
+                                    id: 'p1',
+                                    subject_id: '5', 
+                                    title: 'شرح ماده ماده الكترونيات رقمية',
+                                    description: 'قائمه يوتيوب تشرح ماده الكترونيات رقمية',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLXvLsH8q7jCj8uYqxyr0Iexq2hiod2pVu&si=oQ7NLwYZKFxt9ixy',
+                                    created_at: new Date().toISOString()
+                                },
+                                      {
+                                    id: 'p1',
+                                    subject_id: '6', 
+                                    title: 'شرح ماده معالجات ومتحكمات دقيقة',
+                                    description: 'قائمه يوتيوب تشرح ماده معالجات ومتحكمات دقيقة',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLGc5yhl36AZq3QLYH9_FNYP35PHF1_IqV&si=SAWIwgy1hgPB0s-2',
+                                    created_at: new Date().toISOString()
+                                },
+                                                  {
+                                    id: 'p1',
+                                    subject_id: '6', 
+                                    title: 'شرح ماده معالجات ومتحكمات دقيقة',
+                                    description: 'قائمه يوتيوب تشرح ماده معالجات ومتحكمات دقيقة',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLXvLsH8q7jChMQo_4bNfMga7NUvwxuEqS&si=bHxIDdcVv8xA9R37',
+                                    created_at: new Date().toISOString()
+                                },
+                                                             {
+                                    id: 'p1',
+                                    subject_id: '7', 
+                                    title: 'شرح ماده دوائر الكترونية',
+                                    description: 'قائمه يوتيوب تشرح ماده دوائر الكترونية',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLXvLsH8q7jCicFrJY1FX2A0Lax_sIOHxO&si=SktLefJzC3GTemWZ',
+                                    created_at: new Date().toISOString()
+                                },
 
+                            ]);
 
-
-
+               setLocalData('exams', []);
             
             console.log('[v0] Sample data initialized');
         }
