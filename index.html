@@ -1402,26 +1402,58 @@
         function initializeSampleData() {
             if (!useLocalStorage) return;
             
-            const subjects = getLocalData('subjects');
-            if (subjects.length > 0) return; // Data already exists
+           
+        
             
             console.log('[v0] Initializing sample data...');
             
             // Sample subjects
             const sampleSubjects = [
-                { id: '1', name: 'ب', description: 'مادة الرياضيات للثانوية العامة', created_at: new Date().toISOString() },
-                { id: '2', name: 'الفيزياء', description: 'مادة الفيزياء للثانوية العامة', created_at: new Date().toISOString() },
-                { id: '3', name: 'الكيمياء', description: 'مادة الكيمياء للثانوية العامة', created_at: new Date().toISOString() },
-                { id: '4', name: 'الأحياء', description: 'مادة الأحياء للثانوية العامة', created_at: new Date().toISOString() },
-                { id: '5', name: 'اللغة العربية', description: 'مادة اللغة العربية للثانوية العامة', created_at: new Date().toISOString() },
-                { id: '6', name: 'اللغة الإنجليزية', description: 'مادة اللغة الإنجليزية للثانوية العامة', created_at: new Date().toISOString() },
-                { id: '7', name: 'التاريخ', description: 'مادة التاريخ للثانوية العامة', created_at: new Date().toISOString() }
+                { id: '1', name: 'تك ورش الكترونية ', description: 'مادة الرياضيات للثانوية العامة', created_at: new Date().toISOString() },
+                { id: '2', name: 'مكونات حاسب', description: 'مادة الفيزياء للثانوية العامة', created_at: new Date().toISOString() },
+                { id: '3', name: 'أساسيات شبكات حاسب', description: 'مادة الكيمياء للثانوية العامة', created_at: new Date().toISOString() },
+                { id: '4', name: 'الكترونات قوى كهربية', description: 'مادة الأحياء للثانوية العامة', created_at: new Date().toISOString() },
+                { id: '5', name: 'اللغة الكترونيات رقمية', description: 'مادة اللغة العربية للثانوية العامة', created_at: new Date().toISOString() },
+                { id: '6', name: 'معالجات ومتحكمات دقيقة ', description: 'مادة اللغة الإنجليزية للثانوية العامة', created_at: new Date().toISOString() },
+                { id: '7', name: 'دوائر الكترونية', description: 'مادة التاريخ للثانوية العامة', created_at: new Date().toISOString() }
             ];
+
+
+
+          
+
+
             
-            setLocalData('subjects', sampleSubjects);
-            setLocalData('notes', []);
-            setLocalData('playlists', []);
-            setLocalData('exams', []);
+            
+                                                    setLocalData('subjects', sampleSubjects);
+
+                                            setLocalData('notes', [
+                                                {
+                                                    id: 'n1',
+                                                    subject_id: '1', // مذكرة للمادة الأولى
+                                                    title: 'مذكرة الورش - الجزء الأول',
+                                                    description: '1',
+                                                    dropbox_link: 'https://example.com/workshop-note1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                
+                                                
+                                                {
+                                                    id: 'n2',
+                                                    subject_id: '2', // مذكرة للمادة الثانية
+                                                    title: 'مذكرة مكونات الحاسب',
+                                                    description: 'شرح مفصل لمكونات الحاسب',
+                                                    dropbox_link: 'https://example.com/computer-note1',
+                                                    created_at: new Date().toISOString()
+                                                }
+                                            ]); // ← هنا لازم تقفل المصفوفة والقوس
+
+                                            setLocalData('playlists', []);
+                                            setLocalData('exams', []);
+
+
+
+
             
             console.log('[v0] Sample data initialized');
         }
