@@ -315,9 +315,111 @@
                 gap: 0.5rem;
             }
         }
-    </style>
+    
+/* تأثير تحويم على البطاقات */
+.glass-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.glass-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(255, 217, 50, 0.15);
+}
+
+/* لمسة وميض على الأزرار */
+.btn-primary, .btn-secondary, .btn-danger {
+    position: relative;
+    overflow: hidden;
+}
+.btn-primary::after, .btn-secondary::after, .btn-danger::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: skewX(-20deg);
+    transition: left 0.4s ease;
+}
+.btn-primary:hover::after, .btn-secondary:hover::after, .btn-danger:hover::after {
+    left: 100%;
+}
+
+/* ظهور تدريجي للعناصر */
+.fade-up {
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeUp 0.6s forwards;
+}
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* تأثير هالة متوهجة للنصوص */
+.glow-text {
+    text-shadow: 0 0 8px rgba(255, 217, 50, 0.5);
+}
+
+
+/* شاشة الترحيب */
+#introOverlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, #161616 0%, #000000 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeOutOverlay 0.7s ease 0.7s forwards;
+}
+#introOverlay h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ffd932fc;
+    text-shadow: 0 0 15px rgba(246, 233, 174, 0.782);
+    animation: zoomIn 0.3s ease forwards, fadeOutText 0.3s ease 0.7s forwards;
+}
+@keyframes zoomIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+@keyframes fadeOutText {
+    to { opacity: 0; transform: scale(0.8); }
+}
+@keyframes fadeOutOverlay {
+    to { opacity: 0; visibility: hidden; }
+}
+
+/* تحسين السكرول */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Parallax للهيدر */
+.header-glow {
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+/* أنيميشن بسيط عند دخول العناصر */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+</style>
 </head>
-<body class="min-h-screen text-white">
+<body>
+<div id="introOverlay"><h1>اهلا بيك يابشمهندس</h1></div> class="min-h-screen text-white">
     <!-- Student View -->
     <div id="studentView" class="min-h-screen">
         <!-- Header -->
@@ -346,11 +448,11 @@
         <!-- Main Content -->
         <main class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-6 sm:py-12">
             <div class="mb-8 sm:mb-12 text-center">
-                <h2 class="text-3xl sm:text-4xl font-black text-white mb-4 gradient-text">﴿ وَأَنْ لَيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ ﴾</h2>
+                <h2 class="text-3xl sm:text-4xl font-black text-white mb-4 gradient-text glow-text fade-up">﴿ وَأَنْ لَيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ ﴾</h2>
                 <p class="text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed px-4">اختار ياصحبي الماده الي عايز تذاكرها و دوس عليها بس براحه عشان المواد مش بتعتنا😉</p>
             </div>
 
-            <div id="subjectsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
+            <div id="subjectsGrid" class="fade-up" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
                 <!-- Subjects will be loaded here -->
             </div>
 
@@ -2281,6 +2383,22 @@
             console.log('[v0] DOM loaded, initializing app...');
             initApp();
         });
-    </script>
+    
+// إظهار العناصر عند السكرول
+function revealOnScroll() {
+    const reveals = document.querySelectorAll('.reveal');
+    for (let i = 0; i < reveals.length; i++) {
+        const windowHeight = window.innerHeight;
+        const elementTop = reveals[i].getBoundingClientRect().top;
+        const elementVisible = 50;
+        if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add('visible');
+        }
+    }
+}
+window.addEventListener('scroll', revealOnScroll);
+document.addEventListener('DOMContentLoaded', revealOnScroll);
+
+</script>
 </body>
 </html>
