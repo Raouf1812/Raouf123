@@ -16,8 +16,10 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #e2e8f0;
+            /* Updated background to use 60% #050505 */
+            background: rgba(0, 0, 0, 0.973);
+            /* Updated text color to use 30% gray */
+            color: lab(0% 0 0);
             min-height: 100vh;
             direction: rtl;
         }
@@ -32,9 +34,11 @@
         }
         
         .glass-card {
-            background: rgba(15, 23, 42, 0.8);
+            /* Updated glass card background to use 60% #050505 with transparency */
+            background: rgba(90, 90, 90, 0.075);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(148, 163, 184, 0.2);
+            /* Updated border to use 30% gray */
+            border: 1px solid rgba(255, 255, 255, 0.11);
             border-radius: 16px;
             padding: 24px;
             box-shadow: 
@@ -54,27 +58,30 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);
-            border: 1px solid rgba(59, 130, 246, 0.3);
+            /* Updated primary button to use 10% #FFD932 */
+            background: linear-gradient(135deg, #FFD932 0%, #E6C42D 100%);
+            box-shadow: 0 8px 20px rgba(255, 217, 50, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             transition: all 0.2s ease;
+            color: #050505;
         }
         
         .btn-primary:hover {
-            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+            background: linear-gradient(135deg, #E6C42D 0%, #CDB028 100%);
+            box-shadow: 0 10px 25px rgba(255, 217, 50, 0.3);
             transform: translateY(-1px);
         }
         
         .btn-secondary {
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px solid rgba(148, 163, 184, 0.3);
+            /* Updated secondary button to use 30% gray */
+            background: rgba(139, 139, 139, 0.2);
+            border: 1px solid rgba(139, 139, 139, 0.3);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
             transition: all 0.2s ease;
         }
         
         .btn-secondary:hover {
-            background: rgba(51, 65, 85, 0.9);
+            background: rgba(139, 139, 139, 0.3);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
             transform: translateY(-1px);
         }
@@ -93,23 +100,26 @@
         }
         
         .input-field {
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(148, 163, 184, 0.2);
-            color: #e2e8f0;
+            /* Updated input field to use 60% #050505 */
+            background: rgba(5, 5, 5, 0.9);
+            border: 1px solid rgba(139, 139, 139, 0.2);
+            color: #8B8B8B;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
             transition: all 0.2s ease;
         }
         
         .input-field:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            /* Updated focus color to use 10% #FFD932 */
+            border-color: #FFD932;
+            box-shadow: 0 0 0 3px rgba(255, 217, 50, 0.1);
             outline: none;
         }
         
         .stats-glow-blue {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.15) 100%);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.05);
+            /* Updated blue stats to use 10% #FFD932 */
+            background: linear-gradient(135deg, rgba(255, 217, 50, 0.1) 0%, rgba(230, 196, 45, 0.15) 100%);
+            border: 1px solid rgba(255, 217, 50, 0.2);
+            box-shadow: 0 0 10px rgba(255, 217, 50, 0.05);
         }
         
         .stats-glow-green {
@@ -131,14 +141,16 @@
         }
         
         .header-glow {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            /* Updated header to use 60% #050505 */
+            background: linear-gradient(135deg, rgba(5, 5, 5, 0.95) 0%, rgba(5, 5, 5, 0.95) 100%);
             backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            border-bottom: 1px solid rgba(139, 139, 139, 0.1);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
         
         .gradient-text {
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%);
+            /* Updated gradient text to use 10% #FFD932 and 30% gray */
+            background: linear-gradient(135deg, #ffc400 0%, #fcfcfcd5 50%, #ffcc00 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -148,13 +160,33 @@
             position: relative;
             overflow: hidden;
         }
-        
-        .cyber-border:hover {
-            border-color: rgba(59, 130, 246, 0.4);
+
+        /* Added image container styles */
+        .top-image-container {
+            width: 100%;
+            height: 200px;
+            background: rgba(139, 139, 139, 0.1);
+            border: 2px dashed rgba(255, 217, 50, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            color: #8B8B8B;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        /* Mobile responsive adjustments */
+        @media (max-width: 100px) {
+            .mobile-left {
+                order: -1;
+                margin-bottom: 1rem;
+            }
         }
 
         /* Mobile responsive styles */
-        @media (max-width: 768px) {
+        @media (max-width: 100px) {
             .header-glow .max-w-7xl {
                 padding-left: 1rem;
                 padding-right: 1rem;
@@ -173,7 +205,7 @@
             
             .header-glow p {
                 text-align: center;
-                font-size: 0.875rem;
+                font-size: rem;
             }
             
             .glass-card {
@@ -297,7 +329,7 @@
                             <i data-lucide="book-text" class="h-8 w-8 text-white"></i>
                         </div>
                         <div>
-                            <h1 class="text-3xl font-black gradient-text">شعبه اجهزه</h1>
+                            <h1 class="text-2xl font-black gradient-text">شعبه اجهزه🖤</h1>
                             <p class="text-slate-400 font-medium">مذكرات وامتحانات و شروحات للصف الثاني الترم الاول</p>
                         </div>
                     </div>
@@ -314,7 +346,7 @@
         <!-- Main Content -->
         <main class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-6 sm:py-12">
             <div class="mb-8 sm:mb-12 text-center">
-                <h2 class="text-3xl sm:text-5xl font-black text-white mb-4 gradient-text">﴿ وَأَنْ لَيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ ﴾</h2>
+                <h2 class="text-3xl sm:text-4xl font-black text-white mb-4 gradient-text">﴿ وَأَنْ لَيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ ﴾</h2>
                 <p class="text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed px-4">اختار ياصحبي الماده الي عايز تذاكرها و دوس عليها بس براحه عشان المواد مش بتعتنا😉</p>
             </div>
 
@@ -335,7 +367,7 @@
         <footer class="header-glow border-t border-slate-800 mt-20">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="text-center text-slate-400">
-                    <p class="text-lg">  Made by - Raouf   </p>
+                    <p class="text-yellow-400"  >  Made by - Raouf   </p>
                 </div>
             </div>
         </footer>
@@ -1863,7 +1895,7 @@
                                                 },
                                                 {
                                                     id: 'n56',
-                                                    subject_id: '6', 
+                                                    subject_id: '7', 
                                                     title: ' معالجات إسراء أشرف   ',
                                                     description: '8',
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/rdkj1x2nrttv0z022zali/.pdf?rlkey=mw4peb5s2lfmtkksulw9ws0a9&st=3bq7vklj&dl=1',
@@ -1879,7 +1911,7 @@
                                                 },
                                                  {
                                                     id: 'n58',
-                                                    subject_id: '7', 
+                                                    subject_id: '6', 
                                                     title: ' كتاب دوائر الكترونية  ',
                                                     description: '1',
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/m9hrtdse0wvefihccut6e/.pdf?rlkey=3rjp7usr9tgbzhc50f4mz0efb&st=pxqugb5r&dl=1',
@@ -1900,7 +1932,7 @@
                                 {
                                     id: 'p1',
                                     subject_id: '3', 
-                                    title: 'شرح ماده أساسيات شبكات حاسب',
+                                    title: 'شرح ماده تك أساسيات شبكات حاسب',
                                     description: 'قائمه يوتيوب تشرح ماده أساسيات شبكات حاسب',
                                     youtube_url: 'https://youtube.com/playlist?list=PLMtGXqqv8Y-o39k2pvp2d5dFE_s9Gn3Rx&si=brN7UxOuANYXDYb-',
                                     created_at: new Date().toISOString()
@@ -1992,5 +2024,3 @@
     </script>
 </body>
 </html>
-
-
