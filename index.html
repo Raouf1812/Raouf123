@@ -419,7 +419,7 @@ html {
 </style>
 </head>
 <body>
-<div id="introOverlay"><h1>اهلا بيك يابشمهندس</h1></div> class="min-h-screen text-white">
+<div id="introOverlay"><h1>اهلا بيك يابشمهندس</h1></div>
     <!-- Student View -->
     <div id="studentView" class="min-h-screen">
         <!-- Header -->
@@ -447,7 +447,7 @@ html {
         <!-- Main Content -->
         <main class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-6 sm:py-12">
             <div class="mb-8 sm:mb-12 text-center">
-                <h2 class="text-2xl sm:text-4xl font-black text-white mb-4 gradient-text glow-text fade-up">﴿ وَأَنْ لَيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ ﴾</h2>
+                <h2 class="text-2xl sm:text-4xl font-black text-white mb-4 gradient-text glow-text    animate-pulse  transition-transform duration-300  ">﴿ وَأَنْ لَيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ ﴾</h2>
                 <p class="text-slate-400 text-lg sm:text-1xl max-w-2xl mx-auto leading-relaxed px-4">اختار ياصحبي الماده الي عايز تذاكرها و دوس عليها بس براحه عشان المواد مش بتعتنا😉</p>
             </div>
 
@@ -468,7 +468,15 @@ html {
         <footer class="header-glow border-t border-slate-800 mt-20">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="text-center text-slate-400">
-                    <p class="text-yellow-400"> ❤  Made by - Raouf  ❤  </p>
+                    <!-- Added side-by-side Made by Raouf text with enhanced styling and animations -->
+                    <div class="flex justify-center items-center gap-8 flex-wrap">
+                        <p class="text-yellow-400 font-bold animate-pulse  transition-transform duration-300 "> 
+                            ❤ Made by - Raouf ❤  
+                        </p>
+                        <p class="text-pink-400  font-bold animate-pulse  transition-transform duration-300 " style="animation-delay: 0.5s;"> 
+                           ❤  Data by - Kareman & Donia  ❤   
+                        </p>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -1025,9 +1033,25 @@ html {
                 document.getElementById('modalSubjectTitle').textContent = subject.name;
 
                 const content = `
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
+                    <!-- Section Filter Buttons -->
+                    <div class="flex justify-center gap-4 mb-8">
+                        <button onclick="showAllSections()" class="btn-primary px-6 py-3 rounded-lg font-bold" id="allBtn">
+                            عرض الكل
+                        </button>
+                        <button onclick="showNotesOnly()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition-colors" id="notesBtn">
+                            مذكرات
+                        </button>
+                        <button onclick="showPlaylistsOnly()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition-colors" id="playlistsBtn">
+                            شرح
+                        </button>
+                        <button onclick="showExamsOnly()" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-colors" id="examsBtn">
+                            امتحانات
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8" id="contentGrid">
                         <!-- Notes Section -->
-                        <div class="stats-glow-green rounded-2xl p-4 sm:p-6">
+                        <div class="stats-glow-green rounded-2xl p-4 sm:p-6" id="notesSection">
                             <div class="flex items-center gap-3 mb-4 sm:mb-6">
                                 <i data-lucide="file-text" class="h-5 w-5 sm:h-6 sm:w-6 text-green-400"></i>
                                 <h3 class="text-xl sm:text-2xl font-bold text-green-300">المذكرات</h3>
@@ -1045,7 +1069,7 @@ html {
                         </div>
                         
                         <!-- Playlists Section -->
-                        <div class="stats-glow-red rounded-2xl p-4 sm:p-6">
+                        <div class="stats-glow-red rounded-2xl p-4 sm:p-6" id="playlistsSection">
                             <div class="flex items-center gap-3 mb-4 sm:mb-6">
                                 <i data-lucide="play-circle" class="h-5 w-5 sm:h-6 sm:w-6 text-red-400"></i>
                                 <h3 class="text-xl sm:text-2xl font-bold text-red-300">شرح الدروس</h3>
@@ -1063,7 +1087,7 @@ html {
                         </div>
                         
                         <!-- Exams Section -->
-                        <div class="stats-glow-purple rounded-2xl p-4 sm:p-6">
+                        <div class="stats-glow-purple rounded-2xl p-4 sm:p-6" id="examsSection">
                             <div class="flex items-center gap-3 mb-4 sm:mb-6">
                                 <i data-lucide="clipboard-check" class="h-5 w-5 sm:h-6 sm:w-6 text-purple-400"></i>
                                 <h3 class="text-xl sm:text-2xl font-bold text-purple-300">الامتحانات</h3>
@@ -1109,9 +1133,25 @@ html {
                         const exams = allExams.filter(exam => exam.subject_id === subjectId);
                         
                         const content = `
-                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
+                            <!-- Section Filter Buttons -->
+                            <div class="flex justify-center gap-4 mb-8">
+                                <button onclick="showAllSections()" class="btn-primary px-6 py-3 rounded-lg font-bold" id="allBtn">
+                                    عرض الكل
+                                </button>
+                                <button onclick="showNotesOnly()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition-colors" id="notesBtn">
+                                    مذكرات
+                                </button>
+                                <button onclick="showPlaylistsOnly()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition-colors" id="playlistsBtn">
+                                    شرح
+                                </button>
+                                <button onclick="showExamsOnly()" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-colors" id="examsBtn">
+                                    امتحانات
+                                </button>
+                            </div>
+
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8" id="contentGrid">
                                 <!-- Notes Section -->
-                                <div class="stats-glow-green rounded-2xl p-4 sm:p-6">
+                                <div class="stats-glow-green rounded-2xl p-4 sm:p-6" id="notesSection">
                                     <div class="flex items-center gap-3 mb-4 sm:mb-6">
                                         <i data-lucide="file-text" class="h-5 w-5 sm:h-6 sm:w-6 text-green-400"></i>
                                         <h3 class="text-xl sm:text-2xl font-bold text-green-300">المذكرات</h3>
@@ -1129,7 +1169,7 @@ html {
                                 </div>
                                 
                                 <!-- Playlists Section -->
-                                <div class="stats-glow-red rounded-2xl p-4 sm:p-6">
+                                <div class="stats-glow-red rounded-2xl p-4 sm:p-6" id="playlistsSection">
                                     <div class="flex items-center gap-3 mb-4 sm:mb-6">
                                         <i data-lucide="play-circle" class="h-5 w-5 sm:h-6 sm:w-6 text-red-400"></i>
                                         <h3 class="text-xl sm:text-2xl font-bold text-red-300">شرح الدروس</h3>
@@ -1147,7 +1187,7 @@ html {
                                 </div>
                                 
                                 <!-- Exams Section -->
-                                <div class="stats-glow-purple rounded-2xl p-4 sm:p-6">
+                                <div class="stats-glow-purple rounded-2xl p-4 sm:p-6" id="examsSection">
                                     <div class="flex items-center gap-3 mb-4 sm:mb-6">
                                         <i data-lucide="clipboard-check" class="h-5 w-5 sm:h-6 sm:w-6 text-purple-400"></i>
                                         <h3 class="text-xl sm:text-2xl font-bold text-purple-300">الامتحانات</h3>
@@ -1177,6 +1217,75 @@ html {
                 } catch (localError) {
                     console.error('[v0] localStorage fallback failed:', localError);
                     alert('حدث خطأ في تحميل البيانات');
+                }
+            }
+        }
+
+        function showAllSections() {
+            document.getElementById('notesSection').style.display = 'block';
+            document.getElementById('playlistsSection').style.display = 'block';
+            document.getElementById('examsSection').style.display = 'block';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('allBtn');
+        }
+
+        function showNotesOnly() {
+            document.getElementById('notesSection').style.display = 'block';
+            document.getElementById('playlistsSection').style.display = 'none';
+            document.getElementById('examsSection').style.display = 'none';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('notesBtn');
+        }
+
+        function showPlaylistsOnly() {
+            document.getElementById('notesSection').style.display = 'none';
+            document.getElementById('playlistsSection').style.display = 'block';
+            document.getElementById('examsSection').style.display = 'none';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('playlistsBtn');
+        }
+
+        function showExamsOnly() {
+            document.getElementById('notesSection').style.display = 'none';
+            document.getElementById('playlistsSection').style.display = 'none';
+            document.getElementById('examsSection').style.display = 'block';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('examsBtn');
+        }
+
+        function updateButtonStyles(activeButtonId) {
+            // Reset all buttons to default style
+            const buttons = ['allBtn', 'notesBtn', 'playlistsBtn', 'examsBtn'];
+            buttons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) {
+                    if (btnId === 'allBtn') {
+                        btn.className = 'bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    } else if (btnId === 'notesBtn') {
+                        btn.className = 'bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    } else if (btnId === 'playlistsBtn') {
+                        btn.className = 'bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    } else if (btnId === 'examsBtn') {
+                        btn.className = 'bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    }
+                }
+            });
+            
+            // Highlight active button
+            const activeBtn = document.getElementById(activeButtonId);
+            if (activeBtn) {
+                if (activeButtonId === 'allBtn') {
+                    activeBtn.className = 'btn-primary px-6 py-3 rounded-lg font-bold';
+                } else {
+                    activeBtn.className = activeBtn.className.replace('hover:bg-', 'bg-').replace('600', '500');
                 }
             }
         }
@@ -1540,11 +1649,11 @@ html {
             // Sample subjects
             const sampleSubjects = [
                 { id: '1', name: 'تك ورش الكترونية ', description: 'مادة تك ورش الكترونية', created_at: new Date().toISOString() },
+                { id: '2', name: 'مكونات حاسب', description: 'مادة مكونات حاسب', created_at: new Date().toISOString() },
                 { id: '3', name: 'أساسيات شبكات حاسب', description: 'مادة أساسيات شبكات حاسب', created_at: new Date().toISOString() },
                 { id: '4', name: 'الكترونات قوى كهربية', description: 'مادة الكترونات قوى كهربية', created_at: new Date().toISOString() },
                 { id: '5', name: ' الكترونيات رقمية', description: 'مادة الكترونيات رقمية', created_at: new Date().toISOString() },
                 { id: '6', name: 'معالجات ومتحكمات دقيقة ', description: 'مادة معالجات ومتحكمات دقيقة', created_at: new Date().toISOString() },
-                { id: '2', name: 'مكونات حاسب', description: 'مادة مكونات حاسب', created_at: new Date().toISOString() },
                 { id: '7', name: 'دوائر الكترونية', description: 'مادة دوائر الكترونية', created_at: new Date().toISOString() }
             ];
 
@@ -2018,14 +2127,6 @@ html {
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/m9hrtdse0wvefihccut6e/.pdf?rlkey=3rjp7usr9tgbzhc50f4mz0efb&st=twzx3spg&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
-                                                   {
-                                                    id: 'n59',
-                                                    subject_id: '7', 
-                                                    title: ' كورس المهندسة شيرين مادة دوائر  ',
-                                                    description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/w8f6f3yfg0yslktttx47w/.pdf?rlkey=eo80sgummb0eex3pn8x97h7zh&st=dfg5rvod&dl=1',
-                                                    created_at: new Date().toISOString()
-                                                },
                                                   {
                                                     id: 'n60',
                                                     subject_id: '7', 
@@ -2050,23 +2151,6 @@ html {
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/yqnvc4ohxc8q5lutaatxh/.pdf?rlkey=a5qyhwyi5q424gzs5vkd45rh2&st=au0vkcey&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
-                                                {
-                                                    id: 'n63',
-                                                    subject_id: '7', 
-                                                    title: '  باب تانى م  شيرين دوائر',
-                                                    description: '6',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/e65la0qvl7onrfj5eugw6/...pdf?rlkey=uq0eh52ctapwbk35cxewy48s2&st=2hi6pmza&dl=1',
-                                                    created_at: new Date().toISOString()
-                                                },
-                                                   {
-                                                    id: 'n64',
-                                                    subject_id: '7', 
-                                                    title: '  الباب التالت دوائر م شيرين',
-                                                    description: '7',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/gclig5y8juywr83uq93b0/..pdf?rlkey=p9tm7q2pubzwgcf4mf3vjbjgk&st=fwrvzn5q&dl=1',
-                                                    created_at: new Date().toISOString()
-                                                },
-
 
                                             ]); // ← هنا لازم تقفل المصفوفة والقوس
 
@@ -2355,6 +2439,278 @@ html {
                         dropbox_link: 'https://www.dropbox.com/scl/fi/f38hhq1u8pu0nj9u9hdwc/22.jpg?rlkey=qz1zfyqhg3r4ujwp9ow3ybwrh&st=9lfrh3gm&dl=1',
                         created_at: new Date().toISOString()
                     },
+                        {
+                        id: 'e27',
+                        subject_id: '3',
+                        title: 'امتحان 2021',
+                        description: '2021',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/q39c2e6eutoeytrxyo147/21.jpg?rlkey=jdw22kipaqvgbqlh9kngp4owy&st=echjvm5s&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                           {
+                        id: 'e28',
+                        subject_id: '3',
+                        title: 'امتحان 2020',
+                        description: '2020',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/12zivrl05m0msyk9yovjb/20.jpg?rlkey=aanj1yn3mps417ppou9svisey&st=oqbr6kyo&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                      {
+                        id: 'e29',
+                        subject_id: '3',
+                        title: 'امتحان 2019',
+                        description: '2019',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/0msvxacfzzb98t5q12soi/19.jpg?rlkey=p4vzelx3y2ewe0l0pwohb4k1i&st=qz1h0ke7&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                     {
+                        id: 'e30',
+                        subject_id: '3',
+                        title: 'امتحان 2017',
+                        description: '2017',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/lb0o6lo5ttf8fvtyg8001/17.jpg?rlkey=qtax3h32lh2few8tpnqqv195m&st=oc9n6rdh&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                       {
+                        id: 'e31',
+                        subject_id: '3',
+                        title: 'امتحان 2016',
+                        description: '2016',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/tfcuhiwmo18x3mktn2i9i/16.jpg?rlkey=slamh2i61fjzplzfhgnue4gga&st=mrymlrf6&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                      {
+                        id: 'e31',
+                        subject_id: '3',
+                        title: 'امتحان 2016',
+                        description: '2016',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/tfcuhiwmo18x3mktn2i9i/16.jpg?rlkey=slamh2i61fjzplzfhgnue4gga&st=mrymlrf6&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                          {
+                        id: 'e32',
+                        subject_id: '2',
+                        title: 'امتحان 2021',
+                        description: '2021',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/zc3djjvuu5s8jiow24ogu/21.jpg?rlkey=6c2j22vkmnut2sx7fg2ch4zfp&st=mx21d2vs&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                           {
+                        id: 'e33',
+                        subject_id: '2',
+                        title: 'امتحان 2020',
+                        description: '2020',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/2366is4rsxai3no84fczk/20.jpg?rlkey=y3z7j5vcwk33yttfko7knxa60&st=e3v9bsk0&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                      {
+                        id: 'e34',
+                        subject_id: '2',
+                        title: 'امتحان 2019',
+                        description: '2019',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/026xe0z2il7x07c7gkghd/19.jpg?rlkey=o5faqk7kzhkd8xlwbzvk63o0s&st=ct4ktl5n&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                          {
+                        id: 'e35',
+                        subject_id: '2',
+                        title: 'امتحان 2018',
+                        description: '2018',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/nxgvw1al044thrk1ki3xg/18.jpg?rlkey=gvvjqw0xd2n5icc56zyy0h583&st=l40j05cs&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e36',
+                        subject_id: '1',
+                        title: 'امتحان 2021',
+                        description: '2021',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/l319mgmayvmjubbx7srlv/21.jpg?rlkey=4qxkj794za61jlo3izty8fwxm&st=gpqm9rld&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                           {
+                        id: 'e37',
+                        subject_id: '1',
+                        title: 'امتحان 2020',
+                        description: '2020',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/scey55hjhtd59fwy4vgve/20.jpg?rlkey=doqmvee6k08iceq15eib0bz4w&st=9dsk42z8&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                         {
+                        id: 'e38',
+                        subject_id: '1',
+                        title: 'امتحان 2018',
+                        description: '2018',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/o26240kwz2p6u4xjgjd1s/18.jpg?rlkey=gwz7i6dld55g45lhi8zwxqo0o&st=tgu38nwx&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                       {
+                        id: 'e39',
+                        subject_id: '1',
+                        title: 'امتحان 2017',
+                        description: '2017',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/h5myw6dg3zgbhhz4ts0nl/17.jpg?rlkey=7w92x3c1zv9ij7wzrv4cawtro&st=7vegjwo5&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                        {
+                        id: 'e40',
+                        subject_id: '4',
+                        title: 'امتحان 2021',
+                        description: '2021',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/03igu8b08oemidvjbnlbn/21.jpg?rlkey=38pn9pjkkf7qqfvfoin1mgitb&st=rg746ki4&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e41',
+                        subject_id: '4',
+                        title: 'امتحان 2020',
+                        description: '2020',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/g2l5fi38x0moye2kq9fzq/20.jpg?rlkey=twzel8vfyomz8wsvq6muhltoi&st=ilqfd9dg&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e42',
+                        subject_id: '4',
+                        title: 'امتحان 2019',
+                        description: '2019',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/vt84y7mz0ln3gzr4xd6c2/19.jpg?rlkey=khe5r47je85rtkmq3t0eyrv8p&st=zfn2ti3c&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                     {
+                        id: 'e43',
+                        subject_id: '4',
+                        title: 'امتحان 2018',
+                        description: '2018',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/as8kk54kv9ouugzh5tqol/18.jpg?rlkey=hzgi780bef5z0h1tman6s1txr&st=eyb0ib6n&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                       {
+                        id: 'e44',
+                        subject_id: '4',
+                        title: 'امتحان 2017',
+                        description: '2017',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/5swzwrxy11ng58gvna15n/17.jpg?rlkey=zwe2bbd67tezcn7clq1x7z6e7&st=h2h42fpc&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                      {
+                        id: 'e45',
+                        subject_id: '4',
+                        title: 'امتحان 2024',
+                        description: '2024',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/rmzioo9juy6pdyx87wuow/24.jpg?rlkey=5hq5i5tf8u2q2c8dk5cfopzsr&st=61dkba30&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                     {
+                        id: 'e46',
+                        subject_id: '5',
+                        title: 'امتحان 2021',
+                        description: '2021',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/dhldbz4und0s3tdnhxzc0/21.jpg?rlkey=ihd52re5uexlui715ky1zm665&st=m2n5fizy&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e47',
+                        subject_id: '5',
+                        title: 'امتحان 2020',
+                        description: '2020',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/am238dri6yv0hyakp72zd/20.jpg?rlkey=co6jjg0jejcy226v1f286jcn9&st=yeh5l3nf&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e48',
+                        subject_id: '5',
+                        title: 'امتحان 2019',
+                        description: '2019',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/loocsz06n5ar90jd9oqgo/19.jpg?rlkey=peq8p7930by1jrychtltjl50g&st=xlw8z7oe&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                     {
+                        id: 'e49',
+                        subject_id: '5',
+                        title: 'امتحان 2018',
+                        description: '2018',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/fq6zckn0qpayf5wsmj22m/18.jpg?rlkey=7tj6jhyxrk07k3eob781higt2&st=12bqgsaa&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                       {
+                        id: 'e50',
+                        subject_id: '5',
+                        title: 'امتحان 2017',
+                        description: '2017',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/y7asxbwewgzaox6b8u74j/17.jpg?rlkey=x86gqjp16n9tovbki8jw2wm7a&st=u5kho601&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                                         {
+                        id: 'e51',
+                        subject_id: '6',
+                        title: 'امتحان 2021',
+                        description: '2021',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/x2ncozakqhin4uzij100e/21.jpg?rlkey=zcdtrmdglyevi0ofinao41y64&st=mqhcevsa&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e52',
+                        subject_id: '6',
+                        title: 'امتحان 2020',
+                        description: '2020',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/nw0i5hyt0zknollnn6shu/20.jpg?rlkey=9rorzlypxdrp2knn80hflfhf8&st=ozwe8j6l&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e53',
+                        subject_id: '6',
+                        title: 'امتحان 2019',
+                        description: '2019',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/lph0vhp5qrcbokysleuro/19.jpg?rlkey=ahglouue7c0uiqrymke6yo6nc&st=vfmhfq69&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                     {
+                        id: 'e54',
+                        subject_id: '6',
+                        title: 'امتحان 2018',
+                        description: '2018',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/irp70ecvrzitzvdg61qmx/18.jpg?rlkey=jl2urynt8iy7cpw5427pkif9p&st=b30h85c3&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e56',
+                        subject_id: '7',
+                        title: 'امتحان 2021',
+                        description: '2021',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/adj3ix6ps91wcbscpvm4p/21.jpg?rlkey=uzs6dikffst4cd6uscq87ksr1&st=glvwos8g&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e57',
+                        subject_id: '7',
+                        title: 'امتحان 2020',
+                        description: '2020',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/b3n31j5p0tgp30h70li3i/20.jpg?rlkey=dhcp9a2yjky2vhrsuspy05hxm&st=j0ljn5mu&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e58',
+                        subject_id: '7',
+                        title: 'امتحان 2019',
+                        description: '2019',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/9cud7bhik5w4ljy75z05v/19.jpg?rlkey=eky8lhaynh3bhdotx916ugn9i&st=cgpiu1l7&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e59',
+                        subject_id: '7',
+                        title: 'امتحان 2018',
+                        description: '2018',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/lzfyesyskc5a7583u981c/18.jpg?rlkey=8jbs4x58jxy8n36heyhaonmvd&st=neph26qa&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                          {
+                        id: 'e60',
+                        subject_id: '7',
+                        title: 'امتحان 2017',
+                        description: '2017',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/q8vfvtpqows0r6kh9m0e5/17.jpg?rlkey=u1fwwuj2wl6yxqkikmhlkygpu&st=84ztrqwl&dl=1',
+                        created_at: new Date().toISOString()
+                    },
 
                     ]);
 
@@ -2398,6 +2754,74 @@ function revealOnScroll() {
 window.addEventListener('scroll', revealOnScroll);
 document.addEventListener('DOMContentLoaded', revealOnScroll);
 
+        function showAllSections() {
+            document.getElementById('notesSection').style.display = 'block';
+            document.getElementById('playlistsSection').style.display = 'block';
+            document.getElementById('examsSection').style.display = 'block';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('allBtn');
+        }
+
+        function showNotesOnly() {
+            document.getElementById('notesSection').style.display = 'block';
+            document.getElementById('playlistsSection').style.display = 'none';
+            document.getElementById('examsSection').style.display = 'none';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('notesBtn');
+        }
+
+        function showPlaylistsOnly() {
+            document.getElementById('notesSection').style.display = 'none';
+            document.getElementById('playlistsSection').style.display = 'block';
+            document.getElementById('examsSection').style.display = 'none';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('playlistsBtn');
+        }
+
+        function showExamsOnly() {
+            document.getElementById('notesSection').style.display = 'none';
+            document.getElementById('playlistsSection').style.display = 'none';
+            document.getElementById('examsSection').style.display = 'block';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('examsBtn');
+        }
+
+        function updateButtonStyles(activeButtonId) {
+            // Reset all buttons to default style
+            const buttons = ['allBtn', 'notesBtn', 'playlistsBtn', 'examsBtn'];
+            buttons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) {
+                    if (btnId === 'allBtn') {
+                        btn.className = 'bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    } else if (btnId === 'notesBtn') {
+                        btn.className = 'bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    } else if (btnId === 'playlistsBtn') {
+                        btn.className = 'bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    } else if (btnId === 'examsBtn') {
+                        btn.className = 'bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    }
+                }
+            });
+            
+            // Highlight active button
+            const activeBtn = document.getElementById(activeButtonId);
+            if (activeBtn) {
+                if (activeButtonId === 'allBtn') {
+                    activeBtn.className = 'btn-primary px-6 py-3 rounded-lg font-bold';
+                } else {
+                    activeBtn.className = activeBtn.className.replace('hover:bg-', 'bg-').replace('600', '500');
+                }
+            }
+        }
 </script>
 </body>
 </html>
