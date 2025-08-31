@@ -1031,22 +1031,6 @@ html {
                 document.getElementById('modalSubjectTitle').textContent = subject.name;
 
                 const content = `
-                    <!-- Section Filter Buttons -->
-                    <div class="flex justify-center gap-4 mb-8">
-                        <button onclick="showAllSections()" class="btn-primary px-6 py-3 rounded-lg font-bold" id="allBtn">
-                            عرض الكل
-                        </button>
-                        <button onclick="showNotesOnly()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition-colors" id="notesBtn">
-                            مذكرات
-                        </button>
-                        <button onclick="showPlaylistsOnly()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition-colors" id="playlistsBtn">
-                            شرح
-                        </button>
-                        <button onclick="showExamsOnly()" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-colors" id="examsBtn">
-                            امتحانات
-                        </button>
-                    </div>
-
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8" id="contentGrid">
                         <!-- Notes Section -->
                         <div class="stats-glow-green rounded-2xl p-4 sm:p-6" id="notesSection">
@@ -1063,7 +1047,7 @@ html {
                                         تحميل المذكرة
                                     </a>
                                 </div>
-                            `).join('') : '<p class="text-slate-500 text-center py-6 sm:py-8 text-sm sm:text-base">لا توجد مذكرات متاحة</p>'}
+                            `).join('') : '<p class="text-slate-500 text-center py- sm:py-8 text-sm sm:text-base">لا توجد مذكرات متاحة</p>'}
                         </div>
                         
                         <!-- Playlists Section -->
@@ -1748,12 +1732,59 @@ html {
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/p69lckob7de5z99cdy0s4/.pdf?rlkey=fhkzpicgibyuc3d32e4afop1x&e=1&st=7awczvad&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
-                                                
-                                                           {
+                                                   {
+                                                    id: 'n12',
+                                                    subject_id: '2', 
+                                                    title: 'ملخص باب 1 ',
+                                                    description: '4',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/qhhoy3vwyb6pkml5bfbxe/__-_.pdf?rlkey=d63o6bl8aap0wf6xflco8d4lq&st=q5h7y5i3&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                                 {
+                                                    id: 'n12',
+                                                    subject_id: '2', 
+                                                    title: 'ملخص باب 2 ',
+                                                    description: '5',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/rbnoy0o3v2kguecgtl45o/__-2_.pdf?rlkey=xp6fubo6mjtyzjxd2zcturn3j&st=kczuui42&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                                    {
+                                                    id: 'n12',
+                                                    subject_id: '2', 
+                                                    title: 'ملخص باب 3 ',
+                                                    description: '6',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/xq4dl94modejmxt1w1e55/__-_.pdf?rlkey=yeizd0o4pywwy6dotxp0ou758&st=uzr8wokg&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n12',
+                                                    subject_id: '2', 
+                                                    title: 'ملخص باب 4 ',
+                                                    description: '7',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/jk64gvc8lm4tpw72inu7q/1.pdf?rlkey=7vow0sew7fyn0mtkoazqkz0m9&st=chs4f8wh&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                        {
+                                                    id: 'n12',
+                                                    subject_id: '2', 
+                                                    title: 'ملخص باب 5 ',
+                                                    description: '8',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/5wo69agu69evay4djj4xj/__-_.pdf?rlkey=lymjai54ifcwnkha2cefmdteo&st=gtdua364&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n12',
+                                                    subject_id: '2', 
+                                                    title: 'ملخص باب 6 ',
+                                                    description: '9',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/e2zceug3v6pijpxusc5km/__-_.pdf?rlkey=jml66ywsgk9t5abr78qv9lu4z&st=939s0g0c&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
                                                     id: 'n12',
                                                     subject_id: '2', 
                                                     title: 'مكونات باب 1 ',
-                                                    description: '4',
+                                                    description: '10',
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/d57pes9y08o2wgcgc7bod/1.pdf?rlkey=1vzedsisrcprltc0u7vwg3p7b&st=pjeg29iy&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
@@ -1761,7 +1792,7 @@ html {
                                                     id: 'n13',
                                                     subject_id: '2', 
                                                     title: 'مكونات باب 2 ',
-                                                    description: '5',
+                                                    description: '11',
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/89qnug9fpjv1v6gwc6ags/2.pdf?rlkey=epr3g07rs7g5ek61l888dw77q&st=pgfp18p5&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
@@ -1769,7 +1800,7 @@ html {
                                                     id: 'n14',
                                                     subject_id: '2', 
                                                     title: 'مكونات باب 3 ',
-                                                    description: '5',
+                                                    description: '12',
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/x7woghjkqe92tvkejxqdr/3.pdf?rlkey=v898mwm8kk75oml3rrds4hkj1&st=r8492kls&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
@@ -1777,7 +1808,7 @@ html {
                                                     id: 'n15',
                                                     subject_id: '2', 
                                                     title: 'مكونات باب 4 ',
-                                                    description: '6',
+                                                    description: '13',
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/j2t813dzx3d91c4dext8i/4.pdf?rlkey=oyvdqg7t31p61k0qb9qowp4h4&st=4ugdayhb&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
@@ -1785,7 +1816,7 @@ html {
                                                     id: 'n16',
                                                     subject_id: '2', 
                                                     title: 'مكونات باب 5 ',
-                                                    description: '7',
+                                                    description: '14',
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/hpgkh3lup32rs5y76i5vp/5.pdf?rlkey=s0buaycqm9bp5q6h04pwwzz5z&st=lx5mjs2t&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
@@ -1793,7 +1824,7 @@ html {
                                                     id: 'n17',
                                                     subject_id: '2', 
                                                     title: 'مكونات باب 6 ',
-                                                    description: '8',
+                                                    description: '15',
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/pyeydo7bilxlu4vjykbtv/6.pdf?rlkey=nq0j7w3lvicsi7y8dt125mzbx&st=s2jwuzej&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
@@ -2149,8 +2180,9 @@ html {
                                                     dropbox_link: 'https://www.dropbox.com/scl/fi/yqnvc4ohxc8q5lutaatxh/.pdf?rlkey=a5qyhwyi5q424gzs5vkd45rh2&st=au0vkcey&dl=1',
                                                     created_at: new Date().toISOString()
                                                 },
+                                                
 
-                                            ]); // ← هنا لازم تقفل المصفوفة والقوس
+                                            ]);
 
                                  setLocalData('playlists', [
                                 {
