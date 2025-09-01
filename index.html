@@ -450,7 +450,6 @@ html {
                 <h2 class="text-2xl sm:text-4xl font-black text-white mb-4 gradient-text glow-text    animate-pulse  transition-transform duration-300  ">﴿ وَأَنْ لَيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ ﴾</h2>
                 <p class="text-slate-400 text-lg sm:text-1xl max-w-2xl mx-auto leading-relaxed px-4">اختار ياصحبي الماده الي عايز تذاكرها و دوس عليها بس براحه عشان المواد مش بتعتنا😉</p>
             </div>
-
             <div id="subjectsGrid" class="fade-up" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
                 <!-- Subjects will be loaded here -->
             </div>
@@ -463,6 +462,26 @@ html {
                 <p class="text-slate-500 text-lg">سيتم إضافة المواد الدراسية قريباً</p>
             </div>
         </main>
+                <!-- زرار عرض أسماء التظلمات -->
+                <div class="text-center my-8">
+                <button class="btn-primary px-6 py-3 rounded-lg font-bold" onclick="openPopup()">✨ عرض أسماء الطلاب المضاف لهم درجات في التظلمات  ✨</button>
+                </div>
+                <!-- البوب أب العائم -->
+                <div id="myPopup" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50">
+                <div class="bg-gradient-to-br from-yellow-100 to-yellow-300 border-4 border-yellow-500 rounded-2xl p-6 w-96 shadow-2xl animate-fade-in">
+                    <h2 class="text-2xl font-bold text-yellow-800 text-center mb-4"> 👑  درجات التظلمات  👑</h2>
+                    <ul class="space-y-3 text-center font-bold text-lg text-yellow-900">
+                    <li class="bg-yellow-200 rounded-lg py-2 shadow">اسم الطلاب تم اضافه 20 درجه في ماده لغه القطط التقدير الان جيد جدا</li>
+                    <li class="bg-yellow-200 rounded-lg py-2 shadow">اسم الطلاب تم اضافه 10 درجه في ماده لغه الكلاب التقدير الان ممتاز</li>
+                    <li class="bg-yellow-200 rounded-lg py-2 shadow">اسم الطلاب تم اضافه 50 درجه في ماده العلوم التقدير الان مقبول</li>
+                    <li class="bg-yellow-200 rounded-lg py-2 shadow"> اسم الطلاب تم اضافه 800 درجه في ماده الجبر و التقدير الان جيد جدا</li>
+                    <li class="bg-yellow-200 rounded-lg py-2 shadow"> اسم الطلاب تم اضافه 40 درجه في ماده عالم الحيوان و التقدير الان ممتاز</li>
+                    </ul>
+                    <div class="text-center mt-6">
+                    <button class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-red-700" onclick="closePopup()">إغلاق</button>
+                    </div>
+                </div>
+                </div>
 
         <!-- Footer -->
         <footer class="header-glow border-t border-slate-800 mt-20">
@@ -479,7 +498,6 @@ html {
             </div>
         </footer>
     </div>
-
     <!-- Admin Login Modal -->
     <div id="adminLoginModal" class="fixed inset-0 modal-backdrop flex items-center justify-center hidden z-50">
         <div class="glass-card rounded-2xl p-8 max-w-md w-full mx-4 cyber-border">
@@ -2858,6 +2876,13 @@ document.addEventListener('DOMContentLoaded', revealOnScroll);
                 }
             }
         }
+
+                        function openPopup() {
+                        document.getElementById("myPopup").classList.remove("hidden");
+                    }
+                    function closePopup() {
+                        document.getElementById("myPopup").classList.add("hidden");
+                    }
 </script>
 </body>
 </html>
