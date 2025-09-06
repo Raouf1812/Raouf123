@@ -29,8 +29,8 @@ canvas {
 
 button#spinBtn {
   position: absolute;
-  top: 43%;
-  left: 51%;
+  top: 38%;
+  left: 50%;
   transform: translate(-50%, -50%);
   width: 100px;
   height: 100px;
