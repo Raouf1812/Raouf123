@@ -6,11 +6,11 @@
     <meta name="author" content="Raouf">
     <meta name="keywords"  content="Raouf , Raouf Raaoet , رؤوف , رؤوف رافت , RR">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ أهــلًا بـيــك يـابشمهندس ✨ </title>
+    <title>✨ أهــلًا بـيــك يـابشمهندس ✨ </title>   
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-   <link rel="stylesheet" href="style.css" />
+   <link rel="stylesheet" href="style.css" /ِ>
 </head>
 <body>
 
@@ -91,7 +91,10 @@
                     </div>
                     <div class="flex items-center gap-6">
                         <div class="flex items-center gap-3 text-cyan-400 glass-card px-4 py-2 rounded-lg">
-                            <span class="font-bold" id="subjectCount"> 0 مواد</span>
+                                   <!-- العداد  -->
+                            <span class="counter-icon">👁️</span>
+                            <span class="counter-number" id="visitorNumber">0</span>
+                            <span class=" text-yellow-400 font-bold counter-label">زائر</span>
                         </div>
                     </div>
                 </div>
@@ -117,33 +120,10 @@
             </div>
         </main>
 
-      
-                <!-- زرار عرض أسماء التظلمات -->
-                 <!-- <div class="text-center my-8">
-                <button class="btn-primary px-2 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg font-bold" onclick="openPopup()">✨ عرض أسماء الطلاب المضاف لهم درجات في التظلمات  ✨</button>
-                </div>-->
-                <!-- البوب أب العائم -->
-                <!--<div id="myPopup" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50">
-                <div class="bg-gradient-to-br from-yellow-100 to-yellow-300 border-4 border-yellow-500 rounded-3xl p-7 w-96 shadow-2xl animate-fade-in">
-                    <h2 class="text-2xl font-bold text-yellow-800 text-center mb-4" > 👑  الطلبه إلى لهم حق فى التظلمات شعبه اجهزه  👑</h2>
-                    <ul class="space-y-3 text-center font-bold text-lg text-yellow-900">
-                    <li class="bg-yellow-200 rounded-lg py-2 shadow">شريف محروس ابراهيم مدكور : ماده تك معلومات</li>
-                    <li class="bg-yellow-200 rounded-lg py-2 shadow">مريم احمد محمود الصغير : ماده رسم فنى</li>
-                    <li class="bg-yellow-200 rounded-lg py-2 shadow">الاء مصطفى جمال بدير  : ماده رياضه</li>
-                    <li class="bg-yellow-200 rounded-lg py-2 shadow"> ملك سيد محمد مرسى : ماده فيزياء</li>
-                    <li class="bg-yellow-200 rounded-lg py-2 shadow"> علا عبدالغنى عبدالواحد : ماده فيزياء</li>
-                    </ul>
-                    <div class="text-center mt-6">
-                    <button class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-red-700" onclick="closePopup()">إغلاق</button>
-                    </div>
-                </div>-->
-                </div>
                  <div class="text-center my-8">
                      <button class="btn-primary px-2 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg font-bold" onclick="window.open('333.html','_blank')"">
                        ✨ لف العجلة و شوف هتذاكر ايه  ✨
                      </button>
-                   </div>
-
         <!-- Footer -->
         <footer class="header-glow border-t border-slate-800 mt-20">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -480,8 +460,7 @@
                     return;
                 }
                 
-                noSubjects.classList.add('hidden');
-                subjectCount.textContent = `${subjects.length} مواد`;
+                
                 
                 // Load content counts for each subject
                 const subjectsWithCounts = await Promise.all(subjects.map(async (subject) => {
@@ -2488,9 +2467,29 @@ document.addEventListener('DOMContentLoaded', revealOnScroll);
                 }
             }
         }
-
-                    
+           
 </script>
+ <script>
+        // عداد بسيط يعد كل ريفريش
+        function updateVisitorCount() {
+            // الحصول على العدد المحفوظ أو البدء من 0
+            let count = parseInt(localStorage.getItem('pageVisits')) || 487;
+            
+            // زيادة العدد
+            count ++ ;
+            
+            // حفظ العدد الجديد
+            localStorage.setItem('pageVisits', count);
+            
+            // عرض العدد
+            document.getElementById('visitorNumber').textContent = count;
+        }
+
+        // تشغيل العداد عند تحميل الصفحة
+        window.addEventListener('load', updateVisitorCount);
+
+        
+    </script>
 </body>
 </html>
 
