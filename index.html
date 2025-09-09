@@ -90,12 +90,6 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-6">
-                        <div class="flex items-center gap-3 text-cyan-400 glass-card px-4 py-2 rounded-lg">
-                                   <!-- العداد  -->
-                            <span class="counter-icon">👁️</span>
-                            <span class="counter-number" id="visitorNumber">0</span>
-                            <span class=" text-yellow-400 font-bold counter-label">زائر</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -2469,27 +2463,6 @@ document.addEventListener('DOMContentLoaded', revealOnScroll);
         }
            
 </script>
- <script>
-        // عداد بسيط يعد كل ريفريش
-        function updateVisitorCount() {
-            // الحصول على العدد المحفوظ أو البدء من 0
-            let count = parseInt(localStorage.getItem('pageVisits')) || 487;
-            
-            // زيادة العدد
-            count ++ ;
-            
-            // حفظ العدد الجديد
-            localStorage.setItem('pageVisits', count);
-            
-            // عرض العدد
-            document.getElementById('visitorNumber').textContent = count;
-        }
-
-        // تشغيل العداد عند تحميل الصفحة
-        window.addEventListener('load', updateVisitorCount);
-
-        
-    </script>
 </body>
 </html>
 
