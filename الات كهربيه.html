@@ -1,0 +1,2446 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Raouf">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ أهــلًا بـيــك يـابشمهندس ✨ </title>   
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+   <link rel="stylesheet" href="style.css" /ِ>
+</head>
+<body>
+                                            <div class="background">
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
+                                            </div>
+
+<button id="menu-btn" class="fixed top-4 left-4 z-50 p-2 rounded-full bg-gray-800 text-white shadow-lg focus:outline-none">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+</button>
+
+<div id="side-menu" class="fixed top-0 left-0 h-full w-64 bg-gray-900 shadow-xl transform -translate-x-full transition-transform duration-300 ease-in-out z-40">
+    <div class="p-8">
+        <h2 class="text-2xl font-bold text-yellow-400 mb-6 border-b border-yellow-400 pb-2">✨اختار شعبتك✨</h2>
+        <a href="index.html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة اجهزة</a>
+        <a href="حاسبات.html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة حاسبات<a>
+        <a href="سيارات .html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة سيارات </a>
+        <a href="الات كهربيه.html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة الات كهربية</a>
+        <a href="تبريد و تكيف.html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة تبريد و تكيف</a>     
+    </div>
+</div>
+
+    <!-- Student View -->
+    <div id="studentView" class="min-h-screen">
+        <!-- Header -->
+        <header class="header-glow  top-0 z-0">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div>
+                          <img src="logo/pp.png" width="69">
+                        </div>
+                        <div>
+                            <h1 class="text-1xl font-black gradient-text">شعبه الات كهربية🖤</h1>
+                            <p class="text-slate-400 font-medium text-1xl "> مكتبه شعبه الات كهربية الصف الثاني الترم الاول</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-6">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-6 sm:py-12">
+            <div class="mb-8 sm:mb-12 text-center">
+                <h2 class="text-2xl sm:text-4xl font-black text-white mb-4 gradient-text glow-text    animate-pulse  transition-transform duration-300  ">﴿ وَأَنْ لَيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ ﴾</h2>
+                <p id="00000" class="text-slate-400 text-lg sm:text-1xl max-w-2xl mx-auto leading-relaxed px-4 animate-pulse " >اختار ياصحبي الماده الي عايز تذاكرها و دوس عليها بس براحه عشان المواد مش بتعتنا😉</p>
+            </div>
+            <div id="subjectsGrid" class="fade-up" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
+                <!-- Subjects will be loaded here -->
+            </div>
+
+            <div id="noSubjects" class="text-center py-20 hidden">
+                <div>
+                    <i data-lucide="book-open" class="h-20 w-20 text-slate-600 mx-auto mb-6"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-300 mb-4">لا توجد مواد متاحة حالياً</h3>
+                <p class="text-slate-500 text-lg">سيتم إضافة المواد الدراسية قريباً</p>
+            </div>
+        </main>
+        <!-- Footer -->
+        <footer class="header-glow border-t border-slate-800 mt-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="text-center text-slate-400">
+                    <!-- Added side-by-side Made by Raouf text with enhanced styling and animations -->
+                    <div class="flex justify-center items-center gap-8 flex-wrap">
+                        <p style="font-size: 14px" class="text-yellow-400 font-bold animate-pulse  transition-transform duration-300 "> 
+                            ❤ Made by - Raouf❤  </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="fixed inset-0 modal-backdrop flex items-center justify-center hidden z-50">
+        <div class="glass-card rounded-2xl p-8 max-w-md w-full mx-4 cyber-border">
+            <h2 class="text-3xl font-bold text-white mb-8 text-center gradient-text">دخول الأدمن</h2>
+            <form onsubmit="adminLogin(event)">
+                <div class="mb-6">
+                    <label class="block text-slate-300 text-sm font-bold mb-3">كلمة المرور</label>
+                    <input type="password" id="adminPassword" class="input-field w-full px-4 py-3 rounded-lg" placeholder="أدخل كلمة المرور" required>
+                </div>
+                <div class="flex gap-4">
+                    <button type="submit" class="btn-primary flex-1 py-3 rounded-lg font-bold text-white">دخول</button>
+                    <button type="button" onclick="hideAdminLogin()" class="btn-secondary flex-1 py-3 rounded-lg font-bold text-slate-300">إلغاء</button>
+                </div>
+            </form>
+            <div id="loginError" class="text-red-400 text-sm mt-4 text-center font-medium hidden">كلمة المرور غير صحيحة</div>
+        </div>
+    </div>
+
+    <!-- Subject Details Modal -->
+    <div id="subjectModal" class="fixed inset-0 modal-backdrop flex items-center justify-center hidden z-50">
+        <div class="glass-card rounded-2xl max-w-6xl w-full mx-2 sm:mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="p-4 sm:p-6 border-b border-slate-700">
+                <div class="flex items-center justify-between">
+                    <h2 id="modalSubjectTitle" class="text-xl sm:text-3xl font-bold gradient-text"></h2>
+                    <button onclick="closeSubjectModal()" class="text-slate-400 hover:text-white transition-colors">
+                        <i data-lucide="x" class="h-6 w-6 sm:h-8 sm:w-8"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-4 sm:p-8">
+                <div id="modalSubjectContent">
+                    <!-- Subject content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Management Modal -->
+    <div id="contentModal" class="fixed inset-0 modal-backdrop flex items-center justify-center hidden z-50">
+        <div class="glass-card rounded-2xl max-w-4xl w-full mx-2 sm:mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="p-4 sm:p-6 border-b border-slate-700">
+                <div class="flex items-center justify-between">
+                    <h2 id="contentModalTitle" class="text-xl sm:text-3xl font-bold gradient-text"></h2>
+                    <button onclick="closeContentModal()" class="text-slate-400 hover:text-white transition-colors">
+                        <i data-lucide="x" class="h-6 w-6 sm:h-8 sm:w-8"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-4 sm:p-8">
+                <div id="contentModalBody">
+                    <!-- Content forms will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const sideMenu = document.getElementById('side-menu');
+
+    menuBtn.addEventListener('click', () => {
+        sideMenu.classList.toggle('-translate-x-full');
+    });
+</script>
+
+<script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+
+         const supabaseUrl = 'https://qgtjbiatssjthbjujhke.supabase.co'  
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFndGpiaWF0c3NqdGhianVqaGtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzNDQ2NzMsImV4cCI6MjA3MTkyMDY3M30.K2KqgNZjqKcMYezhEihM884rzQgxAhDs9zv61nVCZfM'
+        let supabase = null;
+        let useLocalStorage = true;
+
+
+        // Try to initialize Supabase, fallback to localStorage if it fails     
+        try {
+            if (supabaseUrl !== 'https://qgtjbiatssjthbjujhke.supabase.co' && supabaseKey !== 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFndGpiaWF0c3NqdGhianVqaGtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzNDQ2NzMsImV4cCI6MjA3MTkyMDY3M30.K2KqgNZjqKcMYezhEihM884rzQgxAhDs9zv61nVCZfM'   ) {  
+                useLocalStorage = false;
+                console.log('[v0] Using Supabase database');
+            } else {
+                console.log('[v0] Using localStorage fallback');
+            }
+        } catch (error) {
+            console.log('[v0] Supabase initialization failed, using localStorage');
+            useLocalStorage = true;
+        }
+
+        // Global variables
+        let currentSubjectId = null;
+        let isAdmin = false;
+
+        function getLocalData(key) {
+            try {
+                return JSON.parse(localStorage.getItem(key) || '[]');
+            } catch {
+                return [];
+            }
+        }
+
+        function setLocalData(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        function generateId() {
+            return Date.now().toString() + Math.random().toString(36).substr(2, 9);
+        }
+
+        async function loadSubjectsFromDB() {
+            if (useLocalStorage) {
+                return getLocalData('subjects');
+            }
+            
+            try {
+                const { data: subjects, error } = await supabase
+                    .from('subjects')
+                    .select('*')
+                    .order('created_at', { ascending: true });
+                
+                if (error) throw error;
+                return subjects || [];
+            } catch (error) {
+                console.error('Error loading subjects:', error);
+                return getLocalData('subjects');
+            }
+        }
+
+        async function loadNotesFromDB(subjectId) {
+            if (useLocalStorage) {
+                return getLocalData('notes').filter(note => note.subject_id === subjectId);
+            }
+            
+            try {
+                const { data: notes, error } = await supabase
+                    .from('notes')
+                    .select('*')
+                    .eq('subject_id', subjectId)
+                    .order('created_at', { ascending: true });
+                
+                if (error) throw error;
+                return notes || [];
+            } catch (error) {
+                console.error('Error loading notes:', error);
+                return getLocalData('notes').filter(note => note.subject_id === subjectId);
+            }
+        }
+
+        async function loadPlaylistsFromDB(subjectId) {
+            if (useLocalStorage) {
+                return getLocalData('playlists').filter(playlist => playlist.subject_id === subjectId);
+            }
+            
+            try {
+                const { data: playlists, error } = await supabase
+                    .from('youtube_playlists')
+                    .select('*')
+                    .eq('subject_id', subjectId)
+                    .order('created_at', { ascending: true });
+                
+                if (error) throw error;
+                return playlists || [];
+            } catch (error) {
+                console.error('Error loading playlists:', error);
+                return getLocalData('playlists').filter(playlist => playlist.subject_id === subjectId);
+            }
+        }
+
+        async function loadExamsFromDB(subjectId) {
+            if (useLocalStorage) {
+                return getLocalData('exams').filter(exam => exam.subject_id === subjectId);
+            }
+            
+            try {
+                const { data: exams, error } = await supabase
+                    .from('exams')
+                    .select('*')
+                    .eq('subject_id', subjectId)
+                    .order('created_at', { ascending: true });
+                
+                if (error) throw error;
+                return exams || [];
+            } catch (error) {
+                console.error('Error loading exams:', error);
+                return getLocalData('exams').filter(exam => exam.subject_id === subjectId);
+            }
+        }
+
+        // Admin authentication
+        function showAdminLogin() {
+            console.log('[v0] Showing admin login modal');
+            document.getElementById('adminLoginModal').classList.remove('hidden');
+        }
+
+        function hideAdminLogin() {
+            console.log('[v0] Hiding admin login modal');
+            document.getElementById('adminLoginModal').classList.add('hidden');
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('loginError').classList.add('hidden');
+        }
+
+        function adminLogin(event) {
+            event.preventDefault();
+            console.log('[v0] Admin login attempt started');
+            
+            const password = document.getElementById('adminPassword').value;
+            console.log('[v0] Password entered:', password ? 'Yes' : 'No');
+            console.log('[v0] Password value:', password);
+            
+            if (password === '123') {
+                console.log('[v0] Password correct, logging in as admin');
+                isAdmin = true;
+                hideAdminLogin();
+                showAdminView();
+                console.log('[v0] Admin view should now be visible');
+            } else {
+                console.log('[v0] Password incorrect, expected: 123, got:', password);
+                document.getElementById('loginError').classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('loginError').classList.add('hidden');
+                }, 3000);
+            }
+        }
+
+        function adminLogout() {
+            console.log('[v0] Admin logout');
+            isAdmin = false;
+            showStudentView();
+        }
+
+        function showStudentView() {
+            console.log('[v0] Switching to student view');
+            document.getElementById('studentView').classList.remove('hidden');
+            document.getElementById('adminView').classList.add('hidden');
+            loadSubjects();
+        }
+
+        function showAdminView() {
+            console.log('[v0] Switching to admin view');
+            document.getElementById('studentView').classList.add('hidden');
+            document.getElementById('adminView').classList.remove('hidden');
+            loadAdminSubjects();
+        }
+
+        async function addSubject(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('subjectName').value;
+            const description = document.getElementById('subjectDescription').value;
+            
+            try {
+                if (useLocalStorage) {
+                    const subjects = getLocalData('subjects');
+                    const newSubject = {
+                        id: generateId(),
+                        name,
+                        description,
+                        created_at: new Date().toISOString()
+                    };
+                    subjects.push(newSubject);
+                    setLocalData('subjects', subjects);
+                } else {
+                    const { data, error } = await supabase
+                        .from('subjects')
+                        .insert([{ name, description }])
+                        .select();
+                    
+                    if (error) throw error;
+                }
+                
+                // Reset form
+                document.getElementById('subjectName').value = '';
+                document.getElementById('subjectDescription').value = '';
+                
+                loadAdminSubjects();
+                alert('تم إضافة المادة بنجاح!');
+            } catch (error) {
+                console.error('Error adding subject:', error);
+                alert('حدث خطأ في إضافة المادة');
+            }
+        }
+
+        async function deleteSubject(subjectId) {
+            if (confirm('هل أنت متأكد من حذف هذه المادة؟ سيتم حذف جميع المحتويات المرتبطة بها.')) {
+                try {
+                    if (useLocalStorage) {
+                        const subjects = getLocalData('subjects').filter(s => s.id !== subjectId);
+                        const notes = getLocalData('notes').filter(n => n.subject_id !== subjectId);
+                        const playlists = getLocalData('playlists').filter(p => p.subject_id !== subjectId);
+                        const exams = getLocalData('exams').filter(e => e.subject_id !== subjectId);
+                        
+                        setLocalData('subjects', subjects);
+                        setLocalData('notes', notes);
+                        setLocalData('playlists', playlists);
+                        setLocalData('exams', exams);
+                    } else {
+                        const { error } = await supabase
+                            .from('subjects')
+                            .delete()
+                            .eq('id', subjectId);
+                        
+                        if (error) throw error;
+                    }
+                    
+                    loadAdminSubjects();
+                    alert('تم حذف المادة بنجاح!');
+                } catch (error) {
+                    console.error('Error deleting subject:', error);
+                    alert('حدث خطأ في حذف المادة');
+                }
+            }
+        }
+
+        async function loadSubjects() {
+            const grid = document.getElementById('subjectsGrid');
+            const noSubjects = document.getElementById('noSubjects');
+            const subjectCount = document.getElementById('subjectCount');
+            
+            try {
+                console.log('[v0] Attempting to load subjects from database...');
+                const subjects = await loadSubjectsFromDB();
+                console.log('[v0] Loaded subjects:', subjects.length);
+                
+                if (subjects.length === 0) {
+                    grid.innerHTML = '';
+                    noSubjects.classList.remove('hidden');
+                    subjectCount.textContent = '0 مواد';
+                    return;
+                }
+                
+                
+                
+                // Load content counts for each subject
+                const subjectsWithCounts = await Promise.all(subjects.map(async (subject) => {
+                    const [notes, playlists, exams] = await Promise.all([
+                        loadNotesFromDB(subject.id),
+                        loadPlaylistsFromDB(subject.id),
+                        loadExamsFromDB(subject.id)
+                    ]);
+                    
+                    return {
+                        ...subject,
+                        notesCount: notes.length,
+                        playlistsCount: playlists.length,
+                        examsCount: exams.length
+                    };
+                }));
+                
+                grid.innerHTML = subjectsWithCounts.map(subject => `
+                    <div class="glass-card rounded-2xl p-6 cursor-pointer cyber-border fade-in" onclick="openSubject('${subject.id}')">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="bg-gradient-to-br from-blue-500 to-purple-600 p-3 rounded-xl shadow-lg">
+                                <i data-lucide="book" class="h-8 w-8 text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-white mb-1">${subject.name}</h3>
+                                <p class="text-slate-400">${subject.description}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="stats-glow-green rounded-xl p-4 text-center">
+                                <div class="flex items-center justify-center gap-2 text-green-400 mb-2">
+                                    <i data-lucide="file-text" class="h-5 w-5"></i>
+                                    <span class="font-bold">مذكرات</span>
+                                </div>
+                                <div class="text-3xl font-black text-green-300">${subject.notesCount}</div>
+                            </div>
+                            
+                            <div class="stats-glow-red rounded-xl p-4 text-center">
+                                <div class="flex items-center justify-center gap-2 text-red-400 mb-2">
+                                    <i data-lucide="play-circle" class="h-5 w-5"></i>
+                                    <span class="font-bold">شرح</span>
+                                </div>
+                                <div class="text-3xl font-black text-red-300">${subject.playlistsCount}</div>
+                            </div>
+                            
+                            <div class="stats-glow-purple rounded-xl p-4 text-center">
+                                <div class="flex items-center justify-center gap-2 text-purple-400 mb-2">
+                                    <i data-lucide="clipboard-check" class="h-5 w-5"></i>
+                                    <span class="font-bold">امتحانات</span>
+                                </div>
+                                <div class="text-3xl font-black text-purple-300">${subject.examsCount}</div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Re-initialize icons
+                lucide.createIcons();
+            } catch (error) {
+                console.error('[v0] Error loading subjects:', error);
+                // Show fallback message
+                grid.innerHTML = '<div class="glass-card rounded-2xl p-8 text-center"><p class="text-yellow-400 text-lg mb-4">تعذر الاتصال بقاعدة البيانات</p><p class="text-slate-400">تأكد من إعدادات Supabase أو استخدم النسخة المحلية</p></div>';
+                subjectCount.textContent = 'خطأ في التحميل';
+            }
+        }
+
+        async function loadAdminSubjects() {
+            const container = document.getElementById('adminSubjectsList');
+            
+            try {
+                const subjects = await loadSubjectsFromDB();
+                
+                if (subjects.length === 0) {
+                    container.innerHTML = '<p class="text-slate-400 text-center py-12 text-xl">لا توجد مواد مضافة بعد</p>';
+                    return;
+                }
+                
+                // Load content counts for each subject
+                const subjectsWithCounts = await Promise.all(subjects.map(async (subject) => {
+                    const [notes, playlists, exams] = await Promise.all([
+                        loadNotesFromDB(subject.id),
+                        loadPlaylistsFromDB(subject.id),
+                        loadExamsFromDB(subject.id)
+                    ]);
+                    
+                    return {
+                        ...subject,
+                        notesCount: notes.length,
+                        playlistsCount: playlists.length,
+                        examsCount: exams.length
+                    };
+                }));
+                
+                container.innerHTML = subjectsWithCounts.map(subject => `
+                    <div class="glass-card rounded-xl p-6 mb-6 cyber-border">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-2xl font-bold text-white mb-2">${subject.name}</h3>
+                                <p class="text-slate-400 mb-3">${subject.description}</p>
+                                <div class="flex gap-6 text-sm">
+                                    <span class="text-green-400 font-medium">${subject.notesCount} مذكرة</span>
+                                    <span class="text-red-400 font-medium">${subject.playlistsCount} قائمة تشغيل</span>
+                                    <span class="text-purple-400 font-medium">${subject.examsCount} امتحان</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <button onclick="manageSubjectContent('${subject.id}')" class="btn-primary px-6 py-3 rounded-lg font-bold">
+                                    إدارة المحتوى
+                                </button>
+                                <button onclick="deleteSubject('${subject.id}')" class="btn-danger px-4 py-3 rounded-lg font-bold">
+                                    حذف
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading admin subjects:', error);
+                container.innerHTML = '<p class="text-red-400 text-center py-12">حدث خطأ في تحميل المواد</p>';
+            }
+        }
+
+        async function openSubject(subjectId) {
+            try {
+                let subject, notes, playlists, exams;
+                
+                // Try to get data from database first, fallback to localStorage
+                try {
+                    const { data: subjectData, error: subjectError } = await supabase
+                        .from('subjects')
+                        .select('*')
+                        .eq('id', subjectId)
+                        .single();
+                    
+                    if (subjectError) throw subjectError;
+                    subject = subjectData;
+                    
+                    [notes, playlists, exams] = await Promise.all([
+                        loadNotesFromDB(subjectId),
+                        loadPlaylistsFromDB(subjectId),
+                        loadExamsFromDB(subjectId)
+                    ]);
+                } catch (dbError) {
+                    console.log('[v0] Database failed, using localStorage:', dbError);
+                    // Fallback to localStorage
+                    const subjects = JSON.parse(localStorage.getItem('subjects') || '[]');
+                    subject = subjects.find(s => s.id === subjectId);
+                    
+                    if (!subject) {
+                        alert('المادة غير موجودة');
+                        return;
+                    }
+                    
+                    const allNotes = JSON.parse(localStorage.getItem('notes') || '[]');
+                    const allPlaylists = JSON.parse(localStorage.getItem('playlists') || '[]');
+                    const allExams = JSON.parse(localStorage.getItem('exams') || '[]');
+                    
+                    notes = allNotes.filter(note => note.subject_id === subjectId);
+                    playlists = allPlaylists.filter(playlist => playlist.subject_id === subjectId);
+                    exams = allExams.filter(exam => exam.subject_id === subjectId);
+                }
+                
+                if (!subject) {
+                    alert('المادة غير موجودة');
+                    return;
+                }
+                
+                currentSubjectId = subjectId;
+                document.getElementById('modalSubjectTitle').textContent = subject.name;
+
+                const content = `
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8" id="contentGrid">
+                        <!-- Notes Section -->
+                        <div class="stats-glow-green rounded-2xl p-4 sm:p-6" id="notesSection">
+                            <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                                <i data-lucide="file-text" class="h-5 w-5 sm:h-6 sm:w-6 text-green-400"></i>
+                                <h3 class="text-xl sm:text-2xl font-bold text-green-300">المذكرات</h3>
+                            </div>
+                            ${notes.length > 0 ? notes.map(note => `
+                                <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
+                                    <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${note.title}</h4>
+                                    <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${note.description}</p>
+                                    <a href="${note.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                        <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                        تحميل المذكرة
+                                    </a>
+                                </div>
+                            `).join('') : '<p class="text-slate-500 text-center py- sm:py-8 text-sm sm:text-base">لا توجد مذكرات متاحة</p>'}
+                        </div>
+                        
+                        <!-- Playlists Section -->
+                        <div class="stats-glow-red rounded-2xl p-4 sm:p-6" id="playlistsSection">
+                            <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                                <i data-lucide="play-circle" class="h-5 w-5 sm:h-6 sm:w-6 text-red-400"></i>
+                                <h3 class="text-xl sm:text-2xl font-bold text-red-300">شرح الدروس</h3>
+                            </div>
+                            ${playlists.length > 0 ? playlists.map(playlist => `
+                                <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
+                                    <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${playlist.title}</h4>
+                                    <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${playlist.description}</p>
+                                    <a href="${playlist.youtube_url}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-rose-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                        <i data-lucide="play" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                        مشاهدة الشرح
+                                    </a>
+                                </div>
+                            `).join('') : '<p class="text-slate-500 text-center py-6 sm:py-8 text-sm sm:text-base">لا توجد قوائم تشغيل متاحة</p>'}
+                        </div>
+                        
+                        <!-- Exams Section -->
+                        <div class="stats-glow-purple rounded-2xl p-4 sm:p-6" id="examsSection">
+                            <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                                <i data-lucide="clipboard-check" class="h-5 w-5 sm:h-6 sm:w-6 text-purple-400"></i>
+                                <h3 class="text-xl sm:text-2xl font-bold text-purple-300">الامتحانات</h3>
+                            </div>
+                            ${exams.length > 0 ? exams.map(exam => `
+                                <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
+                                    <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${exam.title}</h4>
+                                    <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${exam.description}</p>
+                                    <a href="${exam.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                        <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                        تحميل الامتحان
+                                    </a>
+                                </div>
+                            `).join('') : '<p class="text-slate-500 text-center py-6 sm:py-8 text-sm sm:text-base">لا توجد امتحانات متاحة</p>'}
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('modalSubjectContent').innerHTML = content;
+                document.getElementById('subjectModal').classList.remove('hidden');
+                
+                // Re-initialize icons
+                lucide.createIcons();
+            } catch (error) {
+                console.error('[v0] Error opening subject:', error);
+                alert('حدث خطأ أثناء فتح بيانات المادة. جاري المحاولة مرة أخرى...');
+                
+                // Try localStorage as final fallback
+                try {
+                    const subjects = JSON.parse(localStorage.getItem('subjects') || '[]');
+                    const subject = subjects.find(s => s.id === subjectId);
+                    
+                    if (subject) {
+                        currentSubjectId = subjectId;
+                        document.getElementById('modalSubjectTitle').textContent = subject.name;
+                        
+                        const allNotes = JSON.parse(localStorage.getItem('notes') || '[]');
+                        const allPlaylists = JSON.parse(localStorage.getItem('playlists') || '[]');
+                        const allExams = JSON.parse(localStorage.getItem('exams') || '[]');
+                        
+                        const notes = allNotes.filter(note => note.subject_id === subjectId);
+                        const playlists = allPlaylists.filter(playlist => playlist.subject_id === subjectId);
+                        const exams = allExams.filter(exam => exam.subject_id === subjectId);
+                        
+                        const content = `
+                            <!-- Section Filter Buttons -->
+                            <div class="flex justify-center gap-4 mb-8">
+                                <button onclick="showAllSections()" class="btn-primary px-6 py-3 rounded-lg font-bold" id="allBtn">
+                                    عرض الكل
+                                </button>
+                                <button onclick="showNotesOnly()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition-colors" id="notesBtn">
+                                    مذكرات
+                                </button>
+                                <button onclick="showPlaylistsOnly()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition-colors" id="playlistsBtn">
+                                    شرح
+                                </button>
+                                <button onclick="showExamsOnly()" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-colors" id="examsBtn">
+                                    امتحانات
+                                </button>
+                            </div>
+
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8" id="contentGrid">
+                                <!-- Notes Section -->
+                                <div class="stats-glow-green rounded-2xl p-4 sm:p-6" id="notesSection">
+                                    <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                                        <i data-lucide="file-text" class="h-5 w-5 sm:h-6 sm:w-6 text-green-400"></i>
+                                        <h3 class="text-xl sm:text-2xl font-bold text-green-300">المذكرات</h3>
+                                    </div>
+                                    ${notes.length > 0 ? notes.map(note => `
+                                        <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
+                                            <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${note.title}</h4>
+                                            <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${note.description}</p>
+                                            <a href="${note.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                                <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                                تحميل المذكرة
+                                            </a>
+                                        </div>
+                                    `).join('') : '<p class="text-slate-500 text-center py-6 sm:py-8 text-sm sm:text-base">لا توجد مذكرات متاحة</p>'}
+                                </div>
+                                
+                                <!-- Playlists Section -->
+                                <div class="stats-glow-red rounded-2xl p-4 sm:p-6" id="playlistsSection">
+                                    <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                                        <i data-lucide="play-circle" class="h-5 w-5 sm:h-6 sm:w-6 text-red-400"></i>
+                                        <h3 class="text-xl sm:text-2xl font-bold text-red-300">شرح الدروس</h3>
+                                    </div>
+                                    ${playlists.length > 0 ? playlists.map(playlist => `
+                                        <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
+                                            <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${playlist.title}</h4>
+                                            <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${playlist.description}</p>
+                                            <a href="${playlist.youtube_url}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-rose-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                                <i data-lucide="play" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                                مشاهدة الشرح
+                                            </a>
+                                        </div>
+                                    `).join('') : '<p class="text-slate-500 text-center py-6 sm:py-8 text-sm sm:text-base">لا توجد قوائل تشغيل متاحة</p>'}
+                                </div>
+                                
+                                <!-- Exams Section -->
+                                <div class="stats-glow-purple rounded-2xl p-4 sm:p-6" id="examsSection">
+                                    <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                                        <i data-lucide="clipboard-check" class="h-5 w-5 sm:h-6 sm:w-6 text-purple-400"></i>
+                                        <h3 class="text-xl sm:text-2xl font-bold text-purple-300">الامتحانات</h3>
+                                    </div>
+                                    ${exams.length > 0 ? exams.map(exam => `
+                                        <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
+                                            <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${exam.title}</h4>
+                                            <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${exam.description}</p>
+                                            <a href="${exam.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                                <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                                تحميل الامتحان
+                                            </a>
+                                        </div>
+                                    `).join('') : '<p class="text-slate-500 text-center py-6 sm:py-8 text-sm sm:text-base">لا توجد امتحانات متاحة</p>'}
+                                </div>
+                            </div>
+                        `;
+                        
+                        document.getElementById('modalSubjectContent').innerHTML = content;
+                        document.getElementById('subjectModal').classList.remove('hidden');
+                        
+                        // Re-initialize icons
+                        lucide.createIcons();
+                    } else {
+                        alert('المادة غير موجودة');
+                    }
+                } catch (localError) {
+                    console.error('[v0] localStorage fallback failed:', localError);
+                    alert('حدث خطأ في تحميل البيانات');
+                }
+            }
+        }
+
+        function showAllSections() {
+            document.getElementById('notesSection').style.display = 'block';
+            document.getElementById('playlistsSection').style.display = 'block';
+            document.getElementById('examsSection').style.display = 'block';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('allBtn');
+        }
+
+        function showNotesOnly() {
+            document.getElementById('notesSection').style.display = 'block';
+            document.getElementById('playlistsSection').style.display = 'none';
+            document.getElementById('examsSection').style.display = 'none';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('notesBtn');
+        }
+
+        function showPlaylistsOnly() {
+            document.getElementById('notesSection').style.display = 'none';
+            document.getElementById('playlistsSection').style.display = 'block';
+            document.getElementById('examsSection').style.display = 'none';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('playlistsBtn');
+        }
+
+        function showExamsOnly() {
+            document.getElementById('notesSection').style.display = 'none';
+            document.getElementById('playlistsSection').style.display = 'none';
+            document.getElementById('examsSection').style.display = 'block';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('examsBtn');
+        }
+
+        function updateButtonStyles(activeButtonId) {
+            // Reset all buttons to default style
+            const buttons = ['allBtn', 'notesBtn', 'playlistsBtn', 'examsBtn'];
+            buttons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) {
+                    if (btnId === 'allBtn') {
+                        btn.className = 'bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    } else if (btnId === 'notesBtn') {
+                        btn.className = 'bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    } else if (btnId === 'playlistsBtn') {
+                        btn.className = 'bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    } else if (btnId === 'examsBtn') {
+                        btn.className = 'bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    }
+                }
+            });
+            
+            // Highlight active button
+            const activeBtn = document.getElementById(activeButtonId);
+            if (activeBtn) {
+                if (activeButtonId === 'allBtn') {
+                    activeBtn.className = 'btn-primary px-6 py-3 rounded-lg font-bold';
+                } else {
+                    activeBtn.className = activeBtn.className.replace('hover:bg-', 'bg-').replace('600', '500');
+                }
+            }
+        }
+
+        // Content management functions would continue here...
+        async function manageSubjectContent(subjectId) {
+            console.log('[v0] Managing content for subject:', subjectId);
+            
+            try {
+                const subjects = await loadSubjectsFromDB();
+                const subject = subjects.find(s => s.id === subjectId);
+                
+                if (!subject) {
+                    alert('المادة غير موجودة');
+                    return;
+                }
+                
+                currentSubjectId = subjectId;
+                document.getElementById('contentModalTitle').textContent = `إدارة محتوى: ${subject.name}`;
+                
+                const [notes, playlists, exams] = await Promise.all([
+                    loadNotesFromDB(subjectId),
+                    loadPlaylistsFromDB(subjectId),
+                    loadExamsFromDB(subjectId)
+                ]);
+                
+                const contentHTML = `
+                    <div class="space-y-8">
+                        <!-- Add Content Forms -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <!-- Add Note Form -->
+                            <div class="stats-glow-green rounded-xl p-6">
+                                <h3 class="text-xl font-bold text-green-300 mb-4 flex items-center gap-2">
+                                    <i data-lucide="file-text" class="h-5 w-5"></i>
+                                    إضافة مذكرة
+                                </h3>
+                                <form onsubmit="addNote(event)" class="space-y-4">
+                                    <input type="text" id="noteTitle" class="input-field w-full px-3 py-2 rounded-lg text-sm" placeholder="عنوان المذكرة" required>
+                                    <textarea id="noteDescription" class="input-field w-full px-3 py-2 rounded-lg text-sm" rows="2" placeholder="وصف المذكرة" required></textarea>
+                                    <input type="url" id="noteLink" class="input-field w-full px-3 py-2 rounded-lg text-sm" placeholder="رابط Dropbox للتحميل" required>
+                                    <button type="submit" class="btn-primary w-full py-2 rounded-lg font-bold text-sm">إضافة مذكرة</button>
+                                </form>
+                            </div>
+                            
+                            <!-- Add Playlist Form -->
+                            <div class="stats-glow-red rounded-xl p-6">
+                                <h3 class="text-xl font-bold text-red-300 mb-4 flex items-center gap-2">
+                                    <i data-lucide="play-circle" class="h-5 w-5"></i>
+                                    إضافة قائمة تشغيل
+                                </h3>
+                                <form onsubmit="addPlaylist(event)" class="space-y-4">
+                                    <input type="text" id="playlistTitle" class="input-field w-full px-3 py-2 rounded-lg text-sm" placeholder="عنوان قائمة التشغيل" required>
+                                    <textarea id="playlistDescription" class="input-field w-full px-3 py-2 rounded-lg text-sm" rows="2" placeholder="وصف قائمة التشغيل" required></textarea>
+                                    <input type="url" id="playlistLink" class="input-field w-full px-3 py-2 rounded-lg text-sm" placeholder="رابط YouTube Playlist" required>
+                                    <button type="submit" class="btn-primary w-full py-2 rounded-lg font-bold text-sm">إضافة قائمة</button>
+                                </form>
+                            </div>
+                            
+                            <!-- Add Exam Form -->
+                            <div class="stats-glow-purple rounded-xl p-6">
+                                <h3 class="text-xl font-bold text-purple-300 mb-4 flex items-center gap-2">
+                                    <i data-lucide="clipboard-check" class="h-5 w-5"></i>
+                                    إضافة امتحان
+                                </h3>
+                                <form onsubmit="addExam(event)" class="space-y-4">
+                                    <input type="text" id="examTitle" class="input-field w-full px-3 py-2 rounded-lg text-sm" placeholder="عنوان الامتحان" required>
+                                    <textarea id="examDescription" class="input-field w-full px-3 py-2 rounded-lg text-sm" rows="2" placeholder="وصف الامتحان" required></textarea>
+                                    <input type="url" id="examLink" class="input-field w-full px-3 py-2 rounded-lg text-sm" placeholder="رابط Dropbox للتحميل" required>
+                                    <button type="submit" class="btn-primary w-full py-2 rounded-lg font-bold text-sm">إضافة امتحان</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Existing Content Lists -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <!-- Notes List -->
+                            <div class="stats-glow-green rounded-xl p-6">
+                                <h3 class="text-xl font-bold text-green-300 mb-4">المذكرات الموجودة</h3>
+                                <div class="space-y-3 max-h-60 overflow-y-auto">
+                                    ${notes.length > 0 ? notes.map(note => `
+                                        <div class="glass-card rounded-lg p-3">
+                                            <h4 class="font-bold text-white text-sm mb-1">${note.title}</h4>
+                                            <p class="text-slate-400 text-xs mb-2">${note.description}</p>
+                                            <div class="flex gap-2">
+                                                <a href="${note.dropbox_link}" target="_blank" class="text-green-400 text-xs hover:text-green-300">عرض</a>
+                                                <button onclick="deleteNote('${note.id}')" class="text-red-400 text-xs hover:text-red-300">حذف</button>
+                                            </div>
+                                        </div>
+                                    `).join('') : '<p class="text-slate-500 text-sm">لا توجد مذكرات</p>'}
+                                </div>
+                            </div>
+                            
+                            <!-- Playlists List -->
+                            <div class="stats-glow-red rounded-xl p-6">
+                                <h3 class="text-xl font-bold text-red-300 mb-4">قوائم التشغيل الموجودة</h3>
+                                <div class="space-y-3 max-h-60 overflow-y-auto">
+                                    ${playlists.length > 0 ? playlists.map(playlist => `
+                                        <div class="glass-card rounded-lg p-3">
+                                            <h4 class="font-bold text-white text-sm mb-1">${playlist.title}</h4>
+                                            <p class="text-slate-400 text-xs mb-2">${playlist.description}</p>
+                                            <div class="flex gap-2">
+                                                <a href="${playlist.youtube_url}" target="_blank" class="text-red-400 text-xs hover:text-red-300">عرض</a>
+                                                <button onclick="deletePlaylist('${playlist.id}')" class="text-red-400 text-xs hover:text-red-300">حذف</button>
+                                            </div>
+                                        </div>
+                                    `).join('') : '<p class="text-slate-500 text-sm">لا توجد قوائم تشغيل</p>'}
+                                </div>
+                            </div>
+                            
+                            <!-- Exams List -->
+                            <div class="stats-glow-purple rounded-xl p-6">
+                                <h3 class="text-xl font-bold text-purple-300 mb-4">الامتحانات الموجودة</h3>
+                                <div class="space-y-3 max-h-60 overflow-y-auto">
+                                    ${exams.length > 0 ? exams.map(exam => `
+                                        <div class="glass-card rounded-lg p-3">
+                                            <h4 class="font-bold text-white text-sm mb-1">${exam.title}</h4>
+                                            <p class="text-slate-400 text-xs mb-2">${exam.description}</p>
+                                            <div class="flex gap-2">
+                                                <a href="${exam.dropbox_link}" target="_blank" class="text-purple-400 text-xs hover:text-purple-300">عرض</a>
+                                                <button onclick="deleteExam('${exam.id}')" class="text-red-400 text-xs hover:text-red-300">حذف</button>
+                                            </div>
+                                        </div>
+                                    `).join('') : '<p class="text-slate-500 text-sm">لا توجد امتحانات</p>'}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('contentModalBody').innerHTML = contentHTML;
+                document.getElementById('contentModal').classList.remove('hidden');
+                
+                // Re-initialize icons
+                lucide.createIcons();
+            } catch (error) {
+                console.error('Error managing subject content:', error);
+                alert('حدث خطأ في تحميل محتوى المادة');
+            }
+        }
+
+        async function addNote(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('noteTitle').value;
+            const description = document.getElementById('noteDescription').value;
+            const dropbox_link = document.getElementById('noteLink').value;
+            
+            try {
+                if (useLocalStorage) {
+                    const notes = getLocalData('notes');
+                    const newNote = {
+                        id: generateId(),
+                        subject_id: currentSubjectId,
+                        title,
+                        description,
+                        dropbox_link,
+                        created_at: new Date().toISOString()
+                    };
+                    notes.push(newNote);
+                    setLocalData('notes', notes);
+                } else {
+                    const { data, error } = await supabase
+                        .from('notes')
+                        .insert([{ subject_id: currentSubjectId, title, description, dropbox_link }])
+                        .select();
+                    
+                    if (error) throw error;
+                }
+                
+                // Reset form
+                document.getElementById('noteTitle').value = '';
+                document.getElementById('noteDescription').value = '';
+                document.getElementById('noteLink').value = '';
+                
+                // Refresh content
+                manageSubjectContent(currentSubjectId);
+                alert('تم إضافة المذكرة بنجاح!');
+            } catch (error) {
+                console.error('Error adding note:', error);
+                alert('حدث خطأ في إضافة المذكرة');
+            }
+        }
+
+        async function addPlaylist(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('playlistTitle').value;
+            const description = document.getElementById('playlistDescription').value;
+            const youtube_url = document.getElementById('playlistLink').value;
+            
+            try {
+                if (useLocalStorage) {
+                    const playlists = getLocalData('playlists');
+                    const newPlaylist = {
+                        id: generateId(),
+                        subject_id: currentSubjectId,
+                        title,
+                        description,
+                        youtube_url,
+                        created_at: new Date().toISOString()
+                    };
+                    playlists.push(newPlaylist);
+                    setLocalData('playlists', playlists);
+                } else {
+                    const { data, error } = await supabase
+                        .from('youtube_playlists')
+                        .insert([{ subject_id: currentSubjectId, title, description, youtube_url }])
+                        .select();
+                    
+                    if (error) throw error;
+                }
+                
+                // Reset form
+                document.getElementById('playlistTitle').value = '';
+                document.getElementById('playlistDescription').value = '';
+                document.getElementById('playlistLink').value = '';
+                
+                // Refresh content
+                manageSubjectContent(currentSubjectId);
+                alert('تم إضافة قائمة التشغيل بنجاح!');
+            } catch (error) {
+                console.error('Error adding playlist:', error);
+                alert('حدث خطأ في إضافة قائمة التشغيل');
+            }
+        }
+
+        async function addExam(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('examTitle').value;
+            const description = document.getElementById('examDescription').value;
+            const dropbox_link = document.getElementById('examLink').value;
+            
+            try {
+                if (useLocalStorage) {
+                    const exams = getLocalData('exams');
+                    const newExam = {
+                        id: generateId(),
+                        subject_id: currentSubjectId,
+                        title,
+                        description,
+                        dropbox_link,
+                        created_at: new Date().toISOString()
+                    };
+                    exams.push(newExam);
+                    setLocalData('exams', exams);
+                } else {
+                    const { data, error } = await supabase
+                        .from('exams')
+                        .insert([{ subject_id: currentSubjectId, title, description, dropbox_link }])
+                        .select();
+                    
+                    if (error) throw error;
+                }
+                
+                // Reset form
+                document.getElementById('examTitle').value = '';
+                document.getElementById('examDescription').value = '';
+                document.getElementById('examLink').value = '';
+                
+                // Refresh content
+                manageSubjectContent(currentSubjectId);
+                alert('تم إضافة الامتحان بنجاح!');
+            } catch (error) {
+                console.error('Error adding exam:', error);
+                alert('حدث خطأ في إضافة الامتحان');
+            }
+        }
+
+        async function deleteNote(noteId) {
+            if (confirm('هل أنت متأكد من حذف هذه المذكرة؟')) {
+                try {
+                    if (useLocalStorage) {
+                        const notes = getLocalData('notes').filter(n => n.id !== noteId);
+                        setLocalData('notes', notes);
+                    } else {
+                        const { error } = await supabase
+                            .from('notes')
+                            .delete()
+                            .eq('id', noteId);
+                        
+                        if (error) throw error;
+                    }
+                    
+                    manageSubjectContent(currentSubjectId);
+                    alert('تم حذف المذكرة بنجاح!');
+                } catch (error) {
+                    console.error('Error deleting note:', error);
+                    alert('حدث خطأ في حذف المذكرة');
+                }
+            }
+        }
+
+        async function deletePlaylist(playlistId) {
+            if (confirm('هل أنت متأكد من حذف قائمة التشغيل هذه؟')) {
+                try {
+                    if (useLocalStorage) {
+                        const playlists = getLocalData('playlists').filter(p => p.id !== playlistId);
+                        setLocalData('playlists', playlists);
+                    } else {
+                        const { error } = await supabase
+                            .from('youtube_playlists')
+                            .delete()
+                            .eq('id', playlistId);
+                        
+                        if (error) throw error;
+                    }
+                    
+                    manageSubjectContent(currentSubjectId);
+                    alert('تم حذف قائمة التشغيل بنجاح!');
+                } catch (error) {
+                    console.error('Error deleting playlist:', error);
+                    alert('حدث خطأ في حذف قائمة التشغيل');
+                }
+            }
+        }
+
+        async function deleteExam(examId) {
+            if (confirm('هل أنت متأكد من حذف هذا الامتحان؟')) {
+                try {
+                    if (useLocalStorage) {
+                        const exams = getLocalData('exams').filter(e => e.id !== examId);
+                        setLocalData('exams', exams);
+                    } else {
+                        const { error } = await supabase
+                            .from('exams')
+                            .delete()
+                            .eq('id', examId);
+                        
+                        if (error) throw error;
+                    }
+                    
+                    manageSubjectContent(currentSubjectId);
+                    alert('تم حذف الامتحان بنجاح!');
+                } catch (error) {
+                    console.error('Error deleting exam:', error);
+                    alert('حدث خطأ في حذف الامتحان');
+                }
+            }
+        }
+
+        // Modal closing functions
+        function closeSubjectModal() {
+            document.getElementById('subjectModal').classList.add('hidden');
+            currentSubjectId = null;
+        }
+
+        function closeContentModal() {
+            document.getElementById('contentModal').classList.add('hidden');
+            currentSubjectId = null;
+        }
+
+        function initializeSampleData() {
+            if (!useLocalStorage) return;
+            
+           
+        
+            
+            console.log('[v0] Initializing sample data...');
+            
+            // Sample subjects
+           const sampleSubjects = [
+                { id: '1', name: '111111111', description: 'مادة 111111', created_at: new Date().toISOString() },
+                { id: '2', name: '111111111111', description: 'مادة 111111', created_at: new Date().toISOString() },
+                { id: '3', name: '111111111', description: 'مادة 1111111', created_at: new Date().toISOString() },
+                { id: '4', name: '1111111111', description: 'مادة 11111111', created_at: new Date().toISOString() },
+                { id: '5', name: ' 11111111', description: 'مادة 1111111111', created_at: new Date().toISOString() },
+                { id: '6', name: '11111111111 ', description: 'مادة 111111111', created_at: new Date().toISOString() },
+                { id: '7', name: '111111111', description: 'مادة 111111111111', created_at: new Date().toISOString() }
+            ];
+
+                                                    setLocalData('subjects', sampleSubjects);
+
+                                            setLocalData('notes', [
+                                                     
+
+
+
+                                            {
+                                                    id: 'n1',
+                                                    subject_id: '1', // مذكرة للمادة الأولى
+                                                    title: '  كتاب تك ورش إلكترونية ',
+                                                    description: '1',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/mcydl0822cfw1n3ibei30/.pdf?rlkey=wxf6h7w0xdk90nlyy36dg9oen&st=iu5el7ny&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n2',
+                                                    subject_id: '1', // مذكرة للمادة الأولى
+                                                    title: 'MBIتك ورش إلكترونية متقدمه',
+                                                    description: '2',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/s6nu4veb2p0lafrqk0ihi/MBI.pdf?rlkey=4rtyg2n4a2ljsrt9xbp1cj53h&st=kchu3ibc&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                  {
+                                                    id: 'n3',
+                                                    subject_id: '1', // مذكرة للمادة الأولى
+                                                    title: 'تك ورش إلكترونية بشمهندسه سمر صبحي.',
+                                                    description: '3',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/3jkv9l5wzou2mzij99ai9/_-_-_-_-_.pdf?rlkey=3msxt9ds56sdw5n05bwq7sxf1&e=1&st=zc6wpgzc&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n4',
+                                                    subject_id: '1', // مذكرة للمادة الأولى
+                                                    title: 'ورش باب 1 و 2',
+                                                    description: '4',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/cvcsc4nn7vhbrjoerjltw/1-2.pdf?rlkey=f1fwqdtycw30884dktw1bs55o&e=1&st=0l253usz&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n5',
+                                                    subject_id: '1', // مذكرة للمادة الأولى
+                                                    title: 'ورش باب 3',
+                                                    description: '5',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/eec25mwkuqmt4ae487vyi/3.pdf?rlkey=85wnyqoakzxw9hc2omskzbegn&e=1&st=g625i5m6&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n6',
+                                                    subject_id: '1', // مذكرة للمادة الأولى
+                                                    title: 'ورش باب 4',
+                                                    description: '6',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/u78a1w584sa5fvoo1fjkq/4.pdf?rlkey=u00w02oyy9nd76idpfdq0x17f&e=1&st=2xs6wo66&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n7',
+                                                    subject_id: '1', // مذكرة للمادة الأولى
+                                                    title: 'ورش باب 5',
+                                                    description: '7',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/64dzbrza25oqw2e8qrrsy/5.pdf?rlkey=ys6jig64p8y6bakmjxs890srl&e=1&st=i5oz1a0c&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n8',
+                                                    subject_id: '1', // مذكرة للمادة الأولى
+                                                    title: 'ورش باب 6',
+                                                    description: '8',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/t1ohw8w0k9r5js2pd4ul9/6.pdf?rlkey=glh6vg9pcamuqi7bgbrqmhlq2&e=1&st=vo0lcl8d&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                        {
+                                                    id: 'n9',
+                                                    subject_id: '2', 
+                                                    title: 'كتاب مكونات حاسب',
+                                                    description: '1',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/brwiusu6hhv5tq6wykjdr/.pdf?rlkey=378i0geep1onvh7eo7oba1kg8&st=kkewqnrl&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                
+                                                           {
+                                                    id: 'n10',
+                                                    subject_id: '2', 
+                                                    title: 'سعيد مكونات حاسب ',
+                                                    description: '2',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/zmcqnu6p7irtjrmxuy8pc/.pdf?rlkey=eepnjk11m5z2tzw0kbaqgxgsq&e=1&st=p61ke2ps&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                
+                                                           {
+                                                    id: 'n11',
+                                                    subject_id: '2', 
+                                                    title: 'مكونات حاسب مذكره كامله ',
+                                                    description: '3',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/p69lckob7de5z99cdy0s4/.pdf?rlkey=fhkzpicgibyuc3d32e4afop1x&e=1&st=7awczvad&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                   {
+                                                    id: 'n12',
+                                                    subject_id: '2', 
+                                                    title: 'ملخص باب 1 ',
+                                                    description: '4',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/qhhoy3vwyb6pkml5bfbxe/__-_.pdf?rlkey=d63o6bl8aap0wf6xflco8d4lq&st=q5h7y5i3&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                                 {
+                                                    id: 'n12',
+                                                    subject_id: '2', 
+                                                    title: 'ملخص باب 2 ',
+                                                    description: '5',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/rbnoy0o3v2kguecgtl45o/__-2_.pdf?rlkey=xp6fubo6mjtyzjxd2zcturn3j&st=kczuui42&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                                    {
+                                                    id: 'n12',
+                                                    subject_id: '2', 
+                                                    title: 'ملخص باب 3 ',
+                                                    description: '6',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/xq4dl94modejmxt1w1e55/__-_.pdf?rlkey=yeizd0o4pywwy6dotxp0ou758&st=uzr8wokg&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n12',
+                                                    subject_id: '2', 
+                                                    title: 'ملخص باب 4 ',
+                                                    description: '7',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/jk64gvc8lm4tpw72inu7q/1.pdf?rlkey=7vow0sew7fyn0mtkoazqkz0m9&st=chs4f8wh&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                        {
+                                                    id: 'n12',
+                                                    subject_id: '2', 
+                                                    title: 'ملخص باب 5 ',
+                                                    description: '8',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/5wo69agu69evay4djj4xj/__-_.pdf?rlkey=lymjai54ifcwnkha2cefmdteo&st=gtdua364&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n12',
+                                                    subject_id: '2', 
+                                                    title: 'ملخص باب 6 ',
+                                                    description: '9',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/e2zceug3v6pijpxusc5km/__-_.pdf?rlkey=jml66ywsgk9t5abr78qv9lu4z&st=939s0g0c&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n12',
+                                                    subject_id: '2', 
+                                                    title: 'مكونات باب 1 ',
+                                                    description: '10',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/d57pes9y08o2wgcgc7bod/1.pdf?rlkey=1vzedsisrcprltc0u7vwg3p7b&st=pjeg29iy&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                                {
+                                                    id: 'n13',
+                                                    subject_id: '2', 
+                                                    title: 'مكونات باب 2 ',
+                                                    description: '11',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/89qnug9fpjv1v6gwc6ags/2.pdf?rlkey=epr3g07rs7g5ek61l888dw77q&st=pgfp18p5&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                                {
+                                                    id: 'n14',
+                                                    subject_id: '2', 
+                                                    title: 'مكونات باب 3 ',
+                                                    description: '12',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/x7woghjkqe92tvkejxqdr/3.pdf?rlkey=v898mwm8kk75oml3rrds4hkj1&st=r8492kls&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                                {
+                                                    id: 'n15',
+                                                    subject_id: '2', 
+                                                    title: 'مكونات باب 4 ',
+                                                    description: '13',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/j2t813dzx3d91c4dext8i/4.pdf?rlkey=oyvdqg7t31p61k0qb9qowp4h4&st=4ugdayhb&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                                {
+                                                    id: 'n16',
+                                                    subject_id: '2', 
+                                                    title: 'مكونات باب 5 ',
+                                                    description: '14',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/hpgkh3lup32rs5y76i5vp/5.pdf?rlkey=s0buaycqm9bp5q6h04pwwzz5z&st=lx5mjs2t&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                                {
+                                                    id: 'n17',
+                                                    subject_id: '2', 
+                                                    title: 'مكونات باب 6 ',
+                                                    description: '15',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/pyeydo7bilxlu4vjykbtv/6.pdf?rlkey=nq0j7w3lvicsi7y8dt125mzbx&st=s2jwuzej&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                                  {
+                                                    id: 'n18',
+                                                    subject_id: '3', 
+                                                    title: ' كتاب أساسيات شبكات حاسب ',
+                                                    description: '1',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/a6i9jykpeqadqf171grzo/.pdf?rlkey=oh3z5x90h38q37jruxvwfv9k5&st=dvvv5lky&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                         {
+                                                    id: 'n19',
+                                                    subject_id: '3', 
+                                                    title: ' MBIأساسيات شبكات ',
+                                                    description: '2',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/y8huzg37jxbqym9zjq5f6/MBI.pdf?rlkey=hx6aaxipc5vydnks1o3k5ydkp&st=y701hngn&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                          {
+                                                    id: 'n20',
+                                                    subject_id: '3', 
+                                                    title: ' سعيد شبكات  ',
+                                                    description: '3',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/mj8ockgi1lwf9d6grre6x/.pdf?rlkey=jizguu80pkoz1hf4qkxkvfmfv&st=va9pj43x&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                  {
+                                                    id: 'n20',
+                                                    subject_id: '3', 
+                                                    title: ' سعيد شبكات  ',
+                                                    description: '3',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/mj8ockgi1lwf9d6grre6x/.pdf?rlkey=jizguu80pkoz1hf4qkxkvfmfv&st=va9pj43x&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n21',
+                                                    subject_id: '3', 
+                                                    title: ' مودي اساسيات شبكات  ',
+                                                    description: '4',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/mvqctcp84r756saehpgac/.pdf?rlkey=j5j13a8xvrs3onv9n4nxiduyt&st=snv79v3j&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n22',
+                                                    subject_id: '3', 
+                                                    title: ' باب اول اساسيات   ',
+                                                    description: '5',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/72i2u7nq8biu4lek9hid6/.pdf?rlkey=sunm6d3z7a170hv4645mvue4f&st=tja47pum&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                    {
+                                                    id: 'n23',
+                                                    subject_id: '3', 
+                                                    title: ' باب ثاني اساسيات   ',
+                                                    description: '6',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/naoa063s08st1lfu9gduf/.pdf?rlkey=7e172sb9jhqurzg9o54rxkf4m&st=zzwh843g&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                                          {
+                                                    id: 'n24',
+                                                    subject_id: '3', 
+                                                    title: ' باب ثالث 1 اساسيات   ',
+                                                    description: '7',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/x5ahcb9m64jacjc124f2b/1.pdf?rlkey=9zttx0y2119alqxyabz7sox5f&st=9f50eo57&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                                 {
+                                                    id: 'n25',
+                                                    subject_id: '3', 
+                                                    title: ' باب ثالث 2 اساسيات   ',
+                                                    description: '8',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/in4jq5zk1of7fajvyaj3q/2.pdf?rlkey=wg7faou8q16521ake15jlhw6j&st=0qs6ri3n&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                               {
+                                                    id: 'n26',
+                                                    subject_id: '3', 
+                                                    title: ' باب رابع اساسيات   ',
+                                                    description: '9',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/996sro9cm1ss4m3dqr0b5/.pdf?rlkey=ffks8nw93nlkwnn01buh1ai8r&st=d4rmh6vp&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                         {
+                                                    id: 'n27',
+                                                    subject_id: '3', 
+                                                    title: ' باب خامس اساسيات   ',
+                                                    description: '10',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/a5w6qpjbx3poe5jaij00j/.pdf?rlkey=z8wc2bysmqdrjh8ztnt18b34g&st=5uogbo6d&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                     {
+                                                    id: 'n28',
+                                                    subject_id: '3', 
+                                                    title: ' باب سادس اساسيات   ',
+                                                    description: '11',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/iaw19i3xp9vqw9zjsbusc/.pdf?rlkey=yovd0gh0m6dxop1a3qk41nfm6&st=c6juj6xt&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                   {
+                                                    id: 'n29',
+                                                    subject_id: '4', 
+                                                    title: ' كتاب الكترونات قوى كهربية   ',
+                                                    description: '1',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/9oe4f94dn7gjav67jqacg/.pdf?rlkey=jx0r63dmtswgbxjxt0utwvbjx&st=gjomquoe&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },  
+                                                  {
+                                                    id: 'n30',
+                                                    subject_id: '4', 
+                                                    title: ' MBIالكترونيات_القوى_الكهربيه  ',
+                                                    description: '2',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/1i5ea032jqf2l3wmms2hw/MBI-_-_.pdf?rlkey=np3526e9qis6pvgdpntlqrezq&st=9njbc7vd&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                  {
+                                                    id: 'n31',
+                                                    subject_id: '4', 
+                                                    title: ' الكترونيات القوى Abdelmonem sengab ',
+                                                    description: '3',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/0qw9y2gcekx8bi14tx1k8/Abdelmonem-sengab.pdf?rlkey=om7lwgsnnpyxa3qpjdii5ipvv&st=qybnpakh&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                  {
+                                                    id: 'n32',
+                                                    subject_id: '4', 
+                                                    title: ' بنك أسئلة قوي   ',
+                                                    description: '4',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/k9gimf8jogqj7rhsg6vrc/.pdf?rlkey=ipjeruc3fz2879etu92nf1geo&st=d3zw78uu&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n33',
+                                                    subject_id: '4', 
+                                                    title: ' م-أشرف إلك قوي 1-2-3   ',
+                                                    description: '5',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/5wa60rftoi6ouzu8xpup0/1-2-3.pdf?rlkey=ovh444ifczwwlfh4b6y9huapz&st=d2bvgj6l&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n34',
+                                                    subject_id: '4', 
+                                                    title: ' م-أشرف إلك قوي  4-5-6    ',
+                                                    description: '6',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/j3my0rsli4uhpm3lnqsra/4-5-6.pdf?rlkey=5vgw0w7u68trdwk7yjtm53fc9&st=4zc2ki5s&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n35',
+                                                    subject_id: '4', 
+                                                    title: ' مذكرةإلك قوي محمد عبد السميع ',
+                                                    description: '7',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/jrdw99uymivk6kqlnq4fp/_-_-_-_-_-_-_.pdf?rlkey=2y5pvsb0drmmo76t7449fu73o&st=z5wmqelu&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n37',
+                                                    subject_id: '4', 
+                                                    title: ' باب اول قوي م هـنـاء  ',
+                                                    description: '8',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/qvuaie43qfx489wta70jv/.pdf?rlkey=7e3u0mnarl2sus5g2okgubt7r&st=p7g4lcge&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n38',
+                                                    subject_id: '4', 
+                                                    title: ' باب ثاني قوي م هـنـاء',
+                                                    description: '9',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/0cmzen2jcsw7i3cew0i1s/.pdf?rlkey=8p17n55vwjv3hkmciubhp3hlf&st=lihgxpqa&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n39',
+                                                    subject_id: '4', 
+                                                    title: ' باب رابع قوي م هـنـاء   ',
+                                                    description: '10',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/m59khemudnc1ycgomjbqc/.pdf?rlkey=t7ke76bvksmgyh99o7q8rfvtc&st=3mf1qvab&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n40',
+                                                    subject_id: '4', 
+                                                    title: ' باب خامس قوي م هـنـاء   ',
+                                                    description: '11',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/hkm932b5i9trktgbs0b42/1.pdf?rlkey=dcgzgakdltiax7ifccgy7kcni&st=s7b9kyyd&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n41',
+                                                    subject_id: '4', 
+                                                    title: ' باب سادس قوي م هـنـاء   ',
+                                                    description: '12',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/jek0xv6itv9nq47rkvb3b/.pdf?rlkey=8dcbzfscofgzjn8es2m09fbtl&st=pmd7zqwl&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n42',
+                                                    subject_id: '5', 
+                                                    title: ' كتاب الكترونيات رقمية   ',
+                                                    description: '1',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/z3bzx1f0lx7b4m9lp86ko/.pdf?rlkey=z1vozx5gxpquf9ruk68ftpaiw&st=ns46e0jf&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n43',
+                                                    subject_id: '5', 
+                                                    title: 'إلكترونيات  رقمية مكتبه ابو زياد ',
+                                                    description: '2',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/tc9upwunqplwz2spiw2j4/.pdf?rlkey=etp3ezq2d7rwnilcb7s62s7l0&st=l7mp8ger&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                  {id: 'n00',
+                                                    subject_id: '5', 
+                                                    title: 'MBIإلكترونيات رقميه  ',
+                                                    description: '3',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/9idetad8imyxrrucovhxo/MBI.pdf?rlkey=kmelyza8rqu52i8tt3ncn1yy6&st=npkdfo2p&dl=1',
+                                                    created_at: new Date().toISOString()    
+                                                 },
+                                                {
+                                                    id: 'n44',
+                                                    subject_id: '5', 
+                                                    title: ' اسكتش الك رقميه   ',
+                                                    description: '4',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/r4anqdohlsdped2bv8kzs/.....pdf?rlkey=477bc3ucktw4rqnkuofksmo91&st=zq8gaaaz&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                  {
+                                                    id: 'n45',
+                                                    subject_id: '5', 
+                                                    title: ' سعيد إلك رقميه   ',
+                                                    description: '5',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/bo95d87dxemnll0sydau5/.pdf?rlkey=k8hrbasmoo80c6kqotalqjhxu&st=z08a7u6x&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                  {
+                                                    id: 'n46',
+                                                    subject_id: '5', 
+                                                    title: ' باب اول رقمية م لولة   ',
+                                                    description: '6',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/fmiwvvlyclofpa5ltmyuk/.pdf?rlkey=s3g3hwr492ppvfyz2guopjsm7&st=w9tvczc5&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                     {
+                                                    id: 'n47',
+                                                    subject_id: '5', 
+                                                    title: ' باب ثاني رقمية م لولة   ',
+                                                    description: '7',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/z2ui2ua69b2kdmyibyff4/.pdf?rlkey=8rtexzjodxia3wbuip95nc1ra&st=2oaywhar&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                     {
+                                                    id: 'n48',
+                                                    subject_id: '5', 
+                                                    title: ' باب ثالث رقمية م لولة   ',
+                                                    description: '8',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/sq5318r8d235l636vvw0m/3.pdf?rlkey=ezxpgix77u9xusfn0at58es0v&st=cqpmklwg&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n49',
+                                                    subject_id: '5', 
+                                                    title: ' باب رابع رقمية م لولة   ',
+                                                    description: '9',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/uo7af67qynbr7375f3lqp/.pdf?rlkey=i7jxqqetxf67zbg9clpv0qri3&st=3wr0cw5r&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n50',
+                                                    subject_id: '6', 
+                                                    title: ' كتاب معالجات ومتحكمات دقيقة   ',
+                                                    description: '1',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/0klnu40rjk4so0j3uhezg/.pdf?rlkey=ni5spttzz7ybtgs8tgp6zvkvs&st=dy7okimh&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n51',
+                                                    subject_id: '6', 
+                                                    title: ' MBI مذكرة_معالجات   ',
+                                                    description: '2',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/xn874slgpt2o0yoiahvgg/MBI-_.pdf?rlkey=ju1lvhjszudc415re6g99wsfi&st=928rwc47&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n52',
+                                                    subject_id: '6', 
+                                                    title: ' سعيد معالجات ',
+                                                    description: '3',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/qf7g2vcy7977r1ab5ycdk/.pdf?rlkey=vd8uy9g542eba5rzy60we4yki&st=hkfjvj7b&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n53',
+                                                    subject_id: '6', 
+                                                    title: ' م-أشرف معالجات  ',
+                                                    description: '4',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/b81shk8t2fho8uaz0uyq1/.pdf?rlkey=tdgd578pum1g7xoa1xtfu8pwp&st=rab5ix2s&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n54',
+                                                    subject_id: '6', 
+                                                    title: ' مذاكره معالجات باب 1 و 2 م عبدالحميد    ',
+                                                    description: '5',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/gurarrppsy3bsty9wod48/_-_-_-_-_-_.pdf?rlkey=qxeza85e0w81g95d0konuqepw&st=26eurid1&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n55',
+                                                    subject_id: '6', 
+                                                    title: ' مراجعة معالجات م عبدالحميد   ',
+                                                    description: '6',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/oms9q98sp1s9h6w4p9uvn/.pdf?rlkey=lojkxx704hohbdf49rsh38bgb&st=n2rtagd0&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n56',
+                                                    subject_id: '6', 
+                                                    title: ' معالجات إسراء أشرف   ',
+                                                    description: '8',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/rdkj1x2nrttv0z022zali/.pdf?rlkey=mw4peb5s2lfmtkksulw9ws0a9&st=3bq7vklj&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n57',
+                                                    subject_id: '6', 
+                                                    title: ' = معالجات =   ',
+                                                    description: '8',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/e35w2cmtji7goneg53uqc/.pdf?rlkey=ptmg2j7mltzdjgn8o0m2rw1tf&st=ldhzivtf&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n58',
+                                                    subject_id: '7', 
+                                                    title: ' كتاب دوائر الكترونية  ',
+                                                    description: '1',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/m9hrtdse0wvefihccut6e/.pdf?rlkey=3rjp7usr9tgbzhc50f4mz0efb&st=twzx3spg&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                  {
+                                                    id: 'n60',
+                                                    subject_id: '7', 
+                                                    title: ' م-أشرف دوائر إلكترونية   ',
+                                                    description: '2',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/y8696xmf4zlxncuxb44qe/.pdf?rlkey=31n2mx4tieqkhfikoqtlyiev6&st=aotwx23s&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                {
+                                                    id: 'n61',
+                                                    subject_id: '7', 
+                                                    title: '  م-سمر صبحي دوائر إلكترونية',
+                                                    description: '3',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/qkqbicz5sgao3ntdmg6y1/.pdf?rlkey=giri9orsie97lomm2a1z6vlny&st=r4q7qa89&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                  {
+                                                    id: 'n62',
+                                                    subject_id: '7', 
+                                                    title: '  نظري دوائر إلكترونية',
+                                                    description: '4',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/yqnvc4ohxc8q5lutaatxh/.pdf?rlkey=a5qyhwyi5q424gzs5vkd45rh2&st=au0vkcey&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n68',
+                                                    subject_id: '7', 
+                                                    title: '  دوائر فى شوال ',
+                                                    description: '5',
+                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/d0limsmvzqssku3kqgda7/.pdf?rlkey=jo723cugkl2boztqmmz09ffpi&st=fl1cd05r&dl=1',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                            ]);
+
+                                 setLocalData('playlists', [
+                                {
+                                    id: 'p1',
+                                    subject_id: '1', // المادة الأولى: تك ورش الكترونية
+                                    title: 'شرح ماده تك ورش الكترونية',
+                                    description: 'قائمه يوتيوب تشرح ماده تك ورش الكترونية',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLXvLsH8q7jCh_WHPhJefolRrLQClarq6H&si=WV511BtUmC2y_uAE',
+                                    created_at: new Date().toISOString()
+                                },
+                                {
+                                    id: 'p2',
+                                    subject_id: '3', 
+                                    title: 'شرح ماده تك أساسيات شبكات حاسب',
+                                    description: 'قائمه يوتيوب تشرح ماده أساسيات شبكات حاسب',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLMtGXqqv8Y-o39k2pvp2d5dFE_s9Gn3Rx&si=brN7UxOuANYXDYb-',
+                                    created_at: new Date().toISOString()
+                                },
+                                 {
+                                    id: 'p3',
+                                    subject_id: '4', 
+                                    title: '1 شرح ماده الكترونات قوى كهربية',
+                                    description: 'قائمه يوتيوب تشرح ماده الكترونات قوى كهربية',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLGc5yhl36AZobbpLAROi9eJHyhG1B5p0u&si=34NYXCq-TWKs23G0',
+                                    created_at: new Date().toISOString()
+                                },
+                                      {
+                                    id: 'p4',
+                                    subject_id: '4', 
+                                    title: '2 شرح ماده الكترونات قوى كهربية',
+                                    description: 'قائمه يوتيوب تشرح ماده الكترونات قوى كهربية',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLXvLsH8q7jCjrRtRissA49Wbp3Ls_AAsI&si=1tLeone1usZbZupj',
+                                    created_at: new Date().toISOString()
+                                },
+                                     {
+                                    id: 'p5',
+                                    subject_id: '5', 
+                                    title: '1 شرح ماده ماده الكترونيات رقمية',
+                                    description: 'قائمه يوتيوب تشرح ماده الكترونيات رقمية',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLrCcWQykzyF5KUMqDo6mTWYE-KFMX3rX1&si=6J0AdIUss6VM4kPC',
+                                    created_at: new Date().toISOString()
+                                },
+                                   {
+                                    id: 'p6',
+                                    subject_id: '5', 
+                                    title: '2 شرح ماده ماده الكترونيات رقمية',
+                                    description: 'قائمه يوتيوب تشرح ماده الكترونيات رقمية',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLXvLsH8q7jCj8uYqxyr0Iexq2hiod2pVu&si=oQ7NLwYZKFxt9ixy',
+                                    created_at: new Date().toISOString()
+                                },
+                                      {
+                                    id: 'p7',
+                                    subject_id: '6', 
+                                    title: '1 شرح ماده معالجات ومتحكمات دقيقة',
+                                    description: 'قائمه يوتيوب تشرح ماده معالجات ومتحكمات دقيقة',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLGc5yhl36AZq3QLYH9_FNYP35PHF1_IqV&si=SAWIwgy1hgPB0s-2',
+                                    created_at: new Date().toISOString()
+                                },
+                                                  {
+                                    id: 'p8',
+                                    subject_id: '6', 
+                                    title: '2 شرح ماده معالجات ومتحكمات دقيقة',
+                                    description: 'قائمه يوتيوب تشرح ماده معالجات ومتحكمات دقيقة',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLXvLsH8q7jChMQo_4bNfMga7NUvwxuEqS&si=bHxIDdcVv8xA9R37',
+                                    created_at: new Date().toISOString()
+                                },
+                                                             {
+                                    id: 'p9',
+                                    subject_id: '7', 
+                                    title: 'شرح ماده دوائر الكترونية',
+                                    description: 'قائمه يوتيوب تشرح ماده دوائر الكترونية',
+                                    youtube_url: 'https://youtube.com/playlist?list=PLXvLsH8q7jCicFrJY1FX2A0Lax_sIOHxO&si=SktLefJzC3GTemWZ',
+                                    created_at: new Date().toISOString()
+                                },
+
+                            ]);
+
+               setLocalData('exams', [
+                    {
+                        id: 'e1',
+                        subject_id: '1',
+                        title: 'امتحان 2025',
+                        description: '2025',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/puzwxlcepnailfsmhjkt2/25.jpg?rlkey=pnivqjpnsyf6xd7j3sdapvoao&st=6psb2l9o&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                      {
+                        id: 'e2',
+                        subject_id: '1',
+                        title: 'امتحان 2024',
+                        description: '2024',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/r8t9u88vk6xkzp1e1fywr/24.jpg?rlkey=sjj6iz5ml1cv6kk1gtsbdaw44&st=e6485mzy&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                      {
+                        id: 'e3',
+                        subject_id: '1',
+                        title: 'امتحان 2023',
+                        description: '2023',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/x2zdonlibwbms6be18r7a/23.jpg?rlkey=1a8ocebokqtl2r2xwwxod8ngo&st=niqks37f&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                      {
+                        id: 'e4',
+                        subject_id: '1',
+                        title: 'امتحان 2022',
+                        description: '2022',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/k1l86gjuttjtbvcjbr97g/22.jpg?rlkey=9g4iwosjfmd36dvvgvjntms9h&st=ectv6o1e&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                       {
+                        id: 'e5',
+                        subject_id: '3',
+                        title: 'امتحان 2024',
+                        description: '2024',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/hrenuaf6xbtu8vqin10aj/24.jpg?rlkey=rqnsq85p6ronlh30sk62ofi43&st=4s5iddkx&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                        {
+                        id: 'e6',
+                        subject_id: '3',
+                        title: 'امتحان 2023',
+                        description: '2023',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/2d791pl4v9jy719joz6vz/23.jpg?rlkey=l80h1tn2hnjr5clsra6zu22o9&st=qgt9y8sq&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                        {
+                        id: 'e7',
+                        subject_id: '3',
+                        title: 'امتحان 2022',
+                        description: '2022',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/mj8ockgi1lwf9d6grre6x/.pdf?rlkey=jizguu80pkoz1hf4qkxkvfmfv&st=gynj4ps2&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                        {
+                        id: 'e8',
+                        subject_id: '2',
+                        title: 'امتحان 2025',
+                        description: '2025',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/jenie9ylntjdiv7xihijg/25.jpg?rlkey=bivgfpz0bzcrped6a1wxfy1gh&st=icp276dd&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                          {
+                        id: 'e9',
+                        subject_id: '2',
+                        title: 'امتحان 2024',
+                        description: '2024',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/r02fab39hok64hufil7oq/24.jpg?rlkey=cq78a3iydef2uymfdty6q38qg&st=mmnhpct6&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                          {
+                        id: 'e10',
+                        subject_id: '2',
+                        title: 'امتحان 2023',
+                        description: '2023',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/wi0oju4pmuetxof5txykg/23.jpg?rlkey=zqeduu3i67scsgapc3uah34ff&st=sxd1na2c&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                      {
+                        id: 'e11',
+                        subject_id: '2',
+                        title: 'امتحان 2022',
+                        description: '2022',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/x3qa41mu8lxbvlujx1thx/22.jpg?rlkey=6bi70emt6vx2qjgetatialehj&st=eg8x01q4&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                      {
+                        id: 'e12',
+                        subject_id: '4',
+                        title: 'امتحان 2025',
+                        description: '2025',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/okcb8g2dj1xiid2cmbrqi/25.jpg?rlkey=i7r4wpqbm8p12bbma0b3yojm0&st=mctb5bpf&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                     {
+                        id: 'e13',
+                        subject_id: '4',
+                        title: 'امتحان 2023',
+                        description: '2023',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/2m4wzgrbfpt7phhvyxpu5/23.jpg?rlkey=ypn17ugp6t1ijywypoz6ssg7c&st=419ouw8p&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                     {
+                        id: 'e14',
+                        subject_id: '4',
+                        title: 'امتحان 2022',
+                        description: '2022',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/fq3cu1d3es31hnqjxopg3/22.jpg?rlkey=qyokgmtolrtsho06z7f457cpf&st=w9wao04v&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                              {
+                        id: 'e15',
+                        subject_id: '5',
+                        title: 'امتحان1 2025',
+                        description: '2025',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/1bnsno2b1o9856pqk6m4g/25.jpg?rlkey=4u0zo5yj2afal7t7ncwdsgqi0&st=p5ipbpbz&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                                {
+                        id: 'e16',
+                        subject_id: '5',
+                        title: 'امتحان2 2025',
+                        description: '2025',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/k82pwvu41y98bws70of02/25-2.jpg?rlkey=iltt81vt7zqzdx8353i0o8lyn&st=ao9q6rbs&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                                {
+                        id: 'e17',
+                        subject_id: '5',
+                        title: 'امتحان 2023',
+                        description: '2023',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/0kb2g5eg6cl336mgco3tn/23.jpg?rlkey=9j98shpnxirspxzcbnlhmorn9&st=9lcaus5g&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                                {
+                        id: 'e18',
+                        subject_id: '5',
+                        title: 'امتحان 2022',
+                        description: '2022',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/5jzcpyw7zm4ktm8sjyneo/22.jpg?rlkey=rc4ormn3bjjwnvczu52qp0aar&st=vf6m1yq5&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                            {
+                        id: 'e19',
+                        subject_id: '6',
+                        title: 'امتحان 2025',
+                        description: '2025',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/xi45abpo3u5p2ecupdk1y/25.jpg?rlkey=ybyuijpqbvs46zum3nx74enhk&st=tcfgld8u&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                                {
+                        id: 'e20',
+                        subject_id: '6',
+                        title: 'امتحان 2024',
+                        description: '2024',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/11k8naiseb7zb4aeckgs4/24.jpg?rlkey=o4d324lv2xfww9blppyk0tkxj&st=9fulq1zg&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                                {
+                        id: 'e21',
+                        subject_id: '6',
+                        title: 'امتحان 2023',
+                        description: '2023',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/gik00s8e1ridzi6425h5j/23.jpg?rlkey=r0ra4s73o0sikqc2hzzfeziy1&st=d2w36vz1&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                                {
+                        id: 'e22',
+                        subject_id: '6',
+                        title: 'امتحان 2022',
+                        description: '2022',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/smp9vha1va98tevqlmjii/22.jpg?rlkey=ltsp38i1iouj4tr8hj8zzhhaw&st=jbmbhhk0&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                       {
+                        id: 'e23',
+                        subject_id: '7',
+                        title: 'امتحان 2025',
+                        description: '2025',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/wegesjs3x3afg8t1cprqh/25.jpg?rlkey=folske91ij124k6i127xutu7w&st=bm2zi5y2&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                       {
+                        id: 'e24',
+                        subject_id: '7',
+                        title: 'امتحان 2024',
+                        description: '2024',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/jsfeu2h467r3i00flxof8/24.jpg?rlkey=luulot056zr938wss0g91xz0j&st=276nxxih&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                       {
+                        id: 'e25',
+                        subject_id: '7',
+                        title: 'امتحان 2023',
+                        description: '2023',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/undbekdcfbgy2ce4p5dc8/23.jpg?rlkey=k5aoopivf8mv3398wa5u72omb&st=a5gy8izr&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                       {
+                        id: 'e26',
+                        subject_id: '7',
+                        title: 'امتحان 2022',
+                        description: '2022',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/f38hhq1u8pu0nj9u9hdwc/22.jpg?rlkey=qz1zfyqhg3r4ujwp9ow3ybwrh&st=9lfrh3gm&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                        {
+                        id: 'e27',
+                        subject_id: '3',
+                        title: 'امتحان 2021',
+                        description: '2021',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/q39c2e6eutoeytrxyo147/21.jpg?rlkey=jdw22kipaqvgbqlh9kngp4owy&st=echjvm5s&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                           {
+                        id: 'e28',
+                        subject_id: '3',
+                        title: 'امتحان 2020',
+                        description: '2020',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/12zivrl05m0msyk9yovjb/20.jpg?rlkey=aanj1yn3mps417ppou9svisey&st=oqbr6kyo&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                      {
+                        id: 'e29',
+                        subject_id: '3',
+                        title: 'امتحان 2019',
+                        description: '2019',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/0msvxacfzzb98t5q12soi/19.jpg?rlkey=p4vzelx3y2ewe0l0pwohb4k1i&st=qz1h0ke7&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                     {
+                        id: 'e30',
+                        subject_id: '3',
+                        title: 'امتحان 2017',
+                        description: '2017',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/lb0o6lo5ttf8fvtyg8001/17.jpg?rlkey=qtax3h32lh2few8tpnqqv195m&st=oc9n6rdh&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                       {
+                        id: 'e31',
+                        subject_id: '3',
+                        title: 'امتحان 2016',
+                        description: '2016',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/tfcuhiwmo18x3mktn2i9i/16.jpg?rlkey=slamh2i61fjzplzfhgnue4gga&st=mrymlrf6&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                      {
+                        id: 'e31',
+                        subject_id: '3',
+                        title: 'امتحان 2016',
+                        description: '2016',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/tfcuhiwmo18x3mktn2i9i/16.jpg?rlkey=slamh2i61fjzplzfhgnue4gga&st=mrymlrf6&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                          {
+                        id: 'e32',
+                        subject_id: '2',
+                        title: 'امتحان 2021',
+                        description: '2021',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/zc3djjvuu5s8jiow24ogu/21.jpg?rlkey=6c2j22vkmnut2sx7fg2ch4zfp&st=mx21d2vs&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                           {
+                        id: 'e33',
+                        subject_id: '2',
+                        title: 'امتحان 2020',
+                        description: '2020',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/2366is4rsxai3no84fczk/20.jpg?rlkey=y3z7j5vcwk33yttfko7knxa60&st=e3v9bsk0&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                      {
+                        id: 'e34',
+                        subject_id: '2',
+                        title: 'امتحان 2019',
+                        description: '2019',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/026xe0z2il7x07c7gkghd/19.jpg?rlkey=o5faqk7kzhkd8xlwbzvk63o0s&st=ct4ktl5n&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                          {
+                        id: 'e35',
+                        subject_id: '2',
+                        title: 'امتحان 2018',
+                        description: '2018',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/nxgvw1al044thrk1ki3xg/18.jpg?rlkey=gvvjqw0xd2n5icc56zyy0h583&st=l40j05cs&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e36',
+                        subject_id: '1',
+                        title: 'امتحان 2021',
+                        description: '2021',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/l319mgmayvmjubbx7srlv/21.jpg?rlkey=4qxkj794za61jlo3izty8fwxm&st=gpqm9rld&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                           {
+                        id: 'e37',
+                        subject_id: '1',
+                        title: 'امتحان 2020',
+                        description: '2020',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/scey55hjhtd59fwy4vgve/20.jpg?rlkey=doqmvee6k08iceq15eib0bz4w&st=9dsk42z8&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                         {
+                        id: 'e38',
+                        subject_id: '1',
+                        title: 'امتحان 2018',
+                        description: '2018',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/o26240kwz2p6u4xjgjd1s/18.jpg?rlkey=gwz7i6dld55g45lhi8zwxqo0o&st=tgu38nwx&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                       {
+                        id: 'e39',
+                        subject_id: '1',
+                        title: 'امتحان 2017',
+                        description: '2017',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/h5myw6dg3zgbhhz4ts0nl/17.jpg?rlkey=7w92x3c1zv9ij7wzrv4cawtro&st=7vegjwo5&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                        {
+                        id: 'e40',
+                        subject_id: '4',
+                        title: 'امتحان 2021',
+                        description: '2021',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/03igu8b08oemidvjbnlbn/21.jpg?rlkey=38pn9pjkkf7qqfvfoin1mgitb&st=rg746ki4&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e41',
+                        subject_id: '4',
+                        title: 'امتحان 2020',
+                        description: '2020',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/g2l5fi38x0moye2kq9fzq/20.jpg?rlkey=twzel8vfyomz8wsvq6muhltoi&st=ilqfd9dg&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e42',
+                        subject_id: '4',
+                        title: 'امتحان 2019',
+                        description: '2019',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/vt84y7mz0ln3gzr4xd6c2/19.jpg?rlkey=khe5r47je85rtkmq3t0eyrv8p&st=zfn2ti3c&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                     {
+                        id: 'e43',
+                        subject_id: '4',
+                        title: 'امتحان 2018',
+                        description: '2018',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/as8kk54kv9ouugzh5tqol/18.jpg?rlkey=hzgi780bef5z0h1tman6s1txr&st=eyb0ib6n&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                       {
+                        id: 'e44',
+                        subject_id: '4',
+                        title: 'امتحان 2017',
+                        description: '2017',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/5swzwrxy11ng58gvna15n/17.jpg?rlkey=zwe2bbd67tezcn7clq1x7z6e7&st=h2h42fpc&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                      {
+                        id: 'e45',
+                        subject_id: '4',
+                        title: 'امتحان 2024',
+                        description: '2024',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/rmzioo9juy6pdyx87wuow/24.jpg?rlkey=5hq5i5tf8u2q2c8dk5cfopzsr&st=61dkba30&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                     {
+                        id: 'e46',
+                        subject_id: '5',
+                        title: 'امتحان 2021',
+                        description: '2021',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/dhldbz4und0s3tdnhxzc0/21.jpg?rlkey=ihd52re5uexlui715ky1zm665&st=m2n5fizy&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e47',
+                        subject_id: '5',
+                        title: 'امتحان 2020',
+                        description: '2020',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/am238dri6yv0hyakp72zd/20.jpg?rlkey=co6jjg0jejcy226v1f286jcn9&st=yeh5l3nf&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e48',
+                        subject_id: '5',
+                        title: 'امتحان 2019',
+                        description: '2019',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/loocsz06n5ar90jd9oqgo/19.jpg?rlkey=peq8p7930by1jrychtltjl50g&st=xlw8z7oe&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                     {
+                        id: 'e49',
+                        subject_id: '5',
+                        title: 'امتحان 2018',
+                        description: '2018',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/fq6zckn0qpayf5wsmj22m/18.jpg?rlkey=7tj6jhyxrk07k3eob781higt2&st=12bqgsaa&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                       {
+                        id: 'e50',
+                        subject_id: '5',
+                        title: 'امتحان 2017',
+                        description: '2017',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/y7asxbwewgzaox6b8u74j/17.jpg?rlkey=x86gqjp16n9tovbki8jw2wm7a&st=u5kho601&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                                         {
+                        id: 'e51',
+                        subject_id: '6',
+                        title: 'امتحان 2021',
+                        description: '2021',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/x2ncozakqhin4uzij100e/21.jpg?rlkey=zcdtrmdglyevi0ofinao41y64&st=mqhcevsa&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e52',
+                        subject_id: '6',
+                        title: 'امتحان 2020',
+                        description: '2020',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/nw0i5hyt0zknollnn6shu/20.jpg?rlkey=9rorzlypxdrp2knn80hflfhf8&st=ozwe8j6l&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e53',
+                        subject_id: '6',
+                        title: 'امتحان 2019',
+                        description: '2019',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/lph0vhp5qrcbokysleuro/19.jpg?rlkey=ahglouue7c0uiqrymke6yo6nc&st=vfmhfq69&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                     {
+                        id: 'e54',
+                        subject_id: '6',
+                        title: 'امتحان 2018',
+                        description: '2018',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/irp70ecvrzitzvdg61qmx/18.jpg?rlkey=jl2urynt8iy7cpw5427pkif9p&st=b30h85c3&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e56',
+                        subject_id: '7',
+                        title: 'امتحان 2021',
+                        description: '2021',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/adj3ix6ps91wcbscpvm4p/21.jpg?rlkey=uzs6dikffst4cd6uscq87ksr1&st=glvwos8g&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e57',
+                        subject_id: '7',
+                        title: 'امتحان 2020',
+                        description: '2020',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/b3n31j5p0tgp30h70li3i/20.jpg?rlkey=dhcp9a2yjky2vhrsuspy05hxm&st=j0ljn5mu&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e58',
+                        subject_id: '7',
+                        title: 'امتحان 2019',
+                        description: '2019',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/9cud7bhik5w4ljy75z05v/19.jpg?rlkey=eky8lhaynh3bhdotx916ugn9i&st=cgpiu1l7&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e59',
+                        subject_id: '7',
+                        title: 'امتحان 2018',
+                        description: '2018',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/lzfyesyskc5a7583u981c/18.jpg?rlkey=8jbs4x58jxy8n36heyhaonmvd&st=neph26qa&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                          {
+                        id: 'e60',
+                        subject_id: '7',
+                        title: 'امتحان 2017',
+                        description: '2017',
+                        dropbox_link: 'https://www.dropbox.com/scl/fi/q8vfvtpqows0r6kh9m0e5/17.jpg?rlkey=u1fwwuj2wl6yxqkikmhlkygpu&st=84ztrqwl&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+
+                    ]);
+
+            
+            console.log('[v0] Sample data initialized');
+        }
+
+        async function initApp() {
+            console.log('[v0] Starting app initialization...');
+            
+            try {
+                initializeSampleData();
+                console.log('[v0] Loading subjects...');
+                await loadSubjects();
+                console.log('[v0] App initialized successfully');
+            } catch (error) {
+                console.error('[v0] Error initializing app:', error);
+                // Fallback to show empty state
+                document.getElementById('noSubjects').classList.remove('hidden');
+                document.getElementById('subjectCount').textContent = '0 مادة متاحة';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('[v0] DOM loaded, initializing app...');
+            initApp();
+        });
+    
+// إظهار العناصر عند السكرول
+function revealOnScroll() {
+    const reveals = document.querySelectorAll('.reveal');
+    for (let i = 0; i < reveals.length; i++) {
+        const windowHeight = window.innerHeight;
+        const elementTop = reveals[i].getBoundingClientRect().top;
+        const elementVisible = 50;
+        if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add('visible');
+        }
+    }
+}
+window.addEventListener('scroll', revealOnScroll);
+document.addEventListener('DOMContentLoaded', revealOnScroll);
+
+        function showAllSections() {
+            document.getElementById('notesSection').style.display = 'block';
+            document.getElementById('playlistsSection').style.display = 'block';
+            document.getElementById('examsSection').style.display = 'block';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('allBtn');
+        }
+
+        function showNotesOnly() {
+            document.getElementById('notesSection').style.display = 'block';
+            document.getElementById('playlistsSection').style.display = 'none';
+            document.getElementById('examsSection').style.display = 'none';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('notesBtn');
+        }
+
+        function showPlaylistsOnly() {
+            document.getElementById('notesSection').style.display = 'none';
+            document.getElementById('playlistsSection').style.display = 'block';
+            document.getElementById('examsSection').style.display = 'none';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('playlistsBtn');
+        }
+
+        function showExamsOnly() {
+            document.getElementById('notesSection').style.display = 'none';
+            document.getElementById('playlistsSection').style.display = 'none';
+            document.getElementById('examsSection').style.display = 'block';
+            document.getElementById('contentGrid').className = 'grid grid-cols-1 gap-4 sm:gap-8';
+            
+            // Update button styles
+            updateButtonStyles('examsBtn');
+        }
+
+        function updateButtonStyles(activeButtonId) {
+            // Reset all buttons to default style
+            const buttons = ['allBtn', 'notesBtn', 'playlistsBtn', 'examsBtn'];
+            buttons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) {
+                    if (btnId === 'allBtn') {
+                        btn.className = 'bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    } else if (btnId === 'notesBtn') {
+                        btn.className = 'bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    } else if (btnId === 'playlistsBtn') {
+                        btn.className = 'bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    } else if (btnId === 'examsBtn') {
+                        btn.className = 'bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-colors';
+                    }
+                }
+            });
+            
+            // Highlight active button
+            const activeBtn = document.getElementById(activeButtonId);
+            if (activeBtn) {
+                if (activeButtonId === 'allBtn') {
+                    activeBtn.className = 'btn-primary px-6 py-3 rounded-lg font-bold';
+                } else {
+                    activeBtn.className = activeBtn.className.replace('hover:bg-', 'bg-').replace('600', '500');
+                }
+            }
+        }
+           
+</script>
+</body>
+</html>
+
