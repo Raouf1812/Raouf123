@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Site Under Maintenance</title>
+  <style>
+    :root{
+      --bg:#050507;
+      --gold1:#ffd86b;
+      --gold2:#d4af37;
+      --gold3:#b8860b;
+    }
+    html,body{height:100%;margin:0;}
+    body{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:100vh;
+      background: var(--bg);
+      font-family: Arial, Helvetica, sans-serif;
+      overflow:hidden;
+    }
+    .card{
+      padding:40px 60px;
+      border-radius:18px;
+      background: rgba(255, 215, 107, 0.05);
+      border:1px solid rgba(212,175,55,0.25);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    h1{
+      margin:0;
+      font-size:48px;
+      font-weight:800;
+      background: linear-gradient(90deg, var(--gold1), var(--gold2), var(--gold3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      position:relative;
+      text-align:center;
+    }
+    h1:after{
+      content:"";
+      position:absolute; left:0; top:0; right:0; bottom:0;
+      background:linear-gradient(120deg, rgba(255,255,255,0.0) 0%, rgba(255,255,255,0.6) 45%, rgba(255,255,255,0.0) 60%);
+      transform:translateX(-120%);
+      animation:shimmer 3s linear infinite;
+      mix-blend-mode:overlay;
+    }
+    @keyframes shimmer{to{transform:translateX(220%)}}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Site Under Maintenance</h1>
+  </div>
+</body>
+</html>
