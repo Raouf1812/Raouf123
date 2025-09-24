@@ -612,7 +612,7 @@
                                 <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
                                     <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${note.title}</h4>
                                     <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${note.description}</p>
-                                    <a href="${note.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                    <a href="${note.file_path}" download class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
                                         <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
                                         تحميل المذكرة
                                     </a>
@@ -648,7 +648,7 @@
                                 <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
                                     <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${exam.title}</h4>
                                     <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${exam.description}</p>
-                                    <a href="${exam.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                    <a href="${exam.file_path}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
                                         <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
                                         تحميل الامتحان
                                     </a>
@@ -712,7 +712,7 @@
                                         <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
                                             <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${note.title}</h4>
                                             <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${note.description}</p>
-                                            <a href="${note.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                            <a href="${note.file_path}" download class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
                                                 <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
                                                 تحميل المذكرة
                                             </a>
@@ -748,7 +748,7 @@
                                         <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
                                             <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${exam.title}</h4>
                                             <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${exam.description}</p>
-                                            <a href="${exam.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                            <a href="${exam.file_path}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
                                                 <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
                                                 تحميل الامتحان
                                             </a>
@@ -922,7 +922,7 @@
                                             <h4 class="font-bold text-white text-sm mb-1">${note.title}</h4>
                                             <p class="text-slate-400 text-xs mb-2">${note.description}</p>
                                             <div class="flex gap-2">
-                                                <a href="${note.dropbox_link}" target="_blank" class="text-green-400 text-xs hover:text-green-300">عرض</a>
+                                                <a href="${note.file_path}" download class="text-green-400 text-xs hover:text-green-300">عرض</a>
                                                 <button onclick="deleteNote('${note.id}')" class="text-red-400 text-xs hover:text-red-300">حذف</button>
                                             </div>
                                         </div>
@@ -956,7 +956,7 @@
                                             <h4 class="font-bold text-white text-sm mb-1">${exam.title}</h4>
                                             <p class="text-slate-400 text-xs mb-2">${exam.description}</p>
                                             <div class="flex gap-2">
-                                                <a href="${exam.dropbox_link}" target="_blank" class="text-purple-400 text-xs hover:text-purple-300">عرض</a>
+                                                <a href="${exam.file_path}" target="_blank" class="text-purple-400 text-xs hover:text-purple-300">عرض</a>
                                                 <button onclick="deleteExam('${exam.id}')" class="text-red-400 text-xs hover:text-red-300">حذف</button>
                                             </div>
                                         </div>
@@ -983,7 +983,7 @@
             
             const title = document.getElementById('noteTitle').value;
             const description = document.getElementById('noteDescription').value;
-            const dropbox_link = document.getElementById('noteLink').value;
+            const file_path = document.getElementById('noteLink').value;
             
             try {
                 if (useLocalStorage) {
@@ -993,7 +993,7 @@
                         subject_id: currentSubjectId,
                         title,
                         description,
-                        dropbox_link,
+                        file_path,
                         created_at: new Date().toISOString()
                     };
                     notes.push(newNote);
@@ -1001,7 +1001,7 @@
                 } else {
                     const { data, error } = await supabase
                         .from('notes')
-                        .insert([{ subject_id: currentSubjectId, title, description, dropbox_link }])
+                        .insert([{ subject_id: currentSubjectId, title, description, file_path }])
                         .select();
                     
                     if (error) throw error;
@@ -1069,7 +1069,7 @@
             
             const title = document.getElementById('examTitle').value;
             const description = document.getElementById('examDescription').value;
-            const dropbox_link = document.getElementById('examLink').value;
+            const file_path = document.getElementById('examLink').value;
             
             try {
                 if (useLocalStorage) {
@@ -1079,7 +1079,7 @@
                         subject_id: currentSubjectId,
                         title,
                         description,
-                        dropbox_link,
+                        file_path,
                         created_at: new Date().toISOString()
                     };
                     exams.push(newExam);
@@ -1087,7 +1087,7 @@
                 } else {
                     const { data, error } = await supabase
                         .from('exams')
-                        .insert([{ subject_id: currentSubjectId, title, description, dropbox_link }])
+                        .insert([{ subject_id: currentSubjectId, title, description, file_path }])
                         .select();
                     
                     if (error) throw error;
@@ -1221,7 +1221,7 @@
                                                     subject_id: '1', 
                                                     title: '  1 - الجزء الأول - نظرى ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/pcybxu900dp34vjrlbnhe/1.pdf?rlkey=egtgtbbnunvuqj86km5cq69ry&st=1gsznvbk&dl=1',
+                                                    file_path: 'file/1 - الجزء الأول - نظرى.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1229,7 +1229,7 @@
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: ' 2_الجزء_الثانى_الأحمال_الحرارية',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/mebksu5t4zm1g0r48vacj/2_-_-_-_.pdf?rlkey=7jogrj8u352fwtmiz0nhfmlup&st=fkwjej5g&dl=1',
+                                                    file_path: 'file/2_الجزء_الثانى_الأحمال_الحرارية.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                   {
@@ -1237,7 +1237,7 @@
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: '3_الجزء_الثالث_العمليات_السيكرومترية',
                                                     description: '3',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/8x6g2jaifzjyvw5br9a4s/3_-_-_-_.pdf?rlkey=smucaa54igl7kz81c8zn6al7v&st=ebqci6ug&dl=1',
+                                                    file_path: 'file/3_الجزء_الثالث_العمليات_السيكرومترية.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1245,7 +1245,7 @@
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: 'أنظمة تكييف الهواء',
                                                     description: '4',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/ibjz52fnafqu9uk4u4a6b/.pdf?rlkey=rq8gyqoqvqj1zlet2o455u165&st=th4ho0um&dl=1',
+                                                    file_path: 'file/أنظمة تكييف الهواء.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1253,24 +1253,15 @@
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: 'مادة أنظمة تكييف',
                                                     description: '5',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/js8bmyow1gxubbyqnwbzz/.pdf?rlkey=t5dsvl4yhtclcie2ebzn9hzyk&st=dgnkseyd&dl=1',
+                                                    file_path: 'file/مادة أنظمة تكييف.pdf',
                                                     created_at: new Date().toISOString()
-                                                },
-                                                 {
-                                                    id: 'n6',
-                                                    subject_id: '1', // مذكرة للمادة الأولى
-                                                    title: '  مادة انظمه تكييف',
-                                                    description: '6',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/50qqvlmkr8f77pux3b7vy/.pdf?rlkey=g0fpf4qsx3zcr8cmx9kmu0ntv&st=tkzgqtu2&dl=1',
-                                                    created_at: new Date().toISOString()
-                                                },
-                                                 
+                                                },                                                 
                                                         {
                                                     id: 'n9',
                                                     subject_id: '2', 
                                                     title: 'قوانين  ماده الالات كهربية',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/akqiuwziqrtk4n5ykhpkk/.pdf?rlkey=zwluv2lmv823d3ah0i7b93ns2&st=a8ydygsr&dl=1',
+                                                    file_path: 'file/قوانين  ماده الالات كهربية.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 
@@ -1279,7 +1270,7 @@
                                                     subject_id: '2', 
                                                     title: 'مذاكره شرح الالات كهربية ',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/xxoas4zeaaut2zvmbngcq/.pdf?rlkey=vlvqzi2kw9vtxw0855s9blzsj&st=sj702qnh&dl=1',
+                                                    file_path: 'file/مذاكره شرح الالات كهربية.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 
@@ -1288,7 +1279,7 @@
                                                     subject_id: '2', 
                                                     title: 'ملخص نظري الات كهربيه ',
                                                     description: '3',
-                                                    dropbox_link: 'hhttps://www.dropbox.com/scl/fi/mtcr451oebbk2c1il2qfw/.pdf?rlkey=hbwi7qa3j5oehjq4qnewj45a0&st=0td835pt&dl=1',
+                                                    file_path: 'file/ملخص نظري الات كهربيه.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                    {
@@ -1296,7 +1287,7 @@
                                                     subject_id: '2', 
                                                     title: 'الات كهربيه 1',
                                                     description: '4',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/860w0yacrv2vww61m0he3/.pdf?rlkey=g6itzezr4681zy8zbopt3d4p2&st=qjiy9ibg&dl=1',
+                                                    file_path: 'file/الات كهربيه',
                                                     created_at: new Date().toISOString()
                                                 },
                                                                  {
@@ -1304,15 +1295,15 @@
                                                     subject_id: '2', 
                                                     title: 'الات كهربية 2 ',
                                                     description: '5',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/6v1kng0ggyz3tqdnra1mv/.pdf?rlkey=cagd8p1upbiyi2uqqfuvswvbv&st=akha59hq&dl=1',
+                                                    file_path: 'file/الات كهربيه متقدمه.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
-                                                {
+                                               {
                                                     id: 'n18',
                                                     subject_id: '3', 
                                                     title: ' ملخص ضبط جوده ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/i04l2m31ijlqud4ldduzm/.pdf?rlkey=pt4jr9px8fbvbxaa9m5k85i29&st=vv42wj0q&dl=1',
+                                                    file_path: 'file/ملخص ضبط جوده.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                          {
@@ -1320,7 +1311,7 @@
                                                     subject_id: '3', 
                                                     title: ' كتاب ضبط الجودة',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/r4bqexfgxvh3jbbtz4en1/.pdf?rlkey=atfgaia9zoqih7oljk2qpv643&st=75a48j14&dl=1',
+                                                    file_path: 'file/كتاب الجودة.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                           {
@@ -1328,7 +1319,7 @@
                                                     subject_id: '3', 
                                                     title: ' ملخص الجودة 2  ',
                                                     description: '3',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/kdk03yut3xgfu9a7tcfes/.pdf?rlkey=53c2p15r2y2hq39yvqoi87umd&st=p72uhzxk&dl=1',
+                                                    file_path: 'file/ضبط جودة.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                   {
@@ -1336,7 +1327,7 @@
                                                     subject_id: '3', 
                                                     title: ' ضبط جودة كامل   ',
                                                     description: '3',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/5emvbghpsv86margl739u/.pdf?rlkey=7pw3b8llumjwrjdsi8lc5o4gr&st=9chfsvdj&dl=1',
+                                                    file_path: 'file/ملخص ضبط جوده.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1344,7 +1335,7 @@
                                                     subject_id: '3', 
                                                     title: ' ضبط الجوده 2 كامل  ',
                                                     description: '4',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/png1883uwdh9nmckgdubd/.pdf?rlkey=vewkwkypwvn3obzgpvxcosn47&st=vlow0sxf&dl=1',
+                                                    file_path: 'file/ضبط الجوده.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1352,7 +1343,7 @@
                                                     subject_id: '3', 
                                                     title: ' ضبط الجودة عظمه   ',
                                                     description: '5',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/890g4zv1i8dm3iv49vv6y/.pdf?rlkey=gqdq25gcja8izbwzofayeht64&st=g06goz67&dl=1',
+                                                    file_path: 'file/ضبط الجودة.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                     
@@ -1361,7 +1352,7 @@
                                                     subject_id: '4', 
                                                     title: ' إنجليزي',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/0d4dij6g9fn53rva1oqq8/.pdf?rlkey=0vj76sg30o639ojyrk4zy7wds&st=ceaqp6sm&dl=1',
+                                                    file_path: 'file/إنجليزي.pdf',
                                                     created_at: new Date().toISOString()
                                                 },  
                                                   {
@@ -1369,7 +1360,15 @@
                                                     subject_id: '4', 
                                                     title: ' كتاب الانجليزي التخصصي ',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/g067jjay6c53g1rbs378x/.pdf?rlkey=uiihi5h45eowidvj5odbtikh0&st=tb2vxbxg&dl=1',
+                                                    file_path: 'file/كتاب الانجليزي التخصصي.pdf',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                     {
+                                                    id: 'n30',
+                                                    subject_id: '4', 
+                                                    title: ' مراجعه الانجليزي  ',
+                                                    description: '3',
+                                                    file_path: 'file/مراجعة انجليزي.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                   
@@ -1378,7 +1377,7 @@
                                                     subject_id: '5', 
                                                     title: ' رسم فني تبريد وتكييف الهواء   ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/5y5tokrx3wc8zzu4qy6bm/.pdf?rlkey=rcg196cjd2owoiicherlq1a1m&st=s5mpsl48&dl=1',
+                                                    file_path: 'file/رسم فني تبريد وتكييف الهواء.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1386,14 +1385,14 @@
                                                     subject_id: '5', 
                                                     title: 'رسم فني ترم اول ',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/91mtyxev3slkpfmr2a8gu/.pdf?rlkey=jq7c34t1jwpeiy7nc6jg0pob4&st=sae2adxl&dl=1',
+                                                    file_path: 'file/رسم فني ترم اول.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                   {id: 'n00',
                                                     subject_id: '5', 
                                                     title: 'رسم   ',
                                                     description: '3',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/anblgc5tnbfxxuofashxn/.pdf?rlkey=9xuc82b8tjd7xl0v9vczxo7sl&st=7k7lfgdx&dl=1',
+                                                    file_path: 'file/رسم.pdf',
                                                     created_at: new Date().toISOString()    
                                                  },
                                                 {
@@ -1401,7 +1400,7 @@
                                                     subject_id: '5', 
                                                     title: ' منهج الرسم الفني   ',
                                                     description: '4',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/cisodnrgmw5a0w2ekwh9v/.pdf?rlkey=vc0a45abw7tbqzwakwpauuy6s&st=xgwdlyk1&dl=0',
+                                                    file_path: 'file/منهج الرسم الفني.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                   
@@ -1410,7 +1409,7 @@
                                                     subject_id: '6', 
                                                     title: ' نظري تحكم تبريد ترم اول   ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/145nf1wda71021n6u9u67/.pdf?rlkey=lur15xsvpfpusxw2n99hw8c00&st=3048ym7m&dl=1',
+                                                    file_path: 'file/نظري تحكم تبريد ترم اول.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1418,7 +1417,7 @@
                                                     subject_id: '6', 
                                                     title: ' ملخص ماده تحكم في معدات التبريد',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/9jfml1294pgc0m1b3i8no/.pdf?rlkey=ouuechiyfuko8c5s6ofcwk5fp&st=wncoes3m&dl=1',
+                                                    file_path: 'file/ملخص ماده تحكم في معدات التبريد.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1426,7 +1425,7 @@
                                                     subject_id: '6', 
                                                     title: ' معمل تحكم فى معدات التبريد',
                                                     description: '3',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/lkptf20ulys5zr8vupxzi/.pdf?rlkey=s51b6kq9w14crmtfd0n71dgvi&st=gr4hz4mm&dl=1',
+                                                    file_path: 'file/معمل تحكم فى معدات التبريد.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1434,7 +1433,7 @@
                                                     subject_id: '6', 
                                                     title: 'مادة تحكم في معدات تبريد  ',
                                                     description: '4',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/x9fuky3w0p5b7cvue83ny/.pdf?rlkey=6sg4akfckdn2sh3ah0z19e4cv&st=y74j06z9&dl=1',
+                                                    file_path: 'file/مادة تحكم في معدات تبريد.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1442,7 +1441,7 @@
                                                     subject_id: '6', 
                                                     title: ' تحكم    ',
                                                     description: '5',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/co38uncwmrkyu63n8blmn/.pdf?rlkey=q9wh2jrtzz5qzm0istl78t4om&st=5wp00l5g&dl=1',
+                                                    file_path: 'file/تحكم.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1450,7 +1449,7 @@
                                                     subject_id: '6', 
                                                     title: ' تحكم في معدات تبريد عظمه   ',
                                                     description: '6',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/0rm58mb8orqlfh6m0uk4i/.pdf?rlkey=x0x568pw5s9y8xyk0mglenzw4&st=kk8rcmv5&dl=1',
+                                                    file_path: 'file/تحكم في معدات تبريد.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                
@@ -1459,7 +1458,7 @@
                                                     subject_id: '7', 
                                                     title: ' تكنولوجيا تبريد الترم الاول  ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/ddk260lvcc6zi1wrrcjbf/.pdf?rlkey=hs670cq7zv22kvansrufjwt82&st=u4wtllzw&dl=1',
+                                                    file_path: 'file/تكنولوجيا تبريد الترم الاول.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                   {
@@ -1467,7 +1466,7 @@
                                                     subject_id: '7', 
                                                     title: ' كتاب مبادئ تك تبريد   ',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/int5f6ao1yc3sjqhp9702/.pdf?rlkey=ptufgnd8yepksd28ep03bidvs&st=jx65omju&dl=1',
+                                                    file_path: 'file/كتاب مبادئ تك تبريد.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1475,7 +1474,7 @@
                                                     subject_id: '7', 
                                                     title: '  كتاب مبادئ تك تبريد',
                                                     description: '3',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/int5f6ao1yc3sjqhp9702/.pdf?rlkey=ptufgnd8yepksd28ep03bidvs&st=t58z12fm&dl=1',
+                                                    file_path: 'file/كتاب مبادئ تك تبريد.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                   {
@@ -1483,23 +1482,16 @@
                                                     subject_id: '7', 
                                                     title: '  مادة مبادئ تك تبريد',
                                                     description: '4',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/emzaberh1zz829e3cqgzl/.pdf?rlkey=v7n994ated69h2k731dc9414v&st=9qdrvwxt&dl=1',
+                                                    file_path: 'file/مادة مبادئ تك تبريد.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
-                                                 {
-                                                    id: 'n68',
-                                                    subject_id: '7', 
-                                                    title: '  معمل مبادئ تبريد',
-                                                    description: '5',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/flyja2gqtlmty5dilucvd/.pdf?rlkey=i53fljtjhd3ja1al5rg6ym9ng&st=8qts1cfb&dl=1',
-                                                    created_at: new Date().toISOString()
-                                                },
+                                           
                                                  {
                                                     id: 'n68',
                                                     subject_id: '7', 
                                                     title: '  ملخص نظري مبادئ تبريد',
-                                                    description: '6',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/70afe0uwaqel5z0atb0sv/.pdf?rlkey=2z8g9q8f9qsjof1vgof0rowzr&st=1ooeawui&dl=1',
+                                                    description: '5',
+                                                    file_path: 'file/ملخص نظري مبادئ تبريد.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                             ]);
@@ -1545,7 +1537,7 @@
                         subject_id: '1',
                         title: 'امتحانات انظمه تكييف',
                         description: 'امتحانات مادا انظمه تكييف',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/c8jbp1e6w5av0d4vc2sz0/.pdf?rlkey=7dmdkzl8z940g41tqgidrbz9q&st=bjtsyfvd&dl=1',
+                        file_path: 'file/11111111',
                         created_at: new Date().toISOString()
                     },
                      {
@@ -1553,7 +1545,7 @@
                         subject_id: '2',
                         title: 'امتحانات الآلات كهربية',
                         description: 'امتحانات مادا الآلات',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/k0nbbhuil2h1i6bx4zdtg/.pdf?rlkey=jsjo8ycfc5ci2h8m7msxvfbmf&st=qf3dn8sb&dl=1',
+                        file_path: 'file/11111111',
                         created_at: new Date().toISOString()
                     },
                      {
@@ -1561,7 +1553,7 @@
                         subject_id: '2',
                         title: 'امتحانات الات كهربئيه',
                         description: 'امتحان مادا الات كهربئيه',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/mmhku1e08a4wp264st7f0/.pdf?rlkey=02yc3qx8oj34oh9hxavx9tzdm&st=e5rzay4c&dl=1',
+                        file_path: 'file/11111111',
                         created_at: new Date().toISOString()
                     },
                      {
@@ -1569,7 +1561,7 @@
                         subject_id: '3',
                         title: 'امتحانات ضبط الجودة',
                         description: 'امتحان مادا ضبط',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/y58s43tdelrrgpjqc0nx9/.pdf?rlkey=fst3x8dyt78tiod3moy2wei23&st=pvgzgkuu&dl=1',
+                        file_path: 'file/11111111',
                         created_at: new Date().toISOString()
                     },
                      {
@@ -1577,7 +1569,7 @@
                         subject_id: '3',
                         title: 'امتحانات ضبط جودة',
                         description: 'امتحان مادا ضبط جودة',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/5c8jhp7jnd7efs35u220m/.pdf?rlkey=6etcw5bgvp2xsx5im87u2uwpw&st=e1ba3gsb&dl=1',
+                        file_path: 'file/11111111',
                         created_at: new Date().toISOString()
                     },
                      {
@@ -1585,7 +1577,7 @@
                         subject_id: '3',
                         title: 'امتحانات ضبط جوده',
                         description: 'امتحانات مادا ضبط جوده',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/ay4tfv2j4wd1wxaie5ylv/.pdf?rlkey=osoq27l0egwvosm1xkvxyawqg&st=24iu6p40&dl=1',
+                        file_path: 'https://www.dropbox.com/scl/fi/ay4tfv2j4wd1wxaie5ylv/.pdf?rlkey=osoq27l0egwvosm1xkvxyawqg&st=24iu6p40&dl=1',
                         created_at: new Date().toISOString()
                     },
                   
@@ -1594,7 +1586,7 @@
                         subject_id: '4',
                         title: 'امتحانات انجليزي',
                         description: 'امتحانات مادا انجليزي',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/4fj2f6l932r7c38bzttpp/.pdf?rlkey=sriplymmyhc89vfogav9layf0&st=pbl3b4lt&dl=1',
+                        file_path: 'file/امتحانات انجليزي.pdf',
                         created_at: new Date().toISOString()
                     },
                      {
@@ -1602,7 +1594,7 @@
                         subject_id: '5',
                         title: 'امتحانات رسم الصف الثاني ترم اول',
                         description: 'امتحان مادا رسم',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/iu64qjm89tbage4pyn17m/.pdf?rlkey=yhx64iuwso7ig72ubd7gmvblf&st=jx9vdxgv&dl=1',
+                        file_path: 'file/امتحانات رسم الصف الثاني ترم اول.pdf',
                         created_at: new Date().toISOString()
                     },
                      {
@@ -1610,7 +1602,7 @@
                         subject_id: '5',
                         title: 'امتحانات رسم تخصصي',
                         description: 'امتحان مادا رسم تخصصي',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/dqgx3321l3r8pdu6ennm1/.pdf?rlkey=yzwn41umsso1lki9gme577p3y&st=rhyealsj&dl=1',
+                        file_path: 'file/امتحانات رسم تخصصي',
                         created_at: new Date().toISOString()
                     },
                      {
@@ -1618,7 +1610,7 @@
                         subject_id: '7',
                         title: 'امتحانات مبادئ تكنلوجيا تبريد',
                         description: 'امتحان مادا مبادئ تكنلوجيا تبريد',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/v7ovvz326qgstkgpiajsk/.pdf?rlkey=c1ch8tdx5hz1s35mmqes94bn3&st=mfin5xfc&dl=1',
+                        file_path: 'file/امتحانات مبادئ ت تبريد.pdf',
                         created_at: new Date().toISOString()
                     },
                      {
@@ -1626,7 +1618,7 @@
                         subject_id: '7',
                         title: 'امتحانات مبادئ تبريد',
                         description: 'امتحان مادا مبادئ تبريد',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/ydo5cizjvuqxm1nyroxge/.pdf?rlkey=uohjt0vb2se2fdw45ubkrg4tt&st=2f9e3br1&dl=1',
+                        file_path: 'file/امتحانات مبادئ تبريد.pdf',
                         created_at: new Date().toISOString()
                     },
                      {
@@ -1634,7 +1626,7 @@
                         subject_id: '7',
                         title: 'امتحانات مبادئ تك تبريد',
                         description: 'امتحان مادا مبادئ تك تبريد',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/oyvpxhegzzvnmapelx3ud/.pdf?rlkey=0cwbjy269626empaw6k818eaq&st=e4f9l4m1&dl=1',
+                        file_path: 'file/امتحانات مبادئ تك تبريد.pdf',
                         created_at: new Date().toISOString()
                     },
                      

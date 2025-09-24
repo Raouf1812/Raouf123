@@ -613,7 +613,7 @@
                                 <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
                                     <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${note.title}</h4>
                                     <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${note.description}</p>
-                                    <a href="${note.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                    <a href="${note.file_path}" download class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
                                         <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
                                         تحميل المذكرة
                                     </a>
@@ -649,7 +649,7 @@
                                 <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
                                     <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${exam.title}</h4>
                                     <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${exam.description}</p>
-                                    <a href="${exam.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                    <a href="${exam.file_path}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
                                         <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
                                         تحميل الامتحان
                                     </a>
@@ -713,7 +713,7 @@
                                         <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
                                             <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${note.title}</h4>
                                             <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${note.description}</p>
-                                            <a href="${note.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                            <a href="${note.file_path}" download class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
                                                 <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
                                                 تحميل المذكرة
                                             </a>
@@ -749,7 +749,7 @@
                                         <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
                                             <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${exam.title}</h4>
                                             <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${exam.description}</p>
-                                            <a href="${exam.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                            <a href="${exam.file_path}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
                                                 <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
                                                 تحميل الامتحان
                                             </a>
@@ -923,7 +923,7 @@
                                             <h4 class="font-bold text-white text-sm mb-1">${note.title}</h4>
                                             <p class="text-slate-400 text-xs mb-2">${note.description}</p>
                                             <div class="flex gap-2">
-                                                <a href="${note.dropbox_link}" target="_blank" class="text-green-400 text-xs hover:text-green-300">عرض</a>
+                                                <a href="${note.file_path}" download class="text-green-400 text-xs hover:text-green-300">عرض</a>
                                                 <button onclick="deleteNote('${note.id}')" class="text-red-400 text-xs hover:text-red-300">حذف</button>
                                             </div>
                                         </div>
@@ -957,7 +957,7 @@
                                             <h4 class="font-bold text-white text-sm mb-1">${exam.title}</h4>
                                             <p class="text-slate-400 text-xs mb-2">${exam.description}</p>
                                             <div class="flex gap-2">
-                                                <a href="${exam.dropbox_link}" target="_blank" class="text-purple-400 text-xs hover:text-purple-300">عرض</a>
+                                                <a href="${exam.file_path}" target="_blank" class="text-purple-400 text-xs hover:text-purple-300">عرض</a>
                                                 <button onclick="deleteExam('${exam.id}')" class="text-red-400 text-xs hover:text-red-300">حذف</button>
                                             </div>
                                         </div>
@@ -984,7 +984,7 @@
             
             const title = document.getElementById('noteTitle').value;
             const description = document.getElementById('noteDescription').value;
-            const dropbox_link = document.getElementById('noteLink').value;
+            const file_path = document.getElementById('noteLink').value;
             
             try {
                 if (useLocalStorage) {
@@ -994,7 +994,7 @@
                         subject_id: currentSubjectId,
                         title,
                         description,
-                        dropbox_link,
+                        file_path,
                         created_at: new Date().toISOString()
                     };
                     notes.push(newNote);
@@ -1002,7 +1002,7 @@
                 } else {
                     const { data, error } = await supabase
                         .from('notes')
-                        .insert([{ subject_id: currentSubjectId, title, description, dropbox_link }])
+                        .insert([{ subject_id: currentSubjectId, title, description, file_path }])
                         .select();
                     
                     if (error) throw error;
@@ -1070,7 +1070,7 @@
             
             const title = document.getElementById('examTitle').value;
             const description = document.getElementById('examDescription').value;
-            const dropbox_link = document.getElementById('examLink').value;
+            const file_path = document.getElementById('examLink').value;
             
             try {
                 if (useLocalStorage) {
@@ -1080,7 +1080,7 @@
                         subject_id: currentSubjectId,
                         title,
                         description,
-                        dropbox_link,
+                        file_path,
                         created_at: new Date().toISOString()
                     };
                     exams.push(newExam);
@@ -1088,7 +1088,7 @@
                 } else {
                     const { data, error } = await supabase
                         .from('exams')
-                        .insert([{ subject_id: currentSubjectId, title, description, dropbox_link }])
+                        .insert([{ subject_id: currentSubjectId, title, description, file_path }])
                         .select();
                     
                     if (error) throw error;
@@ -1222,7 +1222,7 @@
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: '  ( الات ) سامح الحريف  ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/u43flqdnv700eb5799nzr/.pdf?rlkey=9jsepc81xujief9poc5qrhjb7&st=lf5plc0k&dl=1',
+                                                    file_path: 'file/( الات ) سامح الحريف .pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1230,7 +1230,7 @@
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: ' آلات كهربائيه ',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/re0pnmhj56234iyq3d685/.pdf?rlkey=jutc7bgcok7pvvcqjm3phgxbx&st=p98ujgdz&dl=1',
+                                                    file_path: 'file/آلات كهربائيه.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                   {
@@ -1238,7 +1238,7 @@
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: 'آلات ',
                                                     description: '3',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/r680gpwl9yjftgrp9r3kx/.pdf?rlkey=vv7ylpidlld9qfqob9zky68iq&st=wub1nmyo&dl=1',
+                                                    file_path: 'file/آلات.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1246,7 +1246,7 @@
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: 'الآت كهربيةSample',
                                                     description: '4',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/r8zq4n468npa42k9jsxui/Sample.pdf?rlkey=06uea9m98o3gluos86x41tn3e&st=nruuaqey&dl=1',
+                                                    file_path: 'file/الآت كهربيةSample.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1254,7 +1254,7 @@
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: ' الات كهربيه متقدمه',
                                                     description: '5',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/3r805jzoqvhxaa2ghnoh8/.pdf?rlkey=uxi2pb0grfwun4hw71g2mc4nb&st=338dcjxw&dl=1',
+                                                    file_path: 'file/الات كهربيه متقدمه.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1262,7 +1262,7 @@
                                                     subject_id: '1', // مذكرة للمادة الأولى
                                                     title: 'مذكره آلات كهربية الصحافة',
                                                     description: '6',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/00icu1dbiv96vrxxrlyr3/.pdf?rlkey=ss6orpfn40mry0m9e2q1zw3w7&st=9xcm23u9&dl=1',
+                                                    file_path: 'file/مذكره آلات كهربية الصحافة.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
 
@@ -1271,7 +1271,7 @@
                                                     subject_id: '2', 
                                                     title: 'اسكتش تحكم (محمدعبدالغني) ',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/t4xpier6kcjla1y2r8o6k/.pdf?rlkey=pqkoy4p847ij665tmcgk7ogfb&st=e382o3za&dl=1',
+                                                    file_path: 'file/اسكتش تحكم (محمدعبدالغني).pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 
@@ -1280,7 +1280,7 @@
                                                     subject_id: '2', 
                                                     title: ' تحكم آليSample1 ',
                                                     description: '3',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/wsr7nrqmicknn9v3zfzyi/Sample1.pdf?rlkey=6i4inn65t8aghdrdt12dyzvcn&st=en2wbkfs&dl=1',
+                                                    file_path: 'file/تحكم آليSample1.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                    {
@@ -1288,7 +1288,7 @@
                                                     subject_id: '2', 
                                                     title: 'تطبيق Symbolab بيحل تحويلات لابلاس ',
                                                     description: '4',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/tnep3aqh09mrrandgwtxb/Symbolab.pdf?rlkey=tsf6salondorbzsgkm7moi3fn&st=leixshdq&dl=1',
+                                                    file_path: 'file/تطبيق Symbolab بيحل تحويلات لابلاس.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                                  {
@@ -1296,7 +1296,7 @@
                                                     subject_id: '2', 
                                                     title: 'مذكرة تحكم ألي (م-عبدالله حمدان)',
                                                     description: '5',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/dmim8r8ltn8xht9k74s31/.pdf?rlkey=ckeque3mr0pwoo4za2pelixcz&st=iaejcqup&dl=1',
+                                                    file_path: 'file/مذكرة تحكم ألي (م-عبدالله حمدان).pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                                     {
@@ -1304,7 +1304,7 @@
                                                     subject_id: '2', 
                                                     title: 'مذكرة تحكم الي(م_رمضان) ',
                                                     description: '6',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/jh44e285g7x5scru57agr/_.pdf?rlkey=k1i8nqkqq2s91vv7s4nwrsoo5&st=i2aztifg&dl=1',
+                                                    file_path: 'file/مذكرة تحكم الي(م_رمضان).pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1312,7 +1312,7 @@
                                                     subject_id: '2', 
                                                     title: 'مذكرة_تحكم_ألي_م_احمد_عبد_الوهاب_تصوير_ونشر_سيف ',
                                                     description: '7',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/xfpdhmd69i2fu5rzro3cr/_-_-_-_-_-_-_-_-_.pdf?rlkey=ydmm47izy0o4it9x1nt3o9otg&st=bzne2qpr&dl=1',
+                                                    file_path: 'file/مذكرة_تحكم_ألي_م_احمد_عبد_الوهاب_تصوير_ونشر_سيف.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                         {
@@ -1320,24 +1320,15 @@
                                                     subject_id: '2', 
                                                     title: 'مذكرة_تحكم_ألي_م_عبدالله_حمدان_2 ',
                                                     description: '8',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/o7xl2uchmqw9o45fvewxj/_-_-_-_-_-_1.pdf?rlkey=ej6joh8c5r78zuiy0f57tvcx3&st=avm96en2&dl=1',
+                                                    file_path: 'file/مذكرة تحكم ألي (م-عبدالله حمدان).pdf',
                                                     created_at: new Date().toISOString()
                                                 },
-                                                 {
-                                                    id: 'n12',
-                                                    subject_id: '2', 
-                                                    title: 'مذكرة_تحكم_ألي_م_عبدالله_حمدان_أعادة_نشر_سيف ',
-                                                    description: '9',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/0pon0aws3385naznce9e1/_-_-_-_-_-_-_-_.pdf?rlkey=2fe7owah4qivxs8comisvx280&st=79tfi867&dl=1',
-                                                    created_at: new Date().toISOString()
-                                                },
-                                                
                                                                   {
                                                     id: 'n18',
                                                     subject_id: '3', 
                                                     title: ' ملخص ضبط جوده ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/i04l2m31ijlqud4ldduzm/.pdf?rlkey=pt4jr9px8fbvbxaa9m5k85i29&st=vv42wj0q&dl=1',
+                                                    file_path: 'file/ملخص ضبط جوده.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                          {
@@ -1345,7 +1336,7 @@
                                                     subject_id: '3', 
                                                     title: ' كتاب ضبط الجودة',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/r4bqexfgxvh3jbbtz4en1/.pdf?rlkey=atfgaia9zoqih7oljk2qpv643&st=75a48j14&dl=1',
+                                                    file_path: 'file/كتاب الجودة.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                           {
@@ -1353,7 +1344,7 @@
                                                     subject_id: '3', 
                                                     title: ' ملخص الجودة 2  ',
                                                     description: '3',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/kdk03yut3xgfu9a7tcfes/.pdf?rlkey=53c2p15r2y2hq39yvqoi87umd&st=p72uhzxk&dl=1',
+                                                    file_path: 'file/ضبط جودة.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                   {
@@ -1361,7 +1352,7 @@
                                                     subject_id: '3', 
                                                     title: ' ضبط جودة كامل   ',
                                                     description: '3',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/5emvbghpsv86margl739u/.pdf?rlkey=7pw3b8llumjwrjdsi8lc5o4gr&st=9chfsvdj&dl=1',
+                                                    file_path: 'file/ملخص ضبط جوده.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1369,7 +1360,7 @@
                                                     subject_id: '3', 
                                                     title: ' ضبط الجوده 2 كامل  ',
                                                     description: '4',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/png1883uwdh9nmckgdubd/.pdf?rlkey=vewkwkypwvn3obzgpvxcosn47&st=vlow0sxf&dl=1',
+                                                    file_path: 'file/ضبط الجوده.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1377,15 +1368,15 @@
                                                     subject_id: '3', 
                                                     title: ' ضبط الجودة عظمه   ',
                                                     description: '5',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/890g4zv1i8dm3iv49vv6y/.pdf?rlkey=gqdq25gcja8izbwzofayeht64&st=g06goz67&dl=1',
+                                                    file_path: 'file/ضبط الجودة.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
-                                                   {
+                                                  {
                                                     id: 'n29',
                                                     subject_id: '4', 
                                                     title: ' كتاب الكترونات قوى كهربية   ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/9oe4f94dn7gjav67jqacg/.pdf?rlkey=jx0r63dmtswgbxjxt0utwvbjx&st=gjomquoe&dl=1',
+                                                    file_path: 'file/كتاب إلك قوي .pdf',
                                                     created_at: new Date().toISOString()
                                                 },  
                                                   {
@@ -1393,7 +1384,7 @@
                                                     subject_id: '4', 
                                                     title: ' MBIالكترونيات_القوى_الكهربيه  ',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/1i5ea032jqf2l3wmms2hw/MBI-_-_.pdf?rlkey=np3526e9qis6pvgdpntlqrezq&st=9njbc7vd&dl=1',
+                                                    file_path: 'file/MBIالكترونيات_القوى_الكهربيه.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                   {
@@ -1401,7 +1392,7 @@
                                                     subject_id: '4', 
                                                     title: ' الكترونيات القوى Abdelmonem sengab ',
                                                     description: '3',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/0qw9y2gcekx8bi14tx1k8/Abdelmonem-sengab.pdf?rlkey=om7lwgsnnpyxa3qpjdii5ipvv&st=qybnpakh&dl=1',
+                                                    file_path: 'file/الكترونيات القوى Abdelmonem sengab.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                   {
@@ -1409,7 +1400,7 @@
                                                     subject_id: '4', 
                                                     title: ' بنك أسئلة قوي   ',
                                                     description: '4',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/k9gimf8jogqj7rhsg6vrc/.pdf?rlkey=ipjeruc3fz2879etu92nf1geo&st=d3zw78uu&dl=1',
+                                                    file_path: 'file/بنك أسئلة قوي.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1417,7 +1408,7 @@
                                                     subject_id: '4', 
                                                     title: ' م-أشرف إلك قوي 1-2-3   ',
                                                     description: '5',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/5wa60rftoi6ouzu8xpup0/1-2-3.pdf?rlkey=ovh444ifczwwlfh4b6y9huapz&st=d2bvgj6l&dl=1',
+                                                    file_path: 'file/م-أشرف إلك قوي 1-2-3.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1425,7 +1416,7 @@
                                                     subject_id: '4', 
                                                     title: ' م-أشرف إلك قوي  4-5-6    ',
                                                     description: '6',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/j3my0rsli4uhpm3lnqsra/4-5-6.pdf?rlkey=5vgw0w7u68trdwk7yjtm53fc9&st=4zc2ki5s&dl=1',
+                                                    file_path: 'file/م-أشرف إلك قوي  4-5-6 .pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1433,7 +1424,7 @@
                                                     subject_id: '4', 
                                                     title: ' مذكرةإلك قوي محمد عبد السميع ',
                                                     description: '7',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/jrdw99uymivk6kqlnq4fp/_-_-_-_-_-_-_.pdf?rlkey=2y5pvsb0drmmo76t7449fu73o&st=z5wmqelu&dl=1',
+                                                    file_path:  'file/مذكرة_إلك_قوي_محمد_عبدالسميع_إعادة_نشر_سيف.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1441,7 +1432,7 @@
                                                     subject_id: '4', 
                                                     title: ' باب اول قوي م هـنـاء  ',
                                                     description: '8',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/qvuaie43qfx489wta70jv/.pdf?rlkey=7e3u0mnarl2sus5g2okgubt7r&st=p7g4lcge&dl=1',
+                                                    file_path: 'file/باب اول قوي م هـنـاء.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1449,7 +1440,7 @@
                                                     subject_id: '4', 
                                                     title: ' باب ثاني قوي م هـنـاء',
                                                     description: '9',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/0cmzen2jcsw7i3cew0i1s/.pdf?rlkey=8p17n55vwjv3hkmciubhp3hlf&st=lihgxpqa&dl=1',
+                                                    file_path: 'file/باب تاني م هـنـاء.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1457,7 +1448,7 @@
                                                     subject_id: '4', 
                                                     title: ' باب رابع قوي م هـنـاء   ',
                                                     description: '10',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/m59khemudnc1ycgomjbqc/.pdf?rlkey=t7ke76bvksmgyh99o7q8rfvtc&st=3mf1qvab&dl=1',
+                                                    file_path: 'file/باب رابع م هـنـاء.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1465,7 +1456,7 @@
                                                     subject_id: '4', 
                                                     title: ' باب خامس قوي م هـنـاء   ',
                                                     description: '11',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/hkm932b5i9trktgbs0b42/1.pdf?rlkey=dcgzgakdltiax7ifccgy7kcni&st=s7b9kyyd&dl=1',
+                                                    file_path: 'file/باب خامس م هـنـاء(1).pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1473,7 +1464,7 @@
                                                     subject_id: '4', 
                                                     title: ' باب سادس قوي م هـنـاء   ',
                                                     description: '12',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/jek0xv6itv9nq47rkvb3b/.pdf?rlkey=8dcbzfscofgzjn8es2m09fbtl&st=pmd7zqwl&dl=1',
+                                                    file_path: 'file/باب سادس قوي م هـنـاء.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1481,7 +1472,7 @@
                                                     subject_id: '5', 
                                                     title: ' تكنولوجيا ورش الات   ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/94q1uz2ov0kr59b1eck1w/.pdf?rlkey=gddzv3evvx1k2vj5v1xdi75k5&st=1wlofyks&dl=1',
+                                                    file_path: 'file/تكنولوجيا ورش الات.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1489,22 +1480,22 @@
                                                     subject_id: '5', 
                                                     title: 'مزكره تك ورش الات 1.pdf ',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/arbyziwvd71v59mgi187d/1.pdf.PDF?rlkey=ecpat8ar4tfn3lxjim0oxvie4&st=94ol6yji&dl=1',
+                                                    file_path: 'file/مزكره تك ورش الات 1.pdf.PDF',
                                                     created_at: new Date().toISOString()
                                                 },
                                                   {id: 'n00',
                                                     subject_id: '5', 
                                                     title: 'نسخة من تك ورش الآت ',
                                                     description: '3',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/0rr6qh2fpnyq7kyoesd4k/.pdf?rlkey=ov1o7yjsb0zsx4ie4svdctuht&st=6emoyb8m&dl=1',
+                                                    file_path: 'file/نسخة من تك ورش الآت.pdf',
                                                     created_at: new Date().toISOString()    
                                                  },
-                                                {
+                                                 {
                                                     id: 'n50',
                                                     subject_id: '6', 
                                                     title: ' كتاب معالجات ومتحكمات دقيقة   ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/0klnu40rjk4so0j3uhezg/.pdf?rlkey=ni5spttzz7ybtgs8tgp6zvkvs&st=dy7okimh&dl=1',
+                                                    file_path: 'file/كتاب معالجات.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1512,7 +1503,7 @@
                                                     subject_id: '6', 
                                                     title: ' MBI مذكرة_معالجات   ',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/xn874slgpt2o0yoiahvgg/MBI-_.pdf?rlkey=ju1lvhjszudc415re6g99wsfi&st=928rwc47&dl=1',
+                                                    file_path: 'file/MBI مذكرة_معالجات.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1520,7 +1511,7 @@
                                                     subject_id: '6', 
                                                     title: ' سعيد معالجات ',
                                                     description: '3',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/qf7g2vcy7977r1ab5ycdk/.pdf?rlkey=vd8uy9g542eba5rzy60we4yki&st=hkfjvj7b&dl=1',
+                                                    file_path: 'file/سعيد معالجات .pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1528,7 +1519,7 @@
                                                     subject_id: '6', 
                                                     title: ' م-أشرف معالجات  ',
                                                     description: '4',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/b81shk8t2fho8uaz0uyq1/.pdf?rlkey=tdgd578pum1g7xoa1xtfu8pwp&st=rab5ix2s&dl=1',
+                                                    file_path: 'file/م-أشرف معالجات .pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1536,7 +1527,7 @@
                                                     subject_id: '6', 
                                                     title: ' مذاكره معالجات باب 1 و 2 م عبدالحميد    ',
                                                     description: '5',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/gurarrppsy3bsty9wod48/_-_-_-_-_-_.pdf?rlkey=qxeza85e0w81g95d0konuqepw&st=26eurid1&dl=1',
+                                                    file_path: 'file/مذاكره_معالجات_باب_اول_وتاني_بشمهندس_عبدالحميد .pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1544,7 +1535,7 @@
                                                     subject_id: '6', 
                                                     title: ' مراجعة معالجات م عبدالحميد   ',
                                                     description: '6',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/oms9q98sp1s9h6w4p9uvn/.pdf?rlkey=lojkxx704hohbdf49rsh38bgb&st=n2rtagd0&dl=1',
+                                                    file_path: 'file/مراجعة معالجات م عبدالحميد.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1552,7 +1543,7 @@
                                                     subject_id: '6', 
                                                     title: ' معالجات إسراء أشرف   ',
                                                     description: '8',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/rdkj1x2nrttv0z022zali/.pdf?rlkey=mw4peb5s2lfmtkksulw9ws0a9&st=3bq7vklj&dl=1',
+                                                    file_path: 'file/معالجات إسراء أشرف.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1560,7 +1551,7 @@
                                                     subject_id: '6', 
                                                     title: ' = معالجات =   ',
                                                     description: '8',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/e35w2cmtji7goneg53uqc/.pdf?rlkey=ptmg2j7mltzdjgn8o0m2rw1tf&st=ldhzivtf&dl=1',
+                                                    file_path: 'file/‎⁨معالجات⁩.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1568,7 +1559,7 @@
                                                     subject_id: '7', 
                                                     title: ' اسكتش شبكات قوي (محمد عبدالغني) (1)  ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/6qf648d4oejmt4750e7yg/1.pdf?rlkey=c2wfd3k0s5s9swhr63vk3t017&st=bnparvnn&dl=1',
+                                                    file_path: 'file/اسكتش شبكات قوي (محمد عبدالغني) (1).pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                   {
@@ -1576,7 +1567,7 @@
                                                     subject_id: '7', 
                                                     title: ' جزء_الترخيم_الي_مش_موجود_في_مذكرة_م_رانيا_متولي_تصوير_ونشر_سيف_1   ',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/g55sswi86p5q0na3duu0x/_-_-_-_-_-_-_-_-_-_-_-_-_1.pdf?rlkey=m7iupbdhvzybc7ixhniqpdt03&st=1pf0pwb6&dl=1',
+                                                    file_path: 'file/جزء_الترخيم_الي_مش_موجود_في_مذكرة_م_رانيا_متولي_تصوير_ونشر_سيف_1.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                 {
@@ -1584,7 +1575,7 @@
                                                     subject_id: '7', 
                                                     title: '  كتابة معمل شبكات',
                                                     description: '3',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/ln6r3ql52g0ovez4tl5zy/.pdf?rlkey=xptveg54grgt7nowp0p4bium6&st=f91zexeb&dl=1',
+                                                    file_path: 'file/كتابة معمل شبكات.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                   {
@@ -1592,7 +1583,7 @@
                                                     subject_id: '7', 
                                                     title: '  مذكرة_شبكات_قوي_م_رانيا_متولي_تصوير_ونشر_سيف',
                                                     description: '4',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/rz4rd3707zjmbbbd32tar/_-_-_-_-_-_-_-_.pdf?rlkey=0cauc1l6629edcu2ow4q1dvyc&st=shf0aqal&dl=1',
+                                                    file_path: 'file/مذكرة_شبكات_قوي_م_رانيا_متولي_تصوير_ونشر_سيف.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1600,7 +1591,15 @@
                                                     subject_id: '7', 
                                                     title: '  معمل شبكات ',
                                                     description: '5',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/29y828myuh2ry3mzl1n6s/.pdf?rlkey=rbv83ynxvhr8e23x9rmu8cmbn&st=9vqx5663&dl=1',
+                                                    file_path: 'file/معمل شبكات.pdf',
+                                                    created_at: new Date().toISOString()
+                                                },
+                                                 {
+                                                    id: 'n68',
+                                                    subject_id: '7', 
+                                                    title: '  معمل شبكات كتابه',
+                                                    description: '6',
+                                                    file_path: 'file/كتابة معمل شبكات.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                             ]);
@@ -1680,7 +1679,7 @@
                         subject_id: '2',
                         title: 'امتحانات التحكم الالى',
                         description: 'امتحانات مادا التحكم الالى',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/txj7zz16geazejsaae9za/.pdf?rlkey=pkkta6pd84ilqjr3xchstuti9&st=5tbgcazs&dl=1',
+                        file_path: 'file/امتحانات التحكم الالى.pdf',
                         created_at: new Date().toISOString()
                     },
                         {
@@ -1688,7 +1687,7 @@
                         subject_id: '3',
                         title: 'امتحانات ضبط الجودة',
                         description: 'امتحان مادا ضبط',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/y58s43tdelrrgpjqc0nx9/.pdf?rlkey=fst3x8dyt78tiod3moy2wei23&st=pvgzgkuu&dl=1',
+                        file_path: 'file/امتحانات ضبط الجودة.pdf',
                         created_at: new Date().toISOString()
                     },
                      {
@@ -1696,24 +1695,15 @@
                         subject_id: '3',
                         title: 'امتحانات ضبط جودة',
                         description: 'امتحان مادا ضبط جودة',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/5c8jhp7jnd7efs35u220m/.pdf?rlkey=6etcw5bgvp2xsx5im87u2uwpw&st=e1ba3gsb&dl=1',
+                        file_path: 'file/امتحانات ضبط جودة.pdf',
                         created_at: new Date().toISOString()
                     },
-                     {
-                        id: 'e1',
-                        subject_id: '3',
-                        title: 'امتحانات ضبط جوده',
-                        description: 'امتحانات مادا ضبط جوده',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/ay4tfv2j4wd1wxaie5ylv/.pdf?rlkey=osoq27l0egwvosm1xkvxyawqg&st=24iu6p40&dl=1',
-                        created_at: new Date().toISOString()
-                    },
-                        
-                      {
+                  {
                         id: 'e12',
                         subject_id: '4',
                         title: 'امتحان 2025',
                         description: '2025',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/okcb8g2dj1xiid2cmbrqi/25.jpg?rlkey=i7r4wpqbm8p12bbma0b3yojm0&st=mctb5bpf&dl=1',
+                        file_path: '111okcb8g2dj1xiid2cmbrqi/25.jpg?rlkey=i7r4wpqbm8p12bbma0b3yojm0&st=mctb5bpf&dl=1',
                         created_at: new Date().toISOString()
                     },
                      {
@@ -1721,7 +1711,15 @@
                         subject_id: '4',
                         title: 'امتحان 2023',
                         description: '2023',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/2m4wzgrbfpt7phhvyxpu5/23.jpg?rlkey=ypn17ugp6t1ijywypoz6ssg7c&st=419ouw8p&dl=1',
+                        file_path: '1112m4wzgrbfpt7phhvyxpu5/23.jpg?rlkey=ypn17ugp6t1ijywypoz6ssg7c&st=419ouw8p&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                       {
+                        id: 'e45',
+                        subject_id: '4',
+                        title: 'امتحان 2024',
+                        description: '2024',
+                        file_path: '111rmzioo9juy6pdyx87wuow/24.jpg?rlkey=5hq5i5tf8u2q2c8dk5cfopzsr&st=61dkba30&dl=1',
                         created_at: new Date().toISOString()
                     },
                      {
@@ -1729,15 +1727,63 @@
                         subject_id: '4',
                         title: 'امتحان 2022',
                         description: '2022',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/fq3cu1d3es31hnqjxopg3/22.jpg?rlkey=qyokgmtolrtsho06z7f457cpf&st=w9wao04v&dl=1',
+                        file_path: '111fq3cu1d3es31hnqjxopg3/22.jpg?rlkey=qyokgmtolrtsho06z7f457cpf&st=w9wao04v&dl=1',
                         created_at: new Date().toISOString()
                     },
-                            {
+{
+                        id: 'e14',
+                        subject_id: '4',
+                        title: 'امتحان 2022',
+                        description: '2022',
+                        file_path: '111fq3cu1d3es31hnqjxopg3/22.jpg?rlkey=qyokgmtolrtsho06z7f457cpf&st=w9wao04v&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+		 {
+                        id: 'e40',
+                        subject_id: '4',
+                        title: 'امتحان 2021',
+                        description: '2021',
+                        file_path: '11103igu8b08oemidvjbnlbn/21.jpg?rlkey=38pn9pjkkf7qqfvfoin1mgitb&st=rg746ki4&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e41',
+                        subject_id: '4',
+                        title: 'امتحان 2020',
+                        description: '2020',
+                        file_path: '111g2l5fi38x0moye2kq9fzq/20.jpg?rlkey=twzel8vfyomz8wsvq6muhltoi&st=ilqfd9dg&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                    {
+                        id: 'e42',
+                        subject_id: '4',
+                        title: 'امتحان 2019',
+                        description: '2019',
+                        file_path: '111vt84y7mz0ln3gzr4xd6c2/19.jpg?rlkey=khe5r47je85rtkmq3t0eyrv8p&st=zfn2ti3c&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                     {
+                        id: 'e43',
+                        subject_id: '4',
+                        title: 'امتحان 2018',
+                        description: '2018',
+                        file_path: '111as8kk54kv9ouugzh5tqol/18.jpg?rlkey=hzgi780bef5z0h1tman6s1txr&st=eyb0ib6n&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                       {
+                        id: 'e44',
+                        subject_id: '4',
+                        title: 'امتحان 2017',
+                        description: '2017',
+                        file_path: '1115swzwrxy11ng58gvna15n/17.jpg?rlkey=zwe2bbd67tezcn7clq1x7z6e7&st=h2h42fpc&dl=1',
+                        created_at: new Date().toISOString()
+                    },
+                          {
                         id: 'e19',
                         subject_id: '6',
                         title: 'امتحان 2025',
                         description: '2025',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/xi45abpo3u5p2ecupdk1y/25.jpg?rlkey=ybyuijpqbvs46zum3nx74enhk&st=tcfgld8u&dl=1',
+                        file_path: '111xi45abpo3u5p2ecupdk1y/25.jpg?rlkey=ybyuijpqbvs46zum3nx74enhk&st=tcfgld8u&dl=1',
                         created_at: new Date().toISOString()
                     },
                                 {
@@ -1745,7 +1791,7 @@
                         subject_id: '6',
                         title: 'امتحان 2024',
                         description: '2024',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/11k8naiseb7zb4aeckgs4/24.jpg?rlkey=o4d324lv2xfww9blppyk0tkxj&st=9fulq1zg&dl=1',
+                        file_path: '11111k8naiseb7zb4aeckgs4/24.jpg?rlkey=o4d324lv2xfww9blppyk0tkxj&st=9fulq1zg&dl=1',
                         created_at: new Date().toISOString()
                     },
                                 {
@@ -1753,7 +1799,7 @@
                         subject_id: '6',
                         title: 'امتحان 2023',
                         description: '2023',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/gik00s8e1ridzi6425h5j/23.jpg?rlkey=r0ra4s73o0sikqc2hzzfeziy1&st=d2w36vz1&dl=1',
+                        file_path: '111gik00s8e1ridzi6425h5j/23.jpg?rlkey=r0ra4s73o0sikqc2hzzfeziy1&st=d2w36vz1&dl=1',
                         created_at: new Date().toISOString()
                     },
                                 {
@@ -1761,7 +1807,7 @@
                         subject_id: '6',
                         title: 'امتحان 2022',
                         description: '2022',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/smp9vha1va98tevqlmjii/22.jpg?rlkey=ltsp38i1iouj4tr8hj8zzhhaw&st=jbmbhhk0&dl=1',
+                        file_path: '111smp9vha1va98tevqlmjii/22.jpg?rlkey=ltsp38i1iouj4tr8hj8zzhhaw&st=jbmbhhk0&dl=1',
                         created_at: new Date().toISOString()
                     },
                        {
@@ -1769,7 +1815,7 @@
                         subject_id: '7',
                         title: 'امتحانات_شبكات عبدالغني',
                         description: 'امتحانات السنوات السابقه مادا شبكات',
-                        dropbox_link: 'https://www.dropbox.com/scl/fi/jtk9z3ec4fgslhc4tc1hy/_-_-_-_1.pdf?rlkey=pnt0obhps3plxrbpnnfqrbbcu&st=dk5i3mrw&dl=1',
+                        file_path: 'file/امتحانات_شبكات_محلولهمحمد_عبدالغني_1.pdf',
                         created_at: new Date().toISOString()
                     },
                       

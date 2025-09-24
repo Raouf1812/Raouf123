@@ -613,7 +613,7 @@
                                 <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
                                     <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${note.title}</h4>
                                     <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${note.description}</p>
-                                    <a href="${note.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                    <a href="${note.file_path}" download class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
                                         <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
                                         تحميل المذكرة
                                     </a>
@@ -649,7 +649,7 @@
                                 <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
                                     <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${exam.title}</h4>
                                     <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${exam.description}</p>
-                                    <a href="${exam.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                    <a href="${exam.file_path}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
                                         <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
                                         تحميل الامتحان
                                     </a>
@@ -713,7 +713,7 @@
                                         <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
                                             <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${note.title}</h4>
                                             <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${note.description}</p>
-                                            <a href="${note.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                            <a href="${note.file_path}" download class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
                                                 <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
                                                 تحميل المذكرة
                                             </a>
@@ -749,7 +749,7 @@
                                         <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
                                             <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${exam.title}</h4>
                                             <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${exam.description}</p>
-                                            <a href="${exam.dropbox_link}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                            <a href="${exam.file_path}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
                                                 <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
                                                 تحميل الامتحان
                                             </a>
@@ -923,7 +923,7 @@
                                             <h4 class="font-bold text-white text-sm mb-1">${note.title}</h4>
                                             <p class="text-slate-400 text-xs mb-2">${note.description}</p>
                                             <div class="flex gap-2">
-                                                <a href="${note.dropbox_link}" target="_blank" class="text-green-400 text-xs hover:text-green-300">عرض</a>
+                                                <a href="${note.file_path}" download class="text-green-400 text-xs hover:text-green-300">عرض</a>
                                                 <button onclick="deleteNote('${note.id}')" class="text-red-400 text-xs hover:text-red-300">حذف</button>
                                             </div>
                                         </div>
@@ -957,7 +957,7 @@
                                             <h4 class="font-bold text-white text-sm mb-1">${exam.title}</h4>
                                             <p class="text-slate-400 text-xs mb-2">${exam.description}</p>
                                             <div class="flex gap-2">
-                                                <a href="${exam.dropbox_link}" target="_blank" class="text-purple-400 text-xs hover:text-purple-300">عرض</a>
+                                                <a href="${exam.file_path}" target="_blank" class="text-purple-400 text-xs hover:text-purple-300">عرض</a>
                                                 <button onclick="deleteExam('${exam.id}')" class="text-red-400 text-xs hover:text-red-300">حذف</button>
                                             </div>
                                         </div>
@@ -984,7 +984,7 @@
             
             const title = document.getElementById('noteTitle').value;
             const description = document.getElementById('noteDescription').value;
-            const dropbox_link = document.getElementById('noteLink').value;
+            const file_path = document.getElementById('noteLink').value;
             
             try {
                 if (useLocalStorage) {
@@ -994,7 +994,7 @@
                         subject_id: currentSubjectId,
                         title,
                         description,
-                        dropbox_link,
+                        file_path,
                         created_at: new Date().toISOString()
                     };
                     notes.push(newNote);
@@ -1002,7 +1002,7 @@
                 } else {
                     const { data, error } = await supabase
                         .from('notes')
-                        .insert([{ subject_id: currentSubjectId, title, description, dropbox_link }])
+                        .insert([{ subject_id: currentSubjectId, title, description, file_path }])
                         .select();
                     
                     if (error) throw error;
@@ -1070,7 +1070,7 @@
             
             const title = document.getElementById('examTitle').value;
             const description = document.getElementById('examDescription').value;
-            const dropbox_link = document.getElementById('examLink').value;
+            const file_path = document.getElementById('examLink').value;
             
             try {
                 if (useLocalStorage) {
@@ -1080,7 +1080,7 @@
                         subject_id: currentSubjectId,
                         title,
                         description,
-                        dropbox_link,
+                        file_path,
                         created_at: new Date().toISOString()
                     };
                     exams.push(newExam);
@@ -1088,7 +1088,7 @@
                 } else {
                     const { data, error } = await supabase
                         .from('exams')
-                        .insert([{ subject_id: currentSubjectId, title, description, dropbox_link }])
+                        .insert([{ subject_id: currentSubjectId, title, description, file_path }])
                         .select();
                     
                     if (error) throw error;
@@ -1218,7 +1218,7 @@
                                                     subject_id: '1',
                                                     title: '   كتاب_كهرباء_سيارات_سنه_تانيه_سيارات   ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/2nygec5iexgvzr5054176/_-_-_-_-_.pdf?rlkey=wwdbiyo5mgmrty8s4m34n7yjp&st=uuljxu7o&dl=1',
+                                                    file_path: 'file/كتاب_كهرباء_سيارات_سنه_تانيه_سيارات.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1226,23 +1226,31 @@
                                                     subject_id: '1',
                                                     title: '   مذكرة كهرباء السيارات   ',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/2nygec5iexgvzr5054176/_-_-_-_-_.pdf?rlkey=wwdbiyo5mgmrty8s4m34n7yjp&st=uuljxu7o&dl=1',
+                                                    file_path: 'file/مذكرة كهرباء السيارات.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
-                                                    id: 'n1',
-                                                    subject_id: '2',
-                                                    title: '   مذكرة لغة انجليزية   ',
+                                                    id: 'n29',
+                                                    subject_id: '4', 
+                                                    title: ' إنجليزي',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/tbccp12fj6k17ybc0j334/.pdf?rlkey=2yo3v1kmn1iqfsm3xnsnk4n11&st=z41nghhw&dl=1',
+                                                    file_path: 'file/إنجليزي.pdf',
+                                                    created_at: new Date().toISOString()
+                                                },  
+                                                  {
+                                                    id: 'n30',
+                                                    subject_id: '4', 
+                                                    title: ' كتاب الانجليزي التخصصي ',
+                                                    description: '2',
+                                                    file_path: 'file/كتاب الانجليزي التخصصي.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
-                                                 {
-                                                    id: 'n1',
-                                                    subject_id: '2',
-                                                    title: '   مراجعة انجليزي   ',
-                                                    description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/f3jwxlgbeueee5k08n2wq/.pdf?rlkey=p15agt31jt48srs7zykoushor&st=7ere4cwe&dl=1',
+                                                     {
+                                                    id: 'n30',
+                                                    subject_id: '4', 
+                                                    title: ' مراجعه الانجليزي  ',
+                                                    description: '3',
+                                                    file_path: 'file/مراجعة انجليزي.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1250,7 +1258,7 @@
                                                     subject_id: '3',
                                                     title: '   كتاب_تعليق_سنه_تانيه_سيارات_الترم_الاول   ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/1lb32a3r05mabdk5mdllz/_-_-_-_-_-_.pdf?rlkey=on2966ywqder3qtkgw2mk36lx&st=zvx1398d&dl=1',
+                                                    file_path: 'file/كتاب_تعليق_سنه_تانيه_سيارات_الترم_الاول.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1258,7 +1266,7 @@
                                                     subject_id: '3',
                                                     title: '   مذكرة_منظومات_التعليق_والتوجيه_والفرامل   ',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/felwx6hw3hhfdj5jl77bq/_-_-_-_.pdf?rlkey=56q5af1gq9p9a4xqplkiagkym&st=dx6c53z5&dl=1',
+                                                    file_path: 'file/مذكرة_منظومات_التعليق_والتوجيه_والفرامل.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1266,7 +1274,7 @@
                                                     subject_id: '4',
                                                     title: '   مذكرة نقل حركة   ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/8ffh88i4tyw8uj2tbdxj8/.pdf?rlkey=ody7aw6fctbtzpzgouo6aj2so&st=lqc213k1&dl=1',
+                                                    file_path: 'file/مذكرة نقل حركة.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1274,7 +1282,7 @@
                                                     subject_id: '5',
                                                     title: '   كتاب_منظومات_وقود_البنزين_والحد_من_التلوث   ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/sqxkltyqst4ey9a2zp2z7/_-_-_-_-_-_.pdf?rlkey=o03nzwj5nm1971nad3sbchbog&st=5scryy1q&dl=1',
+                                                    file_path: 'file/كتاب_منظومات_وقود_البنزين_والحد_من_التلوث.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1282,7 +1290,7 @@
                                                     subject_id: '5',
                                                     title: '   مذكرة منظومات البنزين (حديث)   ',
                                                     description: '2',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/7jx3znzv7kldg6kfmgszc/.pdf?rlkey=jf1d72gbo43fm162rhuev1hs0&st=ki67bl7r&dl=1',
+                                                    file_path: 'file/مذكرة منظومات البنزين (حديث).pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                                  {
@@ -1290,7 +1298,7 @@
                                                     subject_id: '6',
                                                     title: '   مذكرة نظم ادارة مرور   ',
                                                     description: '1',
-                                                    dropbox_link: 'https://www.dropbox.com/scl/fi/un4qtv21q5gsysn1l4nk3/.pdf?rlkey=p7fuhqvzy6gai1lji93btheey&st=t5l8xf9f&dl=1',
+                                                    file_path: 'file/مذكرة نظم ادارة مرور.pdf',
                                                     created_at: new Date().toISOString()
                                                 },
                                              
