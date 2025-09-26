@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>صفحه الشيتات</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<style>
+  /* Reset */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  .body {
+    margin: 0;
+    padding: 0;
+      background-color: #000000; 
+  }
+  
+  header {
+    margin: 0px;
+    padding: 0px;
+  background-color: #000000; 
+}
+footer {
+
+  background-color: #000000; 
+}
+
+  /* خلفية النقاط */
+#background-points {
+    background-color: #000000; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1; /* خلف كل المحتوى */
+}
+
+/* شكل النقاط */
+.point {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.8;
+  background-color: #ffd700; /* لون الموقع */
+  width: 8px;
+  height: 8px;
+  pointer-events: none; /* عدم التداخل مع النقرات */
+}
+
+  p {
+
+    text-align: center;
+  }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(135deg, #000, #111);
+    color: #ffd700;
+    padding: 20px;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* العنوان الرئيسي */
+  h1 {
+    text-align: center;
+    font-size: 3.5em;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+    text-shadow: 4px 4px 10px rgba(0,0,0,0.8);
+    animation: bounceInDown 0.1s both;
+  }
+
+  /* أزرار التنقل - تحت بعضها */
+  .buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: fadeInUp 0.01s forwards;
+    animation-delay: 0.01s;
+  }
+
+  /* أزرار */
+  .buttons-container button {
+    width: 75%;
+    max-width: 600px;
+    padding: 15px;
+    font-size: 1.4em;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #222, #000);
+    color: #ffd700;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    transition: all 0.1s ease, transform 0.1s;
+  }
+
+  /* تأثير عند المرور */
+  .buttons-container button:hover {
+    background: linear-gradient(135deg, #ffd700, #fff);
+    color: #000;
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 0 12px 25px rgba(255,215,0,0.6);
+  }
+
+  /* النافذة المنبثقة */
+  .modal {
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 30px;
+  }
+
+  /* محتوى النافذة */
+  .modal-content {
+    background: linear-gradient(135deg, #222, #000);
+    border-radius: 25px;
+    padding: 40px;
+    max-width: 700px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.9);
+    animation: fadeInUp 0.2s both;
+  }
+
+  @keyframes fadeInUp {
+    from {opacity: 0; transform: translateY(50px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+  /* عنوان المادة في النافذة */
+  .modal-header {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #ffd700;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+  }
+
+  /* زر إغلاق */
+  .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 2.5em;
+    cursor: pointer;
+    color: #ffd700;
+    transition: all 0.3s ease;
+  }
+
+  .close-btn:hover {
+    color: #fff;
+    transform: rotate(15deg) scale(1.2);
+  }
+
+  /* قائمة الفصول */
+  .chapters-list {
+    max-height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  /* فصل */
+  .chapter-item {
+    background: #333;
+    padding: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 1.3em;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+    transition: all 0.1s ease;
+  }
+
+  .chapter-item:hover {
+    background: linear-gradient(135deg, #ffd700, #fff);
+    color: #000;
+    transform: translateY(-3px);
+  }
+
+  /* عرض المحتوى */
+  #contentDisplay {
+    display: none;
+    margin: 50px auto;
+    max-width: 900px;
+    background: linear-gradient(135deg, #222, #000);
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+    line-height: 1.8;
+    font-size: 1.4em;
+    color: #fff;
+    animation: fadeIn 0.1s ease;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(50px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+  /* أنيميشن ظهور الأزرار عند التحميل */
+  @keyframes fadeInUp {
+    from {opacity: 0; transform: translateY(50px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+  /* استجابة للموبايل */
+  @media(max-width: 768px){
+    body {
+      padding: 10px;
+    }
+    h1 {
+      font-size: 2.5em;
+    }
+    .buttons-container button {
+      font-size: 1.2em;
+      padding: 12px;
+    }
+    #contentDisplay {
+      font-size: 1.2em;
+    }
+  }
+</style>
+</head>
+<body class="body">
+<div id="background-points"></div>
+<header>
+<h1 class="animate__animated animate__bounceInDown">الشيتات</h1>
+</header>
+<!-- أزرار التنقل -->
+<div class="buttons-container" id="buttonsContainer"></div>
+
+<!-- النافذة المنبثقة للمحتوى -->
+<div class="modal" id="materialModal">
+  <div class="modal-content animate__animated animate__fadeInUp">
+    <div class="modal-header" id="modalTitle">اسم المادة</div>
+    <div class="chapters-list" id="chaptersContainer"></div>
+    <div class="close-btn" id="closeModal">×</div>
+  </div>
+</div>
+
+<!-- عرض المحتوى -->
+<div id="contentDisplay"></div>
+<footer>
+
+  <p> ❤ Made by - Raouf ❤ </p>
+
+</footer>
+
+<!-- جافاسكريبت -->
+<script>
+  // البيانات
+  const subjects = [
+    {
+      name: "ورش المترونيه متقدمه / م سوسن",
+      chapters: [
+
+      ]
+    },
+    {
+      name: "مكونات حاسب / م ايمان",
+      chapters: [
+
+      ]
+    },
+    {
+      name: "اساسيات شبكات حاسب / م سوسن",
+      chapters: [
+
+      ]
+    },
+    {
+      name: "الك قوي كهربه / م اسراء",
+      chapters: [
+        { title: "شيت رقم 1 تاريخ 22/9/2025", 
+             content: `<img src="images/3.jpg " style="max-width:100%; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.6);">` },
+      ]
+    },
+    {
+      name: "الك رقميه / م رانيا",
+      chapters: [
+
+      ]
+    },
+    {
+      name: "معالجات و متحكمات دقيقه / م عايده",
+      chapters: [
+        { title: "شيت رقم 1 تاريخ 22/9/2025",
+            content: `<img src="images/2.jpg " style="max-width:100%; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.6);">` },
+      ]
+    },
+    {
+      name: "دوائر الكترونيه / م شيرين",
+      chapters: [
+        { title: "شيت رقم 1 تاريخ 21/9/2025",
+             content: `<img src="images/1.jpg " style="max-width:100%; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.6);">` },
+      ]
+    }
+  ];
+
+  const buttonsContainer = document.getElementById('buttonsContainer');
+  const modal = document.getElementById('materialModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const chaptersContainer = document.getElementById('chaptersContainer');
+  const closeBtn = document.getElementById('closeModal');
+  const contentDisplay = document.getElementById('contentDisplay');
+
+  // إنشاء الأزرار مع أنيميشن
+  subjects.forEach((sub, index) => {
+    const btn = document.createElement('button');
+    btn.innerText = sub.name;
+    btn.className = 'animate__animated animate__zoomIn';
+    btn.style.animationDelay = `${index * 0.03}s`; // تأثير تتابعي لطيف
+    btn.onclick = () => {
+      // فتح النافذة
+      modal.style.display = 'flex';
+      modal.classList.remove('animate__fadeOutUp');
+      modal.classList.add('animate__fadeInDown');
+      // عنوان المادة
+      modalTitle.innerText = sub.name;
+      // تنظيم الفصول
+      chaptersContainer.innerHTML = '';
+      sub.chapters.forEach(ch => {
+        const chDiv = document.createElement('div');
+        chDiv.className = 'chapter-item';
+        chDiv.innerText = ch.title;
+        chDiv.onclick = () => {
+          // إخفاء النافذة وفتح المحتوى
+          modal.style.display = 'none';
+          contentDisplay.style.display = 'block';
+          // عرض المحتوى بشكل أنيق
+          contentDisplay.innerHTML = `<h2 style="margin-bottom:15px;">${ch.title}</h2><p>${ch.content}</p>`;
+        };
+        chaptersContainer.appendChild(chDiv);
+      });
+    };
+    buttonsContainer.appendChild(btn);
+  });
+
+  // إغلاق النافذة
+closeBtn.onclick = () => {
+  modal.style.display = 'none';
+  modal.classList.remove('animate__fadeInDown');
+  modal.classList.add('animate__fadeOutUp');
+};
+window.onclick = (e) => {
+  if(e.target===modal){
+    modal.style.display='none';
+    modal.classList.remove('animate__fadeInDown');
+    modal.classList.add('animate__fadeOutUp');
+  }
+}
+
+
+  const numberOfPoints = 80; // عدد النقاط
+  const container = document.getElementById('background-points');
+
+  // إنشاء النقاط
+  const points = [];
+  for (let i = 0; i < numberOfPoints; i++) {
+    const point = document.createElement('div');
+    point.className = 'point';
+
+    // تحديد موقع عشوائي
+    point.style.top = Math.random() * 100 + '%';
+    point.style.left = Math.random() * 100 + '%';
+
+    // تحديد سرعة واتجاه عشوائي
+    point.speedX = (Math.random() - 0.5) * 0.5; // عشوائية في الاتجاه والسرعة
+    point.speedY = (Math.random() - 0.5) * 0.5;
+
+    container.appendChild(point);
+    points.push(point);
+  }
+
+  // وظيفة لتحريك النقاط
+  function animatePoints() {
+    points.forEach(p => {
+      // تحديث الموقع
+      let currentTop = parseFloat(p.style.top);
+      let currentLeft = parseFloat(p.style.left);
+
+      currentTop += p.speedY;
+      currentLeft += p.speedX;
+
+      // العودة عند الحواف
+      if (currentTop > 100 || currentTop < 0) {
+        p.speedY *= -1;
+      }
+      if (currentLeft > 100 || currentLeft < 0) {
+        p.speedX *= -1;
+      }
+
+      p.style.top = currentTop + '%';
+      p.style.left = currentLeft + '%';
+    });
+
+    requestAnimationFrame(animatePoints);
+  }
+
+  // بدء التحريك
+  animatePoints();
+</script>
+
+</body>
+</html>
