@@ -618,13 +618,27 @@
                             </div>
                             ${notes.length > 0 ? notes.map(note => `
                                 <div class="glass-card rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
-                                    <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${note.title}</h4>
-                                    <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${note.description}</p>
-                                    <a href="${note.file_path}" download class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
+                                <h4 class="font-bold text-white mb-2 text-sm sm:text-base">${note.title}</h4>
+                                <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${note.description}</p>
+
+                                <!-- الزرين جوّا div بتحكم في الاتجاه حسب حجم الشاشة -->
+                                <div class="flex flex-row sm:flex-col items-center sm:items-start gap-2 sm:gap-3">
+                                    <!-- زر التحميل -->
+                                    <a href="${note.file_path}" download 
+                                    class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm whitespace-nowrap w-full sm:w-auto">
                                         <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
                                         تحميل المذكرة
                                     </a>
+
+                                    <!-- زر العرض -->
+                                    <a href="${note.file_path}" target="_blank" 
+                                    class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm whitespace-nowrap w-full sm:w-auto">
+                                        <i data-lucide="eye" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                        عرض المذكرة
+                                    </a>
                                 </div>
+                                </div>
+
                             `).join('') : '<p class="text-slate-500 text-center py- sm:py-8 text-sm sm:text-base">لا توجد مذكرات متاحة</p>'}
                         </div>
                         
@@ -658,7 +672,7 @@
                                     <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${exam.description}</p>
                                     <a href="${exam.file_path}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
                                         <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
-                                        تحميل الامتحان
+                                        عرض الامتحان
                                     </a>
                                 </div>
                             `).join('') : '<p class="text-slate-500 text-center py-6 sm:py-8 text-sm sm:text-base">لا توجد امتحانات متاحة</p>'}
@@ -758,7 +772,7 @@
                                             <p class="text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">${exam.description}</p>
                                             <a href="${exam.file_path}" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-violet-600 text-white px-3 sm:px-4 py-2 rounded-lg font-bold hover:shadow-md transition-all duration-200 text-xs sm:text-sm">
                                                 <i data-lucide="download" class="h-3 w-3 sm:h-4 sm:w-4"></i>
-                                                تحميل الامتحان
+                                                عرض الامتحان
                                             </a>
                                         </div>
                                     `).join('') : '<p class="text-slate-500 text-center py-6 sm:py-8 text-sm sm:text-base">لا توجد امتحانات متاحة</p>'}
