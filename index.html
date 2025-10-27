@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✨ أهــلًا بـيــك يـابشمهندس ✨ </title>   
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="stylesheet" href="style.css">
+   <link rel="stylesheet" href="style.css" /ِ>
 </head>
 <body>
                                             <div class="background">
@@ -39,7 +40,7 @@
         <h2 class="text-2xl font-bold text-yellow-400 mb-6 border-b border-yellow-400 pb-2">✨اختار شعبتك✨</h2>
         <a href="index.html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة اجهزة</a>
         <a href="شبكات.html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة شبكات</a>     
-        <a href="حاسبات.html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة حاسبات</a>
+        <a href="حاسبات.html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة حاسبات<a>
         <a href="الات كهربيه.html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة الات كهربية</a>
         <a href="تبريد و تكيف.html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة تبريد و تكيف</a>     
         <a href="سيارات .html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة سيارات </a>
@@ -172,7 +173,7 @@
 
 <script>
         // Initialize Lucide icons
-        //lucide.createIcons();
+        lucide.createIcons();
 
 
          const supabaseUrl = 'https://qgtjbiatssjthbjujhke.supabase.co'  
@@ -183,7 +184,7 @@
 
         // Try to initialize Supabase, fallback to localStorage if it fails     
         try {
-            if (supabaseUrl === 'https://qgtjbiatssjthbjujhke.supabase.co' && supabaseKey === 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFndGpiaWF0c3NqdGhianVqaGtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzNDQ2NzMsImV4cCI6MjA3MTkyMDY3M30.K2KqgNZjqKcMYezhEihM884rzQgxAhDs9zv61nVCZfM'   ) {  
+            if (supabaseUrl !== 'https://qgtjbiatssjthbjujhke.supabase.co' && supabaseKey !== 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFndGpiaWF0c3NqdGhianVqaGtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzNDQ2NzMsImV4cCI6MjA3MTkyMDY3M30.K2KqgNZjqKcMYezhEihM884rzQgxAhDs9zv61nVCZfM'   ) {  
                 useLocalStorage = false;
                 console.log('[v0] Using Supabase database');
             } else {
@@ -494,7 +495,7 @@
                 `).join('');
                 
                 // Re-initialize icons
-                //lucide.createIcons();
+                lucide.createIcons();
             } catch (error) {
                 console.error('[v0] Error loading subjects:', error);
                 // Show fallback message
@@ -683,7 +684,7 @@
                 document.getElementById('subjectModal').classList.remove('hidden');
                 
                 // Re-initialize icons
-                //lucide.createIcons();
+                lucide.createIcons();
             } catch (error) {
                 console.error('[v0] Error opening subject:', error);
                 alert('حدث خطأ أثناء فتح بيانات المادة. جاري المحاولة مرة أخرى...');
@@ -783,7 +784,7 @@
                         document.getElementById('subjectModal').classList.remove('hidden');
                         
                         // Re-initialize icons
-                        //lucide.createIcons();
+                        lucide.createIcons();
                     } else {
                         alert('المادة غير موجودة');
                     }
@@ -992,7 +993,7 @@
                 document.getElementById('contentModal').classList.remove('hidden');
                 
                 // Re-initialize icons
-                //lucide.createIcons();
+                lucide.createIcons();
             } catch (error) {
                 console.error('Error managing subject content:', error);
                 alert('حدث خطأ في تحميل محتوى المادة');
