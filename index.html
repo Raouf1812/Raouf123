@@ -74,7 +74,27 @@
         <main class="  max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-6 sm:py-12">
             <div class="mb-8 sm:mb-12 text-center">
                 <h2 class="text-2xl sm:text-4xl font-black text-white mb-4 gradient-text glow-text  animate-pulse  transition-transform duration-300  ">﴿ وَأَنْ لَيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ ﴾</h2>
-                <p  class="text-slate-400 text-lg sm:text-1xl max-w-2xl mx-auto leading-relaxed px-4 animate-pulse " > دوس علي المادا الي عايز تذاكرها بس براحه عشان المواد مش بتعتنا 😉 </p>
+                <div id="examCountdown" class="flex justify-center gap-4 my-6 text-white font-bold text-lg !opacity-100 animate-pulse ">
+                    <div class="bg-white/10 backdrop-blur px-4 py-3 rounded-xl text-center">
+                        <div id="cd-days" class="text-3xl">00</div>
+                        <div class="text-sm text-yellow-300">يوم</div>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur px-4 py-3 rounded-xl text-center">
+                        <div id="cd-hours" class="text-3xl">00</div>
+                        <div class="text-sm text-yellow-300">ساعة</div>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur px-4 py-3 rounded-xl text-center">
+                        <div id="cd-mins" class="text-3xl">00</div>
+                        <div class="text-sm text-yellow-300">دقيقة</div>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur px-4 py-3 rounded-xl text-center">
+                        <div id="cd-secs" class="text-3xl">00</div>
+                        <div class="text-sm text-yellow-300">ثانية</div>
+                    </div>
+                </div>
             </div>
             <div id="subjectsGrid" class="fade-up" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
                 <!-- Subjects will be loaded here -->
@@ -2425,6 +2445,33 @@ document.addEventListener('DOMContentLoaded', revealOnScroll);
                 }
             }
         }
+</script>
+<script>
+var endTime = new Date("2026-01-1 01:00:00").getTime();
+
+function updateCountdown() {
+    let now = new Date().getTime();
+    let distance = endTime - now;
+
+    if (distance <= 0) {
+        document.getElementById("examCountdown").innerHTML =
+            "<div class='text-yellow-300 text-3xl font-bold'>انتهى الوقت!</div>";
+        return;
+    }
+
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("cd-days").textContent = days.toString().padStart(2, '0');
+    document.getElementById("cd-hours").textContent = hours.toString().padStart(2, '0');
+    document.getElementById("cd-mins").textContent = mins.toString().padStart(2, '0');
+    document.getElementById("cd-secs").textContent = secs.toString().padStart(2, '0');
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
 </script>
 </body>
 </html>
