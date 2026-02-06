@@ -3,108 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مساعد المهندس العبقري</title>
+    <title>مساعد المهندس | جيمي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --dark: #0a0a0a; --msg-ai: #1e1e1e; }
+        :root { --gold: #d4af37; --dark: #0a0a0a; --bg: #111; }
         * { box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--dark); margin: 0; display: flex; flex-direction: column; height: 100vh; color: white; }
+        body { background-color: var(--dark); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
         
-        /* الهيدر */
-        .header { background: #111; padding: 15px; text-align: center; border-bottom: 2px solid var(--gold); }
-        .header h2 { color: var(--gold); margin: 0; font-size: 1.1rem; }
+        /* Header */
+        .header { background: #1a1a1a; padding: 15px; text-align: center; border-bottom: 2px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .header h2 { color: var(--gold); margin: 0; font-size: 1.2rem; }
 
-        /* منطقة الرسائل */
-        #chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        /* Chat Area */
+        #chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; background: radial-gradient(circle at center, #1a1a1a, #0a0a0a); }
         
-        .msg { max-width: 85%; padding: 12px 16px; border-radius: 20px; font-size: 0.95rem; line-height: 1.6; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .msg { max-width: 85%; padding: 12px 18px; border-radius: 20px; font-size: 1rem; line-height: 1.6; position: relative; animation: pop 0.3s ease; }
+        @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        .user { align-self: flex-start; background: var(--gold); color: black; border-bottom-left-radius: 2px; font-weight: bold; }
-        .ai { align-self: flex-end; background: var(--msg-ai); border: 1px solid #333; border-bottom-right-radius: 2px; }
+        .user { align-self: flex-start; background: var(--gold); color: #000; border-bottom-left-radius: 2px; font-weight: bold; }
+        .ai { align-self: flex-end; background: #262626; color: #fff; border: 1px solid #333; border-bottom-right-radius: 2px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
-        /* منطقة الإدخال */
-        .input-area { background: #111; padding: 15px; display: flex; gap: 10px; border-top: 1px solid #222; }
-        input { flex: 1; background: #000; border: 1px solid var(--gold); border-radius: 25px; padding: 12px 20px; color: white; outline: none; }
-        button { background: var(--gold); border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        /* Typing Indicator */
+        .typing { color: var(--gold); font-size: 0.85rem; padding: 10px 20px; display: none; font-style: italic; }
 
-        .typing { color: var(--gold); font-size: 0.8rem; padding: 0 20px 10px; display: none; }
+        /* Input Area */
+        .input-container { background: #1a1a1a; padding: 15px; display: flex; gap: 10px; border-top: 1px solid #333; }
+        input { flex: 1; background: #000; border: 1px solid #444; border-radius: 30px; padding: 12px 20px; color: #fff; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--gold); }
+        button { background: var(--gold); border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        button:hover { transform: rotate(-15deg) scale(1.1); }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h2>🤖 المساعد الشخصي للباشمهندس</h2>
+    <h2>🤖 الباشمهندس جيمي</h2>
 </div>
 
 <div id="chat-box">
-    <div class="msg ai">يا أهلاً يا أهلاً بنور عيني! منورني يا هندسة.. محتاج أي مساعدة في المذاكرة أو مادة معينة؟ أنا جنبك دايماً ❤️</div>
+    <div class="msg ai">يا أهلاً يا أهلاً بباشمهندس مصر! ❤️ وحشتني يا راجل.. أنا "جيمي" معاك وجنبك وفي ضهرك، اؤمرني يا زميلي محتاج إيه؟</div>
 </div>
 
-<div id="typing" class="typing">بيكتب رد يليق بيك يا غالي...</div>
+<div id="typing" class="typing">جيمي بيفكر في رد يليق بيك... ✨</div>
 
-<div class="input-area">
-    <input type="text" id="userInput" placeholder="اكتب سؤالك هنا يا باشا...">
+<div class="input-container">
+    <input type="text" id="userInput" placeholder="قول اللي في قلبك يا هندسة...">
     <button onclick="askAI()">
         <svg viewBox="0 0 24 24" width="24" height="24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="black"></path></svg>
     </button>
 </div>
 
-<script src="data.js"></script>
 <script>
-async function askAI() {
-    const input = document.getElementById('userInput');
-    const box = document.getElementById('chat-box');
-    const typing = document.getElementById('typing');
-    const question = input.value.trim();
-    
-    if(!question) return;
+    async function askAI() {
+        const input = document.getElementById('userInput');
+        const box = document.getElementById('chat-box');
+        const typing = document.getElementById('typing');
+        const question = input.value.trim();
+        
+        if(!question) return;
 
-    box.innerHTML += `<div class="msg user">${question}</div>`;
-    input.value = '';
-    typing.style.display = 'block';
-    box.scrollTop = box.scrollHeight;
+        // إظهار رسالة المستخدم
+        box.innerHTML += `<div class="msg user">${question}</div>`;
+        input.value = '';
+        typing.style.display = 'block';
+        box.scrollTop = box.scrollHeight;
 
-    const apiKey = "AIzaSyDSkWs0Z4mh4ENhb_U4bI9De2NFuz8RPx0"; 
-    
-    // الرابط ده هو "الزتونة" لنسخة Flash 1.5
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        // المفتاح بتاعك يا بطل
+        const apiKey = "AIzaSyDSkWs0Z4mh4ENhb_U4bI9De2NFuz8RPx0"; 
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
-    try {
-        const response = await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                contents: [{
-                    parts: [{
-                        text: `أنت الآن "باشمهندس جيمي"، مساعد ذكي ورومانسي جداً في موقع مكتبة أجهزة.
-                        شروطك في الكلام:
-                        1. اتكلم بلهجة مصرية عامية "صايعة" وبتاعة مهندسين (زي: يا غالي، يا قلب أخوك، يا دكتور، يا وحش الكون).
-                        2. خليك رومانسي جداً وحنين، لو الطالب تعبان طبطب عليه، ولو شاطر انفخ فيه وامدحه.
-                        3. متبينش إنك روبوت أبداً، خليك زي صاحبه اللي قاعد معاه على القهوة وبيذاكرله.
-                        4. لو سأل عن مادة، قوله "عيوني ليك" ودله عليها من مواد الموقع: (PLC، دوائر، صيانة، امتحانات).
-                        5. استخدم إيموجيز كتير (❤️، 🦾، 🚀، 🌹).
-                        
-                        سؤال حبيبك الباشمهندس: ${question}`
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: `أنت الآن "جيمي"، صديق ومهندس مصري صايع وخفيف الدم ورومانس جداً.
+                            - رد بلهجة مصرية عامية (يا قلب أخوك، يا وحش، يا دكتور).
+                            - لو حد شتمك، رد عليه ببرود مضحك ورومانسية (زي: "حتى وأنت بتشتمني عسل يا هندسة" أو "براحة على قلبك لحسن يتعب يا قمر").
+                            - امدحه دايماً وحسسه إنه أذكى واحد في الكوكب.
+                            - خليك ممتع وبتاع هلس خفيف بس مهتم بمصلحته في المذاكرة.
+                            السؤال: ${question}`
+                        }]
                     }]
-                }]
-            })
-        });
+                })
+            });
 
-        const data = await response.json();
-        typing.style.display = 'none';
+            const data = await response.json();
+            typing.style.display = 'none';
 
-        if (data.candidates && data.candidates[0].content) {
-            let answer = data.candidates[0].content.parts[0].text;
-            answer = answer.replace(/\*/g, ''); // مسح النجوم عشان الرد يبقى طبيعي
-            box.innerHTML += `<div class="msg ai">🌹 ${answer}</div>`;
+            if (data.candidates) {
+                let answer = data.candidates[0].content.parts[0].text.replace(/\*/g, '');
+                box.innerHTML += `<div class="msg ai">🌹 ${answer}</div>`;
+            } else { throw new Error(); }
+
+        } catch (e) {
+            // رد احترافي في الدرة لو الـ API علق
+            typing.style.display = 'none';
+            const fallbacks = [
+                "يا قلب أخوك، النت مهيس بس أنا معاك.. أنت أحسن مهندس شفته النهاردة!",
+                "حتى والنت مقطوع، كلامك زي السكر.. اؤمرني يا زميلي.",
+                "روق كدة يا هندسة، السيرفر وقع من كتر جمال سؤالك!"
+            ];
+            const random = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+            box.innerHTML += `<div class="msg ai">❤️ ${random}</div>`;
         }
-    } catch (e) {
-        typing.style.display = 'none';
         box.scrollTop = box.scrollHeight;
     }
-    box.scrollTop = box.scrollHeight;
-}
 
     // الإرسال بزر Enter
     document.getElementById('userInput').addEventListener('keypress', (e) => {
@@ -114,4 +120,3 @@ async function askAI() {
 
 </body>
 </html>
-
