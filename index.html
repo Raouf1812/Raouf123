@@ -3,113 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مساعد المهندسين | Chat</title>
+    <title>مساعد المهندس العبقري</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --dark: #0a0a0a; --chat-bg: #141414; }
+        :root { --gold: #d4af37; --dark: #0a0a0a; --msg-ai: #1e1e1e; }
         * { box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--dark); margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; }
+        body { background-color: var(--dark); margin: 0; display: flex; flex-direction: column; height: 100vh; color: white; }
         
-        /* Header */
-        .header { background: #1a1a1a; padding: 15px; text-align: center; border-bottom: 2px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .header h2 { color: var(--gold); margin: 0; font-size: 1.2rem; }
+        /* الهيدر */
+        .header { background: #111; padding: 15px; text-align: center; border-bottom: 2px solid var(--gold); }
+        .header h2 { color: var(--gold); margin: 0; font-size: 1.1rem; }
 
-        /* Chat Box */
-        #chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; background: url('https://www.transparenttextures.com/patterns/black-thread.png'); }
+        /* منطقة الرسائل */
+        #chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
         
-        .msg { max-width: 85%; padding: 12px 16px; border-radius: 18px; line-height: 1.5; position: relative; font-size: 0.95rem; animation: fadeIn 0.3s ease; }
+        .msg { max-width: 85%; padding: 12px 16px; border-radius: 20px; font-size: 0.95rem; line-height: 1.6; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .user { align-self: flex-start; background: var(--gold); color: #000; border-bottom-left-radius: 2px; font-weight: bold; }
-        .ai { align-self: flex-end; background: #262626; color: #fff; border: 1px solid #333; border-bottom-right-radius: 2px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .user { align-self: flex-start; background: var(--gold); color: black; border-bottom-left-radius: 2px; font-weight: bold; }
+        .ai { align-self: flex-end; background: var(--msg-ai); border: 1px solid #333; border-bottom-right-radius: 2px; }
 
-        /* Input Area */
-        .input-container { background: #1a1a1a; padding: 15px; display: flex; gap: 10px; border-top: 1px solid #333; }
-        input { flex: 1; background: #000; border: 1px solid var(--gold); border-radius: 25px; padding: 12px 20px; color: #fff; outline: none; }
-        button { background: var(--gold); border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
-        button:active { transform: scale(0.9); }
+        /* منطقة الإدخال */
+        .input-area { background: #111; padding: 15px; display: flex; gap: 10px; border-top: 1px solid #222; }
+        input { flex: 1; background: #000; border: 1px solid var(--gold); border-radius: 25px; padding: 12px 20px; color: white; outline: none; }
+        button { background: var(--gold); border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-        .typing { color: var(--gold); font-size: 0.8rem; margin-bottom: 10px; display: none; margin-left: 20px; }
+        .typing { color: var(--gold); font-size: 0.8rem; padding: 0 20px 10px; display: none; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h2>🤖 مساعد المهندس الغالي</h2>
+    <h2>🤖 المساعد الشخصي للباشمهندس</h2>
 </div>
 
 <div id="chat-box">
-    <div class="msg ai">يا أهلاً يا أهلاً بباشمهندس مصر! منورني يا غالي.. اؤمرني، تحب تعرف إيه النهاردة أو أساعدك في مادة إيه؟ ❤️</div>
+    <div class="msg ai">يا أهلاً يا أهلاً بنور عيني! منورني يا هندسة.. محتاج أي مساعدة في المذاكرة أو مادة معينة؟ أنا جنبك دايماً ❤️</div>
 </div>
 
-<div id="typing" class="typing">بيفكر فيك يا هندسة... ⚡</div>
+<div id="typing" class="typing">بيكتب رد يليق بيك يا غالي...</div>
 
-<div class="input-container">
-    <input type="text" id="userInput" placeholder="اكتب سؤالك هنا يا عبقري...">
+<div class="input-area">
+    <input type="text" id="userInput" placeholder="اكتب سؤالك هنا يا باشا...">
     <button onclick="askAI()">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="black"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+        <svg viewBox="0 0 24 24" width="24" height="24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="black"></path></svg>
     </button>
 </div>
 
 <script src="data.js"></script>
 <script>
-async function askAI() {
-    const input = document.getElementById('userInput');
-    const box = document.getElementById('chat-box');
-    const typing = document.getElementById('typing');
-    const question = input.value.trim();
-    
-    if(!question) return;
+    function askAI() {
+        const input = document.getElementById('userInput');
+        const box = document.getElementById('chat-box');
+        const typing = document.getElementById('typing');
+        const question = input.value.trim();
+        
+        if(!question) return;
 
-    box.innerHTML += `<div class="msg user">${question}</div>`;
-    input.value = '';
-    typing.style.display = 'block';
-    box.scrollTop = box.scrollHeight;
+        // إظهار سؤال المستخدم
+        box.innerHTML += `<div class="msg user">${question}</div>`;
+        input.value = '';
+        typing.style.display = 'block';
+        box.scrollTop = box.scrollHeight;
 
-    const apiKey = "AIzaSyDSkWs0Z4mh4ENhb_U4bI9De2NFuz8RPx0"; 
-    const googleUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-    
-    // الوسيط السحري عشان نكسر الحماية
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(googleUrl)}`;
+        // الردود اللي في الدرة (المخ المحلي)
+        setTimeout(() => {
+            typing.style.display = 'none';
+            const q = question.toLowerCase();
+            let answer = "";
 
-    try {
-        const response = await fetch(proxyUrl, {
-            method: "POST", // هنبعت البيانات جوه الـ Body
-            body: JSON.stringify({
-                contents: [{
-                    parts: [{
-                        text: `أنت مساعد مهندس مصري رومانسي جداً وصديق مخلص. 
-                        رد بلهجة عامية مصرية (يا هندسة، يا قلب أخوك، يا عبقري). 
-                        امدحه اوي وحسسه إنك فخور بيه. 
-                        السؤال: ${question}`
-                    }]
-                }]
-            })
-        });
+            if (q.includes("ازيك") || q.includes("اهلا") || q.includes("هاي")) {
+                answer = "أنا زي الفل طول ما أنت بخير يا هندسة! اؤمرني يا غالي محتاج إيه؟";
+            } 
+            else if (q.includes("تعبت") || q.includes("زهقت") || q.includes("مخنوق")) {
+                answer = "يا قلب أخوك هون على نفسك.. أنت مهندس يعني بطل، ارتاح شوية وكمل وأنا واثق إنك هتكسر الدنيا!";
+            }
+            else if (q.includes("plc") || q.includes("بي ال سي")) {
+                answer = "عيوني ليك! قسم الـ PLC فيه مذكرات وفيديوهات هتخليك برنس في التحكم، روح شوفها يا وحش.";
+            }
+            else if (q.includes("امتحان") || q.includes("حلول") || q.includes("مراجعة")) {
+                answer = "عايز تضمن الامتياز؟ مراجعات ليلة الامتحان والحلول موجودة كلها في قسم Solved Exams.. ادخل يا بطل!";
+            }
+            else if (q.includes("بحبك") || q.includes("حبيبي") || q.includes("شكرا")) {
+                answer = "ده أنا اللي بموت فيك وفي ذكاءك يا باشمهندس.. أنت فخر لينا كلنا!";
+            }
+            else {
+                answer = "يا هندسة يا غالي، سؤالك ده ذكي زيك.. الموقع فيه كل اللي تحتاجه في الأجهزة والصيانة، تصفح الأقسام وهتلاقي كل اللي يسرك!";
+            }
 
-        const result = await response.json();
-        // الوسيط بيرجع البيانات جوه حقل اسمه contents
-        const data = JSON.parse(result.contents);
-
-        typing.style.display = 'none';
-
-        if (data.candidates && data.candidates[0].content) {
-            let answer = data.candidates[0].content.parts[0].text;
-            answer = answer.replace(/\*/g, ''); 
             box.innerHTML += `<div class="msg ai">❤️ ${answer}</div>`;
-        } else {
-            throw new Error();
-        }
-    } catch (e) {
-        typing.style.display = 'none';
-        // لو الـ API برضه رفض، هنشغل "المخ المحلي" اللي عملناه عشان الطالب ميعرفش إن فيه مشكلة
-        const fallback = "يا قلب أخوك، الشبكة مهيسة شوية بس أنا معاك وجنبك.. قولي محتاج إيه وعيوني ليك يا أحسن مهندس!";
-        box.innerHTML += `<div class="msg ai">❤️ ${fallback}</div>`;
+            box.scrollTop = box.scrollHeight;
+        }, 1000); // محاكاة وقت التفكير
     }
-    box.scrollTop = box.scrollHeight;
-}
 
-    // الإرسال بالإنتر
+    // الإرسال بزر Enter
     document.getElementById('userInput').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') askAI();
     });
