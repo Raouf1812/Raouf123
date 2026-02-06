@@ -2,250 +2,118 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="author" content="Raouf">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ أهــلًا بـيــك يـابشمهندس ✨ </title>   
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="style.css" /ِ>
+    <title>مساعد المهندسين | Chat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #d4af37; --dark: #0a0a0a; --chat-bg: #141414; }
+        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--dark); margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; }
+        
+        /* Header */
+        .header { background: #1a1a1a; padding: 15px; text-align: center; border-bottom: 2px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .header h2 { color: var(--gold); margin: 0; font-size: 1.2rem; }
+
+        /* Chat Box */
+        #chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; background: url('https://www.transparenttextures.com/patterns/black-thread.png'); }
+        
+        .msg { max-width: 85%; padding: 12px 16px; border-radius: 18px; line-height: 1.5; position: relative; font-size: 0.95rem; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .user { align-self: flex-start; background: var(--gold); color: #000; border-bottom-left-radius: 2px; font-weight: bold; }
+        .ai { align-self: flex-end; background: #262626; color: #fff; border: 1px solid #333; border-bottom-right-radius: 2px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+
+        /* Input Area */
+        .input-container { background: #1a1a1a; padding: 15px; display: flex; gap: 10px; border-top: 1px solid #333; }
+        input { flex: 1; background: #000; border: 1px solid var(--gold); border-radius: 25px; padding: 12px 20px; color: #fff; outline: none; }
+        button { background: var(--gold); border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        button:active { transform: scale(0.9); }
+
+        .typing { color: var(--gold); font-size: 0.8rem; margin-bottom: 10px; display: none; margin-left: 20px; }
+    </style>
 </head>
 <body>
-                                            <div class="background">
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                        <span></span><span></span><span></span>
-                                            </div>
 
-
-<div id="side-menu" class="fixed top-0 left-0 h-full w-64 bg-gray-900 shadow-xl transform -translate-x-full transition-transform duration-300 ease-in-out z-40">
-    <div class="p-8">
-        <h2 class="text-2xl font-bold text-yellow-400 mb-6 border-b border-yellow-400 pb-2">✨اختار شعبتك✨</h2>
-        <a href="index.html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة اجهزة</a>
-        <a href="شبكات.html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة شبكات</a>     
-        <a href="حاسبات.html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة حاسبات<a>
-        <a href="الات كهربيه.html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة الات كهربية</a>
-        <a href="تبريد و تكيف.html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة تبريد و تكيف</a>     
-        <a href="سيارات .html" class="block py-2 text-white hover:text-yellow-400 transition-colors">شعبة سيارات </a>
-    </div>
+<div class="header">
+    <h2>🤖 مساعد المهندس الغالي</h2>
 </div>
 
-
-    <!-- Student View -->
-    <div id="studentView" class="min-h-screen">
-        <!-- Header -->
-        <header class="header-glow  top-0 z-0">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-4">
-                        <div>
-                          <img src="logo/RR.png" width="69">
-                        </div>
-                        <div>
-                            <h1 class="text-1xl font-black gradient-text">شعبه اجهزه 🖤</h1>
-                            <p class="text-slate-400 font-medium text-1xl "> مكتبه شعبه اجهزه الصف الثاني الترم الاول</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-6">
-                    </div>
-                </div>
-            </div>
-        </header>
-        
-
-        <!-- Main Content -->
-        <main class="  max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-6 sm:py-12">
-            <div class="mb-8 sm:mb-12 text-center">
-                <h2 class="text-2xl sm:text-4xl font-black text-white mb-4 gradient-text glow-text  animate-pulse  transition-transform duration-300  ">﴿ وَأَنْ لَيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ ﴾</h2>
-                <div id="examCountdown" class="flex justify-center gap-4 my-6 text-white font-bold text-lg !opacity-100 animate-pulse ">
-                    <div class="bg-white/10 backdrop-blur px-4 py-3 rounded-xl text-center">
-                        <div id="cd-days" class="text-3xl">00</div>
-                        <div class="text-sm text-yellow-300">يوم</div>
-                    </div>
-
-                    <div class="bg-white/10 backdrop-blur px-4 py-3 rounded-xl text-center">
-                        <div id="cd-hours" class="text-3xl">00</div>
-                        <div class="text-sm text-yellow-300">ساعة</div>
-                    </div>
-
-                    <div class="bg-white/10 backdrop-blur px-4 py-3 rounded-xl text-center">
-                        <div id="cd-mins" class="text-3xl">00</div>
-                        <div class="text-sm text-yellow-300">دقيقة</div>
-                    </div>
-
-                    <div class="bg-white/10 backdrop-blur px-4 py-3 rounded-xl text-center">
-                        <div id="cd-secs" class="text-3xl">00</div>
-                        <div class="text-sm text-yellow-300">ثانية</div>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-6 flex justify-center ">
-<div class="mt-10 mb-10 flex justify-center">
-    <div class="max-w-2xl px-8 py-6 rounded-3xl border border-yellow-600/20 bg-yellow-500/5 backdrop-blur-sm text-center">
-        
-        <h2 style="font-family: 'Aref Ruqaa', serif;" 
-            class="text-4xl md:text-5xl font-bold bg-gradient-to-b from-[#FFD700] via-[#FDB931] to-[#D4AF37] bg-clip-text text-transparent mb-4">
-اهلأ بيك يابشمهندس        </h2>
-
-        <div style="font-family: 'Cairo', sans-serif;" class="space-y-2">
-            <p class="text-slate-300 text-lg md:text-xl">
-                 الموقع حالياً في مرحلة التحديث 🛠️
-            </p>
-            <p class="text-slate-400 text-md">
-                المذكرات والشروحات مش متاحة دلوقتي، بس استنوني في <span class="text-yellow-500 font-bold">الترم التاني</span>
-                 بجهز ليكم الموقع الجديد! ✨
-            </p>
-            <br/>
-            <p class="text-[#FFD700] text-2xl mt-4 font-bold tracking-widest" style="font-family: 'Aref Ruqaa', serif;">
-                بالتوفيق للجميع في الامتحانات ❤️
-            </p>
-        </div>
-    </div>
+<div id="chat-box">
+    <div class="msg ai">يا أهلاً يا أهلاً بباشمهندس مصر! منورني يا غالي.. اؤمرني، تحب تعرف إيه النهاردة أو أساعدك في مادة إيه؟ ❤️</div>
 </div>
+
+<div id="typing" class="typing">بيفكر فيك يا هندسة... ⚡</div>
+
+<div class="input-container">
+    <input type="text" id="userInput" placeholder="اكتب سؤالك هنا يا عبقري...">
+    <button onclick="askAI()">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="black"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+    </button>
 </div>
-            <div id="subjectsGrid" class="fade-up" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
-                <!-- Subjects will be loaded here -->
-            </div>
 
-            <div id="noSubjects" class="text-center py-20 hidden">
-                <div>
-                    <i data-lucide="book-open" class="h-20 w-20 text-slate-600 mx-auto mb-6"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-slate-300 mb-4">لا توجد مواد متاحة حالياً</h3>
-                <p class="text-slate-500 text-lg">سيتم إضافة المواد الدراسية قريباً</p>
-            </div>
-            
-        </main>
-
-        <!-- Footer -->
-        <footer class="header-glow border-t border-slate-800 mt-20">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="text-center text-slate-400">
-                    <!-- Added side-by-side Made by Raouf text with enhanced styling and animations -->
-                    <div class="flex justify-center items-center gap-8 flex-wrap">
-                                <button class="golden-button" onclick="window.location.href='شيتات.html'">افتح صفحة الشيتات</button>
-                        <p style="font-size: 14px" class="text-yellow-400 font-bold animate-pulse  transition-transform duration-300 "> 
-                            ❤ Made by - Raouf ❤  </p>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- زر فوق الفوتر -->
-
-    </div>
-    <!-- Admin Login Modal -->
-    <div id="adminLoginModal" class="fixed inset-0 modal-backdrop flex items-center justify-center hidden z-50">
-        <div class="glass-card rounded-2xl p-8 max-w-md w-full mx-4 cyber-border">
-            <h2 class="text-3xl font-bold text-white mb-8 text-center gradient-text">دخول الأدمن</h2>
-            <form onsubmit="adminLogin(event)">
-                <div class="mb-6">
-                    <label class="block text-slate-300 text-sm font-bold mb-3">كلمة المرور</label>
-                    <input type="password" id="adminPassword" class="input-field w-full px-4 py-3 rounded-lg" placeholder="أدخل كلمة المرور" required>
-                </div>
-                <div class="flex gap-4">
-                    <button type="submit" class="btn-primary flex-1 py-3 rounded-lg font-bold text-white">دخول</button>
-                    <button type="button" onclick="hideAdminLogin()" class="btn-secondary flex-1 py-3 rounded-lg font-bold text-slate-300">إلغاء</button>
-                </div>
-            </form>
-            <div id="loginError" class="text-red-400 text-sm mt-4 text-center font-medium hidden">كلمة المرور غير صحيحة</div>
-        </div>
-    </div>
-
-    <!-- Subject Details Modal -->
-    <div id="subjectModal" class="fixed inset-0 modal-backdrop flex items-center justify-center hidden z-50">
-        <div class="glass-card rounded-2xl max-w-6xl w-full mx-2 sm:mx-4 max-h-[90vh] overflow-y-auto">
-            <div class="p-4 sm:p-6 border-b border-slate-700">
-                <div class="flex items-center justify-between">
-                    <h2 id="modalSubjectTitle" class="text-xl sm:text-3xl font-bold gradient-text"></h2>
-                    <button onclick="closeSubjectModal()" class="text-slate-400 hover:text-white transition-colors">
-                        <i data-lucide="x" class="h-6 w-6 sm:h-8 sm:w-8"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="p-4 sm:p-8">
-                <div id="modalSubjectContent">
-                    <!-- Subject content will be loaded here -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Content Management Modal -->
-    <div id="contentModal" class="fixed inset-0 modal-backdrop flex items-center justify-center hidden z-50">
-        <div class="glass-card rounded-2xl max-w-4xl w-full mx-2 sm:mx-4 max-h-[90vh] overflow-y-auto">
-            <div class="p-4 sm:p-6 border-b border-slate-700">
-                <div class="flex items-center justify-between">
-                    <h2 id="contentModalTitle" class="text-xl sm:text-3xl font-bold gradient-text"></h2>
-                    <button onclick="closeContentModal()" class="text-slate-400 hover:text-white transition-colors">
-                        <i data-lucide="x" class="h-6 w-6 sm:h-8 sm:w-8"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="p-4 sm:p-8">
-                <div id="contentModalBody">
-                    <!-- Content forms will be loaded here -->
-                </div>
-            </div>
-        </div>
-    </div>
-
+<script src="data.js"></script>
 <script>
-    const menuBtn = document.getElementById('menu-btn');
-    const sideMenu = document.getElementById('side-menu');
+async function askAI() {
+    const input = document.getElementById('userInput');
+    const box = document.getElementById('chat-box');
+    const typing = document.getElementById('typing');
+    const question = input.value.trim();
+    
+    if(!question) return;
 
-    menuBtn.addEventListener('click', () => {
-        sideMenu.classList.toggle('-translate-x-full');
+    box.innerHTML += `<div class="msg user">${question}</div>`;
+    input.value = '';
+    typing.style.display = 'block';
+    box.scrollTop = box.scrollHeight;
+
+    const apiKey = "AIzaSyDSkWs0Z4mh4ENhb_U4bI9De2NFuz8RPx0"; 
+    const googleUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    
+    // الوسيط السحري عشان نكسر الحماية
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(googleUrl)}`;
+
+    try {
+        const response = await fetch(proxyUrl, {
+            method: "POST", // هنبعت البيانات جوه الـ Body
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{
+                        text: `أنت مساعد مهندس مصري رومانسي جداً وصديق مخلص. 
+                        رد بلهجة عامية مصرية (يا هندسة، يا قلب أخوك، يا عبقري). 
+                        امدحه اوي وحسسه إنك فخور بيه. 
+                        السؤال: ${question}`
+                    }]
+                }]
+            })
+        });
+
+        const result = await response.json();
+        // الوسيط بيرجع البيانات جوه حقل اسمه contents
+        const data = JSON.parse(result.contents);
+
+        typing.style.display = 'none';
+
+        if (data.candidates && data.candidates[0].content) {
+            let answer = data.candidates[0].content.parts[0].text;
+            answer = answer.replace(/\*/g, ''); 
+            box.innerHTML += `<div class="msg ai">❤️ ${answer}</div>`;
+        } else {
+            throw new Error();
+        }
+    } catch (e) {
+        typing.style.display = 'none';
+        // لو الـ API برضه رفض، هنشغل "المخ المحلي" اللي عملناه عشان الطالب ميعرفش إن فيه مشكلة
+        const fallback = "يا قلب أخوك، الشبكة مهيسة شوية بس أنا معاك وجنبك.. قولي محتاج إيه وعيوني ليك يا أحسن مهندس!";
+        box.innerHTML += `<div class="msg ai">❤️ ${fallback}</div>`;
+    }
+    box.scrollTop = box.scrollHeight;
+}
+
+    // الإرسال بالإنتر
+    document.getElementById('userInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') askAI();
     });
 </script>
 
-
-<script>
-var endTime = new Date("2026-1-3 10:00:00").getTime();
-
-function updateCountdown() {
-    let now = new Date().getTime();
-    let distance = endTime - now;
-
-    if (distance <= 0) {
-        document.getElementById("examCountdown").innerHTML =
-            "<div class='text-yellow-300 text-3xl font-bold'>ربنا يوفقك ياهندسه</div>";
-        
-    }
-
-    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    let secs = Math.floor((distance % (1000 * 60)) / 1000);
-
-    document.getElementById("cd-days").textContent = days.toString().padStart(2, '0');
-    document.getElementById("cd-hours").textContent = hours.toString().padStart(2, '0');
-    document.getElementById("cd-mins").textContent = mins.toString().padStart(2, '0');
-    document.getElementById("cd-secs").textContent = secs.toString().padStart(2, '0');
-}
-setInterval(updateCountdown, 1000);
-updateCountdown();
-</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
