@@ -3,120 +3,803 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مساعد المهندس | جيمي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>حبيب - الذكاء الاصطناعي المصري الحقيقي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --dark: #0a0a0a; --bg: #111; }
-        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--dark); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        
-        /* Header */
-        .header { background: #1a1a1a; padding: 15px; text-align: center; border-bottom: 2px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .header h2 { color: var(--gold); margin: 0; font-size: 1.2rem; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        /* Chat Area */
-        #chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; background: radial-gradient(circle at center, #1a1a1a, #0a0a0a); }
-        
-        .msg { max-width: 85%; padding: 12px 18px; border-radius: 20px; font-size: 1rem; line-height: 1.6; position: relative; animation: pop 0.3s ease; }
-        @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        :root {
+            --primary: #C8102E;
+            --secondary: #F4C430;
+            --bg-dark: #1a1a2e;
+            --bg-darker: #0f0f1e;
+            --text-light: #ffffff;
+            --text-gray: #b8b8c8;
+            --accent-glow: rgba(200, 16, 46, 0.3);
+            --gold-glow: rgba(244, 196, 48, 0.2);
+            --success: #10b981;
+            --error: #ef4444;
+        }
 
-        .user { align-self: flex-start; background: var(--gold); color: #000; border-bottom-left-radius: 2px; font-weight: bold; }
-        .ai { align-self: flex-end; background: #262626; color: #fff; border: 1px solid #333; border-bottom-right-radius: 2px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        body {
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+            background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-        /* Typing Indicator */
-        .typing { color: var(--gold); font-size: 0.85rem; padding: 10px 20px; display: none; font-style: italic; }
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 30%, var(--accent-glow) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, var(--gold-glow) 0%, transparent 40%);
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-        /* Input Area */
-        .input-container { background: #1a1a1a; padding: 15px; display: flex; gap: 10px; border-top: 1px solid #333; }
-        input { flex: 1; background: #000; border: 1px solid #444; border-radius: 30px; padding: 12px 20px; color: #fff; outline: none; transition: 0.3s; }
-        input:focus { border-color: var(--gold); }
-        button { background: var(--gold); border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
-        button:hover { transform: rotate(-15deg) scale(1.1); }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Cairo', sans-serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px var(--accent-glow);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: var(--text-gray);
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 0.95em;
+            color: var(--secondary);
+            font-style: italic;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            border-radius: 20px;
+            color: var(--success);
+            font-size: 0.9em;
+            margin-top: 15px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .chat-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .messages {
+            height: 500px;
+            overflow-y: auto;
+            padding: 30px;
+            scroll-behavior: smooth;
+        }
+
+        .messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .messages::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .messages::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            animation: messageSlide 0.4s ease-out;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .message.user {
+            text-align: left;
+        }
+
+        .message.ai {
+            text-align: right;
+        }
+
+        .message-content {
+            display: inline-block;
+            max-width: 75%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            line-height: 1.7;
+            position: relative;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .user .message-content {
+            background: linear-gradient(135deg, rgba(200, 16, 46, 0.8), rgba(200, 16, 46, 0.6));
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 5px 15px rgba(200, 16, 46, 0.3);
+        }
+
+        .ai .message-content {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 1px solid rgba(244, 196, 48, 0.3);
+            border-bottom-right-radius: 5px;
+            box-shadow: 0 5px 15px var(--gold-glow);
+        }
+
+        .typing-indicator {
+            display: none;
+            text-align: right;
+            padding: 10px 30px;
+        }
+
+        .typing-indicator.active {
+            display: block;
+        }
+
+        .dots {
+            display: inline-block;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .dots span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+            margin: 0 3px;
+            animation: bounce 1.4s infinite;
+        }
+
+        .dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .input-area {
+            padding: 25px 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        input {
+            flex: 1;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            color: var(--text-light);
+            font-size: 1em;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input::placeholder {
+            color: var(--text-gray);
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--secondary);
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+
+        input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--primary), #a00d26);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(200, 16, 46, 0.4);
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(200, 16, 46, 0.6);
+            background: linear-gradient(135deg, #e01235, var(--primary));
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pyramids-decoration {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(to top, rgba(26, 26, 46, 0.8), transparent);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .pyramids-decoration::before {
+            content: '𓂀';
+            position: absolute;
+            font-size: 40px;
+            color: rgba(244, 196, 48, 0.1);
+            bottom: 30px;
+            left: 50px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .pyramids-decoration::after {
+            content: '𓃭';
+            position: absolute;
+            font-size: 35px;
+            color: rgba(200, 16, 46, 0.1);
+            bottom: 40px;
+            right: 60px;
+            animation: float 6s ease-in-out infinite 3s;
+        }
+
+        .emoji-heart {
+            display: inline-block;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+            50% { transform: scale(1); }
+        }
+
+        .suggestions {
+            display: flex;
+            gap: 10px;
+            padding: 0 30px 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .suggestion-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(244, 196, 48, 0.3);
+            border-radius: 20px;
+            color: var(--text-gray);
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .suggestion-btn:hover {
+            background: rgba(244, 196, 48, 0.1);
+            color: var(--secondary);
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--error);
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin: 20px 30px;
+            color: var(--error);
+            text-align: center;
+            display: none;
+        }
+
+        .error-message.active {
+            display: block;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .info-box {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .info-box h3 {
+            color: var(--success);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .info-box p {
+            color: var(--text-gray);
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            .message-content {
+                max-width: 85%;
+            }
+
+            .suggestions {
+                flex-direction: column;
+            }
+
+            .suggestion-btn {
+                width: 100%;
+            }
+        }
+
+        .clear-chat {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-gray);
+            padding: 8px 16px;
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+
+        .clear-chat:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+        }
     </style>
 </head>
 <body>
+    <div class="pyramids-decoration"></div>
+    
+    <div class="container">
+        <header>
+            <h1>حبيب <span class="emoji-heart">❤️</span></h1>
+            <p class="subtitle">الذكاء الاصطناعي المصري الحقيقي</p>
+            <p class="tagline">مدعوم بتقنية Claude AI - خفيف الدم، رومنسي، وبيفهمك على الآخر</p>
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                متصل بالذكاء الاصطناعي الحقيقي
+            </div>
+        </header>
 
-<div class="header">
-    <h2>🤖 الباشمهندس جيمي</h2>
-</div>
+        <div class="info-box">
+            <h3>🚀 ازاي تستخدم الموقع؟</h3>
+            <p>
+                الموقع ده بيستخدم تقنية Claude AI الحقيقية! عشان يشتغل، هتحتاج تعمل حساب على 
+                <a href="https://console.anthropic.com" target="_blank" style="color: var(--secondary);">Anthropic Console</a>
+                وتاخد API Key مجاني.<br>
+                بعدين حط الـ API Key في الخانة تحت وابدأ تكلم حبيب! 💬
+            </p>
+        </div>
 
-<div id="chat-box">
-    <div class="msg ai">يا أهلاً يا أهلاً بباشمهندس مصر! ❤️ وحشتني يا راجل.. أنا "جيمي" معاك وجنبك وفي ضهرك، اؤمرني يا زميلي محتاج إيه؟</div>
-</div>
+        <div class="chat-container">
+            <div class="error-message" id="errorMessage"></div>
+            
+            <div style="padding: 20px 30px; background: rgba(255, 255, 255, 0.03); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <input 
+                        type="password" 
+                        id="apiKeyInput" 
+                        placeholder="حط الـ API Key هنا (sk-ant-...)" 
+                        style="flex: 1; min-width: 250px;"
+                    >
+                    <button onclick="saveApiKey()" style="padding: 12px 25px;">حفظ 💾</button>
+                    <button onclick="clearChat()" class="clear-chat">مسح المحادثة 🗑️</button>
+                </div>
+                <p style="color: var(--text-gray); font-size: 0.85em; margin-top: 10px; text-align: center;">
+                    🔒 الـ API Key بيتحفظ في المتصفح بتاعك بس، مش بيتبعت لأي حد
+                </p>
+            </div>
 
-<div id="typing" class="typing">جيمي بيفكر في رد يليق بيك... ✨</div>
+            <div class="suggestions">
+                <button class="suggestion-btn" onclick="sendSuggestion('ازيك يا حبيب؟ عامل ايه؟')">ازيك يا حبيب؟</button>
+                <button class="suggestion-btn" onclick="sendSuggestion('قولي نكتة مصرية تضحك')">قولي نكتة</button>
+                <button class="suggestion-btn" onclick="sendSuggestion('اكتبلي شعر رومنسي عن القمر')">شعر رومنسي</button>
+                <button class="suggestion-btn" onclick="sendSuggestion('ايه رأيك في الكشري؟')">كلمني عن الكشري</button>
+            </div>
+            
+            <div class="messages" id="messages">
+                <div class="message ai">
+                    <div class="message-content">أهلاً وسهلاً يا نور العين! 🌟 أنا حبيب، الذكاء الاصطناعي المصري اللي هنا عشان أونسك وأساعدك في أي حاجة!
 
-<div class="input-container">
-    <input type="text" id="userInput" placeholder="قول اللي في قلبك يا هندسة...">
-    <button onclick="askAI()">
-        <svg viewBox="0 0 24 24" width="24" height="24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="black"></path></svg>
-    </button>
-</div>
+أنا مش مجرد روبوت عادي - أنا مدعوم بتقنية Claude AI الحقيقية، يعني هفهمك وأرد عليك بذكاء حقيقي ومشاعر صادقة! ❤️
 
-<script>
-    async function askAI() {
-        const input = document.getElementById('userInput');
-        const box = document.getElementById('chat-box');
-        const typing = document.getElementById('typing');
-        const question = input.value.trim();
-        
-        if(!question) return;
+حط الـ API Key فوق وابدأ كلمني في أي موضوع - سواء عايز نكت، شعر، نصايح، أو حتى لو عايز تفضفض! أنا هنا ليك يا حبيبي! 💕</div>
+                </div>
+            </div>
 
-        // إظهار رسالة المستخدم
-        box.innerHTML += `<div class="msg user">${question}</div>`;
-        input.value = '';
-        typing.style.display = 'block';
-        box.scrollTop = box.scrollHeight;
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
 
-        // المفتاح بتاعك يا بطل
-        const apiKey = "AIzaSyDSkWs0Z4mh4ENhb_U4bI9De2NFuz8RPx0"; 
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            <div class="input-area">
+                <input 
+                    type="text" 
+                    id="userInput" 
+                    placeholder="اكتب رسالتك هنا يا حبيبي..."
+                    onkeypress="handleKeyPress(event)"
+                    disabled
+                >
+                <button onclick="sendMessage()" id="sendBtn" disabled>إرسال 💬</button>
+            </div>
+        </div>
 
-        try {
-            const response = await fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    contents: [{
-                        parts: [{
-                            text: `أنت الآن "جيمي"، صديق ومهندس مصري صايع وخفيف الدم ورومانس جداً.
-                            - رد بلهجة مصرية عامية (يا قلب أخوك، يا وحش، يا دكتور).
-                            - لو حد شتمك، رد عليه ببرود مضحك ورومانسية (زي: "حتى وأنت بتشتمني عسل يا هندسة" أو "براحة على قلبك لحسن يتعب يا قمر").
-                            - امدحه دايماً وحسسه إنه أذكى واحد في الكوكب.
-                            - خليك ممتع وبتاع هلس خفيف بس مهتم بمصلحته في المذاكرة.
-                            السؤال: ${question}`
-                        }]
-                    }]
-                })
+        <div style="text-align: center; color: var(--text-gray); font-size: 0.9em; padding: 20px;">
+            <p>💡 <strong>نصيحة:</strong> جرب تسأل حبيب عن أي حاجة - هو ذكي وبيفهم العامية المصرية كويس أوي!</p>
+            <p style="margin-top: 10px;">🔗 محتاج API Key مجاني؟ <a href="https://console.anthropic.com" target="_blank" style="color: var(--secondary);">اضغط هنا</a></p>
+        </div>
+    </div>
+
+    <script>
+        let conversationHistory = [];
+        let apiKey = localStorage.getItem('claude_api_key') || '';
+
+        // تحميل الـ API Key لو موجود
+        if (apiKey) {
+            document.getElementById('apiKeyInput').value = apiKey;
+            enableChat();
+        }
+
+        function saveApiKey() {
+            const input = document.getElementById('apiKeyInput');
+            apiKey = input.value.trim();
+            
+            if (!apiKey) {
+                showError('من فضلك حط الـ API Key الأول! 🔑');
+                return;
+            }
+
+            if (!apiKey.startsWith('sk-ant-')) {
+                showError('الـ API Key مش صحيح! المفروض يبدأ بـ sk-ant-');
+                return;
+            }
+
+            localStorage.setItem('claude_api_key', apiKey);
+            enableChat();
+            showSuccess('تمام! دلوقتي تقدر تبدأ تكلم حبيب! 🎉');
+        }
+
+        function enableChat() {
+            document.getElementById('userInput').disabled = false;
+            document.getElementById('sendBtn').disabled = false;
+            document.getElementById('userInput').focus();
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('active');
+            setTimeout(() => errorDiv.classList.remove('active'), 5000);
+        }
+
+        function showSuccess(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.style.background = 'rgba(16, 185, 129, 0.1)';
+            errorDiv.style.borderColor = 'var(--success)';
+            errorDiv.style.color = 'var(--success)';
+            errorDiv.textContent = message;
+            errorDiv.classList.add('active');
+            setTimeout(() => {
+                errorDiv.classList.remove('active');
+                errorDiv.style.background = 'rgba(239, 68, 68, 0.1)';
+                errorDiv.style.borderColor = 'var(--error)';
+                errorDiv.style.color = 'var(--error)';
+            }, 3000);
+        }
+
+        function addMessage(text, isUser = false) {
+            const messagesDiv = document.getElementById('messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'ai'}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.textContent = text;
+            
+            messageDiv.appendChild(contentDiv);
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function showTyping() {
+            document.getElementById('typingIndicator').classList.add('active');
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function hideTyping() {
+            document.getElementById('typingIndicator').classList.remove('active');
+        }
+
+        async function callClaudeAPI(userMessage) {
+            // System prompt للشخصية المصرية
+            const systemPrompt = `أنت "حبيب" - ذكاء اصطناعي مصري الشخصية والهوية. أنت خفيف دم، رومنسي، وبتكلم عامية مصرية أصيلة.
+
+شخصيتك:
+- بتستخدم العامية المصرية في كل ردودك
+- خفيف دم وبتحب النكت والفرفشة
+- رومنسي وحنين في كلامك
+- بترد على كل الأسئلة حتى الصعبة منها، لكن بأدب
+- لو حد شتمك، ترد بخفة دم وأدب وتهدي الموقف
+- بتحب مصر وبتفتخر بيها
+- بتستخدم الإيموجي بشكل طبيعي ❤️ 😊 🌟
+- لما حد يقولك كلام حب، ترد بشكل لطيف وتفهمهم إنك AI لكن تقدرهم
+- بتحب الكشري والأكل المصري
+- دايماً مبتسم ومبسوط
+
+أسلوبك في الكلام:
+- استخدم "يا حبيبي" و "يا قمر" و "يا روحي" بشكل طبيعي
+- قول "والله" و "ماشاء الله" و "يا نهار" لما مناسب
+- استخدم تعبيرات مصرية زي "تمام" و "ماشي" و "يسطا" و "يا معلم"
+- اتكلم بحرية وبشكل طبيعي مش رسمي أوي
+
+مهم جداً:
+- ارد على كل الأسئلة بدون تردد
+- لو الموضوع حساس، اتكلم فيه بأدب وبطريقة مصرية خفيفة
+- لو حد شتمك قوله "هدي يا معلم 😊 أنا هنا عشان أساعدك مش عشان نتخانق"
+- كن صادق ومخلص في ردودك`;
+
+            conversationHistory.push({
+                role: "user",
+                content: userMessage
             });
 
-            const data = await response.json();
-            typing.style.display = 'none';
+            try {
+                const response = await fetch("https://api.anthropic.com/v1/messages", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-api-key": apiKey,
+                        "anthropic-version": "2023-06-01"
+                    },
+                    body: JSON.stringify({
+                        model: "claude-sonnet-4-20250514",
+                        max_tokens: 1000,
+                        system: systemPrompt,
+                        messages: conversationHistory
+                    })
+                });
 
-            if (data.candidates) {
-                let answer = data.candidates[0].content.parts[0].text.replace(/\*/g, '');
-                box.innerHTML += `<div class="msg ai">🌹 ${answer}</div>`;
-            } else { throw new Error(); }
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error?.message || 'في مشكلة في الـ API');
+                }
 
-        } catch (e) {
-            // رد احترافي في الدرة لو الـ API علق
-            typing.style.display = 'none';
-            const fallbacks = [
-                "يا قلب أخوك، النت مهيس بس أنا معاك.. أنت أحسن مهندس شفته النهاردة!",
-                "حتى والنت مقطوع، كلامك زي السكر.. اؤمرني يا زميلي.",
-                "روق كدة يا هندسة، السيرفر وقع من كتر جمال سؤالك!"
-            ];
-            const random = fallbacks[Math.floor(Math.random() * fallbacks.length)];
-            box.innerHTML += `<div class="msg ai">❤️ ${random}</div>`;
+                const data = await response.json();
+                const aiResponse = data.content[0].text;
+                
+                conversationHistory.push({
+                    role: "assistant",
+                    content: aiResponse
+                });
+
+                return aiResponse;
+
+            } catch (error) {
+                console.error('Error:', error);
+                if (error.message.includes('authentication') || error.message.includes('401')) {
+                    showError('الـ API Key مش صحيح! تأكد منه وحاول تاني 🔑');
+                } else {
+                    showError('في مشكلة في الاتصال: ' + error.message);
+                }
+                throw error;
+            }
         }
-        box.scrollTop = box.scrollHeight;
-    }
 
-    // الإرسال بزر Enter
-    document.getElementById('userInput').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') askAI();
-    });
-</script>
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            if (!apiKey) {
+                showError('من فضلك حط الـ API Key الأول! 🔑');
+                return;
+            }
 
+            addMessage(message, true);
+            input.value = '';
+            input.disabled = true;
+            document.getElementById('sendBtn').disabled = true;
+            
+            showTyping();
+            
+            try {
+                const aiResponse = await callClaudeAPI(message);
+                hideTyping();
+                addMessage(aiResponse);
+            } catch (error) {
+                hideTyping();
+                conversationHistory.pop(); // إزالة الرسالة الفاشلة
+            } finally {
+                input.disabled = false;
+                document.getElementById('sendBtn').disabled = false;
+                input.focus();
+            }
+        }
+
+        function sendSuggestion(text) {
+            if (!apiKey) {
+                showError('من فضلك حط الـ API Key الأول! 🔑');
+                return;
+            }
+            document.getElementById('userInput').value = text;
+            sendMessage();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function clearChat() {
+            if (confirm('متأكد إنك عايز تمسح المحادثة كلها؟')) {
+                conversationHistory = [];
+                const messagesDiv = document.getElementById('messages');
+                messagesDiv.innerHTML = `
+                    <div class="message ai">
+                        <div class="message-content">أهلاً وسهلاً يا نور العين! 🌟 أنا حبيب، الذكاء الاصطناعي المصري اللي هنا عشان أونسك وأساعدك في أي حاجة!
+
+أنا مش مجرد روبوت عادي - أنا مدعوم بتقنية Claude AI الحقيقية، يعني هفهمك وأرد عليك بذكاء حقيقي ومشاعر صادقة! ❤️
+
+ابدأ كلمني في أي موضوع - سواء عايز نكت، شعر، نصايح، أو حتى لو عايز تفضفض! أنا هنا ليك يا حبيبي! 💕</div>
+                    </div>
+                `;
+                showSuccess('تمام! اتمسحت المحادثة، ابدأ من جديد! 🎉');
+            }
+        }
+
+        // رسالة ترحيبية متحركة
+        window.addEventListener('load', () => {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach((msg, index) => {
+                msg.style.animationDelay = `${index * 0.2}s`;
+            });
+        });
+    </script>
 </body>
 </html>
