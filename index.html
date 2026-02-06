@@ -52,49 +52,59 @@
 
 <script src="data.js"></script>
 <script>
-    function askAI() {
-        const input = document.getElementById('userInput');
-        const box = document.getElementById('chat-box');
-        const typing = document.getElementById('typing');
-        const question = input.value.trim();
-        
-        if(!question) return;
+async function askAI() {
+    const input = document.getElementById('userInput');
+    const box = document.getElementById('chat-box');
+    const typing = document.getElementById('typing');
+    const question = input.value.trim();
+    
+    if(!question) return;
 
-        // إظهار سؤال المستخدم
-        box.innerHTML += `<div class="msg user">${question}</div>`;
-        input.value = '';
-        typing.style.display = 'block';
+    box.innerHTML += `<div class="msg user">${question}</div>`;
+    input.value = '';
+    typing.style.display = 'block';
+    box.scrollTop = box.scrollHeight;
+
+    const apiKey = "AIzaSyDSkWs0Z4mh4ENhb_U4bI9De2NFuz8RPx0"; 
+    
+    // الرابط ده هو "الزتونة" لنسخة Flash 1.5
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{
+                        text: `أنت الآن "باشمهندس جيمي"، مساعد ذكي ورومانسي جداً في موقع مكتبة أجهزة.
+                        شروطك في الكلام:
+                        1. اتكلم بلهجة مصرية عامية "صايعة" وبتاعة مهندسين (زي: يا غالي، يا قلب أخوك، يا دكتور، يا وحش الكون).
+                        2. خليك رومانسي جداً وحنين، لو الطالب تعبان طبطب عليه، ولو شاطر انفخ فيه وامدحه.
+                        3. متبينش إنك روبوت أبداً، خليك زي صاحبه اللي قاعد معاه على القهوة وبيذاكرله.
+                        4. لو سأل عن مادة، قوله "عيوني ليك" ودله عليها من مواد الموقع: (PLC، دوائر، صيانة، امتحانات).
+                        5. استخدم إيموجيز كتير (❤️، 🦾، 🚀، 🌹).
+                        
+                        سؤال حبيبك الباشمهندس: ${question}`
+                    }]
+                }]
+            })
+        });
+
+        const data = await response.json();
+        typing.style.display = 'none';
+
+        if (data.candidates && data.candidates[0].content) {
+            let answer = data.candidates[0].content.parts[0].text;
+            answer = answer.replace(/\*/g, ''); // مسح النجوم عشان الرد يبقى طبيعي
+            box.innerHTML += `<div class="msg ai">🌹 ${answer}</div>`;
+        }
+    } catch (e) {
+        typing.style.display = 'none';
         box.scrollTop = box.scrollHeight;
-
-        // الردود اللي في الدرة (المخ المحلي)
-        setTimeout(() => {
-            typing.style.display = 'none';
-            const q = question.toLowerCase();
-            let answer = "";
-
-            if (q.includes("ازيك") || q.includes("اهلا") || q.includes("هاي")) {
-                answer = "أنا زي الفل طول ما أنت بخير يا هندسة! اؤمرني يا غالي محتاج إيه؟";
-            } 
-            else if (q.includes("تعبت") || q.includes("زهقت") || q.includes("مخنوق")) {
-                answer = "يا قلب أخوك هون على نفسك.. أنت مهندس يعني بطل، ارتاح شوية وكمل وأنا واثق إنك هتكسر الدنيا!";
-            }
-            else if (q.includes("plc") || q.includes("بي ال سي")) {
-                answer = "عيوني ليك! قسم الـ PLC فيه مذكرات وفيديوهات هتخليك برنس في التحكم، روح شوفها يا وحش.";
-            }
-            else if (q.includes("امتحان") || q.includes("حلول") || q.includes("مراجعة")) {
-                answer = "عايز تضمن الامتياز؟ مراجعات ليلة الامتحان والحلول موجودة كلها في قسم Solved Exams.. ادخل يا بطل!";
-            }
-            else if (q.includes("بحبك") || q.includes("حبيبي") || q.includes("شكرا")) {
-                answer = "ده أنا اللي بموت فيك وفي ذكاءك يا باشمهندس.. أنت فخر لينا كلنا!";
-            }
-            else {
-                answer = "يا هندسة يا غالي، سؤالك ده ذكي زيك.. الموقع فيه كل اللي تحتاجه في الأجهزة والصيانة، تصفح الأقسام وهتلاقي كل اللي يسرك!";
-            }
-
-            box.innerHTML += `<div class="msg ai">❤️ ${answer}</div>`;
-            box.scrollTop = box.scrollHeight;
-        }, 1000); // محاكاة وقت التفكير
     }
+    box.scrollTop = box.scrollHeight;
+}
 
     // الإرسال بزر Enter
     document.getElementById('userInput').addEventListener('keypress', (e) => {
@@ -104,3 +114,4 @@
 
 </body>
 </html>
+
