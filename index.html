@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تطبيق إدارة المصاريف الشخصية المتطور</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fbf7ee',
+                            100: '#f5ee35',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            900: '#14101e'
+                        },
+                        violetTheme: {
+                            800: '#1e1435',
+                            900: '#120b22',
+                            950: '#0a0614'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #0a0614;
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(126, 34, 206, 0.15) 0px, transparent 50%),
+                radial-gradient(at 90% 90%, rgba(234, 179, 8, 0.1) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: #f3f4f6;
+            min-height: 100vh;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: rgba(26, 18, 46, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(234, 179, 8, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-panel-glow {
+            background: rgba(30, 20, 53, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            box-shadow: 0 0 25px rgba(234, 179, 8, 0.12);
+        }
+
+        .glass-header {
+            background: rgba(10, 6, 20, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(234, 179, 8, 0.2);
+        }
+
+        /* Gold Neon Gradient Text */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fffbeb 0%, #facc15 50%, #ca8a04 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Gold Glow Button */
+        .gold-btn {
+            background: linear-gradient(135deg, #facc15 0%, #eab308 50%, #ca8a04 100%);
+            color: #0a0614;
+            font-weight: 800;
+            box-shadow: 0 4px 20px rgba(234, 179, 8, 0.25);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gold-btn:active {
+            transform: scale(0.97);
+        }
+
+        @media (hover: hover) {
+            .gold-btn:hover {
+                box-shadow: 0 6px 28px rgba(234, 179, 8, 0.45);
+                transform: translateY(-2px);
+            }
+        }
+
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 10, 30, 0.5);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(234, 179, 8, 0.4);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(234, 179, 8, 0.7);
+        }
+
+        /* Strict Image Dimension Enforcement */
+        .avatar-img-fixed {
+            width: 52px !important;
+            height: 52px !important;
+            min-width: 52px !important;
+            min-height: 52px !important;
+            max-width: 52px !important;
+            max-height: 52px !important;
+            object-fit: cover !important;
+            border-radius: 16px;
+        }
+
+        .avatar-img-lg {
+            width: 72px !important;
+            height: 72px !important;
+            min-width: 72px !important;
+            min-height: 72px !important;
+            max-width: 72px !important;
+            max-height: 72px !important;
+            object-fit: cover !important;
+            border-radius: 20px;
+        }
+
+        .item-img-fixed {
+            width: 56px !important;
+            height: 56px !important;
+            min-width: 56px !important;
+            min-height: 56px !important;
+            max-width: 56px !important;
+            max-height: 56px !important;
+            object-fit: cover !important;
+            border-radius: 14px;
+        }
+
+        @media (min-width: 640px) {
+            .item-img-fixed {
+                width: 64px !important;
+                height: 64px !important;
+                min-width: 64px !important;
+                min-height: 64px !important;
+                max-width: 64px !important;
+                max-height: 64px !important;
+            }
+        }
+
+        /* Active Tab Indicator Effect */
+        .tab-active {
+            background: linear-gradient(135deg, #facc15 0%, #ca8a04 100%) !important;
+            color: #0a0614 !important;
+            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.3) !important;
+        }
+
+        /* Soft fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="flex flex-col justify-between selection:bg-amber-400 selection:text-black">
+
+    <!-- HEADER SECTION -->
+    <header class="glass-header sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-3">
+            
+            <!-- User Avatar & Profile Summary (Read-Only) -->
+            <div class="flex items-center gap-3">
+                <div class="relative shrink-0">
+                    <img id="headerUserAvatar" 
+                         src="https://placehold.co/150x150/1e1435/facc15?text=أنا" 
+                         alt="صورة المستخدم" 
+                         class="avatar-img-fixed border-2 border-amber-400/80 shadow-lg shadow-amber-500/10">
+                    <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-[#0a0614] rounded-full"></div>
+                </div>
+                
+                <div class="flex flex-col justify-center">
+                    <div class="flex items-center gap-2">
+                        <h2 id="headerUserName" class="text-sm sm:text-base font-extrabold text-white tracking-wide truncate max-w-[130px] sm:max-w-[200px]">
+                           Raouf
+                        </h2>
+                    </div>
+                    <!-- Total Expense Highlight directly next to name context -->
+                    <div class="flex items-center gap-1.5 mt-0.5">
+                        <span class="text-[11px] font-bold text-amber-400/90 shrink-0">الإجمالي:</span>
+                        <span id="headerTotalExpense" class="text-xs sm:text-sm font-black gold-gradient-text tracking-wide shrink-0">
+                            0.00 ج.م
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Navigation Tabs -->
+            <nav class="flex items-center gap-1.5 sm:gap-2 p-1 bg-violetTheme-900/80 rounded-2xl border border-amber-500/15">
+                <button id="navHomeBtn" onclick="switchPage('home')" class="px-3 sm:px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 tab-active">
+                    <i class="fa-solid fa-house-chimney text-xs"></i>
+                    <span>الرئيسية</span>
+                </button>
+                <button id="navAdminBtn" onclick="switchPage('admin')" class="px-3 sm:px-4 py-2 rounded-xl text-xs font-bold text-amber-400/90 hover:text-amber-300 transition-all flex items-center gap-1.5 hover:bg-amber-500/10">
+                    <i class="fa-solid fa-[#fa-sliders] fa-sliders text-xs"></i>
+                    <span>الإعدادات</span>
+                </button>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+        
+        <!-- ================= PAGE 1: HOME PAGE ================= -->
+        <div id="homePage" class="space-y-5 animate-fade-in">
+            
+            <!-- Welcome Hero Card -->
+            <div class=" hidden glass-panel p-5 sm:p-7 rounded-3xl relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-amber-500/20">
+                <div hidden class="absolute -left-16 -top-16 w-56 h-56 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div hidden class="absolute -right-16 -bottom-16 w-56 h-56 bg-purple-600/15 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div hidden class="relative z-10 space-y-1">
+                    <span hidden class="text-[11px] uppercase tracking-widest text-amber-400/80 font-bold block">متابعة اليومية الشخصية</span>
+                    <h1 hidden class="text-xl sm:text-2xl font-black text-white">
+                        أهلاً بك، <span id="welcomeUserName" class="gold-gradient-text">Raouf</span>
+                    </h1>
+                   
+                </div>
+
+                <button hiddenonclick="switchPage('admin')" class=" hidden relative z-10 w-full sm:w-auto px-5 py-3 gold-btn rounded-2xl text-xs font-extrabold flex items-center justify-center gap-2 shrink-0">
+                    <i class=" hidden fa-solid fa-plus"></i>
+                    <span>إضافة صنف جديد</span>
+                </button>
+            </div>
+
+            <!-- Items List Card -->
+            <div class="glass-panel p-4 sm:p-6 rounded-3xl border border-amber-500/20">
+                <div class="flex items-center justify-between mb-5 pb-3 border-b border-white/10">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-sm border border-amber-500/20">
+                            <i class="fa-solid fa-receipt"></i>
+                        </div>
+                        <h3 class="text-sm sm:text-base font-extrabold text-white">قائمة المصاريف</h3>
+                    </div>
+                    <span id="homeItemsBadge" class="text-[11px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full">
+                        0 عنصر
+                    </span>
+                </div>
+
+                <!-- Horizontal Item Cards List -->
+                <div id="homeItemsList" class="space-y-3 max-h-[620px] overflow-y-auto custom-scrollbar pr-1">
+                    <!-- Dynamic Items Rendered Here -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= PAGE 2: ADMIN & SETTINGS PAGE ================= -->
+        <div id="adminPage" class="space-y-6 hidden animate-fade-in">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Left Column: User Profile Settings & Add Form -->
+                <div class="lg:col-span-5 space-y-6">
+                    
+                    <!-- User Profile Settings Box -->
+                    <div class="glass-panel p-5 rounded-3xl border border-amber-500/20 space-y-4">
+                        <div class="flex items-center gap-2 pb-3 border-b border-white/10">
+                            <i class="fa-solid fa-user-gear text-amber-400 text-sm"></i>
+                            <h3 class="text-sm font-extrabold text-white">إعدادات الحساب الشخصي</h3>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- Change Avatar -->
+                            <div class="flex items-center gap-4 bg-violetTheme-950/60 p-3 rounded-2xl border border-white/5">
+                                <img id="settingsAvatarPreview" 
+                                     src="https://placehold.co/150x150/1e1435/facc15?text=أنا" 
+                                     alt="معاينة الصورة" 
+                                     class="avatar-img-lg border-2 border-amber-400/80 shadow-md shrink-0">
+                                <div class="space-y-1.5 flex-grow">
+                                    <span class="block text-xs font-bold text-slate-300">الصورة الشخصية</span>
+                                    <label class="cursor-pointer bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 w-fit">
+                                        <i class="fa-solid fa-camera"></i>
+                                        <span>تغيير الصورة</span>
+                                        <input type="file" id="settingsAvatarInput" accept="image/*" class="hidden" onchange="handleUserAvatarUpload(event)">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Change Name -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-300 mb-1.5">الاسم الشخصي</label>
+                                <div class="flex gap-2">
+                                    <input type="text" id="settingsUserNameInput" placeholder="أدخل اسمك..." class="w-full px-3.5 py-2.5 rounded-xl bg-violetTheme-950/80 border border-amber-500/20 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 text-xs transition">
+                                    <button onclick="updateUserNameFromSettings()" class="px-4 py-2.5 gold-btn font-extrabold rounded-xl text-xs shrink-0">
+                                        حفظ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item Form (Add / Edit) -->
+                    <div class="glass-panel p-5 sm:p-6 rounded-3xl border border-amber-500/20 space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-pen-to-square text-amber-400 text-sm"></i>
+                                <h3 id="formTitleText" class="text-sm font-extrabold text-white">إضافة صنف أو مصروف جديد</h3>
+                            </div>
+                            <button id="cancelEditBtn" onclick="resetForm()" class="hidden text-xs text-rose-400 hover:text-rose-300 underline font-semibold">إلغاء التعديل</button>
+                        </div>
+
+                        <form id="itemForm" onsubmit="handleFormSubmit(event)" class="space-y-3.5">
+                            <input type="hidden" id="editingItemId" value="">
+                            
+                            <!-- Item Name -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-300 mb-1">اسم الصنف أو المصروف</label>
+                                <input type="text" id="itemName" required placeholder="مثال: فاتورة كهرباء، مشتريات..." class="w-full px-3.5 py-2.5 rounded-xl bg-violetTheme-950/80 border border-amber-500/20 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 text-xs transition">
+                            </div>
+
+                            <!-- Price & Quantity Grid -->
+                            <div class="grid grid-cols-2 gap-2.5">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-300 mb-1">السعر (ج.م)</label>
+                                    <input type="number" step="0.01" min="0" id="itemPrice" required placeholder="0.00" class="w-full px-3.5 py-2.5 rounded-xl bg-violetTheme-950/80 border border-amber-500/20 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 text-xs transition">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-300 mb-1">الكمية / العدد</label>
+                                    <input type="number" min="1" id="itemQuantity" value="1" required class="w-full px-3.5 py-2.5 rounded-xl bg-violetTheme-950/80 border border-amber-500/20 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 text-xs transition">
+                                </div>
+                            </div>
+
+                            <!-- Item Image Upload & URL -->
+                            <div class="space-y-2">
+                                <label class="block text-xs font-bold text-slate-300">صورة الصنف</label>
+                                <label class="cursor-pointer bg-violetTheme-950/80 border border-amber-500/20 hover:border-amber-400/50 p-3 rounded-xl text-center text-xs font-bold text-amber-400 transition flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <span>رفع صورة من جهازك</span>
+                                    <input type="file" id="itemImageFile" accept="image/*" class="hidden" onchange="previewItemImage(event)">
+                                </label>
+                                <input type="url" id="itemImageUrl" placeholder="أو الصق رابط صورة هنا..." class="w-full px-3.5 py-2 rounded-xl bg-violetTheme-950/80 border border-amber-500/20 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 text-[11px] transition">
+                                <input type="hidden" id="itemImageBase64" value="">
+                            </div>
+
+                            <!-- Form Submit Button -->
+                            <button type="submit" id="submitFormBtn" class="w-full py-3 gold-btn font-extrabold rounded-xl text-xs flex items-center justify-center gap-2 mt-2">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>حفظ الصنف</span>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
+                <!-- Right Column: Manage Registered Items Table -->
+                <div class="lg:col-span-7 glass-panel p-5 sm:p-6 rounded-3xl border border-amber-500/20 h-fit space-y-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-amber-400 text-sm"></i>
+                            <h3 class="text-sm font-extrabold text-white">إدارة وتعديل المصاريف المسجلة</h3>
+                        </div>
+                        <button onclick="clearAllItems()" class="px-3 py-1.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-trash-can"></i>
+                            <span>حذف الكل</span>
+                        </button>
+                    </div>
+
+                    <!-- Admin Items Container -->
+                    <div id="adminItemsList" class="space-y-3 max-h-[620px] overflow-y-auto custom-scrollbar pr-1">
+                        <!-- Dynamic Admin Items Rendered Here -->
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER SECTION -->
+    <footer class="glass-header py-4 text-center text-xs text-slate-400 border-t border-amber-500/15">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>Made by  :  <span id="footerUserName" class="font-bold gold-gradient-text">Raouf</span> </p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        // App State Management with LocalStorage persistence
+        let appData = JSON.parse(localStorage.getItem('luxury_gold_expense_data')) || {
+            userName: 'Raouf',
+            userAvatar: 'https://placehold.co/150x150/1e1435/facc15?text=أنا',
+            items: [
+                
+            ]
+        };
+
+        // Format Currency Helper
+        function formatCurrency(amount) {
+            return Number(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // Save Data & Update UI
+        function saveData() {
+            localStorage.setItem('luxury_gold_expense_data', JSON.stringify(appData));
+            updateHeaderAndFooter();
+            renderHomeItems();
+            renderAdminItems();
+        }
+
+        // Switch Between Home & Admin Pages
+        function switchPage(page) {
+            const homePage = document.getElementById('homePage');
+            const adminPage = document.getElementById('adminPage');
+            const homeBtn = document.getElementById('navHomeBtn');
+            const adminBtn = document.getElementById('navAdminBtn');
+
+            if (page === 'home') {
+                homePage.classList.remove('hidden');
+                adminPage.classList.add('hidden');
+                
+                homeBtn.className = "px-3 sm:px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 tab-active";
+                adminBtn.className = "px-3 sm:px-4 py-2 rounded-xl text-xs font-bold text-amber-400/90 hover:text-amber-300 transition-all flex items-center gap-1.5 hover:bg-amber-500/10";
+            } else {
+                homePage.classList.add('hidden');
+                adminPage.classList.remove('hidden');
+                
+                adminBtn.className = "px-3 sm:px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 tab-active";
+                homeBtn.className = "px-3 sm:px-4 py-2 rounded-xl text-xs font-bold text-amber-400/90 hover:text-amber-300 transition-all flex items-center gap-1.5 hover:bg-amber-500/10";
+            }
+        }
+
+        // Synchronize User Details & Expense Displays
+        function updateHeaderAndFooter() {
+            document.getElementById('headerUserName').innerText = appData.userName;
+            document.getElementById('welcomeUserName').innerText = appData.userName;
+            document.getElementById('footerUserName').innerText = appData.userName;
+            document.getElementById('headerUserAvatar').src = appData.userAvatar;
+
+            // Update settings preview & input
+            document.getElementById('settingsAvatarPreview').src = appData.userAvatar;
+            document.getElementById('settingsUserNameInput').value = appData.userName;
+
+            // Calculate total expenses
+            let total = 0;
+            appData.items.forEach(item => {
+                total += (item.price * item.quantity);
+            });
+            document.getElementById('headerTotalExpense').innerText = `${formatCurrency(total)} ج.م`;
+        }
+
+        // Update User Name from Admin Settings Page
+        function updateUserNameFromSettings() {
+            const input = document.getElementById('settingsUserNameInput');
+            const newName = input.value.trim();
+            if (newName) {
+                appData.userName = newName;
+                saveData();
+                showToast('تم تحديث الاسم بنجاح');
+            }
+        }
+
+        // Handle User Profile Avatar Upload
+        function handleUserAvatarUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    appData.userAvatar = e.target.result;
+                    saveData();
+                    showToast('تم تحديث الصورة الشخصية');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Preview uploaded image for item
+        function previewItemImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('itemImageBase64').value = e.target.result;
+                    document.getElementById('itemImageUrl').value = '';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Submit Item Form (Add / Edit)
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const editingId = document.getElementById('editingItemId').value;
+            const name = document.getElementById('itemName').value.trim();
+            const price = parseFloat(document.getElementById('itemPrice').value);
+            const quantity = parseInt(document.getElementById('itemQuantity').value);
+            
+            let image = document.getElementById('itemImageBase64').value;
+            const imageUrlInput = document.getElementById('itemImageUrl').value.trim();
+
+            if (!image) {
+                if (imageUrlInput) {
+                    image = imageUrlInput;
+                } else if (!editingId) {
+                    image = 'https://placehold.co/300x300/1e1435/facc15?text=صورة';
+                }
+            }
+
+            if (editingId) {
+                // Edit Existing
+                const index = appData.items.findIndex(item => item.id == editingId);
+                if (index !== -1) {
+                    if (!image) {
+                        image = appData.items[index].image;
+                    }
+                    appData.items[index] = {
+                        id: Number(editingId),
+                        name,
+                        price,
+                        quantity,
+                        image
+                    };
+                    showToast('تم تحديث بيانات الصنف');
+                }
+            } else {
+                // Add New
+                if (!image) image = 'https://placehold.co/300x300/1e1435/facc15?text=صورة';
+                const newItem = {
+                    id: Date.now(),
+                    name,
+                    price,
+                    quantity,
+                    image
+                };
+                appData.items.unshift(newItem);
+                showToast('تم إضافة الصنف بنجاح');
+            }
+
+            saveData();
+            resetForm();
+        }
+
+        // Load Item Into Form For Editing
+        function editItem(id) {
+            const item = appData.items.find(i => i.id == id);
+            if (item) {
+                document.getElementById('editingItemId').value = item.id;
+                document.getElementById('itemName').value = item.name;
+                document.getElementById('itemPrice').value = item.price;
+                document.getElementById('itemQuantity').value = item.quantity;
+                document.getElementById('itemImageUrl').value = item.image.startsWith('data:') ? '' : item.image;
+                document.getElementById('itemImageBase64').value = item.image.startsWith('data:') ? item.image : '';
+                
+                document.getElementById('formTitleText').innerHTML = `تعديل صنف: ${item.name}`;
+                document.getElementById('submitFormBtn').innerHTML = `<i class="fa-solid fa-check"></i> <span>تحديث البيانات</span>`;
+                document.getElementById('cancelEditBtn').classList.remove('hidden');
+
+                switchPage('admin');
+            }
+        }
+
+        // Reset Form Controls
+        function resetForm() {
+            document.getElementById('itemForm').reset();
+            document.getElementById('editingItemId').value = '';
+            document.getElementById('itemImageBase64').value = '';
+            document.getElementById('itemQuantity').value = '1';
+            document.getElementById('formTitleText').innerHTML = `إضافة صنف أو مصروف جديد`;
+            document.getElementById('submitFormBtn').innerHTML = `<i class="fa-solid fa-plus"></i> <span>حفظ الصنف</span>`;
+            document.getElementById('cancelEditBtn').classList.add('hidden');
+        }
+
+        // Delete Single Item
+        function deleteItem(id) {
+            if (confirm('هل أنت متأكد من حذف هذا الصنف؟')) {
+                appData.items = appData.items.filter(item => item.id !== id);
+                saveData();
+                showToast('تم حذف الصنف');
+            }
+        }
+
+        // Clear Entire List
+        function clearAllItems() {
+            if (confirm('هل أنت متأكد من حذف جميع المصاريف؟')) {
+                appData.items = [];
+                saveData();
+                showToast('تم مسح جميع المصاريف');
+            }
+        }
+
+        // Render Home Page Items Horizontal Cards
+        function renderHomeItems() {
+            const container = document.getElementById('homeItemsList');
+            const badge = document.getElementById('homeItemsBadge');
+
+            badge.innerText = `${appData.items.length} عنصر`;
+
+            if (appData.items.length === 0) {
+                container.innerHTML = `
+                    <div class="py-12 text-center space-y-2">
+                        <div class="w-12 h-12 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-lg border border-amber-500/20">
+                            <i class="fa-solid fa-box-open"></i>
+                        </div>
+                        <h4 class="text-xs font-bold text-white">لا توجد مصاريف مسجلة</h4>
+                        <p class="text-[11px] text-slate-400">انتقل إلى صفحة الإعدادات لإضافة مصاريفك الأولى.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            appData.items.forEach(item => {
+                const totalPrice = item.price * item.quantity;
+                html += `
+                    <div class="bg-violetTheme-900/60 hover:bg-violetTheme-800/80 border border-amber-500/20 hover:border-amber-400/40 rounded-2xl p-3 sm:p-4 flex items-center justify-between gap-3 sm:gap-4 transition-all shadow-sm">
+                        
+                        <!-- Left Info: Fixed Dimension Image + Name + Details Inline -->
+                        <div class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <img src="${item.image}" alt="${item.name}" 
+                                 onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" 
+                                 class="item-img-fixed border border-amber-500/30 shrink-0 shadow-md">
+                            
+                            <div class="min-w-0 flex flex-col justify-center">
+                                <h4 class="text-xs sm:text-sm font-extrabold text-white truncate max-w-[140px] sm:max-w-xs">${item.name}</h4>
+                                <div class="flex items-center gap-2 sm:gap-3 text-[11px] text-slate-400 mt-1 flex-wrap">
+                                    <span>العدد: <strong class="text-amber-400 font-bold">${item.quantity}</strong></span>
+                                    <span class="text-slate-600">•</span>
+                                    <span>السعر: <strong class="text-slate-200 font-bold">${formatCurrency(item.price)} ج.م</strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Info: Item Total Expense -->
+                        <div class="text-left shrink-0">
+                            <span class="text-[10px] text-slate-400 block font-semibold">الإجمالي</span>
+                            <span class="text-xs sm:text-sm font-black text-amber-400">${formatCurrency(totalPrice)} <span class="text-[10px] text-slate-400 font-normal">ج.م</span></span>
+                        </div>
+
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Render Admin Page Items Management List
+        function renderAdminItems() {
+            const container = document.getElementById('adminItemsList');
+
+            if (appData.items.length === 0) {
+                container.innerHTML = `
+                    <div class="py-10 text-center text-xs text-slate-400">
+                        القائمة فارغة حالياً.
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            appData.items.forEach(item => {
+                const totalPrice = item.price * item.quantity;
+                html += `
+                    <div class="bg-violetTheme-900/60 border border-amber-500/20 rounded-2xl p-3 flex items-center justify-between gap-3 transition">
+                        
+                        <div class="flex items-center gap-3 min-w-0">
+                            <img src="${item.image}" alt="${item.name}" 
+                                 onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" 
+                                 class="item-img-fixed border border-amber-500/30 shrink-0">
+                            <div class="min-w-0">
+                                <h4 class="text-xs font-bold text-white truncate">${item.name}</h4>
+                                <span class="text-[11px] text-slate-400 block mt-0.5">
+                                    ${item.quantity} × ${formatCurrency(item.price)} ج.م = <strong class="text-amber-400 font-bold">${formatCurrency(totalPrice)} ج.م</strong>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <button onclick="editItem(${item.id})" class="px-2.5 py-1.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 hover:bg-amber-500 hover:text-black transition text-xs font-bold flex items-center gap-1">
+                                <i class="fa-solid fa-pen"></i>
+                                <span class="hidden sm:inline">تعديل</span>
+                            </button>
+                            <button onclick="deleteItem(${item.id})" class="w-8 h-8 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white transition flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Minimal Toast Notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-5 left-1/2 -translate-x-1/2 z-50 bg-amber-400 text-black px-4 py-2 rounded-2xl font-extrabold text-xs shadow-lg transition-all animate-fade-in';
+            toast.innerText = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.remove();
+            }, 2500);
+        }
+
+        // Initial Setup
+        window.onload = function() {
+            updateHeaderAndFooter();
+            renderHomeItems();
+            renderAdminItems();
+        };
+    </script>
+</body>
+</html>
