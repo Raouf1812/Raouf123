@@ -221,17 +221,33 @@
                 </div>
             </div>
 
-            <!-- Page Navigation Tabs -->
-            <nav class="flex items-center gap-1.5 sm:gap-2 p-1 bg-violetTheme-900/80 rounded-2xl border border-amber-500/15">
-                <button id="navHomeBtn" onclick="switchPage('home')" class="px-3 sm:px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 tab-active">
-                    <i class="fa-solid fa-house-chimney text-xs"></i>
-                    <span>الرئيسية</span>
-                </button>
-                <button id="navAdminBtn" onclick="switchPage('admin')" class="px-3 sm:px-4 py-2 rounded-xl text-xs font-bold text-amber-400/90 hover:text-amber-300 transition-all flex items-center gap-1.5 hover:bg-amber-500/10">
-                    <i class="fa-solid fa-[#fa-sliders] fa-sliders text-xs"></i>
-                    <span>الإعدادات</span>
-                </button>
-            </nav>
+            <!-- حاوية القائمة المنسدلة -->
+<div class="relative inline-block text-right">
+  <!-- زر القائمة الذي يضغط عليه المستخدم -->
+  <button id="menuBtn" onclick="toggleMenu()" class="p-2.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white transition-all flex items-center gap-2 border border-white/10 active:scale-95">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+    <span class="text-sm font-medium hidden sm:inline">القائمة</span>
+  </button>
+
+<!-- خيارات القائمة المنسدلة -->
+<div id="dropdownMenu" class="hidden absolute left-0 mt-2 w-48 rounded-2xl bg-slate-900/95 backdrop-blur-xl border border-white/10 shadow-2xl py-2 z-50 transition-all">
+  
+  <!-- خيار الرئيسية -->
+  <button onclick="switchPage('home'); toggleMenu();" class="w-full text-right px-4 py-2.5 text-sm text-slate-200 hover:bg-amber-500/20 hover:text-amber-400 flex items-center gap-2 transition-colors">
+    <span>🏠</span>
+    <span>الرئيسية</span>
+  </button>
+  
+  <!-- خيار الإعدادات -->
+  <button onclick="switchPage('admin'); toggleMenu();" class="w-full text-right px-4 py-2.5 text-sm text-slate-200 hover:bg-amber-500/20 hover:text-amber-400 flex items-center gap-2 transition-colors">
+    <span>⚙️</span>
+    <span>الإعدادات والتحكم</span>
+  </button>
+
+</div>
+</div>
 
         </div>
     </header>
@@ -441,21 +457,13 @@
         function switchPage(page) {
             const homePage = document.getElementById('homePage');
             const adminPage = document.getElementById('adminPage');
-            const homeBtn = document.getElementById('navHomeBtn');
-            const adminBtn = document.getElementById('navAdminBtn');
 
             if (page === 'home') {
                 homePage.classList.remove('hidden');
                 adminPage.classList.add('hidden');
-                
-                homeBtn.className = "px-3 sm:px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 tab-active";
-                adminBtn.className = "px-3 sm:px-4 py-2 rounded-xl text-xs font-bold text-amber-400/90 hover:text-amber-300 transition-all flex items-center gap-1.5 hover:bg-amber-500/10";
-            } else {
-                homePage.classList.add('hidden');
+            } else if (page === 'admin') {
                 adminPage.classList.remove('hidden');
-                
-                adminBtn.className = "px-3 sm:px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 tab-active";
-                homeBtn.className = "px-3 sm:px-4 py-2 rounded-xl text-xs font-bold text-amber-400/90 hover:text-amber-300 transition-all flex items-center gap-1.5 hover:bg-amber-500/10";
+                homePage.classList.add('hidden');
             }
         }
 
@@ -732,6 +740,21 @@
                 toast.remove();
             }, 2500);
         }
+        // دالة إظهار وإخفاء القائمة المنسدلة
+        function toggleMenu() {
+        const menu = document.getElementById('dropdownMenu');
+        menu.classList.toggle('hidden');
+        }
+
+        // إغلاق القائمة تلقائياً إذا ضغط المستخدم في أي مكان خارجها
+        window.addEventListener('click', function(e) {
+        const menuBtn = document.getElementById('menuBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        
+        if (menuBtn && dropdownMenu && !menuBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+        });
 
         // Initial Setup
         window.onload = function() {
