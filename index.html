@@ -542,42 +542,37 @@
             </div>
         </div>
 
-        <!-- 6. تبويب المزامنة (مثل الواتساب) -->
+        <!-- 6. تبويب النسخ الاحتياطي المحلي (تحميل واستعادة ملف) -->
         <div id="syncPage" class="space-y-6 hidden animate-fade-in max-w-xl mx-auto py-4">
             <div class="glass-panel p-6 sm:p-8 rounded-3xl space-y-5 border border-amber-500/30">
                 <div class="flex items-center gap-3 pb-4 border-b border-white/10">
                     <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-xl shadow-lg">
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <i class="fa-solid fa-file-arrow-down"></i>
                     </div>
                     <div>
-                        <h3 class="text-base font-extrabold text-white">النسخ الاحتياطي السحابي</h3>
-                        <p id="syncUserEmailStatus" class="text-xs text-slate-400 mt-0.5">جاري التحقق من الحساب...</p>
+                        <h3 class="text-base font-extrabold text-white">النسخ الاحتياطي على جهازك</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">حفظ واستعادة البيانات عبر ملف JSON</p>
                     </div>
                 </div>
 
                 <div class="bg-slate-950/60 p-5 rounded-2xl border border-amber-500/20 space-y-4">
-                    <div class="space-y-1">
-                        <span class="text-xs font-bold text-slate-300 block">حالة النسخ الاحتياطي:</span>
-                        <p id="backupInfoText" class="text-xs text-amber-300 font-bold">
-                            آخر نسخة احتياطية: لم يتم الإنشاء بعد
-                        </p>
-                    </div>
-
-                    <p class="text-[11px] text-slate-400 leading-relaxed">
-                        قم بإنشاء نسخة احتياطية لحفظ بياناتك على السحابة، أو استعدها في أي وقت على أي جهاز آخر بضغطة زر واحدة.
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        قم بتحميل نسخة احتياطية لحفظ جميع بياناتك (المصاريف، الديون، الإيداعات، والأرشيف) في ملف على جهازك، أو استعدها في أي وقت باختيار الملف.
                     </p>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                        <button onclick="backupToCloud()" class="py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 font-bold">
-                            <i class="fa-solid fa-cloud-arrow-up"></i> <span>إنشاء نسخة احتياطية</span>
+                        <!-- زر تحميل ملف النسخة -->
+                        <button onclick="downloadBackupFile()" class="py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 font-bold">
+                            <i class="fa-solid fa-download"></i> <span>تحميل نسخة احتياطية</span>
                         </button>
-                        <button onclick="restoreFromCloud()" class="py-3 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl text-xs flex items-center justify-center gap-2 font-bold transition">
-                            <i class="fa-solid fa-cloud-arrow-down"></i> <span>استعادة النسخة</span>
-                        </button>
+                        
+                        <!-- زر استعادة من ملف -->
+                        <label class="cursor-pointer py-3 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl text-xs flex items-center justify-center gap-2 font-bold transition text-center">
+                            <i class="fa-solid fa-upload"></i> <span>استعادة من ملف</span>
+                            <input type="file" id="restoreFileInput" accept=".json" class="hidden" onchange="restoreBackupFile(event)">
+                        </label>
                     </div>
                 </div>
-
-                <div id="syncAuthActionArea" class="text-center pt-2"></div>
             </div>
         </div>
 
@@ -635,8 +630,8 @@
                 <span class="text-[8px] font-bold">الإعدادات</span>
             </button>
             <button onclick="switchPage('sync'); setActiveNav(this);" id="nav-sync" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
-                <i class="fa-solid fa-cloud text-xs mb-0.5"></i>
-                <span class="text-[8px] font-bold">المزامنة</span>
+                <i class="fa-solid fa-file-arrow-down text-xs mb-0.5"></i>
+                <span class="text-[8px] font-bold">النسخ</span>
             </button>
             <button onclick="switchPage('about'); setActiveNav(this);" id="nav-about" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
                 <i class="fa-solid fa-code text-xs mb-0.5"></i>
@@ -645,7 +640,7 @@
         </div>
     </nav>
 
-    <!-- منطقة الجافاسكربت وتخزين البيانات -->
+    <!-- الجافاسكربت الخاص بالتحميل والاستعادة عبر ملف محلي -->
     <script>
         let appData = JSON.parse(localStorage.getItem('luxury_gold_expense_data')) || {
             userName: 'اكتب اسمك هنا ... ',
@@ -780,11 +775,69 @@
                 renderSalaryHistory();
             } else if (page === 'sync') {
                 if (syncPage) syncPage.classList.remove('hidden');
-                updateSyncPageUI();
-                checkCloudBackupInfo();
             } else if (page === 'about') {
                 if (aboutPage) aboutPage.classList.remove('hidden');
             }
+        }
+
+        // --- وظائف تحميل واستعادة النسخة الاحتياطية كملف JSON محلي ---
+        function downloadBackupFile() {
+            try {
+                const dataStr = JSON.stringify(appData, null, 2);
+                const blob = new Blob([dataStr], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
+                
+                const now = new Date();
+                const dateStr = now.toISOString().slice(0, 10);
+                const fileName = `Expense_Backup_${dateStr}.json`;
+
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                showToast('تم تحميل ملف النسخة الاحتياطية بنجاح! 📥');
+            } catch (e) {
+                console.error(e);
+                showToast('حدث خطأ أثناء تحميل الملف');
+            }
+        }
+
+        function restoreBackupFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (!confirm('هل أنت متأكد من استعادة هذه النسخة؟ سيتم استبدال البيانات الحالية ببيانات الملف.')) {
+                event.target.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsedData = JSON.parse(e.target.result);
+                    if (parsedData && parsedData.items && parsedData.debts) {
+                        appData = parsedData;
+                        if (!appData.salaryHistory) appData.salaryHistory = [];
+                        if (!appData.debts) appData.debts = [];
+                        if (!appData.archivedMonths) appData.archivedMonths = {};
+
+                        saveData();
+                        showToast('تمت استعادة النسخة الاحتياطية بنجاح! 🎉');
+                        setTimeout(() => { switchPage('home'); }, 1000);
+                    } else {
+                        alert('ملف النسخة الاحتياطية غير صالح أو تالف.');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('خطأ في قراءة ملف JSON.');
+                }
+                event.target.value = '';
+            };
+            reader.readAsText(file);
         }
 
         function handleAddSalary(event) {
@@ -1272,40 +1325,6 @@
             }
         }
 
-        function updateSyncPageUI() {
-            const uid = localStorage.getItem('user_uid');
-            const email = localStorage.getItem('user_email');
-            const emailStatusEl = document.getElementById('syncUserEmailStatus');
-            const actionAreaEl = document.getElementById('syncAuthActionArea');
-
-            if (!emailStatusEl || !actionAreaEl) return;
-
-            if (uid && email) {
-                emailStatusEl.innerHTML = `مسجل بحساب: <strong class="text-amber-400">${email}</strong>`;
-                actionAreaEl.innerHTML = `
-                    <button onclick="logoutFromCloud()" class="w-full py-2.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-right-from-bracket"></i> <span>تسجيل الخروج من الحساب</span>
-                    </button>
-                `;
-            } else {
-                emailStatusEl.innerText = `غير مسجل بحساب جوجل`;
-                actionAreaEl.innerHTML = `
-                    <button onclick="window.location.href='login.html'" class="w-full py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 font-bold">
-                        <i class="fa-brands fa-google"></i> <span>تسجيل الدخول بحساب جوجل أولاً</span>
-                    </button>
-                `;
-            }
-        }
-
-        function logoutFromCloud() {
-            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
-                localStorage.removeItem('user_uid');
-                localStorage.removeItem('user_email');
-                updateSyncPageUI();
-                showToast('تم تسجيل الخروج بنجاح');
-            }
-        }
-
         window.onload = function() {
             document.getElementById('itemCustomDate').value = getTodayDateString();
             checkAndArchiveMonths();
@@ -1315,127 +1334,6 @@
             setInterval(updateClock, 1000);
             updateClock();
         };
-    </script>
-
-    <!-- سكربت الفايربيس (طريقة الواتساب) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyAVDG_rU0WofeTdKwrmaxTiFAWsESKMueI",
-            authDomain: "raouf-5b278.firebaseapp.com",
-            projectId: "raouf-5b278",
-            storageBucket: "raouf-5b278.firebasestorage.app",
-            messagingSenderId: "955422937027",
-            appId: "1:955422937027:web:e92e5666e1e2aabce83776",
-            measurementId: "G-JMTM83E8B2"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // 1. إنشاء نسخة احتياطية (مثل الواتساب)
-        window.backupToCloud = async function() {
-            const uid = localStorage.getItem('user_uid');
-            if (!uid) {
-                showToast('برجاء تسجيل الدخول بحساب جوجل أولاً');
-                setTimeout(() => { window.location.href = 'login.html'; }, 1200);
-                return;
-            }
-
-            showToast('جارٍ رفع وإنشاء نسخة احتياطية…');
-            try {
-                const currentData = JSON.parse(localStorage.getItem('luxury_gold_expense_data')) || {};
-                const nowString = new Date().toLocaleString('ar-EG', {
-                    year: 'numeric', month: '2-digit', day: '2-digit',
-                    hour: '2-digit', minute: '2-digit'
-                });
-
-                currentData.lastBackupTime = nowString;
-                localStorage.setItem('luxury_gold_expense_data', JSON.stringify(currentData));
-
-                await setDoc(doc(db, "users_data", uid), currentData);
-                
-                updateBackupStatusUI(nowString);
-                showToast('تم إنشاء نسخة احتياطية بنجاح! ☁️');
-            } catch (e) {
-                console.error(e);
-                showToast('فشل إنشاء النسخة الاحتياطية، تحقق من الإنترنت');
-            }
-        };
-
-        // 2. استعادة النسخة الاحتياطية (مثل الواتساب)
-        window.restoreFromCloud = async function() {
-            const uid = localStorage.getItem('user_uid');
-            if (!uid) {
-                showToast('برجاء تسجيل الدخول بحساب جوجل أولاً');
-                setTimeout(() => { window.location.href = 'login.html'; }, 1200);
-                return;
-            }
-
-            if (!confirm('هل أنت متأكد من استعادة النسخة الاحتياطية؟ سيتم استبدال البيانات الحالية بآخر نسخة محفوظة على السحابة.')) {
-                return;
-            }
-
-            showToast('جارٍ جلب واستعادة النسخة الاحتياطية…');
-            try {
-                const docRef = doc(db, "users_data", uid);
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    const cloudData = docSnap.data();
-                    
-                    appData = cloudData;
-                    if (!appData.salaryHistory) appData.salaryHistory = [];
-                    if (!appData.debts) appData.debts = [];
-                    if (!appData.archivedMonths) appData.archivedMonths = {};
-
-                    localStorage.setItem('luxury_gold_expense_data', JSON.stringify(appData));
-                    
-                    updateHeaderAndFooter();
-                    renderHomeItems();
-                    renderAdminItems();
-                    renderHistoryPageOptions();
-                    
-                    updateBackupStatusUI(cloudData.lastBackupTime || 'غير معروف');
-                    showToast('تمت استعادة النسخة الاحتياطية بنجاح! 🎉');
-                } else {
-                    showToast('لا توجد نسخة احتياطية سابقة لهذا الحساب');
-                }
-            } catch (e) {
-                console.error(e);
-                showToast('حدث خطأ أثناء استعادة النسخة');
-            }
-        };
-
-        function updateBackupStatusUI(timeStr) {
-            const infoEl = document.getElementById('backupInfoText');
-            if (infoEl) {
-                infoEl.innerText = `آخر نسخة احتياطية: ${timeStr}`;
-            }
-        }
-
-        window.checkCloudBackupInfo = async function() {
-            const uid = localStorage.getItem('user_uid');
-            if (!uid) return;
-            try {
-                const docRef = doc(db, "users_data", uid);
-                const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    if (data.lastBackupTime) {
-                        updateBackupStatusUI(data.lastBackupTime);
-                    }
-                }
-            } catch (e) {
-                console.error(e);
-            }
-        };
-
-        window.addEventListener('DOMContentLoaded', () => {
-            window.checkCloudBackupInfo();
-        });
     </script>
 </body>
 </html>
