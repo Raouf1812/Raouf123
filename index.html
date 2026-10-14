@@ -1461,50 +1461,68 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // 1. رفع كل البيانات للسحابة فوراً
+    // دالة رفع البيانات الحالية للسحابة بضمان كامل
     window.syncDataToCloud = async function() {
         const uid = localStorage.getItem('user_uid');
-        if (!uid) return;
+        if (!uid) {
+            showToast('يجب تسجيل الدخول بحساب جوجل أولاً للمزامنة');
+            return;
+        }
         try {
-            const dataToSave = JSON.parse(localStorage.getItem('luxury_gold_expense_data'));
-            await setDoc(doc(db, "users_data", uid), dataToSave);
-            console.log("تم الرفع للسحابة بنجاح");
+            const currentData = JSON.parse(localStorage.getItem('luxury_gold_expense_data'));
+            // حفظ الملف الخاص بهذا المستخدم فقط بناءً على الـ UID الخاص به
+            await setDoc(doc(db, "users_data", uid), currentData, { merge: true });
+            showToast('تم رفع وحفظ ملفك الشخصي في السحابة بنجاح! ☁️');
         } catch (e) {
-            console.error("خطأ في رفع البيانات: ", e);
+            console.error("خطأ في الرفع: ", e);
+            showToast('حدث خطأ أثناء الرفع للسحابة');
         }
     };
 
-    // 2. جلب أحدث وأدق بيانات من السحابة وتحديث التطبيق بالكامل
-    async function fetchCloudDataAndMerge() {
+    // دالة جلب البيانات من ملف المستخدم السحابي بحذر شديد
+    async function fetchCloudDataSafe() {
         const uid = localStorage.getItem('user_uid');
         if (!uid) return;
+        
         try {
             const docRef = doc(db, "users_data", uid);
             const docSnap = await getDoc(docRef);
+            
+            const localData = JSON.parse(localStorage.getItem('luxury_gold_expense_data')) || {};
+            const localItemsCount = (localData.items || []).length;
+
             if (docSnap.exists()) {
                 const cloudData = docSnap.data();
-                
-                // تحديث الذاكرة المحلية والبيانات بالكامل لتتطابق مع السحابة
-                appData = cloudData;
-                if (!appData.salaryHistory) appData.salaryHistory = [];
-                if (!appData.debts) appData.debts = [];
-                if (!appData.archivedMonths) appData.archivedMonths = {};
+                const cloudItemsCount = (cloudData.items || []).length;
 
-                localStorage.setItem('luxury_gold_expense_data', JSON.stringify(appData));
-                
-                // تحديث واجهة المستخدم فوراً لتظهر الأرقام والبيانات الصحيحة
-                updateHeaderAndFooter();
-                renderHomeItems();
-                renderAdminItems();
-                renderHistoryPageOptions();
-                console.log("تم مزامنة وجلب البيانات من السحابة بنجاح");
+                // لو السحابة فيها بيانات (عناصر أو ميزانية) والمحلي فاضي أو أقل، نأخذ السحابة
+                // أو لو الموبايل هو اللي فيه بيانات جديدة، نسيب المحلي ورفعه
+                if (cloudItemsCount > 0 && localItemsCount === 0) {
+                    appData = cloudData;
+                    if (!appData.salaryHistory) appData.salaryHistory = [];
+                    if (!appData.debts) appData.debts = [];
+                    if (!appData.archivedMonths) appData.archivedMonths = {};
+
+                    localStorage.setItem('luxury_gold_expense_data', JSON.stringify(appData));
+                    updateHeaderAndFooter();
+                    renderHomeItems();
+                    renderAdminItems();
+                    renderHistoryPageOptions();
+                    showToast('تم جلب بياناتك السحابية بنجاح');
+                } else if (localItemsCount > 0 && cloudItemsCount === 0) {
+                    // لو السحابة فاضية والمحلي مليان، نرفع المحلي فوراً للسحابة عشان ميتضيعش
+                    await window.syncDataToCloud();
+                }
+            } else {
+                // لو مفيش ملف خالص للمستخدم ده على السحابة، ننشئ له ملف جديد فوراً ببياناته الحالية
+                await window.syncDataToCloud();
             }
         } catch (e) {
-            console.error("خطأ في جلب البيانات: ", e);
+            console.error("خطأ في الجلب: ", e);
         }
     }
 
-    // 3. زر النسخ الاحتياطي والمزامنة اليدوي
+    // زر المزامنة اليدوي
     window.handleSyncClick = async function() {
         const uid = localStorage.getItem('user_uid');
         if (!uid) {
@@ -1512,20 +1530,11 @@
             setTimeout(() => { window.location.href = 'login.html'; }, 1200);
             return;
         }
-
-        showToast('جارٍ مزامنة وحفظ كل البيانات للسحابة…');
-        try {
-            await window.syncDataToCloud();
-            await fetchCloudDataAndMerge();
-            showToast('تمت المزامنة وحفظ النسخة الاحتياطية بنجاح! ☁️');
-        } catch (e) {
-            showToast('حدث خطأ، تأكد من اتصال الإنترنت');
-        }
+        await window.syncDataToCloud();
     };
 
-    // جلب البيانات فور فتح الصفحة أول مرة
     window.addEventListener('DOMContentLoaded', () => {
-        fetchCloudDataAndMerge();
+        fetchCloudDataSafe();
     });
 </script>
 </body>
