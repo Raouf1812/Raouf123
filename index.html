@@ -1461,20 +1461,21 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // رفع البيانات تلقائياً
+    // 1. رفع كل البيانات للسحابة فوراً
     window.syncDataToCloud = async function() {
         const uid = localStorage.getItem('user_uid');
         if (!uid) return;
         try {
             const dataToSave = JSON.parse(localStorage.getItem('luxury_gold_expense_data'));
             await setDoc(doc(db, "users_data", uid), dataToSave);
+            console.log("تم الرفع للسحابة بنجاح");
         } catch (e) {
-            console.error("خطأ في مزامنة السحابة: ", e);
+            console.error("خطأ في رفع البيانات: ", e);
         }
     };
 
-    // جلب البيانات تلقائياً عند الفتح
-    async function fetchCloudData() {
+    // 2. جلب أحدث وأدق بيانات من السحابة وتحديث التطبيق بالكامل
+    async function fetchCloudDataAndMerge() {
         const uid = localStorage.getItem('user_uid');
         if (!uid) return;
         try {
@@ -1482,38 +1483,50 @@
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
                 const cloudData = docSnap.data();
+                
+                // تحديث الذاكرة المحلية والبيانات بالكامل لتتطابق مع السحابة
                 appData = cloudData;
-                localStorage.setItem('luxury_gold_expense_data', JSON.stringify(cloudData));
+                if (!appData.salaryHistory) appData.salaryHistory = [];
+                if (!appData.debts) appData.debts = [];
+                if (!appData.archivedMonths) appData.archivedMonths = {};
+
+                localStorage.setItem('luxury_gold_expense_data', JSON.stringify(appData));
+                
+                // تحديث واجهة المستخدم فوراً لتظهر الأرقام والبيانات الصحيحة
                 updateHeaderAndFooter();
                 renderHomeItems();
                 renderAdminItems();
                 renderHistoryPageOptions();
+                console.log("تم مزامنة وجلب البيانات من السحابة بنجاح");
             }
         } catch (e) {
             console.error("خطأ في جلب البيانات: ", e);
         }
     }
 
-    // ينفذ عند الضغط على زر "مزامنة وحفظ النسخة الاحتياطية"
+    // 3. زر النسخ الاحتياطي والمزامنة اليدوي
     window.handleSyncClick = async function() {
         const uid = localStorage.getItem('user_uid');
         if (!uid) {
-            showToast('برجاء تسجيل الدخول أولاً بحساب جوجل');
+            showToast('برجاء تسجيل الدخول بحساب جوجل أولاً');
             setTimeout(() => { window.location.href = 'login.html'; }, 1200);
             return;
         }
 
-        showToast('جارٍ رفع نسخة احتياطية للسحابة…');
+        showToast('جارٍ مزامنة وحفظ كل البيانات للسحابة…');
         try {
             await window.syncDataToCloud();
-            await fetchCloudData();
+            await fetchCloudDataAndMerge();
             showToast('تمت المزامنة وحفظ النسخة الاحتياطية بنجاح! ☁️');
         } catch (e) {
-            showToast('حدث خطأ أثناء المزامنة، تأكد من اتصال النت');
+            showToast('حدث خطأ، تأكد من اتصال الإنترنت');
         }
     };
 
-    fetchCloudData();
+    // جلب البيانات فور فتح الصفحة أول مرة
+    window.addEventListener('DOMContentLoaded', () => {
+        fetchCloudDataAndMerge();
+    });
 </script>
 </body>
 </html>
