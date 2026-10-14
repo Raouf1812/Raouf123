@@ -499,7 +499,18 @@
                             <i class="fa-solid fa-user-gear text-amber-400 text-sm"></i>
                             <h3 class="text-sm font-extrabold text-white">إعدادات الحساب الشخصي</h3>
                         </div>
-
+        <div class="glass-panel p-4 rounded-3xl space-y-3">
+            <div class="flex items-center gap-2.5 pb-2 border-b border-white/10">
+                <i class="fa-solid fa-cloud-arrow-up text-amber-400 text-sm"></i>
+                <h3 class="text-sm font-extrabold text-white">النسخ الاحتياطي والمزامنة السحابية</h3>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+                اضغط هنا لحفظ نسخة احتياطية من كل بياناتك (الاسم، المصاريف، الديون، والإيداعات) على السحابة الآن.
+            </p>
+            <button onclick="handleSyncClick()" class="w-full py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 font-bold">
+                <i class="fa-solid fa-rotate"></i> <span>مزامنة وحفظ النسخة الاحتياطية الآن</span>
+            </button>
+        </div>
                         <div class="space-y-4">
                             <div class="flex items-center gap-4 bg-slate-950/60 p-3.5 rounded-2xl border border-white/5">
                                 <img id="settingsAvatarPreview" src="https://placehold.co/150x150/1e1435/facc15?text=رؤوف" alt="معاينة" class="avatar-img shadow-md shrink-0 cursor-pointer" onclick="openImageViewer(this.src)" title="اضغط لتكبير الصورة">
@@ -774,8 +785,8 @@
                 <i class="fa-solid fa-gear text-xs mb-0.5"></i>
                 <span class="text-[8.5px] font-bold">الإعدادات</span>
             </button>
-            <button onclick="handleSyncClick()" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
-                <i class="fa-solid fa-cloud-arrow-up text-xs mb-0.5"></i>
+            <button onclick="window.location.href='login.html'" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
+                <i class="fa-solid fa-user-check text-xs mb-0.5"></i>
                 <span class="text-[8.5px] font-bold">المزامنة</span>
             </button>
             <button onclick="switchPage('about'); setActiveNav(this);" id="nav-about" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
@@ -1433,7 +1444,7 @@
             updateClock();
         };
     </script>
-    <script type="module">
+<script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -1462,7 +1473,7 @@
         }
     };
 
-    // جلب البيانات تلقائياً عند فتح التطبيق
+    // جلب البيانات تلقائياً عند الفتح
     async function fetchCloudData() {
         const uid = localStorage.getItem('user_uid');
         if (!uid) return;
@@ -1483,22 +1494,22 @@
         }
     }
 
-    // زر المزامنة اليدوي عند الضغط عليه من الشريط السفلي
+    // ينفذ عند الضغط على زر "مزامنة وحفظ النسخة الاحتياطية"
     window.handleSyncClick = async function() {
         const uid = localStorage.getItem('user_uid');
         if (!uid) {
-            // لو لم يكن مسجلاً يدخله لصفحة التسجيل
-            window.location.href = 'login.html';
+            showToast('برجاء تسجيل الدخول أولاً بحساب جوجل');
+            setTimeout(() => { window.location.href = 'login.html'; }, 1200);
             return;
         }
 
-        showToast('جارٍ حفظ نسخة احتياطية على السحابة…');
+        showToast('جارٍ رفع نسخة احتياطية للسحابة…');
         try {
             await window.syncDataToCloud();
             await fetchCloudData();
             showToast('تمت المزامنة وحفظ النسخة الاحتياطية بنجاح! ☁️');
         } catch (e) {
-            showToast('حدث خطأ أثناء المزامنة، تأكد من الاتصال بالإنترنت');
+            showToast('حدث خطأ أثناء المزامنة، تأكد من اتصال النت');
         }
     };
 

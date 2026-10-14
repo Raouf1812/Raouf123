@@ -239,8 +239,6 @@
             </section>
         </div>
     </main>
-
-    <!-- حبيبات الخلفية -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import {
@@ -278,28 +276,20 @@
             : 'bg-red-500/10 text-red-300 border border-red-500/30');
     }
 
-    function onSuccess(user) {
-        localStorage.setItem('user_uid', user.uid);
-        localStorage.setItem('user_email', user.email || '');
-        showStatus(`مرحباً ${user.displayName || 'بأنك'}! تم تفعيل المزامنة بنجاح`, 'ok');
-        setTimeout(() => { window.location.href = 'index.html'; }, 1000);
-    }
-
-    // التحقق عند فتح الصفحة مما إذا كان المستخدم مسجلاً بالفعل
+    // فحص حالة الحساب تلقائياً
     onAuthStateChanged(auth, (user) => {
         if (user) {
             localStorage.setItem('user_uid', user.uid);
             localStorage.setItem('user_email', user.email || '');
-            showStatus(`أنت مسجل حالياً بريد: ${user.email}`, 'ok');
-            label.textContent = "الذهاب للرئيسية";
+            showStatus(`حسابك الحالي: ${user.email}`, 'ok');
+            label.textContent = "العودة للتطبيق";
             btn.onclick = () => { window.location.href = 'index.html'; };
 
-            // إضافة زر تسجيل الخروج لو أراد تبديل الحساب
             if (!document.getElementById('logoutBtn')) {
                 const logoutBtn = document.createElement('button');
                 logoutBtn.id = 'logoutBtn';
                 logoutBtn.className = 'w-full mt-2 py-3 bg-rose-500/10 text-rose-400 border border-rose-500/20 rounded-2xl text-xs font-bold transition';
-                logoutBtn.innerText = 'تسجيل الخروج من الحساب';
+                logoutBtn.innerText = 'تسجيل الخروج';
                 logoutBtn.onclick = async () => {
                     await signOut(auth);
                     localStorage.removeItem('user_uid');
@@ -311,13 +301,14 @@
         }
     });
 
-    // معالجة نتيجة إعادة التوجيه
     getRedirectResult(auth).then((result) => {
         if (result && result.user) {
             setLoading(true);
-            onSuccess(result.user);
+            localStorage.setItem('user_uid', result.user.uid);
+            showStatus('تم تسجيل الدخول بنجاح!', 'ok');
+            setTimeout(() => { window.location.href = 'index.html'; }, 1000);
         }
-    }).catch((error) => {
+    }).catch(() => {
         showStatus('تعذر إكمال تسجيل الدخول. حاول مرة أخرى.', 'err');
     });
 
