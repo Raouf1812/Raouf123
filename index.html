@@ -140,6 +140,11 @@
         .item-img {
             width: 52px; height: 52px; object-fit: cover; border-radius: 12px;
             border: 1px solid rgba(212, 175, 55, 0.3);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .item-img:hover {
+            transform: scale(1.05);
         }
 
         @keyframes fadeIn {
@@ -154,7 +159,7 @@
         ::-webkit-scrollbar-thumb:hover { background: #d4af37; }
 
         /* =====================================================================
-           طبقة الواجهة المتقدمة (تنسيق بصري فقط - بدون أي تعديل في الكود البرمجي)
+           طبقة الواجهة المتقدمة 
            ===================================================================== */
         :root {
             --ink: #06080d;
@@ -182,7 +187,6 @@
             font-variant-numeric: tabular-nums;
             -webkit-font-smoothing: antialiased;
         }
-        /* شبكة دقيقة توحي بدفتر الحسابات */
         body::before {
             content: "";
             position: fixed; inset: 0; z-index: -1; pointer-events: none;
@@ -194,7 +198,6 @@
                     mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 72%);
         }
 
-        /* ---------- الترويسة ---------- */
         .glass-header {
             background: linear-gradient(180deg, rgba(8, 11, 18, 0.94), rgba(8, 11, 18, 0.80));
             backdrop-filter: blur(18px) saturate(140%);
@@ -226,7 +229,6 @@
             line-height: 1.7;
         }
 
-        /* ---------- اللوحات ---------- */
         .glass-panel {
             background: linear-gradient(180deg, rgba(22, 30, 46, 0.70) 0%, rgba(11, 15, 23, 0.86) 100%);
             border: 1px solid var(--line);
@@ -242,7 +244,6 @@
         .glass-panel h3 { font-size: 0.98rem; font-weight: 800; }
         .glass-panel .border-b { border-color: var(--line) !important; }
 
-        /* لوحة الرئيسية العلوية (الساعة + الملخص) */
         #homePage > .glass-panel:first-child {
             background:
                 radial-gradient(520px 200px at 100% 0%, rgba(227,179,65,0.14), transparent 70%),
@@ -264,7 +265,6 @@
         }
         #todayTotalExpense, #monthTotalExpense { font-size: 1.05rem !important; }
 
-        /* ---------- بطاقات العناصر (مصاريف / ديون / سجلات) ---------- */
         [class*="bg-slate-900/80"] {
             background: linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 100%) !important;
             border: 1px solid var(--line) !important;
@@ -284,22 +284,6 @@
         [class*="bg-slate-900/80"] .text-amber-400.font-black { color: var(--gold-soft); font-size: 0.98rem; }
         [class*="bg-slate-900/80"] .text-emerald-400.font-black { font-size: 0.98rem; }
 
-        .item-img {
-            border-radius: 14px; border: 1px solid var(--line);
-            background: var(--surface-1);
-            box-shadow: 0 6px 14px -8px rgba(0,0,0,0.9);
-        }
-
-        /* رأس التاريخ (فاصل يومي) */
-        #homeItemsList .rounded-xl.font-black {
-            background: rgba(227,179,65,0.08) !important;
-            border-radius: 999px !important;
-        }
-
-        /* شارة عدد العناصر */
-        #homeItemsBadge { background: rgba(227,179,65,0.10) !important; }
-
-        /* ---------- الحقول ---------- */
         input, select {
             background: var(--surface-1) !important;
             border: 1px solid rgba(255,255,255,0.10) !important;
@@ -326,7 +310,6 @@
         }
         label.block { font-weight: 700; color: #b6c0d0; letter-spacing: 0; }
 
-        /* زر رفع الملفات */
         label.cursor-pointer.bg-slate-900 {
             background: rgba(227,179,65,0.04) !important;
             border: 1.5px dashed rgba(227,179,65,0.38) !important;
@@ -339,7 +322,6 @@
             border-color: var(--gold) !important;
         }
 
-        /* ---------- الأزرار ---------- */
         .gold-btn {
             background: linear-gradient(180deg, #f6dc8e 0%, #e3b341 55%, #c9961f 100%);
             border-radius: 14px !important;
@@ -348,10 +330,7 @@
             position: relative; overflow: hidden;
         }
         .gold-btn:active { transform: translateY(1px) scale(0.99); box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 6px 14px -8px rgba(227,179,65,0.6); }
-        button.bg-rose-500\/10, label.bg-amber-500\/10, button.bg-amber-500\/10 { border-radius: 12px !important; }
-        button, label.cursor-pointer { -webkit-user-select: none; user-select: none; }
 
-        /* ---------- شريط التنقل السفلي (عائم) ---------- */
         .bottom-nav {
             left: 12px !important; right: 12px !important;
             bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
@@ -385,7 +364,6 @@
             border-radius: 2px; background: var(--gold);
         }
 
-        /* ---------- التنبيه (Toast) ---------- */
         @keyframes toastIn {
             from { opacity: 0; transform: translate(-50%, 14px) scale(.97); }
             to   { opacity: 1; transform: translate(-50%, 0) scale(1); }
@@ -409,36 +387,6 @@
             content: "\f058"; font-family: "Font Awesome 6 Free"; font-weight: 900;
             color: var(--gold); margin-inline-end: 9px; vertical-align: -1px;
         }
-
-        /* ---------- صفحة المبرمج ---------- */
-        #aboutPage .glass-panel { border-color: var(--line-gold) !important; }
-        #aboutPage img {
-            background: var(--surface-1);
-            box-shadow: 0 10px 28px -10px rgba(227,179,65,0.5);
-        }
-
-        /* ---------- تحسينات القراءة ---------- */
-        body .text-\[11px\] { font-size: 12px; }
-        body .text-\[10px\] { font-size: 11px; }
-        .text-slate-400 { color: #8d99ad; }
-
-        /* ---------- شريط التمرير ---------- */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #263043; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
-
-        /* ---------- إتاحة وتجاوب ---------- */
-        button:focus-visible, label:focus-within, a:focus-visible {
-            outline: 2px solid var(--gold); outline-offset: 2px;
-        }
-        @media (max-width: 400px) {
-            #liveClock { font-size: 1.55rem !important; }
-            .nav-item span { font-size: 9.5px !important; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-        }
     </style>
 </head>
 <body class="flex flex-col justify-between selection:bg-amber-400 selection:text-black">
@@ -451,16 +399,16 @@
                     <img id="headerUserAvatar" src="https://placehold.co/150x150/1e1435/facc15?text=رؤوف" alt="صورة المستخدم" class="avatar-img">
                     <div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-slate-950 rounded-full"></div>
                 </div>
+                
                 <div>
                     <h2 id="headerUserName" class="text-sm sm:text-base font-extrabold text-white tracking-wide">اكتب اسمك هنا ... </h2>
                     <div class="flex items-center gap-1.5 mt-0.5">
                         <span class="text-[11px] text-amber-300/80 font-medium">المتوفر معايا: </span>
                         <span id="headerTotalExpense" style="color: #facc15 !important; font-weight: 900; font-size: 1rem !important; display: inline-block;">0.00 ج.م</span>
                     </div>
+                    
                 </div>
             </div>
-
-          
         </div>
     </header>
 
@@ -554,7 +502,7 @@
 
                         <div class="space-y-4">
                             <div class="flex items-center gap-4 bg-slate-950/60 p-3.5 rounded-2xl border border-white/5">
-                                <img id="settingsAvatarPreview" src="https://placehold.co/150x150/1e1435/facc15?text=رؤوف" alt="معاينة" class="avatar-img shadow-md shrink-0">
+                                <img id="settingsAvatarPreview" src="https://placehold.co/150x150/1e1435/facc15?text=رؤوف" alt="معاينة" class="avatar-img shadow-md shrink-0 cursor-pointer" onclick="openImageViewer(this.src)" title="اضغط لتكبير الصورة">
                                 <div class="space-y-1.5 flex-grow">
                                     <span class="block text-xs font-bold text-slate-300">الصورة الشخصية</span>
                                     <label class="cursor-pointer bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 w-fit">
@@ -577,10 +525,10 @@
                     <div class="glass-panel p-4 rounded-3xl space-y-3">
                         <div class="flex items-center gap-2.5 pb-2 border-b border-white/10">
                             <i class="fa-solid fa-wallet text-amber-400 text-sm"></i>
-                            <h3 class="text-sm font-extrabold text-white">ميزانية الشهر المتاحة</h3>
+                            <h3 class="text-sm font-extrabold text-white">الميزانية المتاحة</h3>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-1.5">المبلغ المبدئي للشهر (ج.م)</label>
+                            <label class="block text-xs font-bold text-slate-300 mb-1.5">المبلغ (ج.م)</label>
                             <div class="flex gap-2">
                                 <input type="number" step="0.01" id="settingsMonthlyBudgetInput" placeholder="أدخل المبلغ المتوفر..." class="w-full px-3.5 py-2.5 text-xs">
                                 <button onclick="updateMonthlyBudgetFromSettings()" class="px-4 py-2.5 gold-btn rounded-xl text-xs shrink-0">حفظ</button>
@@ -673,7 +621,12 @@
 
                             <div>
                                 <label class="block text-xs font-bold text-slate-300 mb-1">اسم الشخص</label>
-                                <input type="text" id="debtPersonName"  class="w-full px-3.5 py-2.5 text-xs">
+                                <input type="text" id="debtPersonName" required class="w-full px-3.5 py-2.5 text-xs" placeholder="أدخل اسم الشخص...">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-300 mb-1">السبب ؟</label>
+                                <input type="text" id="debtReason" class="w-full px-3.5 py-2.5 text-xs" placeholder="مثال: شراء اونلاين او ايصال او ...">
                             </div>
 
                             <div>
@@ -682,7 +635,7 @@
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-slate-300 mb-1">صورة وصل الأمانة (اختياري)</label>
+                                <label class="block text-xs font-bold text-slate-300 mb-1">صورة اثبات (اختياري)</label>
                                 <label class="cursor-pointer bg-slate-900 border border-amber-500/20 hover:border-amber-400/50 p-2.5 rounded-xl text-center text-xs font-bold text-amber-400 transition flex items-center justify-center gap-2">
                                     <i class="fa-solid fa-cloud-arrow-up"></i> <span>رفع صورة الوصل</span>
                                     <input type="file" id="debtImageFile" accept="image/*" class="hidden" onchange="previewDebtImage(event)">
@@ -771,19 +724,16 @@
         <!-- 6. تبويب عن المبرمج وصانع التطبيق -->
         <div id="aboutPage" class="space-y-6 hidden animate-fade-in max-w-xl mx-auto py-4">
             <div class="glass-panel p-6 sm:p-8 rounded-3xl space-y-5 border border-amber-500/30 text-center">
-                <div class="flex items-center justify-center gap-2.5 pb-3 border-b border-white/10">
                 <div class="bg-slate-950/60 p-6 rounded-2xl border border-amber-500/20 space-y-4">
                     <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-300 p-0.5 shadow-xl shadow-amber-500/20">
-                        <img src="logo.png" class="w-full h-full object-cover rounded-2xl" alt='اكتب اسمك هنا ... '>
-                    </div>
-                    <div>
+                        <img src="logo.png" class="w-full h-full object-cover rounded-2xl cursor-pointer" alt="رؤوف" onclick="openImageViewer(this.src)">
                     </div>
                     <p class="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium px-2">
-                        تم تصميم وبرمجة هذا التطبيق بكل عناية واحترافية ليكون رفيقك الذكي في إدارة مصاريفك اليومية والمالية بكل سهولة وأمان
+                        تم تصميم وبرمجة هذا التطبيق بكل عناية واحترافية ليصبح رفيقك الذكي في إدارة مصاريفك اليومية والمالية بكل سهولة وأمان.
                     </p>
                     <div class="pt-3 border-t border-white/10 flex items-center justify-center gap-2 text-amber-400 text-xs font-bold">
                         <i class="fa-solid fa-heart text-rose-500"></i>
-                        <span>made by : Raouf </span>
+                        <span>made by : Raouf</span>
                     </div>
                 </div>
             </div>
@@ -791,32 +741,46 @@
 
     </main>
 
-    <!-- شريط التنقل السفلي الفاخر (يضم 6 تبويبات) -->
-    <nav class="bottom-nav fixed bottom-0 left-0 right-0 z-50 px-2 py-2">
-        <div class="max-w-md mx-auto grid grid-cols-6 gap-0.5 text-center">
-            <button onclick="switchPage('home'); setActiveNav(this);" id="nav-home" class="nav-item active flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl">
-                <i class="fa-solid fa-house text-sm mb-0.5"></i>
-                <span class="text-[9px] font-bold">الرئيسية</span>
+    <!-- نافذة منبثقة (Modal) لعرض الصور بحجم كبير عند النقر عليها -->
+    <div id="imageModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4 animate-fade-in" onclick="closeImageViewer()">
+        <div class="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center" onclick="event.stopPropagation()">
+            <button onclick="closeImageViewer()" class="absolute -top-12 left-0 text-white bg-white/10 hover:bg-rose-500 w-10 h-10 rounded-full flex items-center justify-center transition text-lg">
+                <i class="fa-solid fa-xmark"></i>
             </button>
-            <button onclick="switchPage('salary'); setActiveNav(this);" id="nav-salary" class="nav-item flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl">
-                <i class="fa-solid fa-wallet text-sm mb-0.5"></i>
-                <span class="text-[9px] font-bold">المرتب</span>
+            <img id="modalImageContent" src="" alt="صورة مكبرة" class="max-w-full max-h-[85vh] object-contain rounded-2xl border border-amber-500/30 shadow-2xl">
+        </div>
+    </div>
+
+    <!-- شريط التنقل السفلي -->
+    <nav class="bottom-nav fixed bottom-0 left-0 right-0 z-50 px-1 py-1.5">
+        <div class="max-w-md mx-auto grid grid-cols-7 gap-0 text-center">
+            <button onclick="switchPage('home'); setActiveNav(this);" id="nav-home" class="nav-item active flex flex-col items-center justify-center py-1 px-0 rounded-lg">
+                <i class="fa-solid fa-house text-xs mb-0.5"></i>
+                <span class="text-[8.5px] font-bold">الرئيسية</span>
             </button>
-            <button onclick="switchPage('debts'); setActiveNav(this);" id="nav-debts" class="nav-item flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl">
-                <i class="fa-solid fa-hand-holding-dollar text-sm mb-0.5"></i>
-                <span class="text-[9px] font-bold">الديون</span>
+            <button onclick="switchPage('salary'); setActiveNav(this);" id="nav-salary" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
+                <i class="fa-solid fa-wallet text-xs mb-0.5"></i>
+                <span class="text-[8.5px] font-bold">ايداع</span>
             </button>
-            <button onclick="switchPage('history'); setActiveNav(this);" id="nav-history" class="nav-item flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl">
-                <i class="fa-solid fa-box-archive text-sm mb-0.5"></i>
-                <span class="text-[9px] font-bold">الأرشيف</span>
+            <button onclick="switchPage('debts'); setActiveNav(this);" id="nav-debts" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
+                <i class="fa-solid fa-hand-holding-dollar text-xs mb-0.5"></i>
+                <span class="text-[8.5px] font-bold">الديون</span>
             </button>
-            <button onclick="switchPage('admin'); setActiveNav(this);" id="nav-admin" class="nav-item flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl">
-                <i class="fa-solid fa-gear text-sm mb-0.5"></i>
-                <span class="text-[9px] font-bold">الإعدادات</span>
+            <button onclick="switchPage('history'); setActiveNav(this);" id="nav-history" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
+                <i class="fa-solid fa-box-archive text-xs mb-0.5"></i>
+                <span class="text-[8.5px] font-bold">الأرشيف</span>
             </button>
-            <button onclick="switchPage('about'); setActiveNav(this);" id="nav-about" class="nav-item flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl">
-                <i class="fa-solid fa-code text-sm mb-0.5"></i>
-                <span class="text-[9px] font-bold">المبرمج</span>
+            <button onclick="switchPage('admin'); setActiveNav(this);" id="nav-admin" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
+                <i class="fa-solid fa-gear text-xs mb-0.5"></i>
+                <span class="text-[8.5px] font-bold">الإعدادات</span>
+            </button>
+            <button onclick="window.location.href='login.html'" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
+                <i class="fa-solid fa-cloud-arrow-up text-xs mb-0.5"></i>
+                <span class="text-[8.5px] font-bold">المزامنة</span>
+            </button>
+            <button onclick="switchPage('about'); setActiveNav(this);" id="nav-about" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
+                <i class="fa-solid fa-code text-xs mb-0.5"></i>
+                <span class="text-[8.5px] font-bold">المبرمج</span>
             </button>
         </div>
     </nav>
@@ -834,6 +798,19 @@
         };
         if (!appData.salaryHistory) appData.salaryHistory = [];
         if (!appData.debts) appData.debts = [];
+
+        function openImageViewer(imgSrc) {
+            if(!imgSrc) return;
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImageContent');
+            modalImg.src = imgSrc;
+            modal.classList.remove('hidden');
+        }
+
+        function closeImageViewer() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.add('hidden');
+        }
 
         function getCurrentMonthKey(dateObj = new Date()) {
             const year = dateObj.getFullYear();
@@ -1010,12 +987,18 @@
             event.preventDefault();
             const type = document.getElementById('debtType').value;
             const personName = document.getElementById('debtPersonName').value.trim();
+            const reason = document.getElementById('debtReason').value.trim() || 'بدون سبب مذكور';
             const amount = parseFloat(document.getElementById('debtAmount').value);
             const receiptImage = document.getElementById('debtImageBase64').value || '';
 
             const newDebt = {
-                id: Date.now(), type: type, personName: personName,
-                totalAmount: amount, paidAmount: 0, receiptImage: receiptImage
+                id: Date.now(), 
+                type: type, 
+                personName: personName,
+                reason: reason,
+                totalAmount: amount, 
+                paidAmount: 0, 
+                receiptImage: receiptImage
             };
 
             appData.debts.push(newDebt);
@@ -1071,10 +1054,11 @@
                     return `
                         <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                             <div class="flex items-center gap-3">
-                                ${d.receiptImage ? `<img src="${d.receiptImage}" class="item-img cursor-pointer" onclick="window.open('${d.receiptImage}')" title="اضغط للتكبير">` : '<div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-xs text-slate-400">بدون وصل</div>'}
+                                ${d.receiptImage ? `<img src="${d.receiptImage}" class="item-img" onclick="openImageViewer('${d.receiptImage}')" title="اضغط لتكبير وصل الأمانة">` : '<div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-xs text-slate-400">بدون وصل</div>'}
                                 <div>
                                     <h4 class="text-xs font-bold text-white">${d.personName}</h4>
-                                    <span class="text-[11px] text-slate-400 block">الإجمالي: ${formatCurrency(d.totalAmount)} | المدفوع: ${formatCurrency(d.paidAmount)}</span>
+                                    <span class="text-[11px] text-amber-300 font-medium block mt-0.5"><i class="fa-solid fa-circle-info ml-1"></i>السبب: ${d.reason || 'غير محدد'}</span>
+                                    <span class="text-[11px] text-slate-400 block mt-0.5">الإجمالي: ${formatCurrency(d.totalAmount)} | المدفوع: ${formatCurrency(d.paidAmount)}</span>
                                     <span class="text-[11px] font-bold ${isFullyPaid ? 'text-emerald-400' : 'text-amber-400'} block">المتبقي: ${formatCurrency(remaining)} ج.م</span>
                                 </div>
                             </div>
@@ -1092,10 +1076,11 @@
                     return `
                         <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                             <div class="flex items-center gap-3">
-                                ${d.receiptImage ? `<img src="${d.receiptImage}" class="item-img cursor-pointer" onclick="window.open('${d.receiptImage}')" title="اضغط للتكبير">` : '<div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-xs text-slate-400">بدون وصل</div>'}
+                                ${d.receiptImage ? `<img src="${d.receiptImage}" class="item-img" onclick="openImageViewer('${d.receiptImage}')" title="اضغط لتكبير وصل الأمانة">` : '<div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-xs text-slate-400">بدون وصل</div>'}
                                 <div>
                                     <h4 class="text-xs font-bold text-white">${d.personName}</h4>
-                                    <span class="text-[11px] text-slate-400 block">الإجمالي: ${formatCurrency(d.totalAmount)} | المستلم: ${formatCurrency(d.paidAmount)}</span>
+                                    <span class="text-[11px] text-amber-300 font-medium block mt-0.5"><i class="fa-solid fa-circle-info ml-1"></i>السبب: ${d.reason || 'غير محدد'}</span>
+                                    <span class="text-[11px] text-slate-400 block mt-0.5">الإجمالي: ${formatCurrency(d.totalAmount)} | المستلم: ${formatCurrency(d.paidAmount)}</span>
                                     <span class="text-[11px] font-bold ${isFullyPaid ? 'text-emerald-400' : 'text-amber-400'} block">المتبقي: ${formatCurrency(remaining)} ج.م</span>
                                 </div>
                             </div>
@@ -1299,7 +1284,7 @@
                     html += `
                         <div class="bg-slate-900/80 hover:bg-slate-900 border border-amber-500/15 hover:border-amber-400/40 rounded-2xl p-3 sm:p-4 flex items-center justify-between gap-3 transition-all shadow-md mb-2">
                             <div class="flex items-center gap-3 min-w-0">
-                                <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" class="item-img shrink-0">
+                                <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" class="item-img shrink-0" onclick="openImageViewer('${item.image}')" title="اضغط لتكبير الصورة">
                                 <div class="min-w-0 flex flex-col justify-center">
                                     <h4 class="text-xs sm:text-sm font-extrabold text-white truncate max-w-[140px] sm:max-w-xs">${item.name}</h4>
                                     <div class="flex items-center gap-2 text-[11px] text-slate-400 mt-1">
@@ -1333,7 +1318,7 @@
                 html += `
                     <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-3 flex items-center justify-between gap-3">
                         <div class="flex items-center gap-3 min-w-0">
-                            <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" class="item-img shrink-0">
+                            <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" class="item-img shrink-0" onclick="openImageViewer('${item.image}')" title="اضغط لتكبير الصورة">
                             <div class="min-w-0">
                                 <h4 class="text-xs font-bold text-white truncate">${item.name}</h4>
                                 <span class="text-[11px] text-slate-400 block mt-0.5">
@@ -1393,7 +1378,7 @@
                 html += `
                     <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-3 flex items-center justify-between gap-3">
                         <div class="flex items-center gap-3 min-w-0">
-                            <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" class="item-img shrink-0">
+                            <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" class="item-img shrink-0" onclick="openImageViewer('${item.image}')" title="اضغط لتكبير الصورة">
                             <div class="min-w-0">
                                 <h4 class="text-xs font-bold text-white truncate">${item.name}</h4>
                                 <span class="text-[11px] text-slate-400 block mt-0.5">تاريخ: ${item.date || selectEl.value} | الكمية: ${item.quantity}</span>
@@ -1442,5 +1427,54 @@
             updateClock();
         };
     </script>
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAVDG_rU0WofeTdKwrmaxTiFAWsESKMueI",
+        authDomain: "raouf-5b278.firebaseapp.com",
+        projectId: "raouf-5b278",
+        storageBucket: "raouf-5b278.firebasestorage.app",
+        messagingSenderId: "955422937027",
+        appId: "1:955422937027:web:e92e5666e1e2aabce83776",
+        measurementId: "G-JMTM83E8B2"
+        };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // دالة لرفع البيانات للسحابة كل ما يحصل حفظ
+    window.syncDataToCloud = async function() {
+        const uid = localStorage.getItem('user_uid');
+        if (!uid) return;
+        try {
+            const dataToSave = JSON.parse(localStorage.getItem('luxury_gold_expense_data'));
+            await setDoc(doc(db, "users_data", uid), dataToSave);
+        } catch (e) {
+            console.error("خطأ في مزامنة السحابة: ", e);
+        }
+    };
+
+    // دالة لجلب البيانات تلقائياً لو فاتح من موبايل جديد ومافيش داتا محلية
+    async function checkCloudData() {
+        const uid = localStorage.getItem('user_uid');
+        if (!uid) return;
+        try {
+            const docRef = doc(db, "users_data", uid);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                const localData = localStorage.getItem('luxury_gold_expense_data');
+                if(!localData || JSON.parse(localData).items.length === 0) {
+                    localStorage.setItem('luxury_gold_expense_data', JSON.stringify(docSnap.data()));
+                    location.reload();
+                }
+            }
+        } catch (e) {
+            console.error("خطأ في جلب البيانات: ", e);
+        }
+    }
+    checkCloudData();
+</script>
 </body>
 </html>
