@@ -62,7 +62,7 @@
             background-color: var(--bg-obsidian);
             background-image: 
                 radial-gradient(circle at 10% 10%, rgba(202, 138, 4, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(30, 41, 59, 0.5) 0%, transparent 50%),
+                radial-gradient(circle at 90% 90%, rgb(30, 41, 59) 0%, transparent 50%),
                 linear-gradient(180deg, #030712 0%, #020617 100%);
             background-attachment: fixed;
             font-family: 'IBM Plex Sans Arabic', sans-serif;
@@ -774,7 +774,7 @@
                 <i class="fa-solid fa-gear text-xs mb-0.5"></i>
                 <span class="text-[8.5px] font-bold">الإعدادات</span>
             </button>
-            <button onclick="window.location.href='login.html'" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
+            <button onclick="handleSyncClick()" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
                 <i class="fa-solid fa-cloud-arrow-up text-xs mb-0.5"></i>
                 <span class="text-[8.5px] font-bold">المزامنة</span>
             </button>
@@ -869,8 +869,14 @@
             return Number(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
-        function saveData() {
+       function saveData() {
             localStorage.setItem('luxury_gold_expense_data', JSON.stringify(appData));
+            
+            // استدعاء المزامنة السحابية تلقائياً مع كل حفظ
+            if (typeof window.syncDataToCloud === 'function') {
+                window.syncDataToCloud();
+            }
+
             updateHeaderAndFooter();
             renderHomeItems();
             renderAdminItems();
@@ -1439,12 +1445,12 @@
         messagingSenderId: "955422937027",
         appId: "1:955422937027:web:e92e5666e1e2aabce83776",
         measurementId: "G-JMTM83E8B2"
-        };
+    };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // دالة لرفع البيانات للسحابة كل ما يحصل حفظ
+    // رفع البيانات تلقائياً
     window.syncDataToCloud = async function() {
         const uid = localStorage.getItem('user_uid');
         if (!uid) return;
@@ -1456,25 +1462,47 @@
         }
     };
 
-    // دالة لجلب البيانات تلقائياً لو فاتح من موبايل جديد ومافيش داتا محلية
-    async function checkCloudData() {
+    // جلب البيانات تلقائياً عند فتح التطبيق
+    async function fetchCloudData() {
         const uid = localStorage.getItem('user_uid');
         if (!uid) return;
         try {
             const docRef = doc(db, "users_data", uid);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                const localData = localStorage.getItem('luxury_gold_expense_data');
-                if(!localData || JSON.parse(localData).items.length === 0) {
-                    localStorage.setItem('luxury_gold_expense_data', JSON.stringify(docSnap.data()));
-                    location.reload();
-                }
+                const cloudData = docSnap.data();
+                appData = cloudData;
+                localStorage.setItem('luxury_gold_expense_data', JSON.stringify(cloudData));
+                updateHeaderAndFooter();
+                renderHomeItems();
+                renderAdminItems();
+                renderHistoryPageOptions();
             }
         } catch (e) {
             console.error("خطأ في جلب البيانات: ", e);
         }
     }
-    checkCloudData();
+
+    // زر المزامنة اليدوي عند الضغط عليه من الشريط السفلي
+    window.handleSyncClick = async function() {
+        const uid = localStorage.getItem('user_uid');
+        if (!uid) {
+            // لو لم يكن مسجلاً يدخله لصفحة التسجيل
+            window.location.href = 'login.html';
+            return;
+        }
+
+        showToast('جارٍ حفظ نسخة احتياطية على السحابة…');
+        try {
+            await window.syncDataToCloud();
+            await fetchCloudData();
+            showToast('تمت المزامنة وحفظ النسخة الاحتياطية بنجاح! ☁️');
+        } catch (e) {
+            showToast('حدث خطأ أثناء المزامنة، تأكد من الاتصال بالإنترنت');
+        }
+    };
+
+    fetchCloudData();
 </script>
 </body>
 </html>

@@ -241,146 +241,96 @@
     </main>
 
     <!-- حبيبات الخلفية -->
-    <script>
-        (function () {
-            const c = document.getElementById('particles');
-            const ctx = c.getContext('2d');
-            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            let w, h, dpr, parts = [], raf;
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import {
+        getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-            function resize() {
-                dpr = Math.min(window.devicePixelRatio || 1, 2);
-                w = c.clientWidth; h = c.clientHeight;
-                c.width = w * dpr; c.height = h * dpr;
-                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-                const n = Math.round(Math.min(60, Math.max(24, w * h / 16000)));
-                parts = Array.from({ length: n }, () => ({
-                    x: Math.random() * w,
-                    y: Math.random() * h,
-                    r: Math.random() * 1.8 + .6,
-                    v: Math.random() * .35 + .12,
-                    d: Math.random() * Math.PI * 2,
-                    a: Math.random() * .5 + .25
-                }));
-            }
+    const firebaseConfig = {
+        apiKey: "AIzaSyAVDG_rU0WofeTdKwrmaxTiFAWsESKMueI",
+        authDomain: "raouf-5b278.firebaseapp.com",
+        projectId: "raouf-5b278",
+        storageBucket: "raouf-5b278.firebasestorage.app",
+        messagingSenderId: "955422937027",
+        appId: "1:955422937027:web:e92e5666e1e2aabce83776",
+        measurementId: "G-JMTM83E8B2"
+    };
 
-            function draw(t) {
-                ctx.clearRect(0, 0, w, h);
-                for (const p of parts) {
-                    p.y -= p.v;
-                    p.x += Math.sin(t / 2500 + p.d) * .25;
-                    if (p.y < -6) { p.y = h + 6; p.x = Math.random() * w; }
-                    const tw = .6 + .4 * Math.sin(t / 900 + p.d);
-                    const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4);
-                    g.addColorStop(0, 'rgba(250,204,21,' + (p.a * tw) + ')');
-                    g.addColorStop(1, 'rgba(250,204,21,0)');
-                    ctx.fillStyle = g;
-                    ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 4, 0, 6.283); ctx.fill();
-                }
-                raf = requestAnimationFrame(draw);
-            }
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
 
-            resize();
-            window.addEventListener('resize', resize);
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) cancelAnimationFrame(raf);
-                else if (!reduce) raf = requestAnimationFrame(draw);
-            });
-            if (reduce) draw(0), cancelAnimationFrame(raf); else raf = requestAnimationFrame(draw);
-        })();
-    </script>
+    const btn = document.getElementById('loginBtn');
+    const label = document.getElementById('btnLabel');
+    const statusEl = document.getElementById('status');
 
-    <!-- Firebase -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import {
-            getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider
-        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    function setLoading(on, text = 'جارٍ تسجيل الدخول…') {
+        btn.disabled = on;
+        btn.setAttribute('aria-busy', on ? 'true' : 'false');
+        label.textContent = text;
+    }
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyAVDG_rU0WofeTdKwrmaxTiFAWsESKMueI",
-            authDomain: "raouf-5b278.firebaseapp.com",
-            projectId: "raouf-5b278",
-            storageBucket: "raouf-5b278.firebasestorage.app",
-            messagingSenderId: "955422937027",
-            appId: "1:955422937027:web:e92e5666e1e2aabce83776",
-            measurementId: "G-JMTM83E8B2"
-        };
+    function showStatus(msg, type) {
+        statusEl.textContent = msg;
+        statusEl.className = 'status rounded-2xl px-4 py-3 text-sm font-semibold text-center ' + (type === 'ok'
+            ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/30'
+            : 'bg-red-500/10 text-red-300 border border-red-500/30');
+    }
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
+    function onSuccess(user) {
+        localStorage.setItem('user_uid', user.uid);
+        localStorage.setItem('user_email', user.email || '');
+        showStatus(`مرحباً ${user.displayName || 'بأنك'}! تم تفعيل المزامنة بنجاح`, 'ok');
+        setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+    }
 
-        const btn = document.getElementById('loginBtn');
-        const label = document.getElementById('btnLabel');
-        const statusEl = document.getElementById('status');
-        const idleLabel = label.textContent;
-
-        function setLoading(on) {
-            btn.disabled = on;
-            btn.setAttribute('aria-busy', on ? 'true' : 'false');
-            label.textContent = on ? 'جارٍ تسجيل الدخول…' : idleLabel;
-            const g = btn.querySelector('.g-logo');
-            if (on) {
-                g.dataset.html = g.innerHTML;
-                g.innerHTML = '<span class="spinner" style="width:18px;height:18px;border-width:2.5px"></span>';
-            } else if (g.dataset.html) {
-                g.innerHTML = g.dataset.html;
-            }
-        }
-
-        function showStatus(msg, type) {
-            statusEl.textContent = msg;
-            statusEl.className = 'status rounded-2xl px-4 py-3 text-sm font-semibold text-center ' + (type === 'ok'
-                ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/30'
-                : 'bg-red-500/10 text-red-300 border border-red-500/30');
-        }
-
-        function errorMessage(code) {
-            switch (code) {
-                case 'auth/popup-closed-by-user':
-                case 'auth/cancelled-popup-request':
-                    return 'تم إغلاق نافذة تسجيل الدخول. حاول مرة أخرى.';
-                case 'auth/network-request-failed':
-                    return 'لا يوجد اتصال بالإنترنت. تحقق من الشبكة وحاول مرة أخرى.';
-                case 'auth/unauthorized-domain':
-                    return 'هذا النطاق غير مصرّح له في إعدادات Firebase.';
-                case 'auth/too-many-requests':
-                    return 'محاولات كثيرة. انتظر قليلاً ثم حاول مرة أخرى.';
-                default:
-                    return 'تعذّر تسجيل الدخول. حاول مرة أخرى.';
-            }
-        }
-
-        function onSuccess(user) {
+    // التحقق عند فتح الصفحة مما إذا كان المستخدم مسجلاً بالفعل
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
             localStorage.setItem('user_uid', user.uid);
-            showStatus('تم تسجيل الدخول وتفعيل النسخة الاحتياطية', 'ok');
-            setTimeout(() => { window.location.href = 'index.html'; }, 900);
-        }
+            localStorage.setItem('user_email', user.email || '');
+            showStatus(`أنت مسجل حالياً بريد: ${user.email}`, 'ok');
+            label.textContent = "الذهاب للرئيسية";
+            btn.onclick = () => { window.location.href = 'index.html'; };
 
-        // إكمال تسجيل الدخول بعد العودة من صفحة جوجل (بديل النافذة المنبثقة على الموبايل)
-        getRedirectResult(auth).then((result) => {
-            if (result && result.user) { setLoading(true); onSuccess(result.user); }
-        }).catch((error) => {
-            showStatus(errorMessage(error.code), 'err');
-        });
-
-        window.loginWithGoogle = async function () {
-            setLoading(true);
-            statusEl.className = 'status hidden-s';
-            try {
-                const result = await signInWithPopup(auth, provider);
-                onSuccess(result.user);
-            } catch (error) {
-                // بعض متصفحات الموبايل تمنع النافذة المنبثقة: ننتقل لتسجيل الدخول بإعادة التوجيه
-                if (error.code === 'auth/popup-blocked' || error.code === 'auth/operation-not-supported-in-this-environment') {
-                    try { await signInWithRedirect(auth, provider); return; }
-                    catch (e) { error = e; }
-                }
-                setLoading(false);
-                showStatus(errorMessage(error.code), 'err');
+            // إضافة زر تسجيل الخروج لو أراد تبديل الحساب
+            if (!document.getElementById('logoutBtn')) {
+                const logoutBtn = document.createElement('button');
+                logoutBtn.id = 'logoutBtn';
+                logoutBtn.className = 'w-full mt-2 py-3 bg-rose-500/10 text-rose-400 border border-rose-500/20 rounded-2xl text-xs font-bold transition';
+                logoutBtn.innerText = 'تسجيل الخروج من الحساب';
+                logoutBtn.onclick = async () => {
+                    await signOut(auth);
+                    localStorage.removeItem('user_uid');
+                    localStorage.removeItem('user_email');
+                    location.reload();
+                };
+                btn.parentNode.appendChild(logoutBtn);
             }
-        };
-    </script>
+        }
+    });
+
+    // معالجة نتيجة إعادة التوجيه
+    getRedirectResult(auth).then((result) => {
+        if (result && result.user) {
+            setLoading(true);
+            onSuccess(result.user);
+        }
+    }).catch((error) => {
+        showStatus('تعذر إكمال تسجيل الدخول. حاول مرة أخرى.', 'err');
+    });
+
+    window.loginWithGoogle = async function () {
+        setLoading(true);
+        statusEl.className = 'status hidden-s';
+        try {
+            await signInWithRedirect(auth, provider);
+        } catch (error) {
+            setLoading(false);
+            showStatus('تعذّر تسجيل الدخول. حاول مرة أخرى.', 'err');
+        }
+    };
+</script>
 </body>
 </html>
