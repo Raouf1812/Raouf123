@@ -490,27 +490,30 @@
             </div>
         </div>
 
-        <!-- 3. الإعدادات والتحكم -->
-        <div id="adminPage" class="space-y-6 hidden animate-fade-in">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div class="lg:col-span-5 space-y-6">
-                    <div class="glass-panel p-5 rounded-3xl space-y-4">
-                        <div class="flex items-center gap-2.5 pb-3 border-b border-white/10">
-                            <i class="fa-solid fa-user-gear text-amber-400 text-sm"></i>
-                            <h3 class="text-sm font-extrabold text-white">إعدادات الحساب الشخصي</h3>
-                        </div>
-        <div class="glass-panel p-4 rounded-3xl space-y-3">
-            <div class="flex items-center gap-2.5 pb-2 border-b border-white/10">
-                <i class="fa-solid fa-cloud-arrow-up text-amber-400 text-sm"></i>
-                <h3 class="text-sm font-extrabold text-white">النسخ الاحتياطي والمزامنة السحابية</h3>
+            <!-- 3. الإعدادات والتحكم -->
+            <div class="glass-panel p-4 rounded-3xl space-y-3">
+                <div class="flex items-center gap-2.5 pb-2 border-b border-white/10">
+                    <i class="fa-solid fa-cloud-arrow-up text-amber-400 text-sm"></i>
+                    <h3 class="text-sm font-extrabold text-white">النسخ الاحتياطي والاستعادة (طريقة الواتساب)</h3>
+                </div>
+                
+                <p id="backupInfoText" class="text-xs text-amber-300 font-bold">
+                    آخر نسخة احتياطية: لم يتم الإنشاء بعد
+                </p>
+                
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                    قم بإنشاء نسخة احتياطية لرفع بياناتك للسحابة، أو استعدها في أي وقت على أي جهاز آخر.
+                </p>
+
+                <div class="grid grid-cols-2 gap-2 pt-1">
+                    <button onclick="backupToCloud()" class="py-2.5 gold-btn rounded-xl text-xs flex items-center justify-center gap-1.5 font-bold">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> <span>إنشاء نسخة</span>
+                    </button>
+                    <button onclick="restoreFromCloud()" class="py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl text-xs flex items-center justify-center gap-1.5 font-bold transition">
+                        <i class="fa-solid fa-cloud-arrow-down"></i> <span>استعادة النسخة</span>
+                    </button>
+                </div>
             </div>
-            <p class="text-xs text-slate-400 leading-relaxed">
-                اضغط هنا لحفظ نسخة احتياطية من كل بياناتك (الاسم، المصاريف، الديون، والإيداعات) على السحابة الآن.
-            </p>
-            <button onclick="handleSyncClick()" class="w-full py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 font-bold">
-                <i class="fa-solid fa-rotate"></i> <span>مزامنة وحفظ النسخة الاحتياطية الآن</span>
-            </button>
-        </div>
                         <div class="space-y-4">
                             <div class="flex items-center gap-4 bg-slate-950/60 p-3.5 rounded-2xl border border-white/5">
                                 <img id="settingsAvatarPreview" src="https://placehold.co/150x150/1e1435/facc15?text=رؤوف" alt="معاينة" class="avatar-img shadow-md shrink-0 cursor-pointer" onclick="openImageViewer(this.src)" title="اضغط لتكبير الصورة">
@@ -1461,80 +1464,111 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // دالة رفع البيانات الحالية للسحابة بضمان كامل
-    window.syncDataToCloud = async function() {
-        const uid = localStorage.getItem('user_uid');
-        if (!uid) {
-            showToast('يجب تسجيل الدخول بحساب جوجل أولاً للمزامنة');
-            return;
-        }
-        try {
-            const currentData = JSON.parse(localStorage.getItem('luxury_gold_expense_data'));
-            // حفظ الملف الخاص بهذا المستخدم فقط بناءً على الـ UID الخاص به
-            await setDoc(doc(db, "users_data", uid), currentData, { merge: true });
-            showToast('تم رفع وحفظ ملفك الشخصي في السحابة بنجاح! ☁️');
-        } catch (e) {
-            console.error("خطأ في الرفع: ", e);
-            showToast('حدث خطأ أثناء الرفع للسحابة');
-        }
-    };
-
-    // دالة جلب البيانات من ملف المستخدم السحابي بحذر شديد
-    async function fetchCloudDataSafe() {
-        const uid = localStorage.getItem('user_uid');
-        if (!uid) return;
-        
-        try {
-            const docRef = doc(db, "users_data", uid);
-            const docSnap = await getDoc(docRef);
-            
-            const localData = JSON.parse(localStorage.getItem('luxury_gold_expense_data')) || {};
-            const localItemsCount = (localData.items || []).length;
-
-            if (docSnap.exists()) {
-                const cloudData = docSnap.data();
-                const cloudItemsCount = (cloudData.items || []).length;
-
-                // لو السحابة فيها بيانات (عناصر أو ميزانية) والمحلي فاضي أو أقل، نأخذ السحابة
-                // أو لو الموبايل هو اللي فيه بيانات جديدة، نسيب المحلي ورفعه
-                if (cloudItemsCount > 0 && localItemsCount === 0) {
-                    appData = cloudData;
-                    if (!appData.salaryHistory) appData.salaryHistory = [];
-                    if (!appData.debts) appData.debts = [];
-                    if (!appData.archivedMonths) appData.archivedMonths = {};
-
-                    localStorage.setItem('luxury_gold_expense_data', JSON.stringify(appData));
-                    updateHeaderAndFooter();
-                    renderHomeItems();
-                    renderAdminItems();
-                    renderHistoryPageOptions();
-                    showToast('تم جلب بياناتك السحابية بنجاح');
-                } else if (localItemsCount > 0 && cloudItemsCount === 0) {
-                    // لو السحابة فاضية والمحلي مليان، نرفع المحلي فوراً للسحابة عشان ميتضيعش
-                    await window.syncDataToCloud();
-                }
-            } else {
-                // لو مفيش ملف خالص للمستخدم ده على السحابة، ننشئ له ملف جديد فوراً ببياناته الحالية
-                await window.syncDataToCloud();
-            }
-        } catch (e) {
-            console.error("خطأ في الجلب: ", e);
-        }
-    }
-
-    // زر المزامنة اليدوي
-    window.handleSyncClick = async function() {
+    // 1. إنشاء نسخة احتياطية (مثل الواتساب)
+    window.backupToCloud = async function() {
         const uid = localStorage.getItem('user_uid');
         if (!uid) {
             showToast('برجاء تسجيل الدخول بحساب جوجل أولاً');
             setTimeout(() => { window.location.href = 'login.html'; }, 1200);
             return;
         }
-        await window.syncDataToCloud();
+
+        showToast('جارٍ رفع وإنشاء نسخة احتياطية…');
+        try {
+            const currentData = JSON.parse(localStorage.getItem('luxury_gold_expense_data')) || {};
+            const nowString = new Date().toLocaleString('ar-EG', {
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit'
+            });
+
+            // نضيف تاريخ النسخة الاحتياطية جوه البيانات
+            currentData.lastBackupTime = nowString;
+            localStorage.setItem('luxury_gold_expense_data', JSON.stringify(currentData));
+
+            // رفع الملف الخاص بالمستخدم للسحابة
+            await setDoc(doc(db, "users_data", uid), currentData);
+            
+            updateBackupStatusUI(nowString);
+            showToast('تم إنشاء نسخة احتياطية بنجاح! ☁️');
+        } catch (e) {
+            console.error(e);
+            showToast('فشل إنشاء النسخة الاحتياطية، تحقق من الإنترنت');
+        }
     };
 
+    // 2. استعادة النسخة الاحتياطية (مثل الواتساب)
+    window.restoreFromCloud = async function() {
+        const uid = localStorage.getItem('user_uid');
+        if (!uid) {
+            showToast('برجاء تسجيل الدخول بحساب جوجل أولاً');
+            setTimeout(() => { window.location.href = 'login.html'; }, 1200);
+            return;
+        }
+
+        if (!confirm('هل أنت متأكد من استعادة النسخة الاحتياطية؟ سيتم استبدال البيانات الحالية بآخر نسخة محفوظة على السحابة.')) {
+            return;
+        }
+
+        showToast('جارٍ جلب واستعادة النسخة الاحتياطية…');
+        try {
+            const docRef = doc(db, "users_data", uid);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const cloudData = docSnap.data();
+                
+                appData = cloudData;
+                if (!appData.salaryHistory) appData.salaryHistory = [];
+                if (!appData.debts) appData.debts = [];
+                if (!appData.archivedMonths) appData.archivedMonths = {};
+
+                localStorage.setItem('luxury_gold_expense_data', JSON.stringify(appData));
+                
+                // تحديث الواجهة بالكامل بالأرقام والبيانات المستعادة
+                updateHeaderAndFooter();
+                renderHomeItems();
+                renderAdminItems();
+                renderHistoryPageOptions();
+                
+                updateBackupStatusUI(cloudData.lastBackupTime || 'غير معروف');
+                showToast('تمت استعادة النسخة الاحتياطية بنجاح! 🎉');
+            } else {
+                showToast('لا توجد نسخة احتياطية سابقة لهذا الحساب');
+            }
+        } catch (e) {
+            console.error(e);
+            showToast('حدث خطأ أثناء استعادة النسخة');
+        }
+    };
+
+    // تحديث النص الظاهر لتاريخ آخر نسخة في الواجهة
+    function updateBackupStatusUI(timeStr) {
+        const infoEl = document.getElementById('backupInfoText');
+        if (infoEl) {
+            infoEl.innerText = `آخر نسخة احتياطية: ${timeStr}`;
+        }
+    }
+
+    // فحص تاريخ آخر نسخة عند فتح التطبيق
+    async function checkCloudBackupInfo() {
+        const uid = localStorage.getItem('user_uid');
+        if (!uid) return;
+        try {
+            const docRef = doc(db, "users_data", uid);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                if (data.lastBackupTime) {
+                    updateBackupStatusUI(data.lastBackupTime);
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
-        fetchCloudDataSafe();
+        checkCloudBackupInfo();
     });
 </script>
 </body>
