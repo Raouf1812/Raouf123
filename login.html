@@ -242,7 +242,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import {
-        getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut
+        getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
@@ -262,49 +262,56 @@
     const btn = document.getElementById('loginBtn');
     const label = document.getElementById('btnLabel');
     const statusEl = document.getElementById('status');
+    const defaultLabelText = label.textContent;
 
-    function setLoading(on, text = 'جارٍ توجيهك لصفحة تسجيل جوجل…') {
+    function setLoading(on, text = 'جارٍ فتح نافذة جوجل…') {
+        if (!btn) return;
         btn.disabled = on;
         btn.setAttribute('aria-busy', on ? 'true' : 'false');
         label.textContent = text;
     }
 
     function showStatus(msg, type) {
+        if (!statusEl) return;
         statusEl.textContent = msg;
         statusEl.className = 'status rounded-2xl px-4 py-3 text-sm font-semibold text-center ' + (type === 'ok'
             ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/30'
             : 'bg-red-500/10 text-red-300 border border-red-500/30');
     }
 
-    // ربط النقر بالزر مباشرة من داخل السكربت
+    // زر تسجيل الدخول باستخدام النافذة المنبثقة (يعطي نتيجة فورية مقبول/مرفوض)
     if (btn) {
         btn.addEventListener('click', async () => {
-            setLoading(true);
+            setLoading(true, 'جاري تسجيل الدخول…');
             statusEl.className = 'status hidden-s';
             try {
-                await signInWithRedirect(auth, provider);
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                
+                localStorage.setItem('user_uid', user.uid);
+                localStorage.setItem('user_email', user.email || '');
+                
+                showStatus('تم تسجيل الدخول بنجاح! جاري تحويلك…', 'ok');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1000);
             } catch (error) {
+                console.error("Login Error: ", error.code, error.message);
                 setLoading(false);
-                showStatus('تعذّر تسجيل الدخول. تأكد من اتصال النت وحاول مرة أخرى.', 'err');
+                label.textContent = defaultLabelText;
+                
+                let errMsg = 'تعذّر تسجيل الدخول. حاول مرة أخرى.';
+                if (error.code === 'auth/popup-closed-by-user') {
+                    errMsg = 'تم إغلاق نافذة تسجيل الدخول قبل الإكمال.';
+                } else if (error.code === 'auth/unauthorized-domain') {
+                    errMsg = 'خطأ: هذا النطاق غير مسموح به في إعدادات Firebase.';
+                }
+                showStatus(errMsg, 'err');
             }
         });
     }
 
-    // التثبت من استكمال عملية التسجيل بعد العودة من موقع جوجل
-    getRedirectResult(auth).then((result) => {
-        if (result && result.user) {
-            setLoading(true, 'تم تسجيل الدخول، جارٍ تحويلك…');
-            localStorage.setItem('user_uid', result.user.uid);
-            localStorage.setItem('user_email', result.user.email || '');
-            showStatus('تم تسجيل الدخول بنجاح!', 'ok');
-            setTimeout(() => { window.location.href = 'index.html'; }, 800);
-        }
-    }).catch((error) => {
-        console.error("Redirect Error: ", error);
-        showStatus('تعذر إكمال تسجيل الدخول. حاول مرة أخرى.', 'err');
-    });
-
-    // متابعة حالة المستخدم الحالية
+    // متابعة حالة المستخدم إذا كان مسجلاً من قبل
     onAuthStateChanged(auth, (user) => {
         if (user) {
             localStorage.setItem('user_uid', user.uid);
@@ -312,7 +319,6 @@
             showStatus(`أنت مسجل حالياً بحساب: ${user.email}`, 'ok');
             label.textContent = "العودة للتطبيق الرئيسي";
             
-            // عند ضغط الزر والمستخدم مسجل ينقله مباشرة للرئيسية
             btn.onclick = (e) => {
                 e.stopPropagation();
                 window.location.href = 'index.html';
