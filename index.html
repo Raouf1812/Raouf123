@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>تطبيق إدارة المصاريف الشخصية</title>
+    <title>تطبيق إدارة المصاريف الشخصيه</title>
     
-    <meta name="theme-color" content="#05070d">
+    <meta name="theme-color" content="#030712">
     <meta name="color-scheme" content="dark">
 
     <!-- Tailwind CSS CDN -->
@@ -16,721 +16,502 @@
             theme: {
                 extend: {
                     colors: {
-                        /* Ivory replaces pure white for a softer, more luxurious text tone */
-                        white: '#f7f2e6',
-                        /* Amber is re-mapped to a refined, metallic antique gold */
+                        white: '#f8fafc',
                         amber: {
-                            50:  '#fbf6e3',
-                            100: '#f6ecc4',
-                            200: '#efdf9f',
-                            300: '#e8d283',
-                            400: '#d8b84f',
-                            500: '#c9a227',
-                            600: '#a4811a',
-                            700: '#7d6214',
-                            800: '#5a4510',
-                            900: '#3a2c0a'
+                            50: '#fefce8', 100: '#fef9c3', 200: '#fef08a', 300: '#fde047',
+                            400: '#facc15', 500: '#eab308', 600: '#ca8a04', 700: '#a16207',
+                            800: '#854d0e', 900: '#713f12', 950: '#422006'
                         },
-                        /* Slate is re-mapped to cool navy-tinted greys */
                         slate: {
-                            50:  '#f4f1e8',
-                            100: '#ece8dc',
-                            200: '#dcdde4',
-                            300: '#b9c0d6',
-                            400: '#8f9bbd',
-                            500: '#66749c',
-                            600: '#46527a',
-                            700: '#2a3558',
-                            800: '#141e40',
-                            900: '#0a1330',
-                            950: '#050a1c'
-                        },
-                        rose: {
-                            400: '#e58a98',
-                            500: '#c4455e',
-                            300: '#f0a9b3'
-                        },
-                        brand: {
-                            50: '#fbf7ee',
-                            100: '#f1dc94',
-                            400: '#d8b84f',
-                            500: '#c9a227',
-                            600: '#a4811a',
-                            900: '#0a1330'
-                        },
-                        /* Deep navy / midnight scale (class names kept so markup is untouched) */
-                        violetTheme: {
-                            800: '#101d47',
-                            900: '#0a1330',
-                            950: '#050a1c'
+                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1',
+                            400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155',
+                            800: '#1e293b', 900: '#0f172a', 950: '#030712'
                         }
                     },
                     fontFamily: {
-                        sans: ['"IBM Plex Sans Arabic"', 'Tajawal', 'system-ui', 'sans-serif'],
-                        display: ['"El Messiri"', '"IBM Plex Sans Arabic"', 'serif']
+                        sans: ['"Cairo"', 'system-ui', 'sans-serif'],
+                        display: ['"Cairo"', 'serif']
                     }
                 }
             }
         }
     </script>
 
-    <!-- FontAwesome for Icons -->
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Google Fonts: El Messiri (elegant display) + IBM Plex Sans Arabic (smooth body) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        /* =====================================================
-           DESIGN TOKENS
-           Black · Midnight navy · Royal blue · Gold · Ivory
-        ===================================================== */
+        
+        body, button, input, select, textarea { font-family: 'Cairo', system-ui, sans-serif !important; } h2, h3, h4 { font-family: 'Cairo', sans-serif; }
+        
         :root {
-            --black:        #04060d;
-            --navy-950:     #050a1c;
-            --navy-900:     #0a1330;
-            --navy-800:     #101d47;
-            --royal:        #25459b;
-            --royal-soft:   #3a5fc0;
-            --gold-100:     #fff3c4;
-            --gold-200:     #f1dc94;
-            --gold-400:     #d4af37;
-            --gold-600:     #a8841a;
-            --gold-800:     #5a4510;
-            --ivory:        #f7f2e6;
-            --ivory-soft:   #cfd3e2;
-
-            --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-smooth:  cubic-bezier(0.4, 0, 0.2, 1);
-
-            --gold-metal: linear-gradient(135deg, #f6e7a8 0%, #dcbc52 34%, #b8901f 68%, #e8cd7a 100%);
-            --gold-text:  linear-gradient(120deg, #fff3c4 0%, #f1dc94 22%, #d4af37 52%, #b08a1e 78%, #ecd488 100%);
+            --bg-obsidian: #030712;
+            --gold-gradient: linear-gradient(135deg, #fef08a 0%, #eab308 50%, #ca8a04 100%);
+            --gold-text-gradient: linear-gradient(120deg, #fffbeb 0%, #fef08a 30%, #d4af37 70%, #facc15 100%);
+            --glass-bg: linear-gradient(145deg, rgba(15, 23, 42, 0.75) 0%, rgba(3, 7, 18, 0.85) 100%);
+            --glass-border: rgba(212, 175, 55, 0.18);
         }
 
-        html {
-            font-size: 105%;
-            scroll-behavior: smooth;
-            -webkit-text-size-adjust: 100%;
+        html { font-size: 105%; scroll-behavior: smooth; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            color: #f8fafc;
+            min-height: 100vh;
+            background-color: var(--bg-obsidian);
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(202, 138, 4, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(30, 41, 59, 0.5) 0%, transparent 50%),
+                linear-gradient(180deg, #030712 0%, #020617 100%);
+            background-attachment: fixed;
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            padding-bottom: 75px;
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+        h2, h3, h4 { font-family: 'El Messiri', serif; }
+
+        .gold-text {
+            background: var(--gold-text-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        body, button, input, select, textarea {
-            font-family: 'IBM Plex Sans Arabic', 'Tajawal', system-ui, sans-serif;
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-header {
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+        }
+
+        .gold-btn {
+            background: var(--gold-gradient);
+            color: #030712 !important;
+            font-weight: 700;
+            box-shadow: 0 10px 25px -5px rgba(234, 179, 8, 0.35);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .gold-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -5px rgba(234, 179, 8, 0.5);
+            filter: brightness(1.05);
+        }
+
+        .bottom-nav {
+            background: rgba(3, 7, 18, 0.92);
+            backdrop-filter: blur(25px);
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
+        }
+        .nav-item {
+            color: #94a3b8;
+            transition: all 0.3s ease;
+        }
+        .nav-item.active {
+            color: #facc15;
+            background: rgba(234, 179, 8, 0.1);
+            border-radius: 1rem;
+        }
+
+        input, select {
+            background: rgba(15, 23, 42, 0.9) !important;
+            border: 1px solid rgba(212, 175, 55, 0.2) !important;
+            color: #f8fafc !important;
+            border-radius: 0.9rem !important;
+            transition: all 0.3s ease;
+        }
+        input:focus, select:focus {
+            border-color: #facc15 !important;
+            box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.15);
+            outline: none;
+        }
+
+        .avatar-img {
+            width: 50px; height: 50px; object-fit: cover; border-radius: 14px;
+            border: 2px solid #facc15; box-shadow: 0 5px 15px rgba(234, 179, 8, 0.3);
+        }
+        .item-img {
+            width: 52px; height: 52px; object-fit: cover; border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #030712; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d4af37; }
+
+        /* =====================================================================
+           طبقة الواجهة المتقدمة (تنسيق بصري فقط - بدون أي تعديل في الكود البرمجي)
+           ===================================================================== */
+        :root {
+            --ink: #06080d;
+            --surface-1: #0b0f17;
+            --surface-2: #101622;
+            --surface-3: #161e2e;
+            --line: rgba(255, 255, 255, 0.07);
+            --line-gold: rgba(227, 179, 65, 0.24);
+            --gold: #e3b341;
+            --gold-soft: #f3d98b;
+            --champagne: #fff4d6;
+            --income: #34d399;
+            --debt: #fb7185;
+            --r-lg: 22px;
+            --r-md: 16px;
+            --r-sm: 12px;
         }
 
         body {
-            color: var(--ivory);
-            min-height: 100vh;
-            background-color: var(--black);
             background-image:
-                radial-gradient(ellipse 80% 50% at 88% -8%,  rgba(37, 69, 155, 0.40), transparent 62%),
-                radial-gradient(ellipse 60% 45% at 0% 0%,    rgba(16, 29, 71, 0.65), transparent 62%),
-                radial-gradient(ellipse 70% 50% at 4% 106%,  rgba(212, 175, 55, 0.14), transparent 62%),
-                radial-gradient(ellipse 50% 40% at 100% 100%, rgba(37, 69, 155, 0.18), transparent 62%),
-                linear-gradient(180deg, #060917 0%, #04060d 100%);
-            background-attachment: fixed;
+                radial-gradient(900px 520px at 88% -6%, rgba(227, 179, 65, 0.11), transparent 60%),
+                radial-gradient(700px 500px at 0% 100%, rgba(52, 211, 153, 0.05), transparent 60%),
+                linear-gradient(180deg, #07090f 0%, #05070b 100%);
+            padding-bottom: calc(112px + env(safe-area-inset-bottom, 0px));
+            font-variant-numeric: tabular-nums;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
-            line-height: 1.65;
         }
-
-        /* Fine film grain for a tactile, realistic surface */
+        /* شبكة دقيقة توحي بدفتر الحسابات */
         body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.07;
-            mix-blend-mode: overlay;
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+            content: "";
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+            background-size: 44px 44px;
+            -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 72%);
+                    mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 72%);
         }
 
-        ::selection { background: rgba(212, 175, 55, 0.85); color: #0a1330; }
-
-        /* ---------- Typography ---------- */
-        h2, h3, h4 {
-            font-family: 'El Messiri', 'IBM Plex Sans Arabic', serif;
-            font-weight: 700;
-            letter-spacing: 0 !important;
-            line-height: 1.4;
-        }
-        h3 { font-size: 1.05rem; }
-        .tracking-wide { letter-spacing: 0 !important; }   /* Arabic letters must stay joined */
-
-        .text-\[10px\] { font-size: 11px !important; }
-        .text-\[11px\] { font-size: 12px !important; }
-
-        #liveClock {
-            font-family: 'El Messiri', serif;
-            font-size: 1.2rem !important;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            font-variant-numeric: tabular-nums;
-            color: var(--ivory);
-        }
-        #liveDate { color: var(--gold-200) !important; font-weight: 500 !important; opacity: 0.9; }
-
-        #headerTotalExpense, #monthTotalExpense, #todayTotalExpense, #historyMonthTotal {
-            font-family: 'El Messiri', serif;
-            font-variant-numeric: tabular-nums;
-            font-weight: 700;
-        }
-        #monthTotalExpense, #historyMonthTotal { font-size: 1.05rem !important; }
-        #todayTotalExpense { color: var(--gold-200) !important; font-size: 1rem !important; }
-
-        /* ---------- Metallic gold text ---------- */
-        .gold-gradient-text {
-            background: var(--gold-text);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            padding-block: 0.1em;
-            filter: drop-shadow(0 1px 8px rgba(212, 175, 55, 0.25));
-        }
-
-        /* ---------- Header / Footer ---------- */
+        /* ---------- الترويسة ---------- */
         .glass-header {
-            background: linear-gradient(180deg, rgba(3, 5, 12, 0.94) 0%, rgba(8, 14, 36, 0.86) 100%);
-            backdrop-filter: blur(22px) saturate(150%);
-            -webkit-backdrop-filter: blur(22px) saturate(150%);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.18);
-            box-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.9);
+            background: linear-gradient(180deg, rgba(8, 11, 18, 0.94), rgba(8, 11, 18, 0.80));
+            backdrop-filter: blur(18px) saturate(140%);
+            -webkit-backdrop-filter: blur(18px) saturate(140%);
+            border-bottom: 1px solid var(--line);
         }
-        header.glass-header { position: sticky; }
-        header.glass-header::after {
-            content: '';
-            position: absolute;
-            inset: auto 0 -1px 0;
-            height: 1px;
-            pointer-events: none;
-            background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.9) 50%, transparent 100%);
-            opacity: 0.75;
+        .glass-header::after {
+            content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(227, 179, 65, 0.6), transparent);
         }
-        footer.glass-header {
-            border-bottom: 0;
-            border-top: 1px solid rgba(212, 175, 55, 0.22) !important;
-            box-shadow: 0 -14px 34px -18px rgba(0, 0, 0, 0.9);
-            color: #8f9bbd;
+        .glass-header > div { padding-top: 0.8rem; padding-bottom: 0.8rem; }
+
+        .avatar-img {
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background:
+                linear-gradient(var(--surface-1), var(--surface-1)) padding-box,
+                conic-gradient(from 210deg, #f3d98b, #b8860b, #f3d98b, #8a6a14, #f3d98b) border-box;
+            box-shadow: 0 6px 18px -4px rgba(227, 179, 65, 0.35);
+        }
+        #headerUserName { font-size: 0.95rem; letter-spacing: 0; }
+        #headerTotalExpense {
+            font-size: 1.05rem !important;
+            padding: 2px 12px;
+            border-radius: 999px;
+            background: rgba(227, 179, 65, 0.09);
+            border: 1px solid rgba(227, 179, 65, 0.28);
+            color: #facc15 !important;
+            line-height: 1.7;
         }
 
-        /* ---------- Glass panels ---------- */
+        /* ---------- اللوحات ---------- */
         .glass-panel {
+            background: linear-gradient(180deg, rgba(22, 30, 46, 0.70) 0%, rgba(11, 15, 23, 0.86) 100%);
+            border: 1px solid var(--line);
+            border-radius: var(--r-lg) !important;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 28px 50px -30px rgba(0,0,0,0.95);
             position: relative;
-            background: linear-gradient(160deg, rgba(20, 34, 82, 0.74) 0%, rgba(8, 14, 38, 0.86) 100%);
-            backdrop-filter: blur(22px) saturate(140%);
-            -webkit-backdrop-filter: blur(22px) saturate(140%);
-            border: 1px solid rgba(212, 175, 55, 0.22) !important;
-            box-shadow:
-                0 28px 50px -24px rgba(0, 0, 0, 0.85),
-                0 0 0 1px rgba(0, 0, 0, 0.45),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
         .glass-panel::before {
-            content: '';
-            position: absolute;
-            inset: 0 1.5rem auto 1.5rem;
-            height: 1px;
+            content: ""; position: absolute; top: 0; right: 8%; left: 8%; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(227,179,65,0.35), transparent);
             pointer-events: none;
-            background: linear-gradient(90deg, transparent, rgba(241, 220, 148, 0.75), transparent);
         }
+        .glass-panel h3 { font-size: 0.98rem; font-weight: 800; }
+        .glass-panel .border-b { border-color: var(--line) !important; }
 
-        .glass-panel-glow {
-            background: rgba(16, 29, 71, 0.8);
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            border: 1px solid rgba(212, 175, 55, 0.35);
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.14);
-        }
-
-        /* Hairline separators tinted gold */
-        .border-white\/10 { border-color: rgba(212, 175, 55, 0.16) !important; }
-        .border-white\/5  { border-color: rgba(212, 175, 55, 0.10) !important; }
-        .flex-grow.h-px {
-            background: linear-gradient(to left, rgba(212, 175, 55, 0.5), transparent) !important;
-        }
-        .w-px {
-            background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.6), transparent) !important;
-        }
-
-        /* Recessed navy wells (summary + avatar boxes) */
-        .bg-violetTheme-950\/60 {
-            background: linear-gradient(180deg, rgba(2, 4, 12, 0.75), rgba(8, 14, 38, 0.6)) !important;
-            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.55), 0 1px 0 rgba(255, 255, 255, 0.03);
-        }
-
-        /* Gold icon tiles */
-        div.bg-amber-500\/10 {
-            background: linear-gradient(145deg, rgba(212, 175, 55, 0.24), rgba(212, 175, 55, 0.05)) !important;
-            border-color: rgba(212, 175, 55, 0.4) !important;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 8px 16px -10px rgba(212, 175, 55, 0.6);
-        }
-        .glass-panel .fa-solid.text-amber-400, .glass-panel .fa-regular.text-amber-400 {
-            filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.45));
-        }
-
-        /* Item-count badge */
-        #homeItemsBadge {
-            background: linear-gradient(180deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.06)) !important;
-            border-color: rgba(212, 175, 55, 0.45) !important;
-            color: var(--gold-200) !important;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        /* ---------- Avatars & thumbnails (sizes preserved) ---------- */
-        .avatar-img-fixed {
-            width: 52px !important;
-            height: 52px !important;
-            min-width: 52px !important;
-            min-height: 52px !important;
-            max-width: 52px !important;
-            max-height: 52px !important;
-            object-fit: cover !important;
-            border-radius: 16px;
-            border-color: transparent !important;
-            box-shadow:
-                0 0 0 2px #060b1f,
-                0 0 0 3.5px rgba(212, 175, 55, 0.9),
-                0 8px 20px -4px rgba(0, 0, 0, 0.7),
-                0 0 18px rgba(212, 175, 55, 0.22);
-        }
-
-        .avatar-img-lg {
-            width: 72px !important;
-            height: 72px !important;
-            min-width: 72px !important;
-            min-height: 72px !important;
-            max-width: 72px !important;
-            max-height: 72px !important;
-            object-fit: cover !important;
-            border-radius: 20px;
-            border-color: transparent !important;
-            box-shadow:
-                0 0 0 2px #060b1f,
-                0 0 0 3.5px rgba(212, 175, 55, 0.9),
-                0 10px 24px -6px rgba(0, 0, 0, 0.75);
-        }
-
-        .item-img-fixed {
-            width: 56px !important;
-            height: 56px !important;
-            min-width: 56px !important;
-            min-height: 56px !important;
-            max-width: 56px !important;
-            max-height: 56px !important;
-            object-fit: cover !important;
-            border-radius: 14px;
-            border-color: transparent !important;
-            box-shadow:
-                0 0 0 1.5px #060b1f,
-                0 0 0 2.5px rgba(212, 175, 55, 0.5),
-                0 8px 16px -6px rgba(0, 0, 0, 0.8);
-        }
-
-        @media (min-width: 640px) {
-            .item-img-fixed {
-                width: 64px !important;
-                height: 64px !important;
-                min-width: 64px !important;
-                min-height: 64px !important;
-                max-width: 64px !important;
-                max-height: 64px !important;
-            }
-        }
-
-        .border-\[\#0a0614\] { border-color: #04060d !important; }
-        .bg-emerald-500 { background: #2fb37a; box-shadow: 0 0 10px rgba(47, 179, 122, 0.7); }
-
-        /* ---------- Expense cards (home / admin / history) ---------- */
-        #homeItemsList > div.rounded-2xl,
-        #adminItemsList > div.rounded-2xl,
-        #historyItemsList > div.rounded-2xl {
-            background: linear-gradient(135deg, rgba(22, 38, 90, 0.62) 0%, rgba(6, 11, 32, 0.9) 100%) !important;
-            border: 1px solid rgba(212, 175, 55, 0.18) !important;
-            box-shadow:
-                0 14px 26px -16px rgba(0, 0, 0, 0.95),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            transition: transform 0.4s var(--ease-out), border-color 0.3s var(--ease-smooth),
-                        box-shadow 0.4s var(--ease-smooth), background 0.4s var(--ease-smooth);
-            animation: itemRise 0.55s var(--ease-out) backwards;
-        }
-        #homeItemsList > div.rounded-2xl:nth-child(2) { animation-delay: .03s; }
-        #homeItemsList > div.rounded-2xl:nth-child(3) { animation-delay: .06s; }
-        #homeItemsList > div.rounded-2xl:nth-child(4) { animation-delay: .09s; }
-        #homeItemsList > div.rounded-2xl:nth-child(5) { animation-delay: .12s; }
-        #homeItemsList > div.rounded-2xl:nth-child(6) { animation-delay: .15s; }
-        #homeItemsList > div.rounded-2xl:nth-child(n+7) { animation-delay: .18s; }
-
-        @media (hover: hover) {
-            #homeItemsList > div.rounded-2xl:hover,
-            #adminItemsList > div.rounded-2xl:hover,
-            #historyItemsList > div.rounded-2xl:hover {
-                transform: translateY(-2px);
-                border-color: rgba(232, 210, 131, 0.55) !important;
-                background: linear-gradient(135deg, rgba(30, 52, 120, 0.7) 0%, rgba(8, 14, 40, 0.92) 100%) !important;
-                box-shadow:
-                    0 20px 34px -16px rgba(0, 0, 0, 0.95),
-                    0 0 24px -6px rgba(212, 175, 55, 0.35),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            }
-        }
-
-        #homeItemsList h4, #adminItemsList h4, #historyItemsList h4 {
-            color: var(--ivory);
-            font-size: 0.95rem;
-        }
-        #homeItemsList strong.text-amber-400,
-        #adminItemsList strong.text-amber-400 { color: var(--gold-200); }
-        #homeItemsList .text-amber-400.font-black,
-        #historyItemsList .text-amber-400.font-black {
-            font-family: 'El Messiri', serif;
-            font-size: 1.02rem !important;
-            font-variant-numeric: tabular-nums;
-            color: var(--gold-200);
-            text-shadow: 0 0 14px rgba(212, 175, 55, 0.3);
-        }
-
-        /* Date chip above each group */
-        #homeItemsList span.rounded-xl {
-            background: linear-gradient(180deg, rgba(212, 175, 55, 0.22), rgba(212, 175, 55, 0.07)) !important;
-            border-color: rgba(212, 175, 55, 0.45) !important;
-            color: var(--gold-200) !important;
-            font-family: 'El Messiri', serif;
-            letter-spacing: 0.04em;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 6px 14px -8px rgba(0, 0, 0, 0.8);
-        }
-
-        /* ---------- Buttons ---------- */
-        button { transition: all 0.3s var(--ease-smooth); }
-        button:active { transform: scale(0.97); }
-
-        .gold-btn {
-            position: relative;
+        /* لوحة الرئيسية العلوية (الساعة + الملخص) */
+        #homePage > .glass-panel:first-child {
+            background:
+                radial-gradient(520px 200px at 100% 0%, rgba(227,179,65,0.14), transparent 70%),
+                linear-gradient(180deg, rgba(22,30,46,0.72), rgba(11,15,23,0.9));
+            border-color: var(--line-gold);
             overflow: hidden;
-            background: var(--gold-metal);
-            color: #0a1330 !important;
-            font-weight: 700;
-            border: 1px solid rgba(255, 238, 170, 0.55);
-            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
-            box-shadow:
-                0 8px 20px -6px rgba(201, 162, 39, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.6),
-                inset 0 -2px 0 rgba(90, 64, 6, 0.35);
-            transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-smooth), filter 0.3s;
         }
-        .gold-btn::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            background: linear-gradient(110deg, transparent 38%, rgba(255, 255, 255, 0.6) 50%, transparent 62%);
-            transform: translateX(-130%);
-            transition: transform 0.9s var(--ease-out);
+        #liveClock {
+            font-size: 1.85rem !important; font-weight: 800 !important; line-height: 1.15;
+            letter-spacing: 0.02em; direction: ltr; display: inline-block;
         }
-        .gold-btn:active { transform: scale(0.97); }
+        #liveDate { font-size: 0.8rem !important; color: var(--gold-soft) !important; }
+        #homePage > .glass-panel:first-child > div:last-child {
+            background: rgba(6, 8, 13, 0.6) !important;
+            border: 1px solid var(--line) !important;
+            border-radius: var(--r-md) !important;
+            padding: 0.9rem 1.1rem !important;
+            gap: 1.25rem !important;
+        }
+        #todayTotalExpense, #monthTotalExpense { font-size: 1.05rem !important; }
 
-        @media (hover: hover) {
-            .gold-btn:hover {
-                transform: translateY(-2px);
-                filter: brightness(1.06);
-                box-shadow:
-                    0 14px 30px -8px rgba(212, 175, 55, 0.65),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.7),
-                    inset 0 -2px 0 rgba(90, 64, 6, 0.35);
-            }
-            .gold-btn:hover::after { transform: translateX(130%); }
+        /* ---------- بطاقات العناصر (مصاريف / ديون / سجلات) ---------- */
+        [class*="bg-slate-900/80"] {
+            background: linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 100%) !important;
+            border: 1px solid var(--line) !important;
+            border-radius: var(--r-md) !important;
+            position: relative; overflow: hidden;
+            box-shadow: 0 10px 22px -16px rgba(0,0,0,0.9);
+            padding: 0.85rem 1rem !important;
+            transition: border-color .25s ease, background .25s ease;
         }
+        [class*="bg-slate-900/80"]::before {
+            content: ""; position: absolute; top: 16%; bottom: 16%; right: 0; width: 3px;
+            background: linear-gradient(180deg, var(--gold-soft), #b8860b);
+            border-radius: 3px 0 0 3px; opacity: .85;
+        }
+        [class*="bg-slate-900/80"]:hover { border-color: rgba(227,179,65,0.38) !important; }
+        [class*="bg-slate-900/80"] h4 { font-size: 0.9rem; font-weight: 800; }
+        [class*="bg-slate-900/80"] .text-amber-400.font-black { color: var(--gold-soft); font-size: 0.98rem; }
+        [class*="bg-slate-900/80"] .text-emerald-400.font-black { font-size: 0.98rem; }
 
-        #menuBtn {
-            background: linear-gradient(180deg, rgba(37, 69, 155, 0.5), rgba(10, 19, 48, 0.85)) !important;
-            border: 1px solid rgba(212, 175, 55, 0.4) !important;
-            color: var(--gold-200) !important;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 18px -10px rgba(0, 0, 0, 0.9);
-        }
-        @media (hover: hover) {
-            #menuBtn:hover {
-                border-color: rgba(241, 220, 148, 0.8) !important;
-                box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 0 22px -4px rgba(212, 175, 55, 0.5);
-            }
+        .item-img {
+            border-radius: 14px; border: 1px solid var(--line);
+            background: var(--surface-1);
+            box-shadow: 0 6px 14px -8px rgba(0,0,0,0.9);
         }
 
-        /* Secondary / danger / edit buttons: glassy finish */
-        button.bg-rose-500\/10 {
-            background: linear-gradient(180deg, rgba(196, 69, 94, 0.18), rgba(196, 69, 94, 0.06)) !important;
-            border-color: rgba(229, 138, 152, 0.35) !important;
-            color: #ee9aa7 !important;
-        }
-        button.bg-rose-500\/10:hover { background: #b83a52 !important; color: #fff !important; border-color: #b83a52 !important; }
-        button.bg-amber-500\/10:hover { color: #0a1330 !important; background: var(--gold-metal) !important; }
-        label.bg-amber-500\/10 {
-            background: linear-gradient(180deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.06)) !important;
-            color: var(--gold-200) !important;
-        }
-        #cancelEditBtn { color: #ee9aa7; }
-
-        /* ---------- Dropdown menu ---------- */
-        #dropdownMenu {
-            background: linear-gradient(180deg, rgba(16, 29, 71, 0.98), rgba(5, 9, 26, 0.98)) !important;
-            border: 1px solid rgba(212, 175, 55, 0.35) !important;
-            border-radius: 1.25rem;
-            padding: 0.4rem;
-            box-shadow: 0 28px 56px -14px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(0, 0, 0, 0.5),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.06);
-            transform-origin: top left;
-        }
-        #dropdownMenu:not(.hidden) { animation: menuIn 0.28s var(--ease-out); }
-        #dropdownMenu button {
-            border-radius: 0.8rem;
-            font-weight: 500;
-            color: var(--ivory-soft);
-        }
-        #dropdownMenu button:hover {
-            background: linear-gradient(270deg, rgba(212, 175, 55, 0.22), rgba(212, 175, 55, 0.02)) !important;
-            color: var(--gold-200) !important;
+        /* رأس التاريخ (فاصل يومي) */
+        #homeItemsList .rounded-xl.font-black {
+            background: rgba(227,179,65,0.08) !important;
+            border-radius: 999px !important;
         }
 
-        /* ---------- Form controls ---------- */
-        .glass-panel input:not([type="file"]):not([type="hidden"]),
-        .glass-panel select {
-            background: linear-gradient(180deg, rgba(2, 4, 14, 0.9), rgba(8, 14, 38, 0.85)) !important;
-            border: 1px solid rgba(212, 175, 55, 0.22) !important;
-            color: var(--ivory) !important;
-            border-radius: 0.85rem;
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255, 255, 255, 0.04);
-            transition: border-color 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth), background 0.3s;
+        /* شارة عدد العناصر */
+        #homeItemsBadge { background: rgba(227,179,65,0.10) !important; }
+
+        /* ---------- الحقول ---------- */
+        input, select {
+            background: var(--surface-1) !important;
+            border: 1px solid rgba(255,255,255,0.10) !important;
+            border-radius: 14px !important;
+            min-height: 46px;
+            padding-inline: 14px;
+            font-size: 0.84rem !important;
+            font-weight: 600;
             color-scheme: dark;
         }
-        .glass-panel select { color: var(--gold-200) !important; cursor: pointer; }
-        .glass-panel select option { background: #0a1330; color: var(--gold-200); }
-        .glass-panel input:not([type="file"]):not([type="hidden"]):focus,
-        .glass-panel select:focus {
-            border-color: rgba(232, 210, 131, 0.85) !important;
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6), 0 0 0 3px rgba(212, 175, 55, 0.18),
-                        0 0 22px -4px rgba(212, 175, 55, 0.35);
+        input::placeholder { color: #5b6678; font-weight: 400; }
+        input:focus, select:focus {
+            background: #0d121c !important;
+            border-color: var(--gold) !important;
+            box-shadow: 0 0 0 4px rgba(227,179,65,0.14);
         }
-        input::placeholder { color: rgba(143, 155, 189, 0.6) !important; }
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            cursor: pointer;
-            filter: invert(78%) sepia(45%) saturate(560%) hue-rotate(2deg) brightness(95%);
-            opacity: 0.85;
+        select {
+            -webkit-appearance: none; appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23e3b341' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: left 14px center !important;
+            background-size: 14px !important;
+            padding-left: 38px !important;
         }
-        label.block { color: var(--ivory-soft); font-weight: 600; }
+        label.block { font-weight: 700; color: #b6c0d0; letter-spacing: 0; }
 
-        /* Upload dropzone */
-        label.cursor-pointer.bg-violetTheme-950\/80 {
-            border-style: dashed !important;
-            border-color: rgba(212, 175, 55, 0.4) !important;
-            background: linear-gradient(180deg, rgba(212, 175, 55, 0.07), rgba(5, 10, 28, 0.8)) !important;
-            color: var(--gold-200) !important;
-            transition: all 0.3s var(--ease-smooth);
+        /* زر رفع الملفات */
+        label.cursor-pointer.bg-slate-900 {
+            background: rgba(227,179,65,0.04) !important;
+            border: 1.5px dashed rgba(227,179,65,0.38) !important;
+            border-radius: 14px !important;
+            min-height: 46px;
+            transition: background .25s ease, border-color .25s ease;
         }
-        label.cursor-pointer.bg-violetTheme-950\/80:hover {
-            border-color: rgba(241, 220, 148, 0.85) !important;
-            box-shadow: 0 0 22px -6px rgba(212, 175, 55, 0.45);
-        }
-
-        /* ---------- Toast ---------- */
-        body > div.fixed.bottom-5 {
-            background: var(--gold-metal) !important;
-            color: #0a1330 !important;
-            font-weight: 700;
-            font-size: 0.85rem !important;
-            padding: 0.7rem 1.4rem !important;
-            border-radius: 999px !important;
-            border: 1px solid rgba(255, 238, 170, 0.6);
-            box-shadow: 0 18px 40px -10px rgba(0, 0, 0, 0.85), 0 0 30px -4px rgba(212, 175, 55, 0.55),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.6);
-            white-space: nowrap;
-        }
-        body > div.fixed.bottom-5.animate-fade-in {
-            animation: toastIn 0.5s var(--ease-out) backwards;
+        label.cursor-pointer.bg-slate-900:hover {
+            background: rgba(227,179,65,0.09) !important;
+            border-color: var(--gold) !important;
         }
 
-        /* ---------- Scrollbars ---------- */
-        html { scrollbar-color: rgba(212, 175, 55, 0.5) #050a1c; }
-        ::-webkit-scrollbar { width: 9px; height: 9px; }
-        ::-webkit-scrollbar-track { background: #050a1c; }
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #d4af37, #8f6f17);
-            border-radius: 10px;
-            border: 2px solid #050a1c;
+        /* ---------- الأزرار ---------- */
+        .gold-btn {
+            background: linear-gradient(180deg, #f6dc8e 0%, #e3b341 55%, #c9961f 100%);
+            border-radius: 14px !important;
+            min-height: 44px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), 0 12px 26px -12px rgba(227,179,65,0.7);
+            position: relative; overflow: hidden;
         }
-        .custom-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(212, 175, 55, 0.5) transparent; }
-        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(5, 10, 28, 0.6); border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, rgba(232, 210, 131, 0.7), rgba(168, 132, 26, 0.6));
-            border-radius: 10px;
-            border: 0;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(241, 220, 148, 0.9); }
+        .gold-btn:active { transform: translateY(1px) scale(0.99); box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 6px 14px -8px rgba(227,179,65,0.6); }
+        button.bg-rose-500\/10, label.bg-amber-500\/10, button.bg-amber-500\/10 { border-radius: 12px !important; }
+        button, label.cursor-pointer { -webkit-user-select: none; user-select: none; }
 
-        /* ---------- Accessibility ---------- */
-        :focus-visible { outline: 2px solid rgba(232, 210, 131, 0.85); outline-offset: 2px; }
+        /* ---------- شريط التنقل السفلي (عائم) ---------- */
+        .bottom-nav {
+            left: 12px !important; right: 12px !important;
+            bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+            max-width: 520px; margin-inline: auto;
+            padding: 6px !important;
+            border-radius: 26px;
+            border: 1px solid var(--line-gold);
+            background: rgba(9, 13, 21, 0.84);
+            backdrop-filter: blur(22px) saturate(150%);
+            -webkit-backdrop-filter: blur(22px) saturate(150%);
+            box-shadow: 0 20px 44px -14px rgba(0,0,0,0.95), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .bottom-nav > div { max-width: none !important; gap: 4px !important; }
+        .nav-item {
+            position: relative; border-radius: 18px;
+            padding-top: 9px !important; padding-bottom: 8px !important;
+            color: #7d8aa0;
+        }
+        .nav-item i { font-size: 1.08rem !important; margin-bottom: 3px !important; transition: transform .25s ease; }
+        .nav-item span { font-size: 10px !important; font-weight: 700; }
+        .nav-item:hover { color: #cbd5e1; }
+        .nav-item.active {
+            color: var(--gold-soft);
+            background: linear-gradient(180deg, rgba(227,179,65,0.20), rgba(227,179,65,0.05));
+            box-shadow: inset 0 0 0 1px rgba(227,179,65,0.30), 0 8px 18px -10px rgba(227,179,65,0.6);
+            border-radius: 18px;
+        }
+        .nav-item.active i { transform: translateY(-1px); }
+        .nav-item.active::after {
+            content: ""; position: absolute; top: 4px; left: 50%; width: 14px; height: 2px; margin-left: -7px;
+            border-radius: 2px; background: var(--gold);
+        }
 
-        /* ---------- Motion ---------- */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes itemRise {
-            from { opacity: 0; transform: translateY(10px) scale(0.985); }
-            to   { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        @keyframes menuIn {
-            from { opacity: 0; transform: translateY(-8px) scale(0.96); }
-            to   { opacity: 1; transform: translateY(0) scale(1); }
-        }
+        /* ---------- التنبيه (Toast) ---------- */
         @keyframes toastIn {
-            from { opacity: 0; transform: translate(-50%, 16px) scale(0.94); }
+            from { opacity: 0; transform: translate(-50%, 14px) scale(.97); }
             to   { opacity: 1; transform: translate(-50%, 0) scale(1); }
         }
-
-        .animate-fade-in {
-            animation: fadeIn 0.5s var(--ease-out) forwards;
+        div.fixed.bottom-20 {
+            bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important;
+            background: rgba(12, 16, 25, 0.94) !important;
+            color: var(--champagne) !important;
+            border: 1px solid rgba(227,179,65,0.45) !important;
+            border-radius: 16px !important;
+            padding: 11px 18px !important;
+            font-size: 0.82rem !important;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 18px 40px -12px rgba(0,0,0,0.95), 0 0 0 4px rgba(227,179,65,0.06) !important;
+            transform: translate(-50%, 0);
+            animation: toastIn .35s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            white-space: nowrap; max-width: calc(100vw - 32px); overflow: hidden; text-overflow: ellipsis;
+        }
+        div.fixed.bottom-20::before {
+            content: "\f058"; font-family: "Font Awesome 6 Free"; font-weight: 900;
+            color: var(--gold); margin-inline-end: 9px; vertical-align: -1px;
         }
 
+        /* ---------- صفحة المبرمج ---------- */
+        #aboutPage .glass-panel { border-color: var(--line-gold) !important; }
+        #aboutPage img {
+            background: var(--surface-1);
+            box-shadow: 0 10px 28px -10px rgba(227,179,65,0.5);
+        }
+
+        /* ---------- تحسينات القراءة ---------- */
+        body .text-\[11px\] { font-size: 12px; }
+        body .text-\[10px\] { font-size: 11px; }
+        .text-slate-400 { color: #8d99ad; }
+
+        /* ---------- شريط التمرير ---------- */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #263043; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+        /* ---------- إتاحة وتجاوب ---------- */
+        button:focus-visible, label:focus-within, a:focus-visible {
+            outline: 2px solid var(--gold); outline-offset: 2px;
+        }
+        @media (max-width: 400px) {
+            #liveClock { font-size: 1.55rem !important; }
+            .nav-item span { font-size: 9.5px !important; }
+        }
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.001ms !important;
-                animation-delay: 0s !important;
-                transition-duration: 0.001ms !important;
-                scroll-behavior: auto !important;
-            }
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
         }
     </style>
 </head>
 <body class="flex flex-col justify-between selection:bg-amber-400 selection:text-black">
 
-    <!-- HEADER SECTION -->
-    <header class="glass-header sticky top-0 z-50 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-3">
-            
-            <!-- User Avatar & Profile Summary -->
+    <!-- الترويسة العلوية الفاخرة -->
+    <header class="glass-header sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="relative shrink-0">
-                    <img id="headerUserAvatar" 
-                         src="https://placehold.co/150x150/1e1435/facc15?text=أنا" 
-                         alt="صورة المستخدم" 
-                         class="avatar-img-fixed border-2 border-amber-400/80 shadow-lg shadow-amber-500/10">
-                    <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-[#0a0614] rounded-full"></div>
+                <div class="relative">
+                    <img id="headerUserAvatar" src="https://placehold.co/150x150/1e1435/facc15?text=رؤوف" alt="صورة المستخدم" class="avatar-img">
+                    <div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-slate-950 rounded-full"></div>
                 </div>
-                
-                <div class="flex flex-col justify-center">
-                    <div class="flex items-center gap-2">
-                        <h2 id="headerUserName" class="text-sm sm:text-base font-extrabold text-white tracking-wide truncate max-w-[130px] sm:max-w-[200px]">
-                           Raouf
-                        </h2>
-                    </div>
-                    <!-- Monthly Total Highlight -->
+                <div>
+                    <h2 id="headerUserName" class="text-sm sm:text-base font-extrabold text-white tracking-wide">رؤوف رأفت</h2>
                     <div class="flex items-center gap-1.5 mt-0.5">
-                        <span class="text-[11px] font-bold text-amber-400/90 shrink-0">المتوفر معايا خلال الشهر:</span>
-                        <span id="headerTotalExpense" class="text-xs sm:text-sm font-black gold-gradient-text tracking-wide shrink-0">
-                            0.00 ج.م
-                        </span>
+                        <span class="text-[11px] text-amber-300/80 font-medium">المتوفر معايا: </span>
+                        <span id="headerTotalExpense" style="color: #facc15 !important; font-weight: 900; font-size: 1rem !important; display: inline-block;">0.00 ج.م</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Dropdown Menu Container -->
-            <div class="relative inline-block text-right">
-                <button id="menuBtn" onclick="toggleMenu()" class="p-2.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white transition-all flex items-center gap-2 border border-white/10 active:scale-95">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                    <span class="text-sm font-medium hidden sm:inline">القائمة</span>
-                </button>
-
-                <!-- Dropdown Menu Items -->
-                <div id="dropdownMenu" class="hidden absolute left-0 mt-2 w-48 rounded-2xl bg-slate-900/95 backdrop-blur-xl border border-white/10 shadow-2xl py-2 z-50 transition-all">
-                    
-                    <button onclick="switchPage('home'); toggleMenu();" class="w-full text-right px-4 py-2.5 text-sm text-slate-200 hover:bg-amber-500/20 hover:text-amber-400 flex items-center gap-2 transition-colors">
-                        <span>🏠</span>
-                        <span>الرئيسية</span>
-                    </button>
-
-                    <button onclick="switchPage('history'); toggleMenu();" class="w-full text-right px-4 py-2.5 text-sm text-slate-200 hover:bg-amber-500/20 hover:text-amber-400 flex items-center gap-2 transition-colors">
-                        <span>📜</span>
-                        <span>سجل الشهور الأرشيفية</span>
-                    </button>
-                    
-                    <button onclick="switchPage('admin'); toggleMenu();" class="w-full text-right px-4 py-2.5 text-sm text-slate-200 hover:bg-amber-500/20 hover:text-amber-400 flex items-center gap-2 transition-colors">
-                        <span>⚙️</span>
-                        <span>الإعدادات والتحكم</span>
-                    </button>
-
-                </div>
-            </div>
-
+          
         </div>
     </header>
 
-    <!-- MAIN CONTAINER -->
-    <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+    <!-- المحتوى الرئيسي -->
+    <main class="max-w-7xl mx-auto px-3 sm:px-6 py-6 flex-grow w-full">
         
-        <!-- ================= PAGE 1: HOME PAGE ================= -->
+        <!-- 1. الرئيسية -->
         <div id="homePage" class="space-y-5 animate-fade-in">
-            
-            <!-- Clock & Today's Summary Banner -->
-            <div class="glass-panel p-4 sm:p-5 rounded-3xl border border-amber-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="glass-panel p-4 sm:p-5 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="flex items-center gap-3 w-full sm:w-auto">
-                    <div class="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-lg shrink-0">
+                    <div class="w-11 h-11 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-lg shrink-0 shadow-lg">
                         <i class="fa-regular fa-clock"></i>
                     </div>
                     <div>
-                        <div id="liveClock" class="text-sm sm:text-base font-black text-white">--:--:-- --</div>
-                        <div id="liveDate" class="text-xs text-amber-400/80 font-bold mt-0.5">---</div>
+                        <div id="liveClock" class="text-sm sm:text-base font-black text-white tracking-wider">--:--:-- --</div>
+                        <div id="liveDate" class="text-xs text-amber-300/80 font-bold mt-0.5">---</div>
                     </div>
                 </div>
 
-                <div class="flex items-center justify-between w-full sm:w-auto gap-4 bg-violetTheme-950/60 p-3 rounded-2xl border border-white/5">
+                <div class="flex items-center justify-between w-full sm:w-auto gap-4 bg-slate-950/60 p-3 rounded-2xl border border-white/5">
                     <div class="text-right">
                         <span class="text-[10px] text-slate-400 block font-semibold">مصاريف اليوم</span>
                         <span id="todayTotalExpense" class="text-xs sm:text-sm font-black text-amber-400">0.00 ج.م</span>
                     </div>
                     <div class="h-8 w-px bg-white/10"></div>
                     <div class="text-right">
-                        <span class="text-[10px] text-slate-400 block font-semibold">إجمالي الشهر الحالي</span>
-                        <span id="monthTotalExpense" class="text-xs sm:text-sm font-black gold-gradient-text">0.00 ج.م</span>
+                        <span class="text-[10px] text-slate-400 block font-semibold">مصاريف الشهر الحالي</span>
+                        <span id="monthTotalExpense" class="text-xs sm:text-sm font-black gold-text">0.00 ج.م</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Items List Card -->
-            <div class="glass-panel p-4 sm:p-6 rounded-3xl border border-amber-500/20">
+            <div class="glass-panel p-4 sm:p-6 rounded-3xl">
                 <div class="flex items-center justify-between mb-5 pb-3 border-b border-white/10">
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2.5">
                         <div class="w-8 h-8 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-sm border border-amber-500/20">
                             <i class="fa-solid fa-receipt"></i>
                         </div>
-                        <h3 class="text-sm sm:text-base font-extrabold text-white">مصاريف الشهر الحالي</h3>
+                        <h3 class="text-sm sm:text-base font-extrabold text-white">مصاريف الشهر</h3>
                     </div>
-                    <span id="homeItemsBadge" class="text-[11px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full">
-                        0 عنصر
-                    </span>
+                    <span id="homeItemsBadge" class="text-[11px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/30 px-3 py-1 rounded-full">0 عنصر</span>
                 </div>
-
-                <!-- Horizontal Item Cards List grouped or sorted by date -->
-                <div id="homeItemsList" class="space-y-3 max-h-[620px] overflow-y-auto custom-scrollbar pr-1">
-                    <!-- Dynamic Items Rendered Here -->
-                </div>
+                <div id="homeItemsList" class="space-y-3 max-h-[620px] overflow-y-auto pr-1"></div>
             </div>
-
         </div>
 
-        <!-- ================= PAGE 2: HISTORY PAGE ================= -->
+        <!-- 2. الأرشيف -->
         <div id="historyPage" class="space-y-6 hidden animate-fade-in">
-            <div class="glass-panel p-5 sm:p-6 rounded-3xl border border-amber-500/20 space-y-4">
+            <div class="glass-panel p-5 sm:p-6 rounded-3xl space-y-4">
                 <div class="flex items-center justify-between pb-3 border-b border-white/10">
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2.5">
                         <div class="w-8 h-8 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-sm border border-amber-500/20">
                             <i class="fa-solid fa-box-archive"></i>
                         </div>
@@ -738,101 +519,78 @@
                     </div>
                 </div>
 
-                <!-- Select Month Dropdown -->
                 <div class="flex flex-col sm:flex-row items-start sm:items-end gap-3">
                     <div class="space-y-2 flex-grow w-full sm:w-auto">
-                        <label class="block text-xs font-bold text-slate-300">اختر الشهر المأرشف للاطلاع:</label>
-                        <select id="historyMonthSelect" onchange="renderHistoryItems()" class="w-full sm:w-64 px-3.5 py-2.5 rounded-xl bg-violetTheme-950/80 border border-amber-500/20 text-amber-400 font-bold focus:outline-none focus:border-amber-400 text-xs transition">
-                            <!-- Options generated dynamically -->
-                        </select>
+                        <label class="block text-xs font-bold text-slate-300">اختر الشهر السابق للاطلاع:</label>
+                        <select id="historyMonthSelect" onchange="renderHistoryItems()" class="w-full sm:w-64 px-3.5 py-2.5 font-bold text-amber-400 text-xs"></select>
                     </div>
                     <button onclick="deleteArchivedMonth()" class="px-4 py-2.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shrink-0">
-                        <i class="fa-solid fa-trash-can"></i>
-                        <span>حذف الشهر الحالي في الأرشيف</span>
+                        <i class="fa-solid fa-trash-can"></i> <span>حذف الشهر الحالي</span>
                     </button>
                 </div>
 
-                <!-- History Items Display Container -->
                 <div class="pt-3 border-t border-white/10 space-y-4">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-extrabold text-slate-300">تفاصيل مصاريف الشهر:</span>
                         <div class="text-left">
                             <span class="text-[10px] text-slate-400 block">إجمالي المصروفات</span>
-                            <span id="historyMonthTotal" class="text-sm font-black gold-gradient-text">0.00 ج.م</span>
+                            <span id="historyMonthTotal" class="text-sm font-black gold-text">0.00 ج.م</span>
                         </div>
                     </div>
-
-                    <div id="historyItemsList" class="space-y-3 max-h-[500px] overflow-y-auto custom-scrollbar pr-1">
-                        <!-- Dynamic Render -->
-                    </div>
+                    <div id="historyItemsList" class="space-y-3 max-h-[500px] overflow-y-auto pr-1"></div>
                 </div>
             </div>
         </div>
 
-        <!-- ================= PAGE 3: ADMIN & SETTINGS PAGE ================= -->
+        <!-- 3. الإعدادات والتحكم -->
         <div id="adminPage" class="space-y-6 hidden animate-fade-in">
-            
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                
-                <!-- Left Column: User Profile Settings & Add Form -->
                 <div class="lg:col-span-5 space-y-6">
-                    
-                    <!-- User Profile Settings Box -->
-                    <div class="glass-panel p-5 rounded-3xl border border-amber-500/20 space-y-4">
-                        <div class="flex items-center gap-2 pb-3 border-b border-white/10">
+                    <div class="glass-panel p-5 rounded-3xl space-y-4">
+                        <div class="flex items-center gap-2.5 pb-3 border-b border-white/10">
                             <i class="fa-solid fa-user-gear text-amber-400 text-sm"></i>
                             <h3 class="text-sm font-extrabold text-white">إعدادات الحساب الشخصي</h3>
                         </div>
 
                         <div class="space-y-4">
-                            <!-- Change Avatar -->
-                            <div class="flex items-center gap-4 bg-violetTheme-950/60 p-3 rounded-2xl border border-white/5">
-                                <img id="settingsAvatarPreview" 
-                                     src="https://placehold.co/150x150/1e1435/facc15?text=أنا" 
-                                     alt="معاينة الصورة" 
-                                     class="avatar-img-lg border-2 border-amber-400/80 shadow-md shrink-0">
+                            <div class="flex items-center gap-4 bg-slate-950/60 p-3.5 rounded-2xl border border-white/5">
+                                <img id="settingsAvatarPreview" src="https://placehold.co/150x150/1e1435/facc15?text=رؤوف" alt="معاينة" class="avatar-img shadow-md shrink-0">
                                 <div class="space-y-1.5 flex-grow">
                                     <span class="block text-xs font-bold text-slate-300">الصورة الشخصية</span>
-                                    <label class="cursor-pointer bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 w-fit">
-                                        <i class="fa-solid fa-camera"></i>
-                                        <span>تغيير الصورة</span>
+                                    <label class="cursor-pointer bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 w-fit">
+                                        <i class="fa-solid fa-camera"></i> <span>تغيير الصورة</span>
                                         <input type="file" id="settingsAvatarInput" accept="image/*" class="hidden" onchange="handleUserAvatarUpload(event)">
                                     </label>
                                 </div>
                             </div>
 
-                            <!-- Change Name -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-300 mb-1.5">الاسم الشخصي</label>
                                 <div class="flex gap-2">
-                                    <input type="text" id="settingsUserNameInput" placeholder="أدخل اسمك..." class="w-full px-3.5 py-2.5 rounded-xl bg-violetTheme-950/80 border border-amber-500/20 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 text-xs transition">
-                                    <button onclick="updateUserNameFromSettings()" class="px-4 py-2.5 gold-btn font-extrabold rounded-xl text-xs shrink-0">
-                                        حفظ
-                                    </button>
+                                    <input type="text" id="settingsUserNameInput" placeholder="أدخل اسمك..." class="w-full px-3.5 py-2.5 text-xs">
+                                    <button onclick="updateUserNameFromSettings()" class="px-4 py-2.5 gold-btn rounded-xl text-xs shrink-0">حفظ</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- خيار تعديل المبلغ المتاح للشهر -->
-                    <div class="glass-panel p-4 rounded-2xl border border-amber-500/20 space-y-3 mt-4">
-                        <div class="flex items-center gap-2 pb-2 border-b border-white/10">
+
+                    <div class="glass-panel p-4 rounded-3xl space-y-3">
+                        <div class="flex items-center gap-2.5 pb-2 border-b border-white/10">
                             <i class="fa-solid fa-wallet text-amber-400 text-sm"></i>
                             <h3 class="text-sm font-extrabold text-white">ميزانية الشهر المتاحة</h3>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-300 mb-1.5">المبلغ المبدئي للشهر (ج.م)</label>
                             <div class="flex gap-2">
-                                <input type="number" step="0.01" id="settingsMonthlyBudgetInput" placeholder="أدخل المبلغ المتوفر..." class="w-full px-3.5 py-2.5 rounded-xl bg-violetTheme-950/80 border border-amber-500/20 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 text-xs transition">
-                                <button onclick="updateMonthlyBudgetFromSettings()" class="px-4 py-2.5 gold-btn font-extrabold rounded-xl text-xs shrink-0">
-                                    حفظ
-                                </button>
+                                <input type="number" step="0.01" id="settingsMonthlyBudgetInput" placeholder="أدخل المبلغ المتوفر..." class="w-full px-3.5 py-2.5 text-xs">
+                                <button onclick="updateMonthlyBudgetFromSettings()" class="px-4 py-2.5 gold-btn rounded-xl text-xs shrink-0">حفظ</button>
                             </div>
                         </div>
                     </div>
-                    <!-- Item Form (Add / Edit) -->
-                    <div class="glass-panel p-5 sm:p-6 rounded-3xl border border-amber-500/20 space-y-4">
+
+                    <div class="glass-panel p-5 sm:p-6 rounded-3xl space-y-4">
                         <div class="flex items-center justify-between pb-3 border-b border-white/10">
-                            <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-2.5">
                                 <i class="fa-solid fa-pen-to-square text-amber-400 text-sm"></i>
                                 <h3 id="formTitleText" class="text-sm font-extrabold text-white">إضافة صنف أو مصروف جديد</h3>
                             </div>
@@ -841,96 +599,242 @@
 
                         <form id="itemForm" onsubmit="handleFormSubmit(event)" class="space-y-3.5">
                             <input type="hidden" id="editingItemId" value="">
-                            
-                            <!-- Item Name -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-300 mb-1">اسم الصنف أو المصروف</label>
-                                <input type="text" id="itemName" required placeholder="مثال: فاتورة كهرباء، مشتريات..." class="w-full px-3.5 py-2.5 rounded-xl bg-violetTheme-950/80 border border-amber-500/20 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 text-xs transition">
+                                <input type="text" id="itemName" required placeholder="مثال: فاتورة كهرباء، مشتريات..." class="w-full px-3.5 py-2.5 text-xs">
                             </div>
 
-                            <!-- Price & Quantity Grid -->
                             <div class="grid grid-cols-2 gap-2.5">
                                 <div>
                                     <label class="block text-xs font-bold text-slate-300 mb-1">السعر (ج.م)</label>
-                                    <input type="number" step="0.01" min="0" id="itemPrice" required placeholder="0.00" class="w-full px-3.5 py-2.5 rounded-xl bg-violetTheme-950/80 border border-amber-500/20 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 text-xs transition">
+                                    <input type="number" step="0.01" min="0" id="itemPrice" required placeholder="0.00" class="w-full px-3.5 py-2.5 text-xs">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-300 mb-1">الكمية / العدد</label>
-                                    <input type="number" min="1" id="itemQuantity" value="1" required class="w-full px-3.5 py-2.5 rounded-xl bg-violetTheme-950/80 border border-amber-500/20 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 text-xs transition">
+                                    <input type="number" min="1" id="itemQuantity" value="1" required class="w-full px-3.5 py-2.5 text-xs">
                                 </div>
                             </div>
 
-                            <!-- Custom Date selection for Expense -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-300 mb-1">تاريخ المصروف</label>
-                                <input type="date" id="itemCustomDate" class="w-full px-3.5 py-2.5 rounded-xl bg-violetTheme-950/80 border border-amber-500/20 text-white focus:outline-none focus:border-amber-400 text-xs transition">
+                                <input type="date" id="itemCustomDate" class="w-full px-3.5 py-2.5 text-xs">
                             </div>
 
-                            <!-- Item Image Upload & URL -->
                             <div class="space-y-2">
                                 <label class="block text-xs font-bold text-slate-300">صورة الصنف</label>
-                                <label class="cursor-pointer bg-violetTheme-950/80 border border-amber-500/20 hover:border-amber-400/50 p-3 rounded-xl text-center text-xs font-bold text-amber-400 transition flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                                    <span>رفع صورة من جهازك</span>
+                                <label class="cursor-pointer bg-slate-900 border border-amber-500/20 hover:border-amber-400/50 p-3 rounded-xl text-center text-xs font-bold text-amber-400 transition flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i> <span>رفع صورة من جهازك</span>
                                     <input type="file" id="itemImageFile" accept="image/*" class="hidden" onchange="previewItemImage(event)">
                                 </label>
-                                <input type="url" id="itemImageUrl" placeholder="أو الصق رابط صورة هنا..." class="w-full px-3.5 py-2 rounded-xl bg-violetTheme-950/80 border border-amber-500/20 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 text-[11px] transition">
+                                <input type="url" id="itemImageUrl" placeholder="أو الصق رابط صورة هنا..." class="w-full px-3.5 py-2 text-[11px]">
                                 <input type="hidden" id="itemImageBase64" value="">
                             </div>
 
-                            <!-- Form Submit Button -->
-                            <button type="submit" id="submitFormBtn" class="w-full py-3 gold-btn font-extrabold rounded-xl text-xs flex items-center justify-center gap-2 mt-2">
-                                <i class="fa-solid fa-plus"></i>
-                                <span>حفظ الصنف</span>
+                            <button type="submit" id="submitFormBtn" class="w-full py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 mt-2">
+                                <i class="fa-solid fa-plus"></i> <span>حفظ الصنف</span>
                             </button>
                         </form>
                     </div>
-
                 </div>
 
-                <!-- Right Column: Manage Registered Items Table -->
-                <div class="lg:col-span-7 glass-panel p-5 sm:p-6 rounded-3xl border border-amber-500/20 h-fit space-y-4">
+                <div class="lg:col-span-7 glass-panel p-5 sm:p-6 rounded-3xl h-fit space-y-4">
                     <div class="flex items-center justify-between pb-3 border-b border-white/10">
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2.5">
                             <i class="fa-solid fa-list-check text-amber-400 text-sm"></i>
                             <h3 class="text-sm font-extrabold text-white">إدارة وتعديل المصاريف المسجلة</h3>
                         </div>
                         <button onclick="clearAllItems()" class="px-3 py-1.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5">
-                            <i class="fa-solid fa-trash-can"></i>
-                            <span>حذف الكل</span>
+                            <i class="fa-solid fa-trash-can"></i> <span>حذف الكل</span>
                         </button>
                     </div>
+                    <div id="adminItemsList" class="space-y-3 max-h-[620px] overflow-y-auto pr-1"></div>
+                </div>
+            </div>
+        </div>
 
-                    <!-- Admin Items Container -->
-                    <div id="adminItemsList" class="space-y-3 max-h-[620px] overflow-y-auto custom-scrollbar pr-1">
-                        <!-- Dynamic Admin Items Rendered Here -->
+        <!-- 4. الديون والسلف -->
+        <div id="debtsPage" class="space-y-6 hidden animate-fade-in">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="glass-panel p-5 rounded-3xl space-y-4">
+                        <div class="flex items-center gap-2.5 pb-3 border-b border-white/10">
+                            <i class="fa-solid fa-hand-holding-dollar text-amber-400 text-sm"></i>
+                            <h3 class="text-sm font-extrabold text-white">تسجيل سلفة / دين جديد</h3>
+                        </div>
+
+                        <form onsubmit="handleAddDebt(event)" class="space-y-3.5">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-300 mb-1">نوع المعاملة</label>
+                                <select id="debtType" class="w-full px-3.5 py-2.5 text-xs">
+                                    <option value="payable">ناس ليها فلوس عندي (مدين)</option>
+                                    <option value="receivable">فلوس ليا عند حد (دائن)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-300 mb-1">اسم الشخص</label>
+                                <input type="text" id="debtPersonName"  class="w-full px-3.5 py-2.5 text-xs">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-300 mb-1">المبلغ الإجمالي (ج.م)</label>
+                                <input type="number" step="0.01" id="debtAmount" required placeholder="0.00" class="w-full px-3.5 py-2.5 text-xs">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-300 mb-1">صورة وصل الأمانة (اختياري)</label>
+                                <label class="cursor-pointer bg-slate-900 border border-amber-500/20 hover:border-amber-400/50 p-2.5 rounded-xl text-center text-xs font-bold text-amber-400 transition flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i> <span>رفع صورة الوصل</span>
+                                    <input type="file" id="debtImageFile" accept="image/*" class="hidden" onchange="previewDebtImage(event)">
+                                </label>
+                                <input type="hidden" id="debtImageBase64" value="">
+                            </div>
+
+                            <button type="submit" class="w-full py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 mt-2">
+                                <i class="fa-solid fa-plus"></i> <span>حفظ المعاملة</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
 
-            </div>
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="glass-panel p-5 rounded-3xl space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-arrow-down-long text-rose-400 text-sm"></i>
+                                <h3 class="text-sm font-extrabold text-white">ناس ليها فلوس عندي (مدين)</h3>
+                            </div>
+                        </div>
+                        <div id="payableDebtsList" class="space-y-3 max-h-[300px] overflow-y-auto"></div>
+                    </div>
 
+                    <div class="glass-panel p-5 rounded-3xl space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-arrow-up-long text-emerald-400 text-sm"></i>
+                                <h3 class="text-sm font-extrabold text-white">فلوس ليا عند حد (دائن)</h3>
+                            </div>
+                        </div>
+                        <div id="receivableDebtsList" class="space-y-3 max-h-[300px] overflow-y-auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. المراتب والدخل -->
+        <div id="salaryPage" class="space-y-6 hidden animate-fade-in">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="glass-panel p-5 rounded-3xl space-y-4">
+                        <div class="flex items-center gap-2.5 pb-3 border-b border-white/10">
+                            <i class="fa-solid fa-money-bill-wave text-emerald-400 text-sm"></i>
+                            <h3 class="text-sm font-extrabold text-white">إيداع</h3>
+                        </div>
+
+                        <form onsubmit="handleAddSalary(event)" class="space-y-3.5">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-300 mb-1">المبلغ</label>
+                                <input type="number" step="0.01" id="salaryAmount" required placeholder="مثال: 8000" class="w-full px-3.5 py-2.5 text-xs">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-300 mb-1">تاريخ الإيداع</label>
+                                <input type="date" id="salaryDate" class="w-full px-3.5 py-2.5 text-xs">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-300 mb-1">ملاحظات (اختياري)</label>
+                                <input type="text" id="salaryNote" placeholder="مثال: الراتب الشهري او حافز او ..." class="w-full px-3.5 py-2.5 text-xs">
+                            </div>
+
+                            <button type="submit" class="w-full py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 mt-2">
+                                <i class="fa-solid fa-plus-circle"></i> <span>إضافة المبلغ لفلوسي</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="glass-panel p-5 rounded-3xl space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-clock-rotate-left text-amber-400 text-sm"></i>
+                                <h3 class="text-sm font-extrabold text-white">سجل الإيداعات</h3>
+                            </div>
+                        </div>
+                        <div id="salaryHistoryList" class="space-y-3 max-h-[450px] overflow-y-auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. تبويب عن المبرمج وصانع التطبيق -->
+        <div id="aboutPage" class="space-y-6 hidden animate-fade-in max-w-xl mx-auto py-4">
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl space-y-5 border border-amber-500/30 text-center">
+                <div class="flex items-center justify-center gap-2.5 pb-3 border-b border-white/10">
+                <div class="bg-slate-950/60 p-6 rounded-2xl border border-amber-500/20 space-y-4">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-300 p-0.5 shadow-xl shadow-amber-500/20">
+                        <img src="logo.png" class="w-full h-full object-cover rounded-2xl" alt="رؤوف رأفت">
+                    </div>
+                    <div>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium px-2">
+                        تم تصميم وبرمجة هذا التطبيق بكل عناية واحترافية ليكون رفيقك الذكي في إدارة مصاريفك اليومية والمالية بكل سهولة وأمان
+                    </p>
+                    <div class="pt-3 border-t border-white/10 flex items-center justify-center gap-2 text-amber-400 text-xs font-bold">
+                        <i class="fa-solid fa-heart text-rose-500"></i>
+                        <span>made by : Raouf </span>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </main>
 
-    <!-- FOOTER SECTION -->
-    <footer class="glass-header py-4 text-center text-xs text-slate-400 border-t border-amber-500/15">
-        <div class="max-w-7xl mx-auto px-4">
-            <p>Made by : <span id="footerUserName" class="font-bold gold-gradient-text">Raouf</span> </p>
+    <!-- شريط التنقل السفلي الفاخر (يضم 6 تبويبات) -->
+    <nav class="bottom-nav fixed bottom-0 left-0 right-0 z-50 px-2 py-2">
+        <div class="max-w-md mx-auto grid grid-cols-6 gap-0.5 text-center">
+            <button onclick="switchPage('home'); setActiveNav(this);" id="nav-home" class="nav-item active flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl">
+                <i class="fa-solid fa-house text-sm mb-0.5"></i>
+                <span class="text-[9px] font-bold">الرئيسية</span>
+            </button>
+            <button onclick="switchPage('salary'); setActiveNav(this);" id="nav-salary" class="nav-item flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl">
+                <i class="fa-solid fa-wallet text-sm mb-0.5"></i>
+                <span class="text-[9px] font-bold">المرتب</span>
+            </button>
+            <button onclick="switchPage('debts'); setActiveNav(this);" id="nav-debts" class="nav-item flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl">
+                <i class="fa-solid fa-hand-holding-dollar text-sm mb-0.5"></i>
+                <span class="text-[9px] font-bold">الديون</span>
+            </button>
+            <button onclick="switchPage('history'); setActiveNav(this);" id="nav-history" class="nav-item flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl">
+                <i class="fa-solid fa-box-archive text-sm mb-0.5"></i>
+                <span class="text-[9px] font-bold">الأرشيف</span>
+            </button>
+            <button onclick="switchPage('admin'); setActiveNav(this);" id="nav-admin" class="nav-item flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl">
+                <i class="fa-solid fa-gear text-sm mb-0.5"></i>
+                <span class="text-[9px] font-bold">الإعدادات</span>
+            </button>
+            <button onclick="switchPage('about'); setActiveNav(this);" id="nav-about" class="nav-item flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl">
+                <i class="fa-solid fa-code text-sm mb-0.5"></i>
+                <span class="text-[9px] font-bold">المبرمج</span>
+            </button>
         </div>
-    </footer>
+    </nav>
 
-    <!-- JAVASCRIPT APP LOGIC -->
+    <!-- منطقة الجافاسكربت وتخزين البيانات -->
     <script>
-       let appData = JSON.parse(localStorage.getItem('luxury_gold_expense_data')) || {
-            userName: 'Raouf',
-            userAvatar: 'https://placehold.co/150x150/1e1435/facc15?text=أنا',
-            monthlyBudget: 0, // أضفنا هذه لحفظ المبلغ الإجمالي للشهر
+        let appData = JSON.parse(localStorage.getItem('luxury_gold_expense_data')) || {
+            userName: 'رؤوف رأفت',
+            userAvatar: 'https://placehold.co/150x150/1e1435/facc15?text=رؤوف',
+            monthlyBudget: 0,
             items: [],
+            debts: [],
+            salaryHistory: [],
             archivedMonths: {}
         };
+        if (!appData.salaryHistory) appData.salaryHistory = [];
+        if (!appData.debts) appData.debts = [];
 
-        // Date & Clock Helpers
         function getCurrentMonthKey(dateObj = new Date()) {
             const year = dateObj.getFullYear();
             const month = String(dateObj.getMonth() + 1).padStart(2, '0');
@@ -956,7 +860,6 @@
             if (dateEl) dateEl.innerText = dateString;
         }
 
-        // Auto Month Transition & Archiving check
         function checkAndArchiveMonths() {
             const currentMonthKey = getCurrentMonthKey();
             if (!appData.archivedMonths) appData.archivedMonths = {};
@@ -985,12 +888,10 @@
             }
         }
 
-        // Format Currency Helper
         function formatCurrency(amount) {
             return Number(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
-        // Save Data & Update UI
         function saveData() {
             localStorage.setItem('luxury_gold_expense_data', JSON.stringify(appData));
             updateHeaderAndFooter();
@@ -999,15 +900,30 @@
             renderHistoryPageOptions();
         }
 
-        // Switch Between Pages
+        function setActiveNav(btnEl) {
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            if (btnEl) btnEl.classList.add('active');
+        }
+
         function switchPage(page) {
             const homePage = document.getElementById('homePage');
             const historyPage = document.getElementById('historyPage');
             const adminPage = document.getElementById('adminPage');
+            const debtsPage = document.getElementById('debtsPage');
+            const salaryPage = document.getElementById('salaryPage');
+            const aboutPage = document.getElementById('aboutPage');
 
             homePage.classList.add('hidden');
             historyPage.classList.add('hidden');
             adminPage.classList.add('hidden');
+            if (debtsPage) debtsPage.classList.add('hidden');
+            if (salaryPage) salaryPage.classList.add('hidden');
+            if (aboutPage) aboutPage.classList.add('hidden');
+
+            const navMap = { home: 'nav-home', salary: 'nav-salary', debts: 'nav-debts', history: 'nav-history', admin: 'nav-admin', about: 'nav-about' };
+            if (navMap[page]) {
+                setActiveNav(document.getElementById(navMap[page]));
+            }
 
             if (page === 'home') {
                 homePage.classList.remove('hidden');
@@ -1016,23 +932,190 @@
                 renderHistoryPageOptions();
             } else if (page === 'admin') {
                 adminPage.classList.remove('hidden');
+            } else if (page === 'debts') {
+                if (debtsPage) debtsPage.classList.remove('hidden');
+                renderDebts();
+            } else if (page === 'salary') {
+                if (salaryPage) salaryPage.classList.remove('hidden');
+                document.getElementById('salaryDate').value = getTodayDateString();
+                renderSalaryHistory();
+            } else if (page === 'about') {
+                if (aboutPage) aboutPage.classList.remove('hidden');
             }
         }
 
-        // Synchronize User Details & Expense Displays
+        function handleAddSalary(event) {
+            event.preventDefault();
+            const amount = parseFloat(document.getElementById('salaryAmount').value);
+            const date = document.getElementById('salaryDate').value || getTodayDateString();
+            const note = document.getElementById('salaryNote').value.trim() || 'مرتب / دخل إضافي';
+
+            if (isNaN(amount) || amount <= 0) {
+                alert('يرجى إدخال مبلغ صحيح');
+                return;
+            }
+
+            appData.monthlyBudget = (appData.monthlyBudget || 0) + amount;
+
+            const newSalaryEntry = { id: Date.now(), amount: amount, date: date, note: note };
+            appData.salaryHistory.unshift(newSalaryEntry);
+
+            saveData();
+            renderSalaryHistory();
+
+            event.target.reset();
+            document.getElementById('salaryDate').value = getTodayDateString();
+            showToast(`تم إضافة ${formatCurrency(amount)} ج.م للمتوفر بنجاح`);
+        }
+
+        function renderSalaryHistory() {
+            const container = document.getElementById('salaryHistoryList');
+            if (!container) return;
+
+            if (appData.salaryHistory.length === 0) {
+                container.innerHTML = `<div class="text-xs text-slate-400 text-center py-6">لا يوجد سجل إيداعات مرتب مضافة بعد.</div>`;
+                return;
+            }
+
+            container.innerHTML = appData.salaryHistory.map(item => `
+                <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-3.5 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold shrink-0">
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-white">${item.note}</h4>
+                            <span class="text-[11px] text-slate-400 block">${item.date}</span>
+                        </div>
+                    </div>
+                    <div class="text-left shrink-0">
+                        <span class="text-xs font-black text-emerald-400">+ ${formatCurrency(item.amount)} ج.م</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function previewDebtImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('debtImageBase64').value = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function handleAddDebt(event) {
+            event.preventDefault();
+            const type = document.getElementById('debtType').value;
+            const personName = document.getElementById('debtPersonName').value.trim();
+            const amount = parseFloat(document.getElementById('debtAmount').value);
+            const receiptImage = document.getElementById('debtImageBase64').value || '';
+
+            const newDebt = {
+                id: Date.now(), type: type, personName: personName,
+                totalAmount: amount, paidAmount: 0, receiptImage: receiptImage
+            };
+
+            appData.debts.push(newDebt);
+            saveData();
+            renderDebts();
+            
+            event.target.reset();
+            document.getElementById('debtImageBase64').value = '';
+            showToast('تم تسجيل المعاملة بنجاح');
+        }
+
+        function payDebt(debtId) {
+            const debt = appData.debts.find(d => d.id === debtId);
+            if (!debt) return;
+
+            const remaining = debt.totalAmount - debt.paidAmount;
+            const promptMsg = debt.type === 'payable' 
+                ? `المبلغ المتبقي للدفـع: ${remaining} ج.م\nأدخل المبلغ المراد سداده:` 
+                : `المبلغ المتبقي للاستلام: ${remaining} ج.م\nأدخل المبلغ المراد استلامه:`;
+
+            const inputVal = prompt(promptMsg, remaining);
+            if (inputVal === null) return;
+
+            const payVal = parseFloat(inputVal);
+            if (isNaN(payVal) || payVal <= 0) { alert('يرجى إدخال مبلغ صحيح'); return; }
+            if (payVal > remaining) { alert('المبلغ المدخل أكبر من المتبقي!'); return; }
+
+            debt.paidAmount += payVal;
+
+            if (debt.type === 'payable') {
+                appData.monthlyBudget -= payVal;
+            } else {
+                appData.monthlyBudget += payVal;
+            }
+
+            saveData();
+            renderDebts();
+            showToast('تم التحديث وتعديل المبلغ المتوفر بنجاح');
+        }
+
+        function renderDebts() {
+            const payableList = document.getElementById('payableDebtsList');
+            const receivableList = document.getElementById('receivableDebtsList');
+            if (!payableList || !receivableList) return;
+
+            const payables = appData.debts.filter(d => d.type === 'payable');
+            const receivables = appData.debts.filter(d => d.type === 'receivable');
+
+            payableList.innerHTML = payables.length === 0 ? `<div class="text-xs text-slate-400 text-center py-4">لا توجد ديون عليك حالياً.</div>` :
+                payables.map(d => {
+                    const remaining = d.totalAmount - d.paidAmount;
+                    const isFullyPaid = remaining <= 0;
+                    return `
+                        <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                ${d.receiptImage ? `<img src="${d.receiptImage}" class="item-img cursor-pointer" onclick="window.open('${d.receiptImage}')" title="اضغط للتكبير">` : '<div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-xs text-slate-400">بدون وصل</div>'}
+                                <div>
+                                    <h4 class="text-xs font-bold text-white">${d.personName}</h4>
+                                    <span class="text-[11px] text-slate-400 block">الإجمالي: ${formatCurrency(d.totalAmount)} | المدفوع: ${formatCurrency(d.paidAmount)}</span>
+                                    <span class="text-[11px] font-bold ${isFullyPaid ? 'text-emerald-400' : 'text-amber-400'} block">المتبقي: ${formatCurrency(remaining)} ج.م</span>
+                                </div>
+                            </div>
+                            <div>
+                                ${!isFullyPaid ? `<button onclick="payDebt(${d.id})" class="px-3 py-1.5 gold-btn rounded-xl text-xs font-bold">سداد مبلغ</button>` : '<span class="text-xs text-emerald-400 font-bold px-2 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">تم السداد</span>'}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            receivableList.innerHTML = receivables.length === 0 ? `<div class="text-xs text-slate-400 text-center py-4">لا توجد ديون لك عند أحد حالياً.</div>` :
+                receivables.map(d => {
+                    const remaining = d.totalAmount - d.paidAmount;
+                    const isFullyPaid = remaining <= 0;
+                    return `
+                        <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                ${d.receiptImage ? `<img src="${d.receiptImage}" class="item-img cursor-pointer" onclick="window.open('${d.receiptImage}')" title="اضغط للتكبير">` : '<div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-xs text-slate-400">بدون وصل</div>'}
+                                <div>
+                                    <h4 class="text-xs font-bold text-white">${d.personName}</h4>
+                                    <span class="text-[11px] text-slate-400 block">الإجمالي: ${formatCurrency(d.totalAmount)} | المستلم: ${formatCurrency(d.paidAmount)}</span>
+                                    <span class="text-[11px] font-bold ${isFullyPaid ? 'text-emerald-400' : 'text-amber-400'} block">المتبقي: ${formatCurrency(remaining)} ج.م</span>
+                                </div>
+                            </div>
+                            <div>
+                                ${!isFullyPaid ? `<button onclick="payDebt(${d.id})" class="px-3 py-1.5 gold-btn rounded-xl text-xs font-bold">استلام مبلغ</button>` : '<span class="text-xs text-emerald-400 font-bold px-2 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">تم الاستلام</span>'}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+        }
+
         function updateHeaderAndFooter() {
             document.getElementById('headerUserName').innerText = appData.userName;
-            document.getElementById('footerUserName').innerText = appData.userName;
             document.getElementById('headerUserAvatar').src = appData.userAvatar;
-
             document.getElementById('settingsAvatarPreview').src = appData.userAvatar;
             document.getElementById('settingsUserNameInput').value = appData.userName;
             
-            // تحديث قيمة حقل الميزانية في الإعدادات
             const budgetInput = document.getElementById('settingsMonthlyBudgetInput');
             if (budgetInput) budgetInput.value = appData.monthlyBudget || 0;
 
-            // حساب إجمالي المصاريف للشهر الحالي
             let monthTotal = 0;
             let todayTotal = 0;
             const todayStr = getTodayDateString();
@@ -1040,30 +1123,23 @@
             appData.items.forEach(item => {
                 const itemTotal = (item.price * item.quantity);
                 monthTotal += itemTotal;
-
-                if (item.date === todayStr) {
-                    todayTotal += itemTotal;
-                }
+                if (item.date === todayStr) { todayTotal += itemTotal; }
             });
 
-            // حساب المتبقي (المتوفر معايا) لو حابب تخليه في الهيدر فوق خالص، أو سيبه زي ما تحب
             let remainingBudget = (appData.monthlyBudget || 0) - monthTotal;
 
-            // تحديث النصوص في الواجهة (هنا خلينا إجمالي الشهر الحالي يعرض مصاريف الشهر الفعلية monthTotal)
-            document.getElementById('headerTotalExpense').innerText = `${formatCurrency(remainingBudget)} ج.م`; // دي لو عايز تسيبها للمتوفر في الهيدر فوق
-            document.getElementById('monthTotalExpense').innerText = `${formatCurrency(monthTotal)} ج.م`;        // دي بقت إجمالي مصاريف الشهر الحالية
+            document.getElementById('headerTotalExpense').innerText = `${formatCurrency(remainingBudget)} ج.م`;
+            document.getElementById('monthTotalExpense').innerText = `${formatCurrency(monthTotal)} ج.م`;
             document.getElementById('todayTotalExpense').innerText = `${formatCurrency(todayTotal)} ج.م`;
         }
 
-        // دالة حفظ ميزانية الشهر من الإعدادات
         function updateMonthlyBudgetFromSettings() {
             const input = document.getElementById('settingsMonthlyBudgetInput');
-            const newBudget = parseFloat(input.value) || 0;
-            appData.monthlyBudget = newBudget;
+            appData.monthlyBudget = parseFloat(input.value) || 0;
             saveData();
             showToast('تم تحديث المبلغ المتوفر للشهر بنجاح');
         }
-        // Update User Name
+
         function updateUserNameFromSettings() {
             const input = document.getElementById('settingsUserNameInput');
             const newName = input.value.trim();
@@ -1074,7 +1150,6 @@
             }
         }
 
-        // Handle Avatar Upload
         function handleUserAvatarUpload(event) {
             const file = event.target.files[0];
             if (file) {
@@ -1088,7 +1163,6 @@
             }
         }
 
-        // Preview Item Image
         function previewItemImage(event) {
             const file = event.target.files[0];
             if (file) {
@@ -1101,10 +1175,8 @@
             }
         }
 
-        // Submit Form
         function handleFormSubmit(event) {
             event.preventDefault();
-
             const editingId = document.getElementById('editingItemId').value;
             const name = document.getElementById('itemName').value.trim();
             const price = parseFloat(document.getElementById('itemPrice').value);
@@ -1115,11 +1187,8 @@
             const imageUrlInput = document.getElementById('itemImageUrl').value.trim();
 
             if (!image) {
-                if (imageUrlInput) {
-                    image = imageUrlInput;
-                } else if (!editingId) {
-                    image = 'https://placehold.co/300x300/1e1435/facc15?text=صورة';
-                }
+                if (imageUrlInput) { image = imageUrlInput; }
+                else if (!editingId) { image = 'https://placehold.co/300x300/1e1435/facc15?text=صورة'; }
             }
 
             const timestamp = new Date(customDate).getTime() || Date.now();
@@ -1128,28 +1197,12 @@
                 const index = appData.items.findIndex(item => item.id == editingId);
                 if (index !== -1) {
                     if (!image) image = appData.items[index].image;
-                    appData.items[index] = {
-                        ...appData.items[index],
-                        name,
-                        price,
-                        quantity,
-                        image,
-                        date: customDate,
-                        timestamp: timestamp
-                    };
+                    appData.items[index] = { ...appData.items[index], name, price, quantity, image, date: customDate, timestamp: timestamp };
                     showToast('تم تحديث بيانات الصنف');
                 }
             } else {
                 if (!image) image = 'https://placehold.co/300x300/1e1435/facc15?text=صورة';
-                const newItem = {
-                    id: Date.now(),
-                    name,
-                    price,
-                    quantity,
-                    image,
-                    date: customDate,
-                    timestamp: timestamp
-                };
+                const newItem = { id: Date.now(), name, price, quantity, image, date: customDate, timestamp: timestamp };
                 appData.items.unshift(newItem);
                 showToast('تم إضافة الصنف بنجاح');
             }
@@ -1159,7 +1212,6 @@
             resetForm();
         }
 
-        // Edit Item
         function editItem(id) {
             const item = appData.items.find(i => i.id == id);
             if (item) {
@@ -1174,12 +1226,10 @@
                 document.getElementById('formTitleText').innerHTML = `تعديل صنف: ${item.name}`;
                 document.getElementById('submitFormBtn').innerHTML = `<i class="fa-solid fa-check"></i> <span>تحديث البيانات</span>`;
                 document.getElementById('cancelEditBtn').classList.remove('hidden');
-
                 switchPage('admin');
             }
         }
 
-        // Reset Form
         function resetForm() {
             document.getElementById('itemForm').reset();
             document.getElementById('editingItemId').value = '';
@@ -1191,7 +1241,6 @@
             document.getElementById('cancelEditBtn').classList.add('hidden');
         }
 
-        // Delete Item
         function deleteItem(id) {
             if (confirm('هل أنت متأكد من حذف هذا الصنف؟')) {
                 appData.items = appData.items.filter(item => item.id !== id);
@@ -1200,7 +1249,6 @@
             }
         }
 
-        // Clear All
         function clearAllItems() {
             if (confirm('هل أنت متأكد من حذف جميع مصاريف الشهر الحالي؟')) {
                 appData.items = [];
@@ -1209,17 +1257,15 @@
             }
         }
 
-        // Render Home Page Items (مرتبة حسب التاريخ مع إظهار تاريخ اليوم فوق العناصر)
         function renderHomeItems() {
             const container = document.getElementById('homeItemsList');
             const badge = document.getElementById('homeItemsBadge');
-
             badge.innerText = `${appData.items.length} عنصر`;
 
             if (appData.items.length === 0) {
                 container.innerHTML = `
                     <div class="py-12 text-center space-y-2">
-                        <div class="w-12 h-12 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-lg border border-amber-500/20">
+                        <div class="w-12 h-12 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-lg border border-amber-500/20 shadow-lg">
                             <i class="fa-solid fa-box-open"></i>
                         </div>
                         <h4 class="text-xs font-bold text-white">لا توجد مصاريف مسجلة لشهرك الحالي</h4>
@@ -1229,24 +1275,16 @@
                 return;
             }
 
-            // ترتيب العناصر تنازلياً حسب التاريخ أو الوقت الأحدث
             const sortedItems = [...appData.items].sort((a, b) => b.timestamp - a.timestamp);
-
-            // تجميع العناصر حسب التاريخ (date)
             const groupedByDate = {};
             sortedItems.forEach(item => {
                 const dateKey = item.date || getTodayDateString();
-                if (!groupedByDate[dateKey]) {
-                    groupedByDate[dateKey] = [];
-                }
+                if (!groupedByDate[dateKey]) { groupedByDate[dateKey] = []; }
                 groupedByDate[dateKey].push(item);
             });
 
             let html = '';
-            
-            // المرور على كل تاريخ وعرضه فوق مصاريفه
             Object.keys(groupedByDate).sort().reverse().forEach(dateKey => {
-                // عنوان التاريخ
                 html += `
                     <div class="mt-4 mb-2 flex items-center gap-2">
                         <span class="text-xs font-black text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-xl">
@@ -1256,26 +1294,21 @@
                     </div>
                 `;
 
-                // عناصر هذا التاريخ
                 groupedByDate[dateKey].forEach(item => {
                     const totalPrice = item.price * item.quantity;
                     html += `
-                        <div class="bg-violetTheme-900/60 hover:bg-violetTheme-800/80 border border-amber-500/20 hover:border-amber-400/40 rounded-2xl p-3 sm:p-4 flex items-center justify-between gap-3 sm:gap-4 transition-all shadow-sm mb-2">
-                            <div class="flex items-center gap-3 sm:gap-4 min-w-0">
-                                <img src="${item.image}" alt="${item.name}" 
-                                     onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" 
-                                     class="item-img-fixed border border-amber-500/30 shrink-0 shadow-md">
-                                
+                        <div class="bg-slate-900/80 hover:bg-slate-900 border border-amber-500/15 hover:border-amber-400/40 rounded-2xl p-3 sm:p-4 flex items-center justify-between gap-3 transition-all shadow-md mb-2">
+                            <div class="flex items-center gap-3 min-w-0">
+                                <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" class="item-img shrink-0">
                                 <div class="min-w-0 flex flex-col justify-center">
                                     <h4 class="text-xs sm:text-sm font-extrabold text-white truncate max-w-[140px] sm:max-w-xs">${item.name}</h4>
-                                    <div class="flex items-center gap-2 sm:gap-3 text-[11px] text-slate-400 mt-1 flex-wrap">
+                                    <div class="flex items-center gap-2 text-[11px] text-slate-400 mt-1">
                                         <span>العدد: <strong class="text-slate-200 font-bold">${item.quantity}</strong></span>
                                         <span class="text-slate-600">•</span>
                                         <span>السعر: <strong class="text-slate-200 font-bold">${formatCurrency(item.price)} ج.م</strong></span>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="text-left shrink-0">
                                 <span class="text-[10px] text-slate-400 block font-semibold">الإجمالي</span>
                                 <span class="text-xs sm:text-sm font-black text-amber-400">${formatCurrency(totalPrice)} <span class="text-[10px] text-slate-400 font-normal">ج.م</span></span>
@@ -1284,20 +1317,13 @@
                     `;
                 });
             });
-
             container.innerHTML = html;
         }
 
-        // Render Admin Page Items
         function renderAdminItems() {
             const container = document.getElementById('adminItemsList');
-
             if (appData.items.length === 0) {
-                container.innerHTML = `
-                    <div class="py-10 text-center text-xs text-slate-400">
-                        القائمة فارغة حالياً.
-                    </div>
-                `;
+                container.innerHTML = `<div class="py-10 text-center text-xs text-slate-400">القائمة فارغة حالياً.</div>`;
                 return;
             }
 
@@ -1305,11 +1331,9 @@
             appData.items.forEach(item => {
                 const totalPrice = item.price * item.quantity;
                 html += `
-                    <div class="bg-violetTheme-900/60 border border-amber-500/20 rounded-2xl p-3 flex items-center justify-between gap-3 transition">
+                    <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-3 flex items-center justify-between gap-3">
                         <div class="flex items-center gap-3 min-w-0">
-                            <img src="${item.image}" alt="${item.name}" 
-                                 onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" 
-                                 class="item-img-fixed border border-amber-500/30 shrink-0">
+                            <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" class="item-img shrink-0">
                             <div class="min-w-0">
                                 <h4 class="text-xs font-bold text-white truncate">${item.name}</h4>
                                 <span class="text-[11px] text-slate-400 block mt-0.5">
@@ -1317,11 +1341,9 @@
                                 </span>
                             </div>
                         </div>
-
                         <div class="flex items-center gap-1.5 shrink-0">
                             <button onclick="editItem(${item.id})" class="px-2.5 py-1.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 hover:bg-amber-500 hover:text-black transition text-xs font-bold flex items-center gap-1">
-                                <i class="fa-solid fa-pen"></i>
-                                <span class="hidden sm:inline">تعديل</span>
+                                <i class="fa-solid fa-pen"></i><span class="hidden sm:inline">تعديل</span>
                             </button>
                             <button onclick="deleteItem(${item.id})" class="w-8 h-8 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white transition flex items-center justify-center text-xs">
                                 <i class="fa-solid fa-trash"></i>
@@ -1330,15 +1352,12 @@
                     </div>
                 `;
             });
-
             container.innerHTML = html;
         }
 
-        // Render Options & Items in History Page
         function renderHistoryPageOptions() {
             const selectEl = document.getElementById('historyMonthSelect');
             if (!selectEl) return;
-
             const archivedKeys = Object.keys(appData.archivedMonths || {}).sort().reverse();
 
             if (archivedKeys.length === 0) {
@@ -1348,10 +1367,7 @@
             }
 
             let optionsHtml = '';
-            archivedKeys.forEach(key => {
-                optionsHtml += `<option value="${key}">شهر ${key}</option>`;
-            });
-
+            archivedKeys.forEach(key => { optionsHtml += `<option value="${key}">شهر ${key}</option>`; });
             selectEl.innerHTML = optionsHtml;
             renderHistoryItems();
         }
@@ -1362,11 +1378,7 @@
             const totalEl = document.getElementById('historyMonthTotal');
 
             if (!selectEl || !selectEl.value || !appData.archivedMonths[selectEl.value]) {
-                container.innerHTML = `
-                    <div class="py-8 text-center text-xs text-slate-400">
-                        لا توجد بيانات متاحة لهذا الشهر.
-                    </div>
-                `;
+                container.innerHTML = `<div class="py-8 text-center text-xs text-slate-400">لا توجد بيانات متاحة لهذا الشهر.</div>`;
                 totalEl.innerText = '0.00 ج.م';
                 return;
             }
@@ -1378,18 +1390,13 @@
             monthItems.forEach(item => {
                 const itemTotal = item.price * item.quantity;
                 total += itemTotal;
-
                 html += `
-                    <div class="bg-violetTheme-900/60 border border-amber-500/20 rounded-2xl p-3 flex items-center justify-between gap-3">
+                    <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-3 flex items-center justify-between gap-3">
                         <div class="flex items-center gap-3 min-w-0">
-                            <img src="${item.image}" alt="${item.name}" 
-                                 onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" 
-                                 class="item-img-fixed border border-amber-500/30 shrink-0">
+                            <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" class="item-img shrink-0">
                             <div class="min-w-0">
                                 <h4 class="text-xs font-bold text-white truncate">${item.name}</h4>
-                                <span class="text-[11px] text-slate-400 block mt-0.5">
-                                    تاريخ: ${item.date || selectEl.value} | الكمية: ${item.quantity}
-                                </span>
+                                <span class="text-[11px] text-slate-400 block mt-0.5">تاريخ: ${item.date || selectEl.value} | الكمية: ${item.quantity}</span>
                             </div>
                         </div>
                         <div class="text-left shrink-0">
@@ -1398,46 +1405,25 @@
                     </div>
                 `;
             });
-
             totalEl.innerText = `${formatCurrency(total)} ج.م`;
             container.innerHTML = html;
         }
 
-        // Minimal Toast Notification
         function showToast(message) {
             const toast = document.createElement('div');
-            toast.className = 'fixed bottom-5 left-1/2 -translate-x-1/2 z-50 bg-amber-400 text-black px-4 py-2 rounded-2xl font-extrabold text-xs shadow-lg transition-all animate-fade-in';
+            toast.className = 'fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-amber-400 text-black px-4 py-2 rounded-2xl font-extrabold text-xs shadow-2xl transition-all animate-fade-in border border-amber-200';
             toast.innerText = message;
             document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.remove();
-            }, 2500);
+            setTimeout(() => { toast.remove(); }, 2500);
         }
 
-        // Toggle Menu
-        function toggleMenu() {
-            const menu = document.getElementById('dropdownMenu');
-            menu.classList.toggle('hidden');
-        }
-
-        window.addEventListener('click', function(e) {
-            const menuBtn = document.getElementById('menuBtn');
-            const dropdownMenu = document.getElementById('dropdownMenu');
-            
-            if (menuBtn && dropdownMenu && !menuBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                dropdownMenu.classList.add('hidden');
-            }
-        });
-        // دالة لحذف الشهر المأرشف المحدد
         function deleteArchivedMonth() {
             const selectEl = document.getElementById('historyMonthSelect');
             const selectedMonth = selectEl ? selectEl.value : '';
-
             if (!selectedMonth || !appData.archivedMonths[selectedMonth]) {
                 showToast('لا يوجد شهر مأرشف محدد للحذف');
                 return;
             }
-
             if (confirm(`هل أنت متأكد من نهائياً حذف أرشيف شهر (${selectedMonth})؟`)) {
                 delete appData.archivedMonths[selectedMonth];
                 saveData();
@@ -1445,14 +1431,13 @@
                 renderHistoryPageOptions();
             }
         }
-        // Initial Setup
+
         window.onload = function() {
             document.getElementById('itemCustomDate').value = getTodayDateString();
             checkAndArchiveMonths();
             updateHeaderAndFooter();
             renderHomeItems();
             renderAdminItems();
-            
             setInterval(updateClock, 1000);
             updateClock();
         };
