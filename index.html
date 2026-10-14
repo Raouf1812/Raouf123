@@ -42,7 +42,6 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        
         body, button, input, select, textarea { font-family: 'Cairo', system-ui, sans-serif !important; } h2, h3, h4 { font-family: 'Cairo', sans-serif; }
         
         :root {
@@ -143,9 +142,7 @@
             cursor: pointer;
             transition: transform 0.2s ease;
         }
-        .item-img:hover {
-            transform: scale(1.05);
-        }
+        .item-img:hover { transform: scale(1.05); }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
@@ -158,9 +155,6 @@
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #d4af37; }
 
-        /* =====================================================================
-           طبقة الواجهة المتقدمة 
-           ===================================================================== */
         :root {
             --ink: #06080d;
             --surface-1: #0b0f17;
@@ -187,149 +181,12 @@
             font-variant-numeric: tabular-nums;
             -webkit-font-smoothing: antialiased;
         }
-        body::before {
-            content: "";
-            position: fixed; inset: 0; z-index: -1; pointer-events: none;
-            background-image:
-                linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
-            background-size: 44px 44px;
-            -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 72%);
-                    mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 72%);
-        }
 
         .glass-header {
             background: linear-gradient(180deg, rgba(8, 11, 18, 0.94), rgba(8, 11, 18, 0.80));
             backdrop-filter: blur(18px) saturate(140%);
-            -webkit-backdrop-filter: blur(18px) saturate(140%);
             border-bottom: 1px solid var(--line);
         }
-        .glass-header::after {
-            content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(227, 179, 65, 0.6), transparent);
-        }
-        .glass-header > div { padding-top: 0.8rem; padding-bottom: 0.8rem; }
-
-        .avatar-img {
-            border-radius: 50%;
-            border: 2px solid transparent;
-            background:
-                linear-gradient(var(--surface-1), var(--surface-1)) padding-box,
-                conic-gradient(from 210deg, #f3d98b, #b8860b, #f3d98b, #8a6a14, #f3d98b) border-box;
-            box-shadow: 0 6px 18px -4px rgba(227, 179, 65, 0.35);
-        }
-        #headerUserName { font-size: 0.95rem; letter-spacing: 0; }
-        #headerTotalExpense {
-            font-size: 1.05rem !important;
-            padding: 2px 12px;
-            border-radius: 999px;
-            background: rgba(227, 179, 65, 0.09);
-            border: 1px solid rgba(227, 179, 65, 0.28);
-            color: #facc15 !important;
-            line-height: 1.7;
-        }
-
-        .glass-panel {
-            background: linear-gradient(180deg, rgba(22, 30, 46, 0.70) 0%, rgba(11, 15, 23, 0.86) 100%);
-            border: 1px solid var(--line);
-            border-radius: var(--r-lg) !important;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 28px 50px -30px rgba(0,0,0,0.95);
-            position: relative;
-        }
-        .glass-panel::before {
-            content: ""; position: absolute; top: 0; right: 8%; left: 8%; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(227,179,65,0.35), transparent);
-            pointer-events: none;
-        }
-        .glass-panel h3 { font-size: 0.98rem; font-weight: 800; }
-        .glass-panel .border-b { border-color: var(--line) !important; }
-
-        #homePage > .glass-panel:first-child {
-            background:
-                radial-gradient(520px 200px at 100% 0%, rgba(227,179,65,0.14), transparent 70%),
-                linear-gradient(180deg, rgba(22,30,46,0.72), rgba(11,15,23,0.9));
-            border-color: var(--line-gold);
-            overflow: hidden;
-        }
-        #liveClock {
-            font-size: 1.85rem !important; font-weight: 800 !important; line-height: 1.15;
-            letter-spacing: 0.02em; direction: ltr; display: inline-block;
-        }
-        #liveDate { font-size: 0.8rem !important; color: var(--gold-soft) !important; }
-        #homePage > .glass-panel:first-child > div:last-child {
-            background: rgba(6, 8, 13, 0.6) !important;
-            border: 1px solid var(--line) !important;
-            border-radius: var(--r-md) !important;
-            padding: 0.9rem 1.1rem !important;
-            gap: 1.25rem !important;
-        }
-        #todayTotalExpense, #monthTotalExpense { font-size: 1.05rem !important; }
-
-        [class*="bg-slate-900/80"] {
-            background: linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 100%) !important;
-            border: 1px solid var(--line) !important;
-            border-radius: var(--r-md) !important;
-            position: relative; overflow: hidden;
-            box-shadow: 0 10px 22px -16px rgba(0,0,0,0.9);
-            padding: 0.85rem 1rem !important;
-            transition: border-color .25s ease, background .25s ease;
-        }
-        [class*="bg-slate-900/80"]::before {
-            content: ""; position: absolute; top: 16%; bottom: 16%; right: 0; width: 3px;
-            background: linear-gradient(180deg, var(--gold-soft), #b8860b);
-            border-radius: 3px 0 0 3px; opacity: .85;
-        }
-        [class*="bg-slate-900/80"]:hover { border-color: rgba(227,179,65,0.38) !important; }
-        [class*="bg-slate-900/80"] h4 { font-size: 0.9rem; font-weight: 800; }
-        [class*="bg-slate-900/80"] .text-amber-400.font-black { color: var(--gold-soft); font-size: 0.98rem; }
-        [class*="bg-slate-900/80"] .text-emerald-400.font-black { font-size: 0.98rem; }
-
-        input, select {
-            background: var(--surface-1) !important;
-            border: 1px solid rgba(255,255,255,0.10) !important;
-            border-radius: 14px !important;
-            min-height: 46px;
-            padding-inline: 14px;
-            font-size: 0.84rem !important;
-            font-weight: 600;
-            color-scheme: dark;
-        }
-        input::placeholder { color: #5b6678; font-weight: 400; }
-        input:focus, select:focus {
-            background: #0d121c !important;
-            border-color: var(--gold) !important;
-            box-shadow: 0 0 0 4px rgba(227,179,65,0.14);
-        }
-        select {
-            -webkit-appearance: none; appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23e3b341' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E") !important;
-            background-repeat: no-repeat !important;
-            background-position: left 14px center !important;
-            background-size: 14px !important;
-            padding-left: 38px !important;
-        }
-        label.block { font-weight: 700; color: #b6c0d0; letter-spacing: 0; }
-
-        label.cursor-pointer.bg-slate-900 {
-            background: rgba(227,179,65,0.04) !important;
-            border: 1.5px dashed rgba(227,179,65,0.38) !important;
-            border-radius: 14px !important;
-            min-height: 46px;
-            transition: background .25s ease, border-color .25s ease;
-        }
-        label.cursor-pointer.bg-slate-900:hover {
-            background: rgba(227,179,65,0.09) !important;
-            border-color: var(--gold) !important;
-        }
-
-        .gold-btn {
-            background: linear-gradient(180deg, #f6dc8e 0%, #e3b341 55%, #c9961f 100%);
-            border-radius: 14px !important;
-            min-height: 44px;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), 0 12px 26px -12px rgba(227,179,65,0.7);
-            position: relative; overflow: hidden;
-        }
-        .gold-btn:active { transform: translateY(1px) scale(0.99); box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 6px 14px -8px rgba(227,179,65,0.6); }
 
         .bottom-nav {
             left: 12px !important; right: 12px !important;
@@ -340,58 +197,25 @@
             border: 1px solid var(--line-gold);
             background: rgba(9, 13, 21, 0.84);
             backdrop-filter: blur(22px) saturate(150%);
-            -webkit-backdrop-filter: blur(22px) saturate(150%);
-            box-shadow: 0 20px 44px -14px rgba(0,0,0,0.95), inset 0 1px 0 rgba(255,255,255,0.06);
+            box-shadow: 0 20px 44px -14px rgba(0,0,0,0.95);
         }
-        .bottom-nav > div { max-width: none !important; gap: 4px !important; }
+        .bottom-nav > div { max-width: none !important; gap: 2px !important; }
         .nav-item {
             position: relative; border-radius: 18px;
             padding-top: 9px !important; padding-bottom: 8px !important;
             color: #7d8aa0;
         }
-        .nav-item i { font-size: 1.08rem !important; margin-bottom: 3px !important; transition: transform .25s ease; }
-        .nav-item span { font-size: 10px !important; font-weight: 700; }
-        .nav-item:hover { color: #cbd5e1; }
+        .nav-item i { font-size: 1.08rem !important; margin-bottom: 3px !important; }
+        .nav-item span { font-size: 9.5px !important; font-weight: 700; }
         .nav-item.active {
             color: var(--gold-soft);
             background: linear-gradient(180deg, rgba(227,179,65,0.20), rgba(227,179,65,0.05));
             box-shadow: inset 0 0 0 1px rgba(227,179,65,0.30), 0 8px 18px -10px rgba(227,179,65,0.6);
-            border-radius: 18px;
-        }
-        .nav-item.active i { transform: translateY(-1px); }
-        .nav-item.active::after {
-            content: ""; position: absolute; top: 4px; left: 50%; width: 14px; height: 2px; margin-left: -7px;
-            border-radius: 2px; background: var(--gold);
-        }
-
-        @keyframes toastIn {
-            from { opacity: 0; transform: translate(-50%, 14px) scale(.97); }
-            to   { opacity: 1; transform: translate(-50%, 0) scale(1); }
-        }
-        div.fixed.bottom-20 {
-            bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important;
-            background: rgba(12, 16, 25, 0.94) !important;
-            color: var(--champagne) !important;
-            border: 1px solid rgba(227,179,65,0.45) !important;
-            border-radius: 16px !important;
-            padding: 11px 18px !important;
-            font-size: 0.82rem !important;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            box-shadow: 0 18px 40px -12px rgba(0,0,0,0.95), 0 0 0 4px rgba(227,179,65,0.06) !important;
-            transform: translate(-50%, 0);
-            animation: toastIn .35s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-            white-space: nowrap; max-width: calc(100vw - 32px); overflow: hidden; text-overflow: ellipsis;
-        }
-        div.fixed.bottom-20::before {
-            content: "\f058"; font-family: "Font Awesome 6 Free"; font-weight: 900;
-            color: var(--gold); margin-inline-end: 9px; vertical-align: -1px;
         }
     </style>
 </head>
 <body class="flex flex-col justify-between selection:bg-amber-400 selection:text-black">
 
-    <!-- الترويسة العلوية الفاخرة -->
     <header class="glass-header sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -399,20 +223,17 @@
                     <img id="headerUserAvatar" src="https://placehold.co/150x150/1e1435/facc15?text=رؤوف" alt="صورة المستخدم" class="avatar-img">
                     <div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-slate-950 rounded-full"></div>
                 </div>
-                
                 <div>
                     <h2 id="headerUserName" class="text-sm sm:text-base font-extrabold text-white tracking-wide">اكتب اسمك هنا ... </h2>
                     <div class="flex items-center gap-1.5 mt-0.5">
                         <span class="text-[11px] text-amber-300/80 font-medium">المتوفر معايا: </span>
                         <span id="headerTotalExpense" style="color: #facc15 !important; font-weight: 900; font-size: 1rem !important; display: inline-block;">0.00 ج.م</span>
                     </div>
-                    
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- المحتوى الرئيسي -->
     <main class="max-w-7xl mx-auto px-3 sm:px-6 py-6 flex-grow w-full">
         
         <!-- 1. الرئيسية -->
@@ -490,30 +311,16 @@
             </div>
         </div>
 
-            <!-- 3. الإعدادات والتحكم -->
-            <div class="glass-panel p-4 rounded-3xl space-y-3">
-                <div class="flex items-center gap-2.5 pb-2 border-b border-white/10">
-                    <i class="fa-solid fa-cloud-arrow-up text-amber-400 text-sm"></i>
-                    <h3 class="text-sm font-extrabold text-white">النسخ الاحتياطي والاستعادة (طريقة الواتساب)</h3>
-                </div>
-                
-                <p id="backupInfoText" class="text-xs text-amber-300 font-bold">
-                    آخر نسخة احتياطية: لم يتم الإنشاء بعد
-                </p>
-                
-                <p class="text-[11px] text-slate-400 leading-relaxed">
-                    قم بإنشاء نسخة احتياطية لرفع بياناتك للسحابة، أو استعدها في أي وقت على أي جهاز آخر.
-                </p>
+        <!-- 3. الإعدادات والتحكم -->
+        <div id="adminPage" class="space-y-6 hidden animate-fade-in">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="glass-panel p-5 rounded-3xl space-y-4">
+                        <div class="flex items-center gap-2.5 pb-3 border-b border-white/10">
+                            <i class="fa-solid fa-user-gear text-amber-400 text-sm"></i>
+                            <h3 class="text-sm font-extrabold text-white">إعدادات الحساب الشخصي</h3>
+                        </div>
 
-                <div class="grid grid-cols-2 gap-2 pt-1">
-                    <button onclick="backupToCloud()" class="py-2.5 gold-btn rounded-xl text-xs flex items-center justify-center gap-1.5 font-bold">
-                        <i class="fa-solid fa-cloud-arrow-up"></i> <span>إنشاء نسخة</span>
-                    </button>
-                    <button onclick="restoreFromCloud()" class="py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl text-xs flex items-center justify-center gap-1.5 font-bold transition">
-                        <i class="fa-solid fa-cloud-arrow-down"></i> <span>استعادة النسخة</span>
-                    </button>
-                </div>
-            </div>
                         <div class="space-y-4">
                             <div class="flex items-center gap-4 bg-slate-950/60 p-3.5 rounded-2xl border border-white/5">
                                 <img id="settingsAvatarPreview" src="https://placehold.co/150x150/1e1435/facc15?text=رؤوف" alt="معاينة" class="avatar-img shadow-md shrink-0 cursor-pointer" onclick="openImageViewer(this.src)" title="اضغط لتكبير الصورة">
@@ -688,7 +495,7 @@
             </div>
         </div>
 
-        <!-- 5. المراتب والدخل -->
+        <!-- 5. المرتب والدخل -->
         <div id="salaryPage" class="space-y-6 hidden animate-fade-in">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 <div class="lg:col-span-5 space-y-6">
@@ -735,7 +542,46 @@
             </div>
         </div>
 
-        <!-- 6. تبويب عن المبرمج وصانع التطبيق -->
+        <!-- 6. تبويب المزامنة (مثل الواتساب) -->
+        <div id="syncPage" class="space-y-6 hidden animate-fade-in max-w-xl mx-auto py-4">
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl space-y-5 border border-amber-500/30">
+                <div class="flex items-center gap-3 pb-4 border-b border-white/10">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-xl shadow-lg">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-extrabold text-white">النسخ الاحتياطي السحابي</h3>
+                        <p id="syncUserEmailStatus" class="text-xs text-slate-400 mt-0.5">جاري التحقق من الحساب...</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-950/60 p-5 rounded-2xl border border-amber-500/20 space-y-4">
+                    <div class="space-y-1">
+                        <span class="text-xs font-bold text-slate-300 block">حالة النسخ الاحتياطي:</span>
+                        <p id="backupInfoText" class="text-xs text-amber-300 font-bold">
+                            آخر نسخة احتياطية: لم يتم الإنشاء بعد
+                        </p>
+                    </div>
+
+                    <p class="text-[11px] text-slate-400 leading-relaxed">
+                        قم بإنشاء نسخة احتياطية لحفظ بياناتك على السحابة، أو استعدها في أي وقت على أي جهاز آخر بضغطة زر واحدة.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                        <button onclick="backupToCloud()" class="py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 font-bold">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> <span>إنشاء نسخة احتياطية</span>
+                        </button>
+                        <button onclick="restoreFromCloud()" class="py-3 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl text-xs flex items-center justify-center gap-2 font-bold transition">
+                            <i class="fa-solid fa-cloud-arrow-down"></i> <span>استعادة النسخة</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="syncAuthActionArea" class="text-center pt-2"></div>
+            </div>
+        </div>
+
+        <!-- 7. تبويب عن المبرمج وصانع التطبيق -->
         <div id="aboutPage" class="space-y-6 hidden animate-fade-in max-w-xl mx-auto py-4">
             <div class="glass-panel p-6 sm:p-8 rounded-3xl space-y-5 border border-amber-500/30 text-center">
                 <div class="bg-slate-950/60 p-6 rounded-2xl border border-amber-500/20 space-y-4">
@@ -755,7 +601,7 @@
 
     </main>
 
-    <!-- نافذة منبثقة (Modal) لعرض الصور بحجم كبير عند النقر عليها -->
+    <!-- نافذة منبثقة (Modal) لعرض الصور بحجم كبير -->
     <div id="imageModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4 animate-fade-in" onclick="closeImageViewer()">
         <div class="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center" onclick="event.stopPropagation()">
             <button onclick="closeImageViewer()" class="absolute -top-12 left-0 text-white bg-white/10 hover:bg-rose-500 w-10 h-10 rounded-full flex items-center justify-center transition text-lg">
@@ -770,31 +616,31 @@
         <div class="max-w-md mx-auto grid grid-cols-7 gap-0 text-center">
             <button onclick="switchPage('home'); setActiveNav(this);" id="nav-home" class="nav-item active flex flex-col items-center justify-center py-1 px-0 rounded-lg">
                 <i class="fa-solid fa-house text-xs mb-0.5"></i>
-                <span class="text-[8.5px] font-bold">الرئيسية</span>
+                <span class="text-[8px] font-bold">الرئيسية</span>
             </button>
             <button onclick="switchPage('salary'); setActiveNav(this);" id="nav-salary" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
                 <i class="fa-solid fa-wallet text-xs mb-0.5"></i>
-                <span class="text-[8.5px] font-bold">ايداع</span>
+                <span class="text-[8px] font-bold">ايداع</span>
             </button>
             <button onclick="switchPage('debts'); setActiveNav(this);" id="nav-debts" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
                 <i class="fa-solid fa-hand-holding-dollar text-xs mb-0.5"></i>
-                <span class="text-[8.5px] font-bold">الديون</span>
+                <span class="text-[8px] font-bold">الديون</span>
             </button>
             <button onclick="switchPage('history'); setActiveNav(this);" id="nav-history" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
                 <i class="fa-solid fa-box-archive text-xs mb-0.5"></i>
-                <span class="text-[8.5px] font-bold">الأرشيف</span>
+                <span class="text-[8px] font-bold">الأرشيف</span>
             </button>
             <button onclick="switchPage('admin'); setActiveNav(this);" id="nav-admin" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
                 <i class="fa-solid fa-gear text-xs mb-0.5"></i>
-                <span class="text-[8.5px] font-bold">الإعدادات</span>
+                <span class="text-[8px] font-bold">الإعدادات</span>
             </button>
-            <button onclick="window.location.href='login.html'" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
-                <i class="fa-solid fa-user-check text-xs mb-0.5"></i>
-                <span class="text-[8.5px] font-bold">المزامنة</span>
+            <button onclick="switchPage('sync'); setActiveNav(this);" id="nav-sync" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
+                <i class="fa-solid fa-cloud text-xs mb-0.5"></i>
+                <span class="text-[8px] font-bold">المزامنة</span>
             </button>
             <button onclick="switchPage('about'); setActiveNav(this);" id="nav-about" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
                 <i class="fa-solid fa-code text-xs mb-0.5"></i>
-                <span class="text-[8.5px] font-bold">المبرمج</span>
+                <span class="text-[8px] font-bold">المبرمج</span>
             </button>
         </div>
     </nav>
@@ -883,14 +729,8 @@
             return Number(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
-       function saveData() {
+        function saveData() {
             localStorage.setItem('luxury_gold_expense_data', JSON.stringify(appData));
-            
-            // استدعاء المزامنة السحابية تلقائياً مع كل حفظ
-            if (typeof window.syncDataToCloud === 'function') {
-                window.syncDataToCloud();
-            }
-
             updateHeaderAndFooter();
             renderHomeItems();
             renderAdminItems();
@@ -908,6 +748,7 @@
             const adminPage = document.getElementById('adminPage');
             const debtsPage = document.getElementById('debtsPage');
             const salaryPage = document.getElementById('salaryPage');
+            const syncPage = document.getElementById('syncPage');
             const aboutPage = document.getElementById('aboutPage');
 
             homePage.classList.add('hidden');
@@ -915,9 +756,10 @@
             adminPage.classList.add('hidden');
             if (debtsPage) debtsPage.classList.add('hidden');
             if (salaryPage) salaryPage.classList.add('hidden');
+            if (syncPage) syncPage.classList.add('hidden');
             if (aboutPage) aboutPage.classList.add('hidden');
 
-            const navMap = { home: 'nav-home', salary: 'nav-salary', debts: 'nav-debts', history: 'nav-history', admin: 'nav-admin', about: 'nav-about' };
+            const navMap = { home: 'nav-home', salary: 'nav-salary', debts: 'nav-debts', history: 'nav-history', admin: 'nav-admin', sync: 'nav-sync', about: 'nav-about' };
             if (navMap[page]) {
                 setActiveNav(document.getElementById(navMap[page]));
             }
@@ -936,6 +778,10 @@
                 if (salaryPage) salaryPage.classList.remove('hidden');
                 document.getElementById('salaryDate').value = getTodayDateString();
                 renderSalaryHistory();
+            } else if (page === 'sync') {
+                if (syncPage) syncPage.classList.remove('hidden');
+                updateSyncPageUI();
+                checkCloudBackupInfo();
             } else if (page === 'about') {
                 if (aboutPage) aboutPage.classList.remove('hidden');
             }
@@ -953,7 +799,6 @@
             }
 
             appData.monthlyBudget = (appData.monthlyBudget || 0) + amount;
-
             const newSalaryEntry = { id: Date.now(), amount: amount, date: date, note: note };
             appData.salaryHistory.unshift(newSalaryEntry);
 
@@ -1012,13 +857,8 @@
             const receiptImage = document.getElementById('debtImageBase64').value || '';
 
             const newDebt = {
-                id: Date.now(), 
-                type: type, 
-                personName: personName,
-                reason: reason,
-                totalAmount: amount, 
-                paidAmount: 0, 
-                receiptImage: receiptImage
+                id: Date.now(), type: type, personName: personName,
+                reason: reason, totalAmount: amount, paidAmount: 0, receiptImage: receiptImage
             };
 
             appData.debts.push(newDebt);
@@ -1047,12 +887,7 @@
             if (payVal > remaining) { alert('المبلغ المدخل أكبر من المتبقي!'); return; }
 
             debt.paidAmount += payVal;
-
-            if (debt.type === 'payable') {
-                appData.monthlyBudget -= payVal;
-            } else {
-                appData.monthlyBudget += payVal;
-            }
+            if (debt.type === 'payable') { appData.monthlyBudget -= payVal; } else { appData.monthlyBudget += payVal; }
 
             saveData();
             renderDebts();
@@ -1437,6 +1272,40 @@
             }
         }
 
+        function updateSyncPageUI() {
+            const uid = localStorage.getItem('user_uid');
+            const email = localStorage.getItem('user_email');
+            const emailStatusEl = document.getElementById('syncUserEmailStatus');
+            const actionAreaEl = document.getElementById('syncAuthActionArea');
+
+            if (!emailStatusEl || !actionAreaEl) return;
+
+            if (uid && email) {
+                emailStatusEl.innerHTML = `مسجل بحساب: <strong class="text-amber-400">${email}</strong>`;
+                actionAreaEl.innerHTML = `
+                    <button onclick="logoutFromCloud()" class="w-full py-2.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-right-from-bracket"></i> <span>تسجيل الخروج من الحساب</span>
+                    </button>
+                `;
+            } else {
+                emailStatusEl.innerText = `غير مسجل بحساب جوجل`;
+                actionAreaEl.innerHTML = `
+                    <button onclick="window.location.href='login.html'" class="w-full py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 font-bold">
+                        <i class="fa-brands fa-google"></i> <span>تسجيل الدخول بحساب جوجل أولاً</span>
+                    </button>
+                `;
+            }
+        }
+
+        function logoutFromCloud() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                localStorage.removeItem('user_uid');
+                localStorage.removeItem('user_email');
+                updateSyncPageUI();
+                showToast('تم تسجيل الخروج بنجاح');
+            }
+        }
+
         window.onload = function() {
             document.getElementById('itemCustomDate').value = getTodayDateString();
             checkAndArchiveMonths();
@@ -1447,129 +1316,126 @@
             updateClock();
         };
     </script>
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyAVDG_rU0WofeTdKwrmaxTiFAWsESKMueI",
-        authDomain: "raouf-5b278.firebaseapp.com",
-        projectId: "raouf-5b278",
-        storageBucket: "raouf-5b278.firebasestorage.app",
-        messagingSenderId: "955422937027",
-        appId: "1:955422937027:web:e92e5666e1e2aabce83776",
-        measurementId: "G-JMTM83E8B2"
-    };
+    <!-- سكربت الفايربيس (طريقة الواتساب) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+        const firebaseConfig = {
+            apiKey: "AIzaSyAVDG_rU0WofeTdKwrmaxTiFAWsESKMueI",
+            authDomain: "raouf-5b278.firebaseapp.com",
+            projectId: "raouf-5b278",
+            storageBucket: "raouf-5b278.firebasestorage.app",
+            messagingSenderId: "955422937027",
+            appId: "1:955422937027:web:e92e5666e1e2aabce83776",
+            measurementId: "G-JMTM83E8B2"
+        };
 
-    // 1. إنشاء نسخة احتياطية (مثل الواتساب)
-    window.backupToCloud = async function() {
-        const uid = localStorage.getItem('user_uid');
-        if (!uid) {
-            showToast('برجاء تسجيل الدخول بحساب جوجل أولاً');
-            setTimeout(() => { window.location.href = 'login.html'; }, 1200);
-            return;
-        }
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-        showToast('جارٍ رفع وإنشاء نسخة احتياطية…');
-        try {
-            const currentData = JSON.parse(localStorage.getItem('luxury_gold_expense_data')) || {};
-            const nowString = new Date().toLocaleString('ar-EG', {
-                year: 'numeric', month: '2-digit', day: '2-digit',
-                hour: '2-digit', minute: '2-digit'
-            });
-
-            // نضيف تاريخ النسخة الاحتياطية جوه البيانات
-            currentData.lastBackupTime = nowString;
-            localStorage.setItem('luxury_gold_expense_data', JSON.stringify(currentData));
-
-            // رفع الملف الخاص بالمستخدم للسحابة
-            await setDoc(doc(db, "users_data", uid), currentData);
-            
-            updateBackupStatusUI(nowString);
-            showToast('تم إنشاء نسخة احتياطية بنجاح! ☁️');
-        } catch (e) {
-            console.error(e);
-            showToast('فشل إنشاء النسخة الاحتياطية، تحقق من الإنترنت');
-        }
-    };
-
-    // 2. استعادة النسخة الاحتياطية (مثل الواتساب)
-    window.restoreFromCloud = async function() {
-        const uid = localStorage.getItem('user_uid');
-        if (!uid) {
-            showToast('برجاء تسجيل الدخول بحساب جوجل أولاً');
-            setTimeout(() => { window.location.href = 'login.html'; }, 1200);
-            return;
-        }
-
-        if (!confirm('هل أنت متأكد من استعادة النسخة الاحتياطية؟ سيتم استبدال البيانات الحالية بآخر نسخة محفوظة على السحابة.')) {
-            return;
-        }
-
-        showToast('جارٍ جلب واستعادة النسخة الاحتياطية…');
-        try {
-            const docRef = doc(db, "users_data", uid);
-            const docSnap = await getDoc(docRef);
-
-            if (docSnap.exists()) {
-                const cloudData = docSnap.data();
-                
-                appData = cloudData;
-                if (!appData.salaryHistory) appData.salaryHistory = [];
-                if (!appData.debts) appData.debts = [];
-                if (!appData.archivedMonths) appData.archivedMonths = {};
-
-                localStorage.setItem('luxury_gold_expense_data', JSON.stringify(appData));
-                
-                // تحديث الواجهة بالكامل بالأرقام والبيانات المستعادة
-                updateHeaderAndFooter();
-                renderHomeItems();
-                renderAdminItems();
-                renderHistoryPageOptions();
-                
-                updateBackupStatusUI(cloudData.lastBackupTime || 'غير معروف');
-                showToast('تمت استعادة النسخة الاحتياطية بنجاح! 🎉');
-            } else {
-                showToast('لا توجد نسخة احتياطية سابقة لهذا الحساب');
+        // 1. إنشاء نسخة احتياطية (مثل الواتساب)
+        window.backupToCloud = async function() {
+            const uid = localStorage.getItem('user_uid');
+            if (!uid) {
+                showToast('برجاء تسجيل الدخول بحساب جوجل أولاً');
+                setTimeout(() => { window.location.href = 'login.html'; }, 1200);
+                return;
             }
-        } catch (e) {
-            console.error(e);
-            showToast('حدث خطأ أثناء استعادة النسخة');
-        }
-    };
 
-    // تحديث النص الظاهر لتاريخ آخر نسخة في الواجهة
-    function updateBackupStatusUI(timeStr) {
-        const infoEl = document.getElementById('backupInfoText');
-        if (infoEl) {
-            infoEl.innerText = `آخر نسخة احتياطية: ${timeStr}`;
-        }
-    }
+            showToast('جارٍ رفع وإنشاء نسخة احتياطية…');
+            try {
+                const currentData = JSON.parse(localStorage.getItem('luxury_gold_expense_data')) || {};
+                const nowString = new Date().toLocaleString('ar-EG', {
+                    year: 'numeric', month: '2-digit', day: '2-digit',
+                    hour: '2-digit', minute: '2-digit'
+                });
 
-    // فحص تاريخ آخر نسخة عند فتح التطبيق
-    async function checkCloudBackupInfo() {
-        const uid = localStorage.getItem('user_uid');
-        if (!uid) return;
-        try {
-            const docRef = doc(db, "users_data", uid);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                const data = docSnap.data();
-                if (data.lastBackupTime) {
-                    updateBackupStatusUI(data.lastBackupTime);
+                currentData.lastBackupTime = nowString;
+                localStorage.setItem('luxury_gold_expense_data', JSON.stringify(currentData));
+
+                await setDoc(doc(db, "users_data", uid), currentData);
+                
+                updateBackupStatusUI(nowString);
+                showToast('تم إنشاء نسخة احتياطية بنجاح! ☁️');
+            } catch (e) {
+                console.error(e);
+                showToast('فشل إنشاء النسخة الاحتياطية، تحقق من الإنترنت');
+            }
+        };
+
+        // 2. استعادة النسخة الاحتياطية (مثل الواتساب)
+        window.restoreFromCloud = async function() {
+            const uid = localStorage.getItem('user_uid');
+            if (!uid) {
+                showToast('برجاء تسجيل الدخول بحساب جوجل أولاً');
+                setTimeout(() => { window.location.href = 'login.html'; }, 1200);
+                return;
+            }
+
+            if (!confirm('هل أنت متأكد من استعادة النسخة الاحتياطية؟ سيتم استبدال البيانات الحالية بآخر نسخة محفوظة على السحابة.')) {
+                return;
+            }
+
+            showToast('جارٍ جلب واستعادة النسخة الاحتياطية…');
+            try {
+                const docRef = doc(db, "users_data", uid);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const cloudData = docSnap.data();
+                    
+                    appData = cloudData;
+                    if (!appData.salaryHistory) appData.salaryHistory = [];
+                    if (!appData.debts) appData.debts = [];
+                    if (!appData.archivedMonths) appData.archivedMonths = {};
+
+                    localStorage.setItem('luxury_gold_expense_data', JSON.stringify(appData));
+                    
+                    updateHeaderAndFooter();
+                    renderHomeItems();
+                    renderAdminItems();
+                    renderHistoryPageOptions();
+                    
+                    updateBackupStatusUI(cloudData.lastBackupTime || 'غير معروف');
+                    showToast('تمت استعادة النسخة الاحتياطية بنجاح! 🎉');
+                } else {
+                    showToast('لا توجد نسخة احتياطية سابقة لهذا الحساب');
                 }
+            } catch (e) {
+                console.error(e);
+                showToast('حدث خطأ أثناء استعادة النسخة');
             }
-        } catch (e) {
-            console.error(e);
-        }
-    }
+        };
 
-    window.addEventListener('DOMContentLoaded', () => {
-        checkCloudBackupInfo();
-    });
-</script>
+        function updateBackupStatusUI(timeStr) {
+            const infoEl = document.getElementById('backupInfoText');
+            if (infoEl) {
+                infoEl.innerText = `آخر نسخة احتياطية: ${timeStr}`;
+            }
+        }
+
+        window.checkCloudBackupInfo = async function() {
+            const uid = localStorage.getItem('user_uid');
+            if (!uid) return;
+            try {
+                const docRef = doc(db, "users_data", uid);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (data.lastBackupTime) {
+                        updateBackupStatusUI(data.lastBackupTime);
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            window.checkCloudBackupInfo();
+        });
+    </script>
 </body>
 </html>
