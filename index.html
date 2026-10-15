@@ -68,8 +68,6 @@
             padding-bottom: 75px;
         }
 
-        h2, h3, h4 { font-family: 'El Messiri', serif; }
-
         .gold-text {
             background: var(--gold-text-gradient);
             -webkit-background-clip: text;
@@ -104,19 +102,28 @@
         }
 
         .bottom-nav {
-            background: rgba(3, 7, 18, 0.92);
-            backdrop-filter: blur(25px);
-            border-top: 1px solid rgba(212, 175, 55, 0.15);
-            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
+            left: 8px !important; right: 8px !important;
+            bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+            max-width: 580px; margin-inline: auto;
+            padding: 4px !important;
+            border-radius: 22px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: rgba(9, 13, 21, 0.90);
+            backdrop-filter: blur(22px) saturate(150%);
+            box-shadow: 0 20px 44px -14px rgba(0,0,0,0.95);
         }
         .nav-item {
-            color: #94a3b8;
-            transition: all 0.3s ease;
+            position: relative; border-radius: 14px;
+            padding: 6px 2px !important;
+            color: #7d8aa0;
+            transition: all 0.2s ease;
         }
+        .nav-item i { font-size: 0.95rem !important; margin-bottom: 2px !important; }
+        .nav-item span { font-size: 7.5px !important; font-weight: 700; display: block; }
         .nav-item.active {
             color: #facc15;
-            background: rgba(234, 179, 8, 0.1);
-            border-radius: 1rem;
+            background: linear-gradient(180deg, rgba(234,179,8,0.20), rgba(234,179,8,0.05));
+            box-shadow: inset 0 0 0 1px rgba(234,179,8,0.30);
         }
 
         input, select {
@@ -133,11 +140,11 @@
         }
 
         .avatar-img {
-            width: 50px; height: 50px; object-fit: cover; border-radius: 14px;
+            width: 46px; height: 46px; object-fit: cover; border-radius: 12px;
             border: 2px solid #facc15; box-shadow: 0 5px 15px rgba(234, 179, 8, 0.3);
         }
         .item-img {
-            width: 52px; height: 52px; object-fit: cover; border-radius: 12px;
+            width: 48px; height: 48px; object-fit: cover; border-radius: 10px;
             border: 1px solid rgba(212, 175, 55, 0.3);
             cursor: pointer;
             transition: transform 0.2s ease;
@@ -145,429 +152,373 @@
         .item-img:hover { transform: scale(1.05); }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
+            from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-fade-in { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #030712; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #d4af37; }
-
-        :root {
-            --ink: #06080d;
-            --surface-1: #0b0f17;
-            --surface-2: #101622;
-            --surface-3: #161e2e;
-            --line: rgba(255, 255, 255, 0.07);
-            --line-gold: rgba(227, 179, 65, 0.24);
-            --gold: #e3b341;
-            --gold-soft: #f3d98b;
-            --champagne: #fff4d6;
-            --income: #34d399;
-            --debt: #fb7185;
-            --r-lg: 22px;
-            --r-md: 16px;
-            --r-sm: 12px;
-        }
-
-        body {
-            background-image:
-                radial-gradient(900px 520px at 88% -6%, rgba(227, 179, 65, 0.11), transparent 60%),
-                radial-gradient(700px 500px at 0% 100%, rgba(52, 211, 153, 0.05), transparent 60%),
-                linear-gradient(180deg, #07090f 0%, #05070b 100%);
-            padding-bottom: calc(112px + env(safe-area-inset-bottom, 0px));
-            font-variant-numeric: tabular-nums;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .glass-header {
-            background: linear-gradient(180deg, rgba(8, 11, 18, 0.94), rgba(8, 11, 18, 0.80));
-            backdrop-filter: blur(18px) saturate(140%);
-            border-bottom: 1px solid var(--line);
-        }
-
-        .bottom-nav {
-            left: 12px !important; right: 12px !important;
-            bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
-            max-width: 520px; margin-inline: auto;
-            padding: 6px !important;
-            border-radius: 26px;
-            border: 1px solid var(--line-gold);
-            background: rgba(9, 13, 21, 0.84);
-            backdrop-filter: blur(22px) saturate(150%);
-            box-shadow: 0 20px 44px -14px rgba(0,0,0,0.95);
-        }
-        .bottom-nav > div { max-width: none !important; gap: 2px !important; }
-        .nav-item {
-            position: relative; border-radius: 18px;
-            padding-top: 9px !important; padding-bottom: 8px !important;
-            color: #7d8aa0;
-        }
-        .nav-item i { font-size: 1.08rem !important; margin-bottom: 3px !important; }
-        .nav-item span { font-size: 9.5px !important; font-weight: 700; }
-        .nav-item.active {
-            color: var(--gold-soft);
-            background: linear-gradient(180deg, rgba(227,179,65,0.20), rgba(227,179,65,0.05));
-            box-shadow: inset 0 0 0 1px rgba(227,179,65,0.30), 0 8px 18px -10px rgba(227,179,65,0.6);
-        }
     </style>
 </head>
 <body class="flex flex-col justify-between selection:bg-amber-400 selection:text-black">
 
     <header class="glass-header sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="relative">
                     <img id="headerUserAvatar" src="https://placehold.co/150x150/1e1435/facc15?text=رؤوف" alt="صورة المستخدم" class="avatar-img">
                     <div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-slate-950 rounded-full"></div>
                 </div>
                 <div>
-                    <h2 id="headerUserName" class="text-sm sm:text-base font-extrabold text-white tracking-wide">اكتب اسمك هنا ... </h2>
+                    <h2 id="headerUserName" class="text-sm font-extrabold text-white tracking-wide">اكتب اسمك هنا ... </h2>
                     <div class="flex items-center gap-1.5 mt-0.5">
                         <span class="text-[11px] text-amber-300/80 font-medium">المتوفر معايا: </span>
-                        <span id="headerTotalExpense" style="color: #facc15 !important; font-weight: 900; font-size: 1rem !important; display: inline-block;">0.00 ج.م</span>
+                        <span id="headerTotalExpense" style="color: #facc15 !important; font-weight: 900; font-size: 0.95rem !important; display: inline-block;">0.00 ج.م</span>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-3 sm:px-6 py-6 flex-grow w-full">
+    <main class="max-w-7xl mx-auto px-3 sm:px-6 py-5 flex-grow w-full">
         
         <!-- 1. الرئيسية -->
-        <div id="homePage" class="space-y-5 animate-fade-in">
-            <div class="glass-panel p-4 sm:p-5 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div id="homePage" class="space-y-4 animate-fade-in">
+            <div class="glass-panel p-4 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-3">
                 <div class="flex items-center gap-3 w-full sm:w-auto">
-                    <div class="w-11 h-11 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-lg shrink-0 shadow-lg">
+                    <div class="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-base shrink-0 shadow-lg">
                         <i class="fa-regular fa-clock"></i>
                     </div>
                     <div>
-                        <div id="liveClock" class="text-sm sm:text-base font-black text-white tracking-wider">--:--:-- --</div>
-                        <div id="liveDate" class="text-xs text-amber-300/80 font-bold mt-0.5">---</div>
+                        <div id="liveClock" class="text-sm font-black text-white tracking-wider">--:--:-- --</div>
+                        <div id="liveDate" class="text-[11px] text-amber-300/80 font-bold">---</div>
                     </div>
                 </div>
 
-                <div class="flex items-center justify-between w-full sm:w-auto gap-4 bg-slate-950/60 p-3 rounded-2xl border border-white/5">
+                <div class="flex items-center justify-between w-full sm:w-auto gap-4 bg-slate-950/60 p-2.5 rounded-2xl border border-white/5">
                     <div class="text-right">
                         <span class="text-[10px] text-slate-400 block font-semibold">مصاريف اليوم</span>
-                        <span id="todayTotalExpense" class="text-xs sm:text-sm font-black text-amber-400">0.00 ج.م</span>
+                        <span id="todayTotalExpense" class="text-xs font-black text-amber-400">0.00 ج.م</span>
                     </div>
-                    <div class="h-8 w-px bg-white/10"></div>
+                    <div class="h-7 w-px bg-white/10"></div>
                     <div class="text-right">
                         <span class="text-[10px] text-slate-400 block font-semibold">مصاريف الشهر الحالي</span>
-                        <span id="monthTotalExpense" class="text-xs sm:text-sm font-black gold-text">0.00 ج.م</span>
+                        <span id="monthTotalExpense" class="text-xs font-black gold-text">0.00 ج.م</span>
                     </div>
                 </div>
             </div>
 
-            <div class="glass-panel p-4 sm:p-6 rounded-3xl">
-                <div class="flex items-center justify-between mb-5 pb-3 border-b border-white/10">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-8 h-8 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-sm border border-amber-500/20">
+            <div class="glass-panel p-4 sm:p-5 rounded-3xl">
+                <div class="flex items-center justify-between mb-4 pb-2.5 border-b border-white/10">
+                    <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-xs border border-amber-500/20">
                             <i class="fa-solid fa-receipt"></i>
                         </div>
-                        <h3 class="text-sm sm:text-base font-extrabold text-white">مصاريف الشهر</h3>
+                        <h3 class="text-sm font-extrabold text-white">مصاريف الشهر</h3>
                     </div>
-                    <span id="homeItemsBadge" class="text-[11px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/30 px-3 py-1 rounded-full">0 عنصر</span>
+                    <span id="homeItemsBadge" class="text-[11px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/30 px-2.5 py-0.5 rounded-full">0 عنصر</span>
                 </div>
-                <div id="homeItemsList" class="space-y-3 max-h-[620px] overflow-y-auto pr-1"></div>
+                <div id="homeItemsList" class="space-y-2.5 max-h-[580px] overflow-y-auto pr-1"></div>
             </div>
         </div>
 
-        <!-- 2. الأرشيف -->
-        <div id="historyPage" class="space-y-6 hidden animate-fade-in">
-            <div class="glass-panel p-5 sm:p-6 rounded-3xl space-y-4">
+        <!-- 2. تبويب إضافة مصروف جديد (الجديد كلياً) -->
+        <div id="addExpensePage" class="space-y-5 hidden animate-fade-in max-w-xl mx-auto py-2">
+            <div class="glass-panel p-5 sm:p-6 rounded-3xl space-y-4 border border-amber-500/30">
+                <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-sm border border-amber-500/20">
+                            <i class="fa-solid fa-plus-circle"></i>
+                        </div>
+                        <h3 id="formTitleText" class="text-sm font-extrabold text-white">إضافة صنف أو مصروف جديد</h3>
+                    </div>
+                    <button id="cancelEditBtn" onclick="resetForm()" class="hidden text-xs text-rose-400 hover:text-rose-300 underline font-semibold">إلغاء التعديل</button>
+                </div>
+
+                <form id="itemForm" onsubmit="handleFormSubmit(event)" class="space-y-3.5">
+                    <input type="hidden" id="editingItemId" value="">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1">اسم الصنف أو المصروف</label>
+                        <input type="text" id="itemName" required placeholder="مثال: فاتورة كهرباء، مشتريات..." class="w-full px-3.5 py-2.5 text-xs">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">السعر (ج.م)</label>
+                            <input type="number" step="any" min="0" id="itemPrice" required placeholder="0.00" class="w-full px-3.5 py-2.5 text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">الكمية / العدد</label>
+                            <input type="number" min="1" id="itemQuantity" value="1" required class="w-full px-3.5 py-2.5 text-xs">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1">تاريخ المصروف</label>
+                        <input type="date" id="itemCustomDate" class="w-full px-3.5 py-2.5 text-xs">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-300">صورة الصنف (اختياري)</label>
+                        <label class="cursor-pointer bg-slate-900 border border-amber-500/20 hover:border-amber-400/50 p-2.5 rounded-xl text-center text-xs font-bold text-amber-400 transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> <span>رفع صورة من جهازك</span>
+                            <input type="file" id="itemImageFile" accept="image/*" class="hidden" onchange="previewItemImage(event)">
+                        </label>
+                        <input type="url" id="itemImageUrl" placeholder="أو الصق رابط صورة هنا..." class="w-full px-3.5 py-2 text-[11px]">
+                        <input type="hidden" id="itemImageBase64" value="">
+                    </div>
+
+                    <button type="submit" id="submitFormBtn" class="w-full py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 mt-3 font-bold">
+                        <i class="fa-solid fa-plus"></i> <span>حفظ وإضافة المصروف</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 3. الأرشيف -->
+        <div id="historyPage" class="space-y-5 hidden animate-fade-in">
+            <div class="glass-panel p-4 sm:p-5 rounded-3xl space-y-4">
                 <div class="flex items-center justify-between pb-3 border-b border-white/10">
                     <div class="flex items-center gap-2.5">
                         <div class="w-8 h-8 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-sm border border-amber-500/20">
                             <i class="fa-solid fa-box-archive"></i>
                         </div>
-                        <h3 class="text-sm sm:text-base font-extrabold text-white">سجل المصاريف للأشهر السابقة</h3>
+                        <h3 class="text-sm font-extrabold text-white">سجل المصاريف للأشهر السابقة</h3>
                     </div>
                 </div>
 
                 <div class="flex flex-col sm:flex-row items-start sm:items-end gap-3">
-                    <div class="space-y-2 flex-grow w-full sm:w-auto">
+                    <div class="space-y-1.5 flex-grow w-full sm:w-auto">
                         <label class="block text-xs font-bold text-slate-300">اختر الشهر السابق للاطلاع:</label>
-                        <select id="historyMonthSelect" onchange="renderHistoryItems()" class="w-full sm:w-64 px-3.5 py-2.5 font-bold text-amber-400 text-xs"></select>
+                        <select id="historyMonthSelect" onchange="renderHistoryItems()" class="w-full sm:w-64 px-3 py-2 font-bold text-amber-400 text-xs"></select>
                     </div>
-                    <button onclick="deleteArchivedMonth()" class="px-4 py-2.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shrink-0">
+                    <button onclick="deleteArchivedMonth()" class="px-3.5 py-2 bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shrink-0">
                         <i class="fa-solid fa-trash-can"></i> <span>حذف الشهر الحالي</span>
                     </button>
                 </div>
 
-                <div class="pt-3 border-t border-white/10 space-y-4">
+                <div class="pt-2 border-t border-white/10 space-y-3">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-extrabold text-slate-300">تفاصيل مصاريف الشهر:</span>
                         <div class="text-left">
                             <span class="text-[10px] text-slate-400 block">إجمالي المصروفات</span>
-                            <span id="historyMonthTotal" class="text-sm font-black gold-text">0.00 ج.م</span>
+                            <span id="historyMonthTotal" class="text-xs font-black gold-text">0.00 ج.م</span>
                         </div>
                     </div>
-                    <div id="historyItemsList" class="space-y-3 max-h-[500px] overflow-y-auto pr-1"></div>
+                    <div id="historyItemsList" class="space-y-2.5 max-h-[480px] overflow-y-auto pr-1"></div>
                 </div>
             </div>
         </div>
 
-        <!-- 3. الإعدادات والتحكم -->
-        <div id="adminPage" class="space-y-6 hidden animate-fade-in">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div class="lg:col-span-5 space-y-6">
-                    <div class="glass-panel p-5 rounded-3xl space-y-4">
-                        <div class="flex items-center gap-2.5 pb-3 border-b border-white/10">
+        <!-- 4. الإعدادات والتحكم وإدارة الأصناف -->
+        <div id="adminPage" class="space-y-5 hidden animate-fade-in">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="glass-panel p-4 rounded-3xl space-y-3">
+                        <div class="flex items-center gap-2 pb-2.5 border-b border-white/10">
                             <i class="fa-solid fa-user-gear text-amber-400 text-sm"></i>
-                            <h3 class="text-sm font-extrabold text-white">إعدادات الحساب الشخصي</h3>
+                            <h3 class="text-xs font-extrabold text-white">إعدادات الحساب الشخصي</h3>
                         </div>
 
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-4 bg-slate-950/60 p-3.5 rounded-2xl border border-white/5">
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3 bg-slate-950/60 p-3 rounded-2xl border border-white/5">
                                 <img id="settingsAvatarPreview" src="https://placehold.co/150x150/1e1435/facc15?text=رؤوف" alt="معاينة" class="avatar-img shadow-md shrink-0 cursor-pointer" onclick="openImageViewer(this.src)" title="اضغط لتكبير الصورة">
-                                <div class="space-y-1.5 flex-grow">
-                                    <span class="block text-xs font-bold text-slate-300">الصورة الشخصية</span>
-                                    <label class="cursor-pointer bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 w-fit">
-                                        <i class="fa-solid fa-camera"></i> <span>تغيير الصورة</span>
+                                <div class="space-y-1 flex-grow">
+                                    <span class="block text-[11px] font-bold text-slate-300">الصورة الشخصية</span>
+                                    <label class="cursor-pointer bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 px-2.5 py-1 rounded-xl text-[11px] font-bold transition flex items-center justify-center gap-1.5 w-fit">
+                                        <i class="fa-solid fa-camera"></i> <span>تغيير</span>
                                         <input type="file" id="settingsAvatarInput" accept="image/*" class="hidden" onchange="handleUserAvatarUpload(event)">
                                     </label>
                                 </div>
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-slate-300 mb-1.5">الاسم الشخصي</label>
+                                <label class="block text-[11px] font-bold text-slate-300 mb-1">الاسم الشخصي</label>
                                 <div class="flex gap-2">
-                                    <input type="text" id="settingsUserNameInput" placeholder="أدخل اسمك..." class="w-full px-3.5 py-2.5 text-xs">
-                                    <button onclick="updateUserNameFromSettings()" class="px-4 py-2.5 gold-btn rounded-xl text-xs shrink-0">حفظ</button>
+                                    <input type="text" id="settingsUserNameInput" placeholder="أدخل اسمك..." class="w-full px-3 py-2 text-xs">
+                                    <button onclick="updateUserNameFromSettings()" class="px-3.5 py-2 gold-btn rounded-xl text-xs shrink-0">حفظ</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="glass-panel p-4 rounded-3xl space-y-3">
-                        <div class="flex items-center gap-2.5 pb-2 border-b border-white/10">
+                        <div class="flex items-center gap-2 pb-2 border-b border-white/10">
                             <i class="fa-solid fa-wallet text-amber-400 text-sm"></i>
-                            <h3 class="text-sm font-extrabold text-white">الميزانية المتاحة</h3>
+                            <h3 class="text-xs font-extrabold text-white">الميزانية المتاحة</h3>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-1.5">المبلغ (ج.م)</label>
+                            <label class="block text-[11px] font-bold text-slate-300 mb-1">المبلغ (ج.م)</label>
                             <div class="flex gap-2">
-                                <input type="number" step="0.01" id="settingsMonthlyBudgetInput" placeholder="أدخل المبلغ المتوفر..." class="w-full px-3.5 py-2.5 text-xs">
-                                <button onclick="updateMonthlyBudgetFromSettings()" class="px-4 py-2.5 gold-btn rounded-xl text-xs shrink-0">حفظ</button>
+                                <input type="number" step="any" id="settingsMonthlyBudgetInput" placeholder="أدخل المبلغ المتوفر..." class="w-full px-3 py-2 text-xs">
+                                <button onclick="updateMonthlyBudgetFromSettings()" class="px-3.5 py-2 gold-btn rounded-xl text-xs shrink-0">حفظ</button>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="glass-panel p-5 sm:p-6 rounded-3xl space-y-4">
-                        <div class="flex items-center justify-between pb-3 border-b border-white/10">
-                            <div class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-pen-to-square text-amber-400 text-sm"></i>
-                                <h3 id="formTitleText" class="text-sm font-extrabold text-white">إضافة صنف أو مصروف جديد</h3>
-                            </div>
-                            <button id="cancelEditBtn" onclick="resetForm()" class="hidden text-xs text-rose-400 hover:text-rose-300 underline font-semibold">إلغاء التعديل</button>
-                        </div>
-
-                        <form id="itemForm" onsubmit="handleFormSubmit(event)" class="space-y-3.5">
-                            <input type="hidden" id="editingItemId" value="">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-300 mb-1">اسم الصنف أو المصروف</label>
-                                <input type="text" id="itemName" required placeholder="مثال: فاتورة كهرباء، مشتريات..." class="w-full px-3.5 py-2.5 text-xs">
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-2.5">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-300 mb-1">السعر (ج.م)</label>
-                                    <input type="number" step="0.01" min="0" id="itemPrice" required placeholder="0.00" class="w-full px-3.5 py-2.5 text-xs">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-300 mb-1">الكمية / العدد</label>
-                                    <input type="number" min="1" id="itemQuantity" value="1" required class="w-full px-3.5 py-2.5 text-xs">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-xs font-bold text-slate-300 mb-1">تاريخ المصروف</label>
-                                <input type="date" id="itemCustomDate" class="w-full px-3.5 py-2.5 text-xs">
-                            </div>
-
-                            <div class="space-y-2">
-                                <label class="block text-xs font-bold text-slate-300">صورة الصنف</label>
-                                <label class="cursor-pointer bg-slate-900 border border-amber-500/20 hover:border-amber-400/50 p-3 rounded-xl text-center text-xs font-bold text-amber-400 transition flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-cloud-arrow-up"></i> <span>رفع صورة من جهازك</span>
-                                    <input type="file" id="itemImageFile" accept="image/*" class="hidden" onchange="previewItemImage(event)">
-                                </label>
-                                <input type="url" id="itemImageUrl" placeholder="أو الصق رابط صورة هنا..." class="w-full px-3.5 py-2 text-[11px]">
-                                <input type="hidden" id="itemImageBase64" value="">
-                            </div>
-
-                            <button type="submit" id="submitFormBtn" class="w-full py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 mt-2">
-                                <i class="fa-solid fa-plus"></i> <span>حفظ الصنف</span>
-                            </button>
-                        </form>
                     </div>
                 </div>
 
-                <div class="lg:col-span-7 glass-panel p-5 sm:p-6 rounded-3xl h-fit space-y-4">
-                    <div class="flex items-center justify-between pb-3 border-b border-white/10">
-                        <div class="flex items-center gap-2.5">
+                <div class="lg:col-span-7 glass-panel p-4 sm:p-5 rounded-3xl h-fit space-y-3">
+                    <div class="flex items-center justify-between pb-2.5 border-b border-white/10">
+                        <div class="flex items-center gap-2">
                             <i class="fa-solid fa-list-check text-amber-400 text-sm"></i>
-                            <h3 class="text-sm font-extrabold text-white">إدارة وتعديل المصاريف المسجلة</h3>
+                            <h3 class="text-xs font-extrabold text-white">إدارة وتعديل المصاريف المسجلة</h3>
                         </div>
-                        <button onclick="clearAllItems()" class="px-3 py-1.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                        <button onclick="clearAllItems()" class="px-3 py-1 bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white rounded-xl text-[11px] font-bold transition flex items-center gap-1">
                             <i class="fa-solid fa-trash-can"></i> <span>حذف الكل</span>
                         </button>
                     </div>
-                    <div id="adminItemsList" class="space-y-3 max-h-[620px] overflow-y-auto pr-1"></div>
+                    <div id="adminItemsList" class="space-y-2.5 max-h-[500px] overflow-y-auto pr-1"></div>
                 </div>
             </div>
         </div>
 
-        <!-- 4. الديون والسلف -->
-        <div id="debtsPage" class="space-y-6 hidden animate-fade-in">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div class="lg:col-span-5 space-y-6">
-                    <div class="glass-panel p-5 rounded-3xl space-y-4">
-                        <div class="flex items-center gap-2.5 pb-3 border-b border-white/10">
+        <!-- 5. الديون والسلف -->
+        <div id="debtsPage" class="space-y-5 hidden animate-fade-in">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="glass-panel p-4 sm:p-5 rounded-3xl space-y-3.5">
+                        <div class="flex items-center gap-2.5 pb-2.5 border-b border-white/10">
                             <i class="fa-solid fa-hand-holding-dollar text-amber-400 text-sm"></i>
-                            <h3 class="text-sm font-extrabold text-white">تسجيل سلفة / دين جديد</h3>
+                            <h3 class="text-xs font-extrabold text-white">تسجيل سلفة / دين جديد</h3>
                         </div>
 
-                        <form onsubmit="handleAddDebt(event)" class="space-y-3.5">
+                        <form onsubmit="handleAddDebt(event)" class="space-y-3">
                             <div>
-                                <label class="block text-xs font-bold text-slate-300 mb-1">نوع المعاملة</label>
-                                <select id="debtType" class="w-full px-3.5 py-2.5 text-xs">
+                                <label class="block text-[11px] font-bold text-slate-300 mb-1">نوع المعاملة</label>
+                                <select id="debtType" class="w-full px-3 py-2 text-xs">
                                     <option value="payable">ناس ليها فلوس عندي (مدين)</option>
                                     <option value="receivable">فلوس ليا عند حد (دائن)</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-slate-300 mb-1">اسم الشخص</label>
-                                <input type="text" id="debtPersonName" required class="w-full px-3.5 py-2.5 text-xs" placeholder="أدخل اسم الشخص...">
+                                <label class="block text-[11px] font-bold text-slate-300 mb-1">اسم الشخص</label>
+                                <input type="text" id="debtPersonName" required class="w-full px-3 py-2 text-xs" placeholder="أدخل اسم الشخص...">
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-slate-300 mb-1">السبب ؟</label>
-                                <input type="text" id="debtReason" class="w-full px-3.5 py-2.5 text-xs" placeholder="مثال: شراء اونلاين او ايصال او ...">
+                                <label class="block text-[11px] font-bold text-slate-300 mb-1">السبب ؟</label>
+                                <input type="text" id="debtReason" class="w-full px-3 py-2 text-xs" placeholder="مثال: شراء اونلاين...">
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-slate-300 mb-1">المبلغ الإجمالي (ج.م)</label>
-                                <input type="number" step="0.01" id="debtAmount" required placeholder="0.00" class="w-full px-3.5 py-2.5 text-xs">
+                                <label class="block text-[11px] font-bold text-slate-300 mb-1">المبلغ الإجمالي (ج.م)</label>
+                                <input type="number" step="any" id="debtAmount" required placeholder="0.00" class="w-full px-3 py-2 text-xs">
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-slate-300 mb-1">صورة اثبات (اختياري)</label>
-                                <label class="cursor-pointer bg-slate-900 border border-amber-500/20 hover:border-amber-400/50 p-2.5 rounded-xl text-center text-xs font-bold text-amber-400 transition flex items-center justify-center gap-2">
+                                <label class="block text-[11px] font-bold text-slate-300 mb-1">صورة اثبات (اختياري)</label>
+                                <label class="cursor-pointer bg-slate-900 border border-amber-500/20 hover:border-amber-400/50 p-2 rounded-xl text-center text-xs font-bold text-amber-400 transition flex items-center justify-center gap-2">
                                     <i class="fa-solid fa-cloud-arrow-up"></i> <span>رفع صورة الوصل</span>
                                     <input type="file" id="debtImageFile" accept="image/*" class="hidden" onchange="previewDebtImage(event)">
                                 </label>
                                 <input type="hidden" id="debtImageBase64" value="">
                             </div>
 
-                            <button type="submit" class="w-full py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 mt-2">
+                            <button type="submit" class="w-full py-2.5 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 mt-2 font-bold">
                                 <i class="fa-solid fa-plus"></i> <span>حفظ المعاملة</span>
                             </button>
                         </form>
                     </div>
                 </div>
 
-                <div class="lg:col-span-7 space-y-6">
-                    <div class="glass-panel p-5 rounded-3xl space-y-4">
-                        <div class="flex items-center justify-between pb-3 border-b border-white/10">
-                            <div class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-arrow-down-long text-rose-400 text-sm"></i>
-                                <h3 class="text-sm font-extrabold text-white">ناس ليها فلوس عندي (مدين)</h3>
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="glass-panel p-4 rounded-3xl space-y-3">
+                        <div class="flex items-center justify-between pb-2 border-b border-white/10">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-arrow-down-long text-rose-400 text-xs"></i>
+                                <h3 class="text-xs font-extrabold text-white">ناس ليها فلوس عندي (مدين)</h3>
                             </div>
                         </div>
-                        <div id="payableDebtsList" class="space-y-3 max-h-[300px] overflow-y-auto"></div>
+                        <div id="payableDebtsList" class="space-y-2.5 max-h-[260px] overflow-y-auto"></div>
                     </div>
 
-                    <div class="glass-panel p-5 rounded-3xl space-y-4">
-                        <div class="flex items-center justify-between pb-3 border-b border-white/10">
-                            <div class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-arrow-up-long text-emerald-400 text-sm"></i>
-                                <h3 class="text-sm font-extrabold text-white">فلوس ليا عند حد (دائن)</h3>
+                    <div class="glass-panel p-4 rounded-3xl space-y-3">
+                        <div class="flex items-center justify-between pb-2 border-b border-white/10">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-arrow-up-long text-emerald-400 text-xs"></i>
+                                <h3 class="text-xs font-extrabold text-white">فلوس ليا عند حد (دائن)</h3>
                             </div>
                         </div>
-                        <div id="receivableDebtsList" class="space-y-3 max-h-[300px] overflow-y-auto"></div>
+                        <div id="receivableDebtsList" class="space-y-2.5 max-h-[260px] overflow-y-auto"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 5. المرتب والدخل -->
-        <div id="salaryPage" class="space-y-6 hidden animate-fade-in">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div class="lg:col-span-5 space-y-6">
-                    <div class="glass-panel p-5 rounded-3xl space-y-4">
-                        <div class="flex items-center gap-2.5 pb-3 border-b border-white/10">
+        <!-- 6. المرتب والدخل -->
+        <div id="salaryPage" class="space-y-5 hidden animate-fade-in">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="glass-panel p-4 sm:p-5 rounded-3xl space-y-3.5">
+                        <div class="flex items-center gap-2.5 pb-2.5 border-b border-white/10">
                             <i class="fa-solid fa-money-bill-wave text-emerald-400 text-sm"></i>
-                            <h3 class="text-sm font-extrabold text-white">إيداع</h3>
+                            <h3 class="text-xs font-extrabold text-white">إيداع رصيد جديد</h3>
                         </div>
 
-                        <form onsubmit="handleAddSalary(event)" class="space-y-3.5">
+                        <form onsubmit="handleAddSalary(event)" class="space-y-3">
                             <div>
-                                <label class="block text-xs font-bold text-slate-300 mb-1">المبلغ</label>
-                                <input type="number" step="0.01" id="salaryAmount" required placeholder="مثال: 8000" class="w-full px-3.5 py-2.5 text-xs">
+                                <label class="block text-[11px] font-bold text-slate-300 mb-1">المبلغ</label>
+                                <input type="number" step="any" id="salaryAmount" required placeholder="مثال: 8000" class="w-full px-3 py-2 text-xs">
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-slate-300 mb-1">تاريخ الإيداع</label>
-                                <input type="date" id="salaryDate" class="w-full px-3.5 py-2.5 text-xs">
+                                <label class="block text-[11px] font-bold text-slate-300 mb-1">تاريخ الإيداع</label>
+                                <input type="date" id="salaryDate" class="w-full px-3 py-2 text-xs">
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-slate-300 mb-1">ملاحظات (اختياري)</label>
-                                <input type="text" id="salaryNote" placeholder="مثال: الراتب الشهري او حافز او ..." class="w-full px-3.5 py-2.5 text-xs">
+                                <label class="block text-[11px] font-bold text-slate-300 mb-1">ملاحظات (اختياري)</label>
+                                <input type="text" id="salaryNote" placeholder="مثال: الراتب الشهري..." class="w-full px-3 py-2 text-xs">
                             </div>
 
-                            <button type="submit" class="w-full py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 mt-2">
+                            <button type="submit" class="w-full py-2.5 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 mt-2 font-bold">
                                 <i class="fa-solid fa-plus-circle"></i> <span>إضافة المبلغ لفلوسي</span>
                             </button>
                         </form>
                     </div>
                 </div>
 
-                <div class="lg:col-span-7 space-y-6">
-                    <div class="glass-panel p-5 rounded-3xl space-y-4">
-                        <div class="flex items-center justify-between pb-3 border-b border-white/10">
-                            <div class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-clock-rotate-left text-amber-400 text-sm"></i>
-                                <h3 class="text-sm font-extrabold text-white">سجل الإيداعات</h3>
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="glass-panel p-4 rounded-3xl space-y-3">
+                        <div class="flex items-center justify-between pb-2 border-b border-white/10">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-clock-rotate-left text-amber-400 text-xs"></i>
+                                <h3 class="text-xs font-extrabold text-white">سجل الإيداعات</h3>
                             </div>
                         </div>
-                        <div id="salaryHistoryList" class="space-y-3 max-h-[450px] overflow-y-auto"></div>
+                        <div id="salaryHistoryList" class="space-y-2.5 max-h-[400px] overflow-y-auto"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 6. تبويب النسخ الاحتياطي المحلي (تحميل واستعادة ملف) -->
-        <div id="syncPage" class="space-y-6 hidden animate-fade-in max-w-xl mx-auto py-4">
-            <div class="glass-panel p-6 sm:p-8 rounded-3xl space-y-5 border border-amber-500/30">
-                <div class="flex items-center gap-3 pb-4 border-b border-white/10">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-xl shadow-lg">
+        <!-- 7. النسخ الاحتياطي المحلي -->
+        <div id="syncPage" class="space-y-5 hidden animate-fade-in max-w-xl mx-auto py-3">
+            <div class="glass-panel p-5 sm:p-6 rounded-3xl space-y-4 border border-amber-500/30">
+                <div class="flex items-center gap-3 pb-3 border-b border-white/10">
+                    <div class="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-lg shadow-lg">
                         <i class="fa-solid fa-file-arrow-down"></i>
                     </div>
                     <div>
-                        <h3 class="text-base font-extrabold text-white">النسخ الاحتياطي على جهازك</h3>
-                        <p class="text-xs text-slate-400 mt-0.5">حفظ واستعادة البيانات عبر ملف JSON</p>
+                        <h3 class="text-sm font-extrabold text-white">النسخ الاحتياطي على جهازك</h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">حفظ واستعادة البيانات عبر ملف JSON</p>
                     </div>
                 </div>
 
-                <div class="bg-slate-950/60 p-5 rounded-2xl border border-amber-500/20 space-y-4">
+                <div class="bg-slate-950/60 p-4 rounded-2xl border border-amber-500/20 space-y-3">
                     <p class="text-xs text-slate-300 leading-relaxed">
-                        قم بتحميل نسخة احتياطية لحفظ جميع بياناتك (المصاريف، الديون، الإيداعات، والأرشيف) في ملف على جهازك، أو استعدها في أي وقت باختيار الملف.
+                        قم بتحميل نسخة احتياطية لحفظ جميع بياناتك ومصاريفك وأرشيفك، أو استعدها في أي وقت من ملف JSON.
                     </p>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                        <!-- زر تحميل ملف النسخة -->
-                        <button onclick="downloadBackupFile()" class="py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 font-bold">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                        <button onclick="downloadBackupFile()" class="py-2.5 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 font-bold">
                             <i class="fa-solid fa-download"></i> <span>تحميل نسخة احتياطية</span>
                         </button>
                         
-                        <!-- زر استعادة من ملف -->
-                        <label class="cursor-pointer py-3 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl text-xs flex items-center justify-center gap-2 font-bold transition text-center">
+                        <label class="cursor-pointer py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl text-xs flex items-center justify-center gap-2 font-bold transition text-center">
                             <i class="fa-solid fa-upload"></i> <span>استعادة من ملف</span>
                             <input type="file" id="restoreFileInput" accept=".json" class="hidden" onchange="restoreBackupFile(event)">
                         </label>
@@ -576,17 +527,17 @@
             </div>
         </div>
 
-        <!-- 7. تبويب عن المبرمج وصانع التطبيق -->
-        <div id="aboutPage" class="space-y-6 hidden animate-fade-in max-w-xl mx-auto py-4">
-            <div class="glass-panel p-6 sm:p-8 rounded-3xl space-y-5 border border-amber-500/30 text-center">
-                <div class="bg-slate-950/60 p-6 rounded-2xl border border-amber-500/20 space-y-4">
-                    <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-300 p-0.5 shadow-xl shadow-amber-500/20">
-                        <img src="logo.png" class="w-full h-full object-cover rounded-2xl cursor-pointer" alt="رؤوف" onclick="openImageViewer(this.src)">
+        <!-- 8. عن المبرمج -->
+        <div id="aboutPage" class="space-y-5 hidden animate-fade-in max-w-xl mx-auto py-3">
+            <div class="glass-panel p-6 rounded-3xl space-y-4 border border-amber-500/30 text-center">
+                <div class="bg-slate-950/60 p-5 rounded-2xl border border-amber-500/20 space-y-3">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-300 p-0.5 shadow-xl shadow-amber-500/20">
+                        <img src="logo.png" class="w-full h-full object-cover rounded-2xl cursor-pointer" alt="رؤوف" onerror="this.src='https://placehold.co/150x150/1e1435/facc15?text=رؤوف'" onclick="openImageViewer(this.src)">
                     </div>
-                    <p class="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium px-2">
+                    <p class="text-xs text-slate-200 leading-relaxed font-medium px-2">
                         تم تصميم وبرمجة هذا التطبيق بكل عناية واحترافية ليصبح رفيقك الذكي في إدارة مصاريفك اليومية والمالية بكل سهولة وأمان.
                     </p>
-                    <div class="pt-3 border-t border-white/10 flex items-center justify-center gap-2 text-amber-400 text-xs font-bold">
+                    <div class="pt-2 border-t border-white/10 flex items-center justify-center gap-2 text-amber-400 text-xs font-bold">
                         <i class="fa-solid fa-heart text-rose-500"></i>
                         <span>made by : Raouf</span>
                     </div>
@@ -596,7 +547,7 @@
 
     </main>
 
-    <!-- نافذة منبثقة (Modal) لعرض الصور بحجم كبير -->
+    <!-- نافذة منبثقة لعرض الصور -->
     <div id="imageModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4 animate-fade-in" onclick="closeImageViewer()">
         <div class="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center" onclick="event.stopPropagation()">
             <button onclick="closeImageViewer()" class="absolute -top-12 left-0 text-white bg-white/10 hover:bg-rose-500 w-10 h-10 rounded-full flex items-center justify-center transition text-lg">
@@ -606,41 +557,44 @@
         </div>
     </div>
 
-    <!-- شريط التنقل السفلي -->
-    <nav class="bottom-nav fixed bottom-0 left-0 right-0 z-50 px-1 py-1.5">
-        <div class="max-w-md mx-auto grid grid-cols-7 gap-0 text-center">
+    <!-- شريط التنقل السفلي المحدث (8 عناصر متناسقة) -->
+    <nav class="bottom-nav fixed bottom-0 left-0 right-0 z-50 px-1 py-1">
+        <div class="grid grid-cols-8 gap-0 text-center">
             <button onclick="switchPage('home'); setActiveNav(this);" id="nav-home" class="nav-item active flex flex-col items-center justify-center py-1 px-0 rounded-lg">
-                <i class="fa-solid fa-house text-xs mb-0.5"></i>
-                <span class="text-[8px] font-bold">الرئيسية</span>
+                <i class="fa-solid fa-house"></i>
+                <span>الرئيسية</span>
+            </button>
+            <button onclick="switchPage('addExpense'); setActiveNav(this);" id="nav-addExpense" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
+                <i class="fa-solid fa-circle-plus"></i>
+                <span>اضافة عنصر</span>
             </button>
             <button onclick="switchPage('salary'); setActiveNav(this);" id="nav-salary" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
-                <i class="fa-solid fa-wallet text-xs mb-0.5"></i>
-                <span class="text-[8px] font-bold">ايداع</span>
+                <i class="fa-solid fa-wallet"></i>
+                <span>إيداع</span>
             </button>
             <button onclick="switchPage('debts'); setActiveNav(this);" id="nav-debts" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
-                <i class="fa-solid fa-hand-holding-dollar text-xs mb-0.5"></i>
-                <span class="text-[8px] font-bold">الديون</span>
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+                <span>الديون</span>
             </button>
             <button onclick="switchPage('history'); setActiveNav(this);" id="nav-history" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
-                <i class="fa-solid fa-box-archive text-xs mb-0.5"></i>
-                <span class="text-[8px] font-bold">الأرشيف</span>
+                <i class="fa-solid fa-box-archive"></i>
+                <span>الأرشيف</span>
             </button>
             <button onclick="switchPage('admin'); setActiveNav(this);" id="nav-admin" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
-                <i class="fa-solid fa-gear text-xs mb-0.5"></i>
-                <span class="text-[8px] font-bold">الإعدادات</span>
+                <i class="fa-solid fa-gear"></i>
+                <span>الإعدادات</span>
             </button>
             <button onclick="switchPage('sync'); setActiveNav(this);" id="nav-sync" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
-                <i class="fa-solid fa-file-arrow-down text-xs mb-0.5"></i>
-                <span class="text-[8px] font-bold">النسخ</span>
+                <i class="fa-solid fa-file-arrow-down"></i>
+                <span>النسخ</span>
             </button>
             <button onclick="switchPage('about'); setActiveNav(this);" id="nav-about" class="nav-item flex flex-col items-center justify-center py-1 px-0 rounded-lg">
-                <i class="fa-solid fa-code text-xs mb-0.5"></i>
-                <span class="text-[8px] font-bold">المبرمج</span>
+                <i class="fa-solid fa-code"></i>
+                <span>المبرمج</span>
             </button>
         </div>
     </nav>
 
-    <!-- الجافاسكربت الخاص بالتحميل والاستعادة عبر ملف محلي -->
     <script>
         let appData = JSON.parse(localStorage.getItem('luxury_gold_expense_data')) || {
             userName: 'اكتب اسمك هنا ... ',
@@ -653,6 +607,8 @@
         };
         if (!appData.salaryHistory) appData.salaryHistory = [];
         if (!appData.debts) appData.debts = [];
+        if (!appData.items) appData.items = [];
+        if (!appData.archivedMonths) appData.archivedMonths = {};
 
         function openImageViewer(imgSrc) {
             if(!imgSrc) return;
@@ -725,7 +681,12 @@
         }
 
         function saveData() {
-            localStorage.setItem('luxury_gold_expense_data', JSON.stringify(appData));
+            try {
+                localStorage.setItem('luxury_gold_expense_data', JSON.stringify(appData));
+            } catch (e) {
+                console.error("Storage error:", e);
+                alert("تحذير: مساحة التخزين المحلية قد تكون ممتلئة بسبب كبر حجم الصور المرفوعة.");
+            }
             updateHeaderAndFooter();
             renderHomeItems();
             renderAdminItems();
@@ -738,49 +699,49 @@
         }
 
         function switchPage(page) {
-            const homePage = document.getElementById('homePage');
-            const historyPage = document.getElementById('historyPage');
-            const adminPage = document.getElementById('adminPage');
-            const debtsPage = document.getElementById('debtsPage');
-            const salaryPage = document.getElementById('salaryPage');
-            const syncPage = document.getElementById('syncPage');
-            const aboutPage = document.getElementById('aboutPage');
+            const pages = ['homePage', 'addExpensePage', 'historyPage', 'adminPage', 'debtsPage', 'salaryPage', 'syncPage', 'aboutPage'];
+            pages.forEach(p => {
+                const el = document.getElementById(p);
+                if (el) el.classList.add('hidden');
+            });
 
-            homePage.classList.add('hidden');
-            historyPage.classList.add('hidden');
-            adminPage.classList.add('hidden');
-            if (debtsPage) debtsPage.classList.add('hidden');
-            if (salaryPage) salaryPage.classList.add('hidden');
-            if (syncPage) syncPage.classList.add('hidden');
-            if (aboutPage) aboutPage.classList.add('hidden');
-
-            const navMap = { home: 'nav-home', salary: 'nav-salary', debts: 'nav-debts', history: 'nav-history', admin: 'nav-admin', sync: 'nav-sync', about: 'nav-about' };
+            const navMap = { 
+                home: 'nav-home', 
+                addExpense: 'nav-addExpense',
+                salary: 'nav-salary', 
+                debts: 'nav-debts', 
+                history: 'nav-history', 
+                admin: 'nav-admin', 
+                sync: 'nav-sync', 
+                about: 'nav-about' 
+            };
             if (navMap[page]) {
                 setActiveNav(document.getElementById(navMap[page]));
             }
 
             if (page === 'home') {
-                homePage.classList.remove('hidden');
+                document.getElementById('homePage').classList.remove('hidden');
+            } else if (page === 'addExpense') {
+                document.getElementById('addExpensePage').classList.remove('hidden');
             } else if (page === 'history') {
-                historyPage.classList.remove('hidden');
+                document.getElementById('historyPage').classList.remove('hidden');
                 renderHistoryPageOptions();
             } else if (page === 'admin') {
-                adminPage.classList.remove('hidden');
+                document.getElementById('adminPage').classList.remove('hidden');
             } else if (page === 'debts') {
-                if (debtsPage) debtsPage.classList.remove('hidden');
+                document.getElementById('debtsPage').classList.remove('hidden');
                 renderDebts();
             } else if (page === 'salary') {
-                if (salaryPage) salaryPage.classList.remove('hidden');
+                document.getElementById('salaryPage').classList.remove('hidden');
                 document.getElementById('salaryDate').value = getTodayDateString();
                 renderSalaryHistory();
             } else if (page === 'sync') {
-                if (syncPage) syncPage.classList.remove('hidden');
+                document.getElementById('syncPage').classList.remove('hidden');
             } else if (page === 'about') {
-                if (aboutPage) aboutPage.classList.remove('hidden');
+                document.getElementById('aboutPage').classList.remove('hidden');
             }
         }
 
-        // --- وظائف تحميل واستعادة النسخة الاحتياطية كملف JSON محلي ---
         function downloadBackupFile() {
             try {
                 const dataStr = JSON.stringify(appData, null, 2);
@@ -824,6 +785,7 @@
                         if (!appData.salaryHistory) appData.salaryHistory = [];
                         if (!appData.debts) appData.debts = [];
                         if (!appData.archivedMonths) appData.archivedMonths = {};
+                        if (!appData.items) appData.items = [];
 
                         saveData();
                         showToast('تمت استعادة النسخة الاحتياطية بنجاح! 🎉');
@@ -873,14 +835,14 @@
             }
 
             container.innerHTML = appData.salaryHistory.map(item => `
-                <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-3.5 flex items-center justify-between gap-3">
+                <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-3 flex items-center justify-between gap-3">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold shrink-0">
-                            <i class="fa-solid fa-arrow-down"></i>
+                        <div class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold shrink-0">
+                            <i class="fa-solid fa-arrow-down text-xs"></i>
                         </div>
                         <div>
                             <h4 class="text-xs font-bold text-white">${item.note}</h4>
-                            <span class="text-[11px] text-slate-400 block">${item.date}</span>
+                            <span class="text-[10px] text-slate-400 block">${item.date}</span>
                         </div>
                     </div>
                     <div class="text-left shrink-0">
@@ -955,45 +917,43 @@
             const payables = appData.debts.filter(d => d.type === 'payable');
             const receivables = appData.debts.filter(d => d.type === 'receivable');
 
-            payableList.innerHTML = payables.length === 0 ? `<div class="text-xs text-slate-400 text-center py-4">لا توجد ديون عليك حالياً.</div>` :
+            payableList.innerHTML = payables.length === 0 ? `<div class="text-[11px] text-slate-400 text-center py-3">لا توجد ديون عليك حالياً.</div>` :
                 payables.map(d => {
                     const remaining = d.totalAmount - d.paidAmount;
                     const isFullyPaid = remaining <= 0;
                     return `
-                        <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                            <div class="flex items-center gap-3">
-                                ${d.receiptImage ? `<img src="${d.receiptImage}" class="item-img" onclick="openImageViewer('${d.receiptImage}')" title="اضغط لتكبير وصل الأمانة">` : '<div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-xs text-slate-400">بدون وصل</div>'}
-                                <div>
-                                    <h4 class="text-xs font-bold text-white">${d.personName}</h4>
-                                    <span class="text-[11px] text-amber-300 font-medium block mt-0.5"><i class="fa-solid fa-circle-info ml-1"></i>السبب: ${d.reason || 'غير محدد'}</span>
-                                    <span class="text-[11px] text-slate-400 block mt-0.5">الإجمالي: ${formatCurrency(d.totalAmount)} | المدفوع: ${formatCurrency(d.paidAmount)}</span>
-                                    <span class="text-[11px] font-bold ${isFullyPaid ? 'text-emerald-400' : 'text-amber-400'} block">المتبقي: ${formatCurrency(remaining)} ج.م</span>
+                        <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-2.5 flex items-center justify-between gap-2.5">
+                            <div class="flex items-center gap-2.5 min-w-0">
+                                ${d.receiptImage ? `<img src="${d.receiptImage}" class="item-img" onclick="openImageViewer('${d.receiptImage}')" title="تكبير الوصل">` : '<div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-[10px] text-slate-400">بدون</div>'}
+                                <div class="min-w-0">
+                                    <h4 class="text-xs font-bold text-white truncate">${d.personName}</h4>
+                                    <span class="text-[10px] text-amber-300 font-medium block truncate">السبب: ${d.reason || 'غير محدد'}</span>
+                                    <span class="text-[10px] font-bold ${isFullyPaid ? 'text-emerald-400' : 'text-amber-400'} block">المتبقي: ${formatCurrency(remaining)} ج.م</span>
                                 </div>
                             </div>
-                            <div>
-                                ${!isFullyPaid ? `<button onclick="payDebt(${d.id})" class="px-3 py-1.5 gold-btn rounded-xl text-xs font-bold">سداد مبلغ</button>` : '<span class="text-xs text-emerald-400 font-bold px-2 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">تم السداد</span>'}
+                            <div class="shrink-0">
+                                ${!isFullyPaid ? `<button onclick="payDebt(${d.id})" class="px-2.5 py-1 gold-btn rounded-xl text-[11px] font-bold">سداد</button>` : '<span class="text-[10px] text-emerald-400 font-bold px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">تم</span>'}
                             </div>
                         </div>
                     `;
                 }).join('');
 
-            receivableList.innerHTML = receivables.length === 0 ? `<div class="text-xs text-slate-400 text-center py-4">لا توجد ديون لك عند أحد حالياً.</div>` :
+            receivableList.innerHTML = receivables.length === 0 ? `<div class="text-[11px] text-slate-400 text-center py-3">لا توجد ديون لك عند أحد حالياً.</div>` :
                 receivables.map(d => {
                     const remaining = d.totalAmount - d.paidAmount;
                     const isFullyPaid = remaining <= 0;
                     return `
-                        <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                            <div class="flex items-center gap-3">
-                                ${d.receiptImage ? `<img src="${d.receiptImage}" class="item-img" onclick="openImageViewer('${d.receiptImage}')" title="اضغط لتكبير وصل الأمانة">` : '<div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-xs text-slate-400">بدون وصل</div>'}
-                                <div>
-                                    <h4 class="text-xs font-bold text-white">${d.personName}</h4>
-                                    <span class="text-[11px] text-amber-300 font-medium block mt-0.5"><i class="fa-solid fa-circle-info ml-1"></i>السبب: ${d.reason || 'غير محدد'}</span>
-                                    <span class="text-[11px] text-slate-400 block mt-0.5">الإجمالي: ${formatCurrency(d.totalAmount)} | المستلم: ${formatCurrency(d.paidAmount)}</span>
-                                    <span class="text-[11px] font-bold ${isFullyPaid ? 'text-emerald-400' : 'text-amber-400'} block">المتبقي: ${formatCurrency(remaining)} ج.م</span>
+                        <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-2.5 flex items-center justify-between gap-2.5">
+                            <div class="flex items-center gap-2.5 min-w-0">
+                                ${d.receiptImage ? `<img src="${d.receiptImage}" class="item-img" onclick="openImageViewer('${d.receiptImage}')" title="تكبير الوصل">` : '<div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-[10px] text-slate-400">بدون</div>'}
+                                <div class="min-w-0">
+                                    <h4 class="text-xs font-bold text-white truncate">${d.personName}</h4>
+                                    <span class="text-[10px] text-amber-300 font-medium block truncate">السبب: ${d.reason || 'غير محدد'}</span>
+                                    <span class="text-[10px] font-bold ${isFullyPaid ? 'text-emerald-400' : 'text-amber-400'} block">المتبقي: ${formatCurrency(remaining)} ج.م</span>
                                 </div>
                             </div>
-                            <div>
-                                ${!isFullyPaid ? `<button onclick="payDebt(${d.id})" class="px-3 py-1.5 gold-btn rounded-xl text-xs font-bold">استلام مبلغ</button>` : '<span class="text-xs text-emerald-400 font-bold px-2 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">تم الاستلام</span>'}
+                            <div class="shrink-0">
+                                ${!isFullyPaid ? `<button onclick="payDebt(${d.id})" class="px-2.5 py-1 gold-btn rounded-xl text-[11px] font-bold">استلام</button>` : '<span class="text-[10px] text-emerald-400 font-bold px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">تم</span>'}
                             </div>
                         </div>
                     `;
@@ -1013,13 +973,15 @@
             let todayTotal = 0;
             const todayStr = getTodayDateString();
 
-            appData.items.forEach(item => {
-                const itemTotal = (item.price * item.quantity);
-                monthTotal += itemTotal;
-                if (item.date === todayStr) { todayTotal += itemTotal; }
-            });
+            if (appData.items && Array.isArray(appData.items)) {
+                appData.items.forEach(item => {
+                    const itemTotal = (Number(item.price) * Number(item.quantity));
+                    monthTotal += itemTotal;
+                    if (item.date === todayStr) { todayTotal += itemTotal; }
+                });
+            }
 
-            let remainingBudget = (appData.monthlyBudget || 0) - monthTotal;
+            let remainingBudget = (Number(appData.monthlyBudget) || 0) - monthTotal;
 
             document.getElementById('headerTotalExpense').innerText = `${formatCurrency(remainingBudget)} ج.م`;
             document.getElementById('monthTotalExpense').innerText = `${formatCurrency(monthTotal)} ج.م`;
@@ -1086,23 +1048,26 @@
 
             const timestamp = new Date(customDate).getTime() || Date.now();
 
+            if (!appData.items) appData.items = [];
+
             if (editingId) {
                 const index = appData.items.findIndex(item => item.id == editingId);
                 if (index !== -1) {
                     if (!image) image = appData.items[index].image;
                     appData.items[index] = { ...appData.items[index], name, price, quantity, image, date: customDate, timestamp: timestamp };
-                    showToast('تم تحديث بيانات الصنف');
+                    showToast('تم تحديث بيانات الصنف بنجاح');
                 }
             } else {
                 if (!image) image = 'https://placehold.co/300x300/1e1435/facc15?text=صورة';
                 const newItem = { id: Date.now(), name, price, quantity, image, date: customDate, timestamp: timestamp };
                 appData.items.unshift(newItem);
-                showToast('تم إضافة الصنف بنجاح');
+                showToast('تم إضافة الصنف بنجاح ✅');
             }
 
             checkAndArchiveMonths();
             saveData();
             resetForm();
+            switchPage('home');
         }
 
         function editItem(id) {
@@ -1113,13 +1078,13 @@
                 document.getElementById('itemPrice').value = item.price;
                 document.getElementById('itemQuantity').value = item.quantity;
                 document.getElementById('itemCustomDate').value = item.date || getTodayDateString();
-                document.getElementById('itemImageUrl').value = item.image.startsWith('data:') ? '' : item.image;
-                document.getElementById('itemImageBase64').value = item.image.startsWith('data:') ? item.image : '';
+                document.getElementById('itemImageUrl').value = item.image && item.image.startsWith('data:') ? '' : item.image;
+                document.getElementById('itemImageBase64').value = item.image && item.image.startsWith('data:') ? item.image : '';
                 
                 document.getElementById('formTitleText').innerHTML = `تعديل صنف: ${item.name}`;
                 document.getElementById('submitFormBtn').innerHTML = `<i class="fa-solid fa-check"></i> <span>تحديث البيانات</span>`;
                 document.getElementById('cancelEditBtn').classList.remove('hidden');
-                switchPage('admin');
+                switchPage('addExpense');
             }
         }
 
@@ -1130,7 +1095,7 @@
             document.getElementById('itemQuantity').value = '1';
             document.getElementById('itemCustomDate').value = getTodayDateString();
             document.getElementById('formTitleText').innerHTML = `إضافة صنف أو مصروف جديد`;
-            document.getElementById('submitFormBtn').innerHTML = `<i class="fa-solid fa-plus"></i> <span>حفظ الصنف</span>`;
+            document.getElementById('submitFormBtn').innerHTML = `<i class="fa-solid fa-plus"></i> <span>حفظ وإضافة المصروف</span>`;
             document.getElementById('cancelEditBtn').classList.add('hidden');
         }
 
@@ -1153,16 +1118,18 @@
         function renderHomeItems() {
             const container = document.getElementById('homeItemsList');
             const badge = document.getElementById('homeItemsBadge');
+            if (!container || !badge) return;
+
             badge.innerText = `${appData.items.length} عنصر`;
 
             if (appData.items.length === 0) {
                 container.innerHTML = `
-                    <div class="py-12 text-center space-y-2">
-                        <div class="w-12 h-12 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-lg border border-amber-500/20 shadow-lg">
+                    <div class="py-10 text-center space-y-2">
+                        <div class="w-10 h-10 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-base border border-amber-500/20 shadow-lg">
                             <i class="fa-solid fa-box-open"></i>
                         </div>
                         <h4 class="text-xs font-bold text-white">لا توجد مصاريف مسجلة لشهرك الحالي</h4>
-                        <p class="text-[11px] text-slate-400">انتقل إلى صفحة الإعدادات لإضافة مصاريفك الأولى.</p>
+                        <p class="text-[11px] text-slate-400">انتقل إلى تبويب "إضافة" لإضافة مصاريفك الجديدة.</p>
                     </div>
                 `;
                 return;
@@ -1179,8 +1146,8 @@
             let html = '';
             Object.keys(groupedByDate).sort().reverse().forEach(dateKey => {
                 html += `
-                    <div class="mt-4 mb-2 flex items-center gap-2">
-                        <span class="text-xs font-black text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-xl">
+                    <div class="mt-3 mb-1.5 flex items-center gap-2">
+                        <span class="text-[11px] font-black text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2.5 py-0.5 rounded-xl">
                             <i class="fa-regular fa-calendar-days ml-1"></i> ${dateKey}
                         </span>
                         <div class="flex-grow h-px bg-amber-500/20"></div>
@@ -1188,14 +1155,14 @@
                 `;
 
                 groupedByDate[dateKey].forEach(item => {
-                    const totalPrice = item.price * item.quantity;
+                    const totalPrice = Number(item.price) * Number(item.quantity);
                     html += `
-                        <div class="bg-slate-900/80 hover:bg-slate-900 border border-amber-500/15 hover:border-amber-400/40 rounded-2xl p-3 sm:p-4 flex items-center justify-between gap-3 transition-all shadow-md mb-2">
-                            <div class="flex items-center gap-3 min-w-0">
-                                <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" class="item-img shrink-0" onclick="openImageViewer('${item.image}')" title="اضغط لتكبير الصورة">
+                        <div class="bg-slate-900/80 hover:bg-slate-900 border border-amber-500/15 rounded-2xl p-3 flex items-center justify-between gap-3 transition-all shadow-md mb-2">
+                            <div class="flex items-center gap-2.5 min-w-0">
+                                <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" class="item-img shrink-0" onclick="openImageViewer('${item.image}')" title="تكبير الصورة">
                                 <div class="min-w-0 flex flex-col justify-center">
-                                    <h4 class="text-xs sm:text-sm font-extrabold text-white truncate max-w-[140px] sm:max-w-xs">${item.name}</h4>
-                                    <div class="flex items-center gap-2 text-[11px] text-slate-400 mt-1">
+                                    <h4 class="text-xs font-extrabold text-white truncate max-w-[150px] sm:max-w-xs">${item.name}</h4>
+                                    <div class="flex items-center gap-2 text-[10px] text-slate-400 mt-0.5">
                                         <span>العدد: <strong class="text-slate-200 font-bold">${item.quantity}</strong></span>
                                         <span class="text-slate-600">•</span>
                                         <span>السعر: <strong class="text-slate-200 font-bold">${formatCurrency(item.price)} ج.م</strong></span>
@@ -1203,8 +1170,8 @@
                                 </div>
                             </div>
                             <div class="text-left shrink-0">
-                                <span class="text-[10px] text-slate-400 block font-semibold">الإجمالي</span>
-                                <span class="text-xs sm:text-sm font-black text-amber-400">${formatCurrency(totalPrice)} <span class="text-[10px] text-slate-400 font-normal">ج.م</span></span>
+                                <span class="text-[9px] text-slate-400 block font-semibold">الإجمالي</span>
+                                <span class="text-xs font-black text-amber-400">${formatCurrency(totalPrice)} <span class="text-[9px] text-slate-400 font-normal">ج.م</span></span>
                             </div>
                         </div>
                     `;
@@ -1215,31 +1182,33 @@
 
         function renderAdminItems() {
             const container = document.getElementById('adminItemsList');
+            if (!container) return;
+
             if (appData.items.length === 0) {
-                container.innerHTML = `<div class="py-10 text-center text-xs text-slate-400">القائمة فارغة حالياً.</div>`;
+                container.innerHTML = `<div class="py-8 text-center text-xs text-slate-400">القائمة فارغة حالياً.</div>`;
                 return;
             }
 
             let html = '';
             appData.items.forEach(item => {
-                const totalPrice = item.price * item.quantity;
+                const totalPrice = Number(item.price) * Number(item.quantity);
                 html += `
-                    <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-3 flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" class="item-img shrink-0" onclick="openImageViewer('${item.image}')" title="اضغط لتكبير الصورة">
+                    <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-2.5 flex items-center justify-between gap-2.5">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" class="item-img shrink-0" onclick="openImageViewer('${item.image}')" title="تكبير الصورة">
                             <div class="min-w-0">
                                 <h4 class="text-xs font-bold text-white truncate">${item.name}</h4>
-                                <span class="text-[11px] text-slate-400 block mt-0.5">
+                                <span class="text-[10px] text-slate-400 block truncate mt-0.5">
                                     ${item.date || ''} | ${item.quantity} × ${formatCurrency(item.price)} = <strong class="text-amber-400 font-bold">${formatCurrency(totalPrice)} ج.م</strong>
                                 </span>
                             </div>
                         </div>
                         <div class="flex items-center gap-1.5 shrink-0">
-                            <button onclick="editItem(${item.id})" class="px-2.5 py-1.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 hover:bg-amber-500 hover:text-black transition text-xs font-bold flex items-center gap-1">
-                                <i class="fa-solid fa-pen"></i><span class="hidden sm:inline">تعديل</span>
+                            <button onclick="editItem(${item.id})" class="px-2 py-1 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 hover:bg-amber-500 hover:text-black transition text-[11px] font-bold flex items-center gap-1">
+                                <i class="fa-solid fa-pen text-[10px]"></i><span>تعديل</span>
                             </button>
-                            <button onclick="deleteItem(${item.id})" class="w-8 h-8 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white transition flex items-center justify-center text-xs">
-                                <i class="fa-solid fa-trash"></i>
+                            <button onclick="deleteItem(${item.id})" class="w-7 h-7 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white transition flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-trash text-[10px]"></i>
                             </button>
                         </div>
                     </div>
@@ -1271,7 +1240,7 @@
             const totalEl = document.getElementById('historyMonthTotal');
 
             if (!selectEl || !selectEl.value || !appData.archivedMonths[selectEl.value]) {
-                container.innerHTML = `<div class="py-8 text-center text-xs text-slate-400">لا توجد بيانات متاحة لهذا الشهر.</div>`;
+                container.innerHTML = `<div class="py-6 text-center text-xs text-slate-400">لا توجد بيانات متاحة لهذا الشهر.</div>`;
                 totalEl.innerText = '0.00 ج.م';
                 return;
             }
@@ -1281,15 +1250,15 @@
             let html = '';
 
             monthItems.forEach(item => {
-                const itemTotal = item.price * item.quantity;
+                const itemTotal = Number(item.price) * Number(item.quantity);
                 total += itemTotal;
                 html += `
-                    <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-3 flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" class="item-img shrink-0" onclick="openImageViewer('${item.image}')" title="اضغط لتكبير الصورة">
+                    <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-2.5 flex items-center justify-between gap-2.5">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/300x300/1e1435/facc15?text=صورة'" class="item-img shrink-0" onclick="openImageViewer('${item.image}')" title="تكبير الصورة">
                             <div class="min-w-0">
                                 <h4 class="text-xs font-bold text-white truncate">${item.name}</h4>
-                                <span class="text-[11px] text-slate-400 block mt-0.5">تاريخ: ${item.date || selectEl.value} | الكمية: ${item.quantity}</span>
+                                <span class="text-[10px] text-slate-400 block mt-0.5">تاريخ: ${item.date || selectEl.value} | الكمية: ${item.quantity}</span>
                             </div>
                         </div>
                         <div class="text-left shrink-0">
