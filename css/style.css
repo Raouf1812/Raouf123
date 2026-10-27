@@ -1,0 +1,173 @@
+/* ==========================================================
+   STYLE & ANIMATIONS - LUXURY FINANCIAL SUITE
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap');
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    direction: rtl;
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding-bottom: 95px;
+    position: relative;
+    overflow-x: hidden;
+    line-height: 1.5;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Background Canvas for Particles / Snow */
+#snowCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Subtle Grid Texture */
+.bg-grid-pattern {
+    position: fixed;
+    inset: 0;
+    background-size: 40px 40px;
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    70% {
+        transform: scale(1.03);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 15px -3px var(--primary-glow);
+    }
+    50% {
+        box-shadow: 0 0 28px 2px var(--primary-glow);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+    animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-pop {
+    animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.pulse-glow {
+    animation: pulseGlow 3s infinite ease-in-out;
+}
+
+/* Avatar Styling */
+.avatar-img {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 2px solid var(--primary);
+    box-shadow: 0 4px 14px var(--primary-glow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.avatar-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px var(--primary-glow);
+}
+
+/* Card Hover micro-interaction */
+.interactive-card {
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.interactive-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-border-hover);
+}
+
+/* Currency symbol typography */
+.currency-badge {
+    font-size: 0.72em;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-right: 2px;
+}
+
+/* Print Stylesheet for Financial PDF & Invoices */
+@media print {
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+    }
+    
+    #snowCanvas, .ambient-glow-mesh, .bg-grid-pattern, .bottom-nav, .glass-header, .no-print, button {
+        display: none !important;
+    }
+    
+    .glass-panel, .glass-card {
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: none !important;
+        color: #000000 !important;
+    }
+
+    .print-only {
+        display: block !important;
+    }
+}
