@@ -259,6 +259,16 @@ const UIEngine = (function() {
 
     function setDateFilter(filterType) {
         currentDateFilter = filterType;
+        ['all', 'today', 'month'].forEach(f => {
+            const btn = document.getElementById(`filterBtn-${f}`);
+            if (btn) {
+                if (f === filterType) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            }
+        });
         renderHomeItems();
         SoundEngine.playClick();
     }
@@ -274,33 +284,67 @@ const UIEngine = (function() {
         renderHomeItems();
     }
 
-    // Filter & Sort Items (فقط ترتيب أحدث، أقدم، أرخص، أغلى)
+    // Filter & Sort Items (شامل كل المضاف / اليوم / الشهر مع الفرز الشامل)
     function getFilteredItems() {
         const data = AppState.getData();
-        let items = [...data.items];
+        let items = [...(data.items || [])];
 
-        // ترتيب فقط
+        // 1. تصفية التاريخ
+        const todayStr = AppState.getTodayDateString();
+        const currentMonthKey = AppState.getCurrentMonthKey();
+
+        if (currentDateFilter === 'today') {
+            items = items.filter(item => (item.date || '') === todayStr);
+        } else if (currentDateFilter === 'month') {
+            items = items.filter(item => (item.date || '').startsWith(currentMonthKey));
+        }
+
+        // 2. تصفية التصنيف
+        if (currentCategoryFilter && currentCategoryFilter !== 'all') {
+            items = items.filter(item => item.category === currentCategoryFilter);
+        }
+
+        // 3. تصفية البحث إن وجد
+        if (currentSearchQuery) {
+            items = items.filter(item => 
+                (item.name || '').toLowerCase().includes(currentSearchQuery) ||
+                (item.notes || '').toLowerCase().includes(currentSearchQuery)
+            );
+        }
+
+        // 4. ترتيب شامل لجميع العناصر حسب اختيار المستخدم (أحدث، أقدم، أغلى، أرخص)
         if (currentSortOrder === 'newest') {
-            items.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+            items.sort((a, b) => (b.timestamp || new Date(b.date || 0).getTime() || 0) - (a.timestamp || new Date(a.date || 0).getTime() || 0));
         } else if (currentSortOrder === 'oldest') {
-            items.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+            items.sort((a, b) => (a.timestamp || new Date(a.date || 0).getTime() || 0) - (b.timestamp || new Date(b.date || 0).getTime() || 0));
         } else if (currentSortOrder === 'price-desc') {
-            items.sort((a, b) => ((b.price * (b.quantity || 1)) - (a.price * (a.quantity || 1))));
+            items.sort((a, b) => {
+                const totalA = (Number(a.price) || 0) * (Number(a.quantity) || 1);
+                const totalB = (Number(b.price) || 0) * (Number(b.quantity) || 1);
+                return totalB - totalA;
+            });
         } else if (currentSortOrder === 'price-asc') {
-            items.sort((a, b) => ((a.price * (a.quantity || 1)) - (b.price * (b.quantity || 1))));
+            items.sort((a, b) => {
+                const totalA = (Number(a.price) || 0) * (Number(a.quantity) || 1);
+                const totalB = (Number(b.price) || 0) * (Number(b.quantity) || 1);
+                return totalA - totalB;
+            });
         }
 
         return items;
     }
 
-    // Render Home Expenses List
     function renderHomeItems() {
         const container = document.getElementById('homeItemsList');
         const badge = document.getElementById('homeItemsBadge');
         if (!container) return;
 
         const filtered = getFilteredItems();
-        if (badge) badge.innerText = `${filtered.length} عنصر`;
+        const totalAmount = filtered.reduce((sum, it) => sum + ((Number(it.price) || 0) * (Number(it.quantity) || 1)), 0);
+
+        if (badge) {
+            badge.innerText = `${filtered.length} عنصر (${AppState.formatCurrency(totalAmount)})`;
+        }
 
         if (filtered.length === 0) {
             container.innerHTML = `
@@ -309,115 +353,94 @@ const UIEngine = (function() {
                         <i class="fa-solid fa-receipt"></i>
                     </div>
                     <h4 class="text-xs font-bold text-white">لا توجد مصاريف مسجلة</h4>
-                    <p class="text-[11px] text-slate-400">أضف أول مصروف في الشهر لبدء التتبع السريع.</p>
+                    <p class="text-[11px] text-slate-400">أضف أول مصروف لبدء التتبع السريع.</p>
                 </div>
             `;
             return;
         }
 
-        // Group by Date
-        const grouped = {};
-        filtered.forEach(item => {
-            const dateKey = item.date || AppState.getTodayDateString();
-            if (!grouped[dateKey]) grouped[dateKey] = [];
-            grouped[dateKey].push(item);
-        });
-
-        const sortedDateKeys = Object.keys(grouped).sort().reverse();
         let html = '';
 
-        sortedDateKeys.forEach(dateKey => {
-            const dayItems = grouped[dateKey];
-            const dayTotal = dayItems.reduce((sum, it) => sum + (Number(it.price) * (Number(it.quantity) || 1)), 0);
+        filtered.forEach(item => {
+            const total = (Number(item.price) || 0) * (Number(item.quantity) || 1);
+            const itemDate = item.date || AppState.getTodayDateString();
 
+            // تم حذف عرض التصنيف (مثل "مصاريف أخرى" أو "طعام") من هنا نهائياً
             html += `
-                <div class="mt-4 mb-2 flex items-center justify-between gap-2">
-                    <span class="text-[11px] font-black text-amber-300 bg-amber-500/15 border border-amber-500/30 px-3 py-1 rounded-xl flex items-center gap-1.5 shadow-sm">
-                        <i class="fa-regular fa-calendar-days text-[10px]"></i> ${dateKey}
-                    </span>
-                    <span class="text-[11px] font-bold text-slate-400">
-                        مجموع اليوم: <strong class="text-amber-400 font-black">${AppState.formatCurrency(dayTotal)}</strong>
-                    </span>
-                </div>
-            `;
-
-            dayItems.forEach(item => {
-                const total = Number(item.price) * (Number(item.quantity) || 1);
-                const cat = AppState.getCategoryById(item.category);
-
-                html += `
-                    <div class="glass-card p-3 sm:p-3.5 flex items-center justify-between gap-3 mb-2.5 group">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <div class="w-10 h-10 rounded-2xl flex items-center justify-center text-sm shrink-0 border border-white/10 shadow-md" style="background:${cat.bg}; color:${cat.color}">
-                                <i class="fa-solid ${cat.icon}"></i>
-                            </div>
-                            <div class="min-w-0">
-                                <div class="flex items-center gap-2">
-                                    <h4 class="text-xs sm:text-sm font-extrabold text-white truncate max-w-[180px] sm:max-w-xs">${item.name}</h4>
-                                    <span class="text-[9px] font-bold px-2 py-0.5 rounded-lg border border-white/5 bg-slate-900/60 text-slate-300">
-                                        ${cat.name}
-                                    </span>
-                                </div>
-                                <div class="flex items-center gap-2 text-[10px] text-slate-400 mt-1">
-                                    <span>العدد: <strong class="text-slate-200">${item.quantity}</strong></span>
-                                    <span class="text-slate-600">•</span>
-                                    <span>السعر: <strong class="text-slate-200">${AppState.formatCurrency(item.price)}</strong></span>
-                                </div>
-                            </div>
+                <div class="glass-card p-3 sm:p-3.5 flex items-center justify-between gap-3 mb-2.5 transition hover:scale-[1.008]">
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h4 class="text-xs sm:text-sm font-extrabold text-white truncate max-w-[200px] sm:max-w-md">${item.name}</h4>
                         </div>
-
-                        <div class="flex items-center gap-3 shrink-0">
-                            <div class="text-left">
-                                <span class="text-[9px] text-slate-400 block font-semibold">الإجمالي</span>
-                                <span class="text-xs sm:text-sm font-black gold-text">${AppState.formatCurrency(total)}</span>
-                            </div>
-                            <!-- تم إلغاء زر التعديل من القائمة الرئيسية مع الإبقاء فقط على الحذف -->
-                            <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
-                                <button onclick="UIEngine.deleteExpense(${item.id})" title="حذف المصروف" class="w-7 h-7 rounded-xl bg-rose-500/10 text-rose-400 hover:bg-rose-500 hover:text-white border border-rose-500/20 flex items-center justify-center text-[10px] transition">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </div>
+                        <div class="flex items-center gap-2 text-[10px] text-slate-400 mt-1 flex-wrap">
+                            <span class="text-amber-300/90 font-semibold"><i class="fa-regular fa-calendar-days text-[9px]"></i> ${itemDate}</span>
+                            <span class="text-slate-600">•</span>
+                            <span>الكمية: <strong class="text-slate-200">${item.quantity || 1}</strong></span>
+                            <span class="text-slate-600">•</span>
+                            <span>السعر: <strong class="text-slate-200">${AppState.formatCurrency(item.price)}</strong></span>
+                            ${item.notes ? `<span class="text-slate-600">•</span><span class="text-slate-400 truncate max-w-[140px]" title="${item.notes}">📝 ${item.notes}</span>` : ''}
                         </div>
                     </div>
-                `;
-            });
+
+                    <div class="flex items-center gap-2.5 shrink-0 text-left">
+                        <div>
+                            <span class="text-[9px] text-slate-400 block font-semibold">الإجمالي</span>
+                            <span class="text-xs sm:text-sm font-black gold-text">${AppState.formatCurrency(total)}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
         });
 
         container.innerHTML = html;
     }
 
-    // Render Admin Manage Items List
+    // Render Admin Manage Items List (البحث والتعديل والحذف بأمان من الإعدادات)
     function renderAdminItems() {
         const container = document.getElementById('adminItemsList');
         if (!container) return;
 
         const data = AppState.getData();
-        if (data.items.length === 0) {
-            container.innerHTML = `<div class="py-8 text-center text-xs text-slate-400">القائمة فارغة حالياً.</div>`;
+        const searchInput = document.getElementById('adminSearchInput');
+        const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+
+        let items = [...(data.items || [])];
+
+        if (query) {
+            items = items.filter(it => 
+                (it.name || '').toLowerCase().includes(query) ||
+                (it.notes || '').toLowerCase().includes(query) ||
+                (it.date || '').includes(query)
+            );
+        }
+
+        if (items.length === 0) {
+            container.innerHTML = `<div class="py-8 text-center text-xs text-slate-400">${query ? 'لا توجد مصاريف مطابقة لكلمة البحث.' : 'القائمة فارغة حالياً.'}</div>`;
             return;
         }
 
         let html = '';
-        data.items.forEach(item => {
+        items.forEach(item => {
             const total = Number(item.price) * (Number(item.quantity) || 1);
             const cat = AppState.getCategoryById(item.category);
 
             html += `
-                <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-2.5 flex items-center justify-between gap-2.5">
+                <div class="bg-slate-900/80 border border-amber-500/15 rounded-2xl p-2.5 flex items-center justify-between gap-2.5 hover:border-amber-500/30 transition">
                     <div class="min-w-0">
-                        <div class="flex items-center gap-1.5">
+                        <div class="flex items-center gap-1.5 flex-wrap">
                             <span class="w-2 h-2 rounded-full" style="background:${cat.color}"></span>
-                            <h4 class="text-xs font-bold text-white truncate">${item.name}</h4>
+                            <h4 class="text-xs font-bold text-white truncate max-w-[150px] sm:max-w-xs">${item.name}</h4>
+                            <span class="text-[9px] text-slate-400 bg-slate-800/80 px-1.5 py-0.5 rounded">${cat.name}</span>
                         </div>
                         <span class="text-[10px] text-slate-400 block truncate mt-0.5">
-                            ${item.date || ''} | ${item.quantity} × ${AppState.formatCurrency(item.price)} = <strong class="text-amber-400">${AppState.formatCurrency(total)}</strong>
+                            📅 ${item.date || ''} | ${item.quantity || 1} × ${AppState.formatCurrency(item.price)} = <strong class="text-amber-400 font-bold">${AppState.formatCurrency(total)}</strong>
                         </span>
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0">
-                        <button onclick="UIEngine.openEditModal(${item.id})" class="px-2.5 py-1 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 hover:bg-amber-500 hover:text-black transition text-[11px] font-bold flex items-center gap-1">
+                        <button onclick="UIEngine.openEditModal(${item.id})" class="px-2.5 py-1.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 hover:bg-amber-500 hover:text-black transition text-[11px] font-bold flex items-center gap-1" title="تعديل المصروف">
                             <i class="fa-solid fa-pen text-[9px]"></i><span>تعديل</span>
                         </button>
-                        <button onclick="UIEngine.deleteExpense(${item.id})" class="w-7 h-7 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white transition flex items-center justify-center text-xs">
+                        <button onclick="UIEngine.deleteExpense(${item.id})" class="w-8 h-8 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white transition flex items-center justify-center text-xs" title="حذف المصروف">
                             <i class="fa-solid fa-trash text-[10px]"></i>
                         </button>
                     </div>
@@ -742,19 +765,27 @@ const UIEngine = (function() {
         const item = AppState.getData().items.find(i => i.id == id);
         if (!item) return;
 
-        document.getElementById('editingItemId').value = item.id;
-        document.getElementById('itemName').value = item.name;
-        document.getElementById('itemPrice').value = item.price;
-        document.getElementById('itemQuantity').value = item.quantity || 1;
-        document.getElementById('itemCustomDate').value = item.date || AppState.getTodayDateString();
+        const editIdEl = document.getElementById('editingItemId');
+        if (editIdEl) editIdEl.value = item.id;
+        const nameEl = document.getElementById('itemName');
+        if (nameEl) nameEl.value = item.name;
+        const priceEl = document.getElementById('itemPrice');
+        if (priceEl) priceEl.value = item.price;
+        const qtyEl = document.getElementById('itemQuantity');
+        if (qtyEl) qtyEl.value = item.quantity || 1;
+        const dateEl = document.getElementById('itemCustomDate');
+        if (dateEl) dateEl.value = item.date || AppState.getTodayDateString();
         const catEl = document.getElementById('itemCategorySelect');
-        if (catEl) catEl.value = item.category || 'other';
-        const payEl = document.getElementById('itemPaymentMethodSelect');
-        if (payEl) payEl.value = item.paymentMethod || 'cash';
+        if (catEl) catEl.value = item.category || 'auto';
+        const notesEl = document.getElementById('itemNotes');
+        if (notesEl) notesEl.value = item.notes || '';
 
-        document.getElementById('formTitleText').innerHTML = `تعديل صنف: ${item.name} ✏️`;
-        document.getElementById('submitFormBtn').innerHTML = `<i class="fa-solid fa-check"></i> <span>تحديث البيانات</span>`;
-        document.getElementById('cancelEditBtn').classList.remove('hidden');
+        const titleText = document.getElementById('formTitleText');
+        if (titleText) titleText.innerHTML = `تعديل صنف: ${item.name} ✏️`;
+        const submitBtn = document.getElementById('submitFormBtn');
+        if (submitBtn) submitBtn.innerHTML = `<i class="fa-solid fa-check"></i> <span>تحديث البيانات</span>`;
+        const cancelBtn = document.getElementById('cancelEditBtn');
+        if (cancelBtn) cancelBtn.classList.remove('hidden');
 
         AppRouter.switchPage('addExpense');
     }

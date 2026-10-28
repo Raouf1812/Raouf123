@@ -127,78 +127,108 @@
                     </div>
                 </div>
 
-                <!-- بطاقات إحصائيات سريعة (اليوم، الشهر، الديون، الحصالة) -->
-                <div class="grid grid-cols-3 gap-2.5 sm:gap-3">
-                    <div class="glass-card p-3 rounded-2xl">
-                        <div class="flex items-center justify-between text-slate-400 mb-1">
-                            <span class="text-[10px] font-bold">مصاريف اليوم 💸</span>
-                            <i class="fa-solid fa-calendar-day text-xs text-amber-400"></i>
-                        </div>
-                        <div id="todayTotalExpense" class="privacy-sensitive text-xs sm:text-sm font-black text-amber-300">0.00 ج.م</div>
-                    </div>
-
-                    <div class="glass-card p-3 rounded-2xl">
-                        <div class="flex items-center justify-between text-slate-400 mb-1">
-                            <span class="text-[10px] font-bold">مصاريف الشهر 📊</span>
-                            <i class="fa-solid fa-calendar-days text-xs text-amber-400"></i>
-                        </div>
-                        <div id="monthTotalExpense" class="privacy-sensitive text-xs sm:text-sm font-black gold-text">0.00 ج.م</div>
-                    </div>
-
-                    <div class="glass-card p-3 rounded-2xl cursor-pointer hover:border-emerald-500/40" onclick="AppRouter.switchPage('debts')">
-                        <div class="flex items-center justify-between text-slate-400 mb-1">
-                            <span class="text-[10px] font-bold">الديون 🤝</span>
-                            <i class="fa-solid fa-hand-holding-dollar text-xs text-amber-400"></i>
-                        </div>
-                        <div class="flex items-center justify-between gap-1 mt-0.5">
-                            <div>
-                                <span class="text-[9px] text-slate-400 block font-semibold">ليا:</span>
-                                <span id="quickDebtsReceivable" class="privacy-sensitive text-[11px] font-black text-emerald-400">0.00 ج.م</span>
+                <!-- بطاقات إحصائيات سريعة: اليوم والشهر جنباً إلى جنب، وتحتهما الديون بكامل العرض -->
+                <div class="space-y-2.5 sm:space-y-3">
+                    <div class="grid grid-cols-2 gap-2.5 sm:gap-3">
+                        <div class="glass-card p-3 sm:p-3.5 rounded-2xl">
+                            <div class="flex items-center justify-between text-slate-400 mb-1">
+                                <span class="text-xs font-bold flex items-center gap-1.5">
+                                    <i class="fa-solid fa-calendar-day text-amber-400 text-xs"></i>
+                                    <span>مصاريف اليوم </span>
+                                </span>
                             </div>
-                            <div class="h-5 w-px bg-white/10"></div>
-                            <div class="text-left">
-                                <span class="text-[9px] text-slate-400 block font-semibold">عليا:</span>
-                                <span id="quickDebtsPayable" class="privacy-sensitive text-[11px] font-black text-rose-400">0.00 ج.م</span>
+                            <div id="todayTotalExpense" class="privacy-sensitive text-sm sm:text-base font-black text-amber-300">0.00 ج.م</div>
+                        </div>
+
+                        <div class="glass-card p-3 sm:p-3.5 rounded-2xl">
+                            <div class="flex items-center justify-between text-slate-400 mb-1">
+                                <span class="text-xs font-bold flex items-center gap-1.5">
+                                    <i class="fa-solid fa-calendar-days text-amber-400 text-xs"></i>
+                                    <span>مصاريف الشهر </span>
+                                </span>
+                            </div>
+                            <div id="monthTotalExpense" class="privacy-sensitive text-sm sm:text-base font-black gold-text">0.00 ج.م</div>
+                        </div>
+                    </div>
+
+                    <!-- بطاقة الديون واخدة الشاشة كلها تحتهم -->
+                    <div class="glass-card p-3 sm:p-3.5 rounded-2xl cursor-pointer hover:border-amber-500/40 transition w-full" onclick="AppRouter.switchPage('debts')">
+                        <div class="flex items-center justify-between text-slate-300 mb-2 pb-1.5 border-b border-white/5">
+                            <span class="text-xs font-bold flex items-center gap-2">
+                                <i class="fa-solid fa-hand-holding-dollar text-amber-400 text-sm"></i>
+                                <span>الديون والسلف </span>
+                            </span>
+                            <span class="text-[10px] text-amber-400 flex items-center gap-1 font-semibold">
+                                <span>عرض التفاصيل</span>
+                                <i class="fa-solid fa-chevron-left text-[9px]"></i>
+                            </span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2.5 sm:gap-3 text-center">
+                            <div class="bg-emerald-500/10 border border-emerald-500/20 p-2 sm:p-2.5 rounded-xl">
+                                <span class="text-[10px] text-slate-300 block font-semibold mb-0.5">مبالغ مستحقة (ليا 🟢)</span>
+                                <span id="quickDebtsReceivable" class="privacy-sensitive text-xs sm:text-sm font-black text-emerald-400">0.00 ج.م</span>
+                            </div>
+                            <div class="bg-rose-500/10 border border-rose-500/20 p-2 sm:p-2.5 rounded-xl">
+                                <span class="text-[10px] text-slate-300 block font-semibold mb-0.5">مبالغ مطلوبة (عليا 🔴)</span>
+                                <span id="quickDebtsPayable" class="privacy-sensitive text-xs sm:text-sm font-black text-rose-400">0.00 ج.م</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- بطاقة المصاريف مع البحث والتصفية -->
+            <!-- بطاقة المصاريف مع التصفية والترتيب -->
             <div class="glass-panel p-4 sm:p-5 rounded-3xl space-y-3.5">
                 <!-- رأس القائمة والفرز -->
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
-                    <div class="flex items-center justify-between sm:justify-start gap-2.5">
-                        <div class="flex items-center gap-2">
+                <div class="flex flex-col gap-3 pb-3 border-b border-white/10">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                        <div class="flex items-center gap-2.5 flex-wrap">
                             <div class="w-8 h-8 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-xs border border-amber-500/20">
                                 <i class="fa-solid fa-receipt"></i>
                             </div>
-                            <h3 class="text-xs sm:text-sm font-extrabold text-white">سجل المصاريف للشهر الحالي 🧾</h3>
+                            <h3 class="text-xs sm:text-sm font-extrabold text-white">سجل المصاريف 🧾</h3>
+                            <span id="homeItemsBadge" class="text-[11px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/30 px-2.5 py-0.5 rounded-full">0 عنصر</span>
                         </div>
-                        <span id="homeItemsBadge" class="text-[11px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/30 px-2.5 py-0.5 rounded-full">0 عنصر</span>
-                        <button onclick="AppRouter.switchPage('history')" class="text-[10px] font-bold text-amber-300 hover:text-amber-200 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 px-2 py-0.5 rounded-lg flex items-center gap-1 transition" title="عرض أرشيف الشهور والتقارير">
-                            <i class="fa-solid fa-box-archive text-[9px]"></i> <span>الأرشيف</span>
-                        </button>
+
+                        
                     </div>
 
-                    <!-- خيارات الترتيب فقط -->
-                    <div class="flex items-center justify-end gap-2">
-                        <span class="text-[11px] font-bold text-slate-400 flex items-center gap-1">
-                            <i class="fa-solid fa-arrow-down-wide-short text-amber-400"></i>
-                            <span>ترتيب حسب:</span>
-                        </span>
-                        <select onchange="UIEngine.setSortOrder(this.value)" class="px-3 py-1.5 text-xs font-bold text-amber-300 rounded-xl bg-slate-900/80 border border-white/10">
-                            <option value="newest">الأحدث أولاً ⏱️</option>
-                            <option value="oldest">الأقدم أولاً ⏳</option>
-                            <option value="price-desc">الأغلى سعراً 💰</option>
-                            <option value="price-asc">الأرخص سعراً 🏷️</option>
-                        </select>
+                    <!-- شريط الفلاتر والترتيب -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pt-1">
+                        <!-- أزرار التصفية (الكل، اليوم، الشهر) -->
+                        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
+                            <button id="filterBtn-all" onclick="UIEngine.setDateFilter('all')" class="category-pill active">
+                                <i class="fa-solid fa-layer-group text-[10px]"></i>
+                                <span>كل المضاف </span>
+                            </button>
+                            <button id="filterBtn-today" onclick="UIEngine.setDateFilter('today')" class="category-pill">
+                                <i class="fa-regular fa-calendar-day text-[10px]"></i>
+                                <span>اليوم فقط </span>
+                            </button>
+                            <button id="filterBtn-month" onclick="UIEngine.setDateFilter('month')" class="category-pill">
+                                <i class="fa-regular fa-calendar-days text-[10px]"></i>
+                                <span>الشهر الحالي </span>
+                            </button>
+                        </div>
+
+                        <!-- خيارات الترتيب الشامل لجميع المصاريف -->
+                        <div class="flex items-center justify-end gap-2 shrink-0">
+                            <span class="text-[11px] font-bold text-slate-400 flex items-center gap-1">
+                                <i class="fa-solid fa-arrow-down-wide-short text-amber-400"></i>
+                                <span>ترتيب حسب:</span>
+                            </span>
+                            <select onchange="UIEngine.setSortOrder(this.value)" class="px-3 py-1.5 text-xs font-bold text-amber-300 rounded-xl bg-slate-900/90 border border-white/10 cursor-pointer">
+                                <option value="newest">الأحدث أولاً ⏱️</option>
+                                <option value="oldest">الأقدم أولاً ⏳</option>
+                                <option value="price-desc">الأغلى سعراً 💰</option>
+                                <option value="price-asc">الأرخص سعراً 🏷️</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                <!-- قائمة المصاريف -->
-                <div id="homeItemsList" class="space-y-2 max-h-[580px] overflow-y-auto pr-1"></div>
+                <!-- قائمة المصاريف الموسعة (تكبر بسلاسة مع سحب الشاشة) -->
+                <div id="homeItemsList" class="space-y-2.5 min-h-[140px] pb-4"></div>
             </div>
         </div>
 
@@ -241,11 +271,6 @@
                     <div>
                         <label class="block text-xs font-bold text-slate-300 mb-1">تاريخ المصروف 📅</label>
                         <input type="date" id="itemCustomDate" class="w-full px-3.5 py-2.5 text-xs font-bold">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1">ملاحظات إضافية (اختياري) 📝</label>
-                        <input type="text" id="itemNotes" placeholder="أي تفاصيل أو ملاحظات..." class="w-full px-3.5 py-2 text-xs">
                     </div>
 
                     <button type="submit" id="submitFormBtn" class="w-full py-3 gold-btn rounded-xl text-xs flex items-center justify-center gap-2 mt-4 font-extrabold shadow-lg">
@@ -380,7 +405,7 @@
         </div>
 
         <!-- ========================================================
-             7. الأرشيف وتصدير التقارير (ARCHIVE & EXPORT)
+             7. الأرشيف وتقارير الشهور (ARCHIVE)
              ======================================================== -->
         <div id="historyPage" class="space-y-4 hidden animate-fade-in">
             <div class="glass-panel p-4 sm:p-5 rounded-3xl space-y-4">
@@ -393,18 +418,9 @@
                         <div class="w-8 h-8 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-sm border border-amber-500/20">
                             <i class="fa-solid fa-box-archive"></i>
                         </div>
-                        <h3 class="text-xs sm:text-sm font-extrabold text-white">سجل الأشهر السابقة والتقارير 📦</h3>
+                        <h3 class="text-xs sm:text-sm font-extrabold text-white">سجل الأشهر السابقة 📦</h3>
                     </div>
-
-                    <!-- أزرار التصدير والطباعة الرسمية -->
-                    <div class="flex items-center gap-2 w-full sm:w-auto">
-                        <button onclick="UIEngine.exportToCSV()" class="flex-1 sm:flex-none px-3 py-1.5 bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-file-excel"></i> <span>تصدير Excel</span>
-                        </button>
-                        <button onclick="UIEngine.printFinancialReport()" class="flex-1 sm:flex-none px-3 py-1.5 bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-print"></i> <span>طباعة تقرير PDF</span>
-                        </button>
-                    </div>
+                    <!-- تم إزالة أزرار التصدير والطباعة من هنا بنجاح -->
                 </div>
 
                 <div class="flex flex-col sm:flex-row items-start sm:items-end gap-3">
@@ -541,8 +557,8 @@
                                         <i class="fa-solid fa-box-archive"></i>
                                     </div>
                                     <div>
-                                        <h4 class="text-xs font-bold text-white group-hover:text-amber-300">أرشيف الشهور والتقارير</h4>
-                                        <span class="text-[10px] text-slate-400">تصدير Excel وطباعة تقرير رسمي PDF</span>
+                                        <h4 class="text-xs font-bold text-white group-hover:text-amber-300">أرشيف الشهور السابقة</h4>
+                                        <span class="text-[10px] text-slate-400">اطلع علي الشهور السابقة</span>
                                     </div>
                                 </div>
                                 <i class="fa-solid fa-arrow-left text-slate-500 text-xs group-hover:text-amber-400 group-hover:-translate-x-1 transition"></i>
@@ -577,17 +593,29 @@
                     </div>
                 </div>
 
-                <!-- إدارة المصاريف المسجلة وحذف الكل -->
-                <div class="lg:col-span-7 glass-panel p-4 sm:p-5 rounded-3xl h-fit space-y-3">
-                    <div class="flex items-center justify-between pb-2.5 border-b border-white/10">
+                <!-- إدارة المصاريف المسجلة وحذف وتعديل العناصر -->
+                <div class="lg:col-span-7 glass-panel p-4 sm:p-5 rounded-3xl h-fit space-y-3.5">
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pb-2.5 border-b border-white/10">
                         <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-list-check text-amber-400 text-sm"></i>
-                            <h3 class="text-xs font-extrabold text-white">إدارة وتعديل المصاريف المسجلة ⚙️</h3>
+                            <div class="w-8 h-8 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-xs border border-amber-500/20">
+                                <i class="fa-solid fa-list-check"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xs sm:text-sm font-extrabold text-white">إدارة وتعديل وحذف المصاريف ⚙️</h3>
+                                <span class="text-[10px] text-slate-400 block">التعديل والحذف يتم بأمان من هذه الصفحة</span>
+                            </div>
                         </div>
-                        <button onclick="clearAllCurrentItems()" class="px-3 py-1 bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white rounded-xl text-[11px] font-bold transition flex items-center gap-1">
-                            <i class="fa-solid fa-trash-can"></i> <span>حذف كل الشهر 🗑️</span>
+                        <button onclick="clearAllCurrentItems()" class="px-3 py-1.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500 hover:text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 shrink-0">
+                            <i class="fa-solid fa-trash-can"></i> <span>حذف جميع المصاريف 🗑️</span>
                         </button>
                     </div>
+
+                    <!-- حقل بحث سريع لتسهيل التعديل والحذف -->
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="text" id="adminSearchInput" oninput="UIEngine.renderAdminItems()" placeholder="ابحث باسم المصروف لتعديله أو حذفه..." class="w-full pr-9 pl-3.5 py-2 text-xs rounded-xl bg-slate-900/80 border border-white/10 text-white placeholder-slate-500">
+                    </div>
+
                     <div id="adminItemsList" class="space-y-2 max-h-[520px] overflow-y-auto pr-1"></div>
                 </div>
             </div>
@@ -647,7 +675,7 @@
                         <img src="logo.png" class="w-full h-full object-cover rounded-3xl cursor-pointer" alt="رؤوف" onerror="this.src='https://placehold.co/150x150/1e1435/facc15?text=رؤوف'" onclick="openImageViewer(this.src)">
                     </div>
                     <div>
-                        <h3 class="text-base font-black text-white">تطبيق ادارة المصاريف الشهرية</h3>
+                        <h3 class="text-base font-black text-white">تطبيق ادارة المصاريف الشخصية</h3>
                     </div>
                     <p class="text-xs text-slate-300 leading-relaxed font-medium px-2">
                         تم تصميم وتطوير وبرمجة هذا التطبيق ليكون الأرقى والأكثر متعة واسهل التطبيقات في إدارة مصاريفك الشخصية .

@@ -21,7 +21,7 @@ const AppState = (function() {
     ];
 
     let data = {
-        userName: 'رؤوف',
+        userName: 'userName',
         userAvatar: 'logo.png',
         currency: 'ج.م',
         monthlyBudget: 0,
@@ -62,6 +62,19 @@ const AppState = (function() {
         if (!data.theme) data.theme = 'gold';
         data.snowEffect = 'snow'; // تساقط دائم
         if (data.soundEnabled === undefined) data.soundEnabled = true;
+
+        // Restore any archived items into data.items so all items are kept together
+        if (data.archivedMonths && typeof data.archivedMonths === 'object') {
+            Object.values(data.archivedMonths).forEach(monthItems => {
+                if (Array.isArray(monthItems)) {
+                    monthItems.forEach(archItem => {
+                        if (!data.items.some(i => i.id == archItem.id)) {
+                            data.items.push(archItem);
+                        }
+                    });
+                }
+            });
+        }
 
         // Ensure each item has category
         data.items.forEach(item => {
@@ -127,10 +140,12 @@ const AppState = (function() {
         return withSymbol ? `${formatted} ج.م` : formatted;
     }
 
-    // Auto-Archive older months into history
+    // Auto-Archive older months into history (preserves all items in data.items)
     function checkAndArchiveMonths() {
         const currentMonthKey = getCurrentMonthKey();
-        const itemsToKeep = [];
+        if (!data.archivedMonths || typeof data.archivedMonths !== 'object') {
+            data.archivedMonths = {};
+        }
         let updated = false;
 
         data.items.forEach(item => {
@@ -141,15 +156,14 @@ const AppState = (function() {
                 if (!data.archivedMonths[itemMonthKey]) {
                     data.archivedMonths[itemMonthKey] = [];
                 }
-                data.archivedMonths[itemMonthKey].push(item);
-                updated = true;
-            } else {
-                itemsToKeep.push(item);
+                if (!data.archivedMonths[itemMonthKey].some(i => i.id == item.id)) {
+                    data.archivedMonths[itemMonthKey].push(item);
+                    updated = true;
+                }
             }
         });
 
         if (updated) {
-            data.items = itemsToKeep;
             saveData();
         }
     }
@@ -158,6 +172,8 @@ const AppState = (function() {
     function getStats() {
         let monthExpenseTotal = 0;
         let todayExpenseTotal = 0;
+        let allExpenseTotal = 0;
+        const currentMonthKey = getCurrentMonthKey();
         const todayStr = getTodayDateString();
         const categoryTotals = {};
         const dailyExpenses = {};
@@ -169,7 +185,7 @@ const AppState = (function() {
 
         data.items.forEach(item => {
             const total = Number(item.price) * (Number(item.quantity) || 1);
-            monthExpenseTotal += total;
+            allExpenseTotal += total;
 
             const itemSummary = {
                 id: item.id,
@@ -182,8 +198,16 @@ const AppState = (function() {
                 notes: item.notes || ''
             };
 
-            monthItemsWithTotal.push(itemSummary);
+            const itemDate = new Date(item.timestamp || item.date || Date.now());
+            const itemMonthKey = getCurrentMonthKey(itemDate);
 
+            // Month total should track current month for monthly budget calculations
+            if (itemMonthKey === currentMonthKey || (item.date && item.date.startsWith(currentMonthKey))) {
+                monthExpenseTotal += total;
+                monthItemsWithTotal.push(itemSummary);
+            }
+
+            // Today total
             if (item.date === todayStr) {
                 todayExpenseTotal += total;
                 todayItems.push(itemSummary);
@@ -321,10 +345,11 @@ const AppState = (function() {
             todayMinItem,
             todayItems,
             monthExpenseTotal,
+            allExpenseTotal,
             monthMaxItem,
             monthMinItem,
             monthAvgDaily,
-            monthItemsCount: data.items.length,
+            monthItemsCount: monthItemsWithTotal.length,
             ladder,
             availableBalance,
             budgetLimit,
@@ -354,6 +379,7 @@ const AppState = (function() {
         getCategoryById: function(id) {
             return CATEGORIES.find(c => c.id === id) || CATEGORIES[CATEGORIES.length - 1];
         },
+        detectCategory,
         getPaymentMethods: function() {
             return [];
         },
@@ -370,7 +396,7 @@ const AppState = (function() {
         addItem: function(item) {
             if (!item.id) item.id = Date.now();
             if (!item.timestamp) item.timestamp = new Date(item.date || Date.now()).getTime();
-            if (!item.category) item.category = detectCategory(item.name);
+            if (!item.category || item.category === 'auto') item.category = detectCategory(item.name);
             if (!item.paymentMethod) item.paymentMethod = 'cash';
             data.items.unshift(item);
             checkAndArchiveMonths();
@@ -381,7 +407,19 @@ const AppState = (function() {
         updateItem: function(id, updatedFields) {
             const idx = data.items.findIndex(i => i.id == id);
             if (idx !== -1) {
+                if (!updatedFields.category || updatedFields.category === 'auto') {
+                    const targetName = updatedFields.name || (data.items[idx] ? data.items[idx].name : '');
+                    updatedFields.category = detectCategory(targetName);
+                }
                 data.items[idx] = Object.assign({}, data.items[idx], updatedFields);
+                if (data.archivedMonths && typeof data.archivedMonths === 'object') {
+                    Object.keys(data.archivedMonths).forEach(k => {
+                        const aIdx = data.archivedMonths[k].findIndex(i => i.id == id);
+                        if (aIdx !== -1) {
+                            data.archivedMonths[k][aIdx] = Object.assign({}, data.archivedMonths[k][aIdx], updatedFields);
+                        }
+                    });
+                }
                 checkAndArchiveMonths();
                 saveData();
                 playSound('playSuccess');
@@ -391,11 +429,20 @@ const AppState = (function() {
         },
         deleteItem: function(id) {
             data.items = data.items.filter(i => i.id != id);
+            if (data.archivedMonths && typeof data.archivedMonths === 'object') {
+                Object.keys(data.archivedMonths).forEach(k => {
+                    data.archivedMonths[k] = data.archivedMonths[k].filter(i => i.id != id);
+                    if (data.archivedMonths[k].length === 0) {
+                        delete data.archivedMonths[k];
+                    }
+                });
+            }
             saveData();
             playSound('playDelete');
         },
         clearAllItems: function() {
             data.items = [];
+            data.archivedMonths = {};
             saveData();
             playSound('playDelete');
         },
@@ -512,7 +559,9 @@ const AppState = (function() {
         // Archive
         deleteArchivedMonth: function(key) {
             if (data.archivedMonths && data.archivedMonths[key]) {
+                const deletedIds = new Set(data.archivedMonths[key].map(i => i.id));
                 delete data.archivedMonths[key];
+                data.items = data.items.filter(i => !deletedIds.has(i.id));
                 saveData();
                 playSound('playDelete');
                 return true;

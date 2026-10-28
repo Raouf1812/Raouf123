@@ -97,13 +97,18 @@ function handleFormSubmit(event) {
     const price = parseFloat(document.getElementById('itemPrice').value);
     const quantity = parseInt(document.getElementById('itemQuantity').value) || 1;
     const customDate = document.getElementById('itemCustomDate').value || AppState.getTodayDateString();
-    const category = document.getElementById('itemCategorySelect').value || 'other';
+    const categorySelectEl = document.getElementById('itemCategorySelect');
+    let category = categorySelectEl ? categorySelectEl.value : 'auto';
     const paymentMethod = 'cash'; // طريقة دفع ثابتة (لا يوجد اختيار)
     const notes = (document.getElementById('itemNotes') ? document.getElementById('itemNotes').value.trim() : '');
 
     if (!name || isNaN(price) || price < 0) {
         UIEngine.showToast('يرجى التأكد من إدخال اسم المصروف وسعر صحيح', 'error');
         return;
+    }
+
+    if (category === 'auto' || !category) {
+        category = AppState.detectCategory(name);
     }
 
     const timestamp = new Date(customDate).getTime() || Date.now();
@@ -148,6 +153,8 @@ function resetForm() {
     if (qty) qty.value = '1';
     const dateInput = document.getElementById('itemCustomDate');
     if (dateInput) dateInput.value = AppState.getTodayDateString();
+    const catSelect = document.getElementById('itemCategorySelect');
+    if (catSelect) catSelect.value = 'auto';
     const title = document.getElementById('formTitleText');
     if (title) title.innerHTML = `إضافة صنف أو مصروف جديد ➕`;
     const submitBtn = document.getElementById('submitFormBtn');
@@ -399,9 +406,12 @@ function populateFormDropdowns() {
     const catSelect = document.getElementById('itemCategorySelect');
     if (catSelect) {
         const categories = AppState.getCategories();
-        catSelect.innerHTML = categories.map(c => `
-            <option value="${c.id}">${c.name}</option>
-        `).join('');
+        catSelect.innerHTML = `
+            <option value="auto">تحديد تلقائي بحسب الاسم ✨</option>
+            ${categories.map(c => `
+                <option value="${c.id}">${c.name}</option>
+            `).join('')}
+        `;
     }
     // ملاحظة: تم إزالة populate للعملة (EGP ثابتة) والثلج (يتساقط دائماً) وطريقة الدفع (محذوفة)
 }
