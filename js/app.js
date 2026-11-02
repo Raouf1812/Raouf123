@@ -99,7 +99,6 @@ function handleFormSubmit(event) {
     const customDate = document.getElementById('itemCustomDate').value || AppState.getTodayDateString();
     const categorySelectEl = document.getElementById('itemCategorySelect');
     let category = categorySelectEl ? categorySelectEl.value : 'auto';
-    const paymentMethod = 'cash'; // طريقة دفع ثابتة (لا يوجد اختيار)
     const notes = (document.getElementById('itemNotes') ? document.getElementById('itemNotes').value.trim() : '');
 
     if (!name || isNaN(price) || price < 0) {
@@ -121,11 +120,11 @@ function handleFormSubmit(event) {
             date: customDate,
             timestamp,
             category,
-            paymentMethod,
             notes
         });
         UIEngine.showToast('تم تحديث بيانات المصروف بنجاح ✏️', 'success');
     } else {
+        // هنا بيتم إضافة المنتج الجديد وتحديث الرصيد فوراً
         AppState.addItem({
             name,
             price,
@@ -133,7 +132,6 @@ function handleFormSubmit(event) {
             date: customDate,
             timestamp,
             category,
-            paymentMethod,
             notes
         });
         UIEngine.showToast('تمت إضافة المصروف بنجاح ✅', 'success');

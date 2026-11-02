@@ -368,6 +368,7 @@ const AppState = (function() {
     return {
         init: function() {
             loadData();
+            checkAndRolloverMonth(); 
             checkAndArchiveMonths();
         },
         getData: function() {
@@ -392,6 +393,7 @@ const AppState = (function() {
         getStats,
         saveData,
 
+        
         // Expense Item Operations
         addItem: function(item) {
             if (!item.id) item.id = Date.now();
@@ -568,6 +570,29 @@ const AppState = (function() {
             }
             return false;
         },
+
+
+        function checkAndRolloverMonth() {
+            const currentMonthKey = getCurrentMonthKey();
+            let lastActiveMonth = localStorage.getItem('last_active_month');
+            
+            if (!lastActiveMonth) {
+                localStorage.setItem('last_active_month', currentMonthKey);
+                return;
+            }
+
+            if (lastActiveMonth !== currentMonthKey) {
+                const stats = getStats();
+                const remainingFromLastMonth = stats.availableBalance; 
+
+                if (remainingFromLastMonth > 0) {
+                    data.monthlyBudget = (Number(data.monthlyBudget) || 0) + remainingFromLastMonth;
+                }
+
+                localStorage.setItem('last_active_month', currentMonthKey);
+                saveData();
+            }
+}
 
         // Backup & Restore
         exportBackupJSON: function() {
