@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#030712">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Obsidian · المصروفات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<style>
+:root{--bg:#030712;--accent:#facc15;--text:#f5f5f4;--muted:#a8a29e;--glass:rgba(255,255,255,.04);--line:rgba(255,255,255,.08);--panel:#0b1020;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{background:var(--bg);color:var(--text);font-family:'Cairo','Inter',system-ui,sans-serif;min-height:100vh;transition:background .3s,color .3s}
+.glass{background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.gold{color:var(--accent)!important}
+.b-acc{background-color:var(--accent)!important}
+.muted{color:var(--muted)!important}
+.panel-bg{background-color:var(--panel)!important}
+.glow{box-shadow:0 0 28px color-mix(in srgb,var(--accent) 35%,transparent)}
+.blur-amt{filter:blur(8px);user-select:none}
+.hide{display:none!important}
+@keyframes wfade{0%{opacity:0}25%{opacity:1}75%{opacity:1}100%{opacity:0}}
+@keyframes wrise{0%{opacity:0;transform:translateY(12px) scale(.96)}30%{opacity:1;transform:translateY(0) scale(1)}75%{opacity:1}100%{opacity:0;transform:translateY(-8px) scale(.98)}}
+#welcome.show{animation:wfade 2s ease-in-out forwards}
+#welcome.show>div{animation:wrise 2s ease-in-out forwards}
+.num{font-family:'Inter',sans-serif;direction:ltr;unicode-bidi:isolate}
+input,select{color:var(--text)}
+</style>
+</head>
+<body class="pb-36">
+<div class="max-w-md mx-auto px-4 pt-6">
+  <header class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <div id="avatar" class="w-12 h-12 rounded-full flex items-center justify-center font-extrabold text-black text-lg" style="background:linear-gradient(135deg,var(--accent),#92400e)">؟</div>
+        <span class="absolute bottom-0 end-0 w-3 h-3 rounded-full bg-emerald-400 ring-2 ring-[#030712]"></span>
+      </div>
+      <div><p class="text-xs muted" data-i="greet"></p><p id="userName" class="font-bold"></p></div>
+    </div>
+    <div class="flex gap-2">
+      <button id="privacyBtn" onclick="togglePrivacy()" class="glass w-10 h-10 rounded-full">👁</button>
+      <button id="langBtn" onclick="setLang(S.lang==='ar'?'en':'ar')" class="glass w-10 h-10 rounded-full text-xs font-bold gold">EN</button>
+    </div>
+  </header>
+
+  <!-- HOME -->
+  <section id="v-home" class="space-y-6">
+    <div id="dueBox" class="hide"></div>
+    <div class="glass rounded-3xl p-6 glow">
+      <p class="text-sm muted" data-i="balance"></p>
+      <p id="bal" class="text-4xl font-extrabold gold mt-2 num"></p>
+      <div class="grid grid-cols-2 gap-3 mt-5 text-sm">
+        <div class="bg-white/5 rounded-2xl p-3"><p class="muted text-xs" data-i="monthSpent"></p><p id="monthSpent" class="font-bold mt-1 num"></p></div>
+        <div class="bg-white/5 rounded-2xl p-3"><p class="muted text-xs" data-i="todaySpent"></p><p id="todaySpent" class="font-bold mt-1 num"></p></div>
+      </div>
+      <p class="text-xs muted mt-4" data-i="carried"></p>
+      <p id="carried" class="text-sm text-emerald-400 num"></p>
+      <div id="budgetBox" class="mt-5 hide">
+        <div class="flex justify-between text-xs muted mb-2"><span data-i="budgetLbl"></span><span id="budgetPct" class="num"></span></div>
+        <div class="h-2.5 rounded-full bg-white/5 overflow-hidden"><div id="budgetBar" class="h-2.5 rounded-full transition-all" style="width:0%"></div></div>
+        <p id="budgetMsg" class="text-xs mt-2"></p>
+      </div>
+    </div>
+    <div>
+      <div class="flex justify-between items-center mb-3">
+        
+        
+      </div>
+      
+    </div>
+    <div>
+      <h2 class="font-bold mb-3" data-i="recent"></h2>
+      <div class="flex gap-2 mb-3"><select id="sortSel" onchange="S.sort=this.value;save();render()" class="flex-1 panel-bg rounded-xl px-3 py-2 border border-white/10 text-sm"></select></div><div id="recent" class="space-y-3"></div>
+    </div>
+  </section>
+
+  <!-- ARCHIVE -->
+  <section id="v-archive" class="hide space-y-5">
+    <h2 class="font-bold text-lg" data-i="archive"></h2>
+    <div id="archList" class="space-y-4"></div>
+  </section>
+
+  <!-- DEBTS -->
+  <section id="v-debts" class="hide space-y-5">
+    <div class="flex justify-between items-center">
+      <h2 class="font-bold text-lg" data-i="debts"></h2>
+      <button onclick="newDebt()" class="b-acc text-black rounded-xl px-4 py-2 font-bold text-sm" data-i="newDebt"></button>
+    </div>
+    <div id="debtList" class="space-y-6"></div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="v-settings" class="hide space-y-4">
+    <h2 class="font-bold text-lg" data-i="settings"></h2>
+    <div class="glass rounded-3xl p-5 space-y-4 relative overflow-hidden">
+      <div class="absolute -top-12 -end-12 w-40 h-40 rounded-full blur-3xl pointer-events-none" style="background:color-mix(in srgb,var(--accent) 22%,transparent)"></div>
+      <div class="flex items-center gap-4 relative">
+        <div class="p-[3px] rounded-full glow shrink-0" style="background:linear-gradient(135deg,var(--accent),#92400e)">
+          <div id="devPhoto" class="w-20 h-20 rounded-full overflow-hidden flex items-center justify-center font-extrabold text-2xl" style="background:var(--panel)"></div>
+        </div>
+        <div class="min-w-0">
+          <p class="text-[11px] tracking-widest uppercase gold" data-i="devLbl"></p>
+          <p id="devName" class="font-extrabold text-xl"></p>
+          <p id="devRole" class="text-xs muted"></p>
+        </div>
+      </div>
+      <div id="devBio" class="text-sm leading-7 relative"></div>
+    </div>
+    <div class="glass rounded-3xl p-5 space-y-4">
+      <div class="flex items-center gap-3"><div id="setAvatar" class="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center font-extrabold text-black text-xl shrink-0" style="background:linear-gradient(135deg,var(--accent),#92400e)"></div><input type="file" accept="image/*" id="photoIn" class="hide"><button onclick="document.getElementById('photoIn').click()" class="flex-1 rounded-xl py-2 border border-white/10 text-sm" data-i="changePhoto"></button><button onclick="removePhoto()" class="rounded-xl px-3 py-2 text-rose-400 border border-rose-400/20 text-sm" data-i="removePhoto"></button></div>
+      <label class="block text-sm muted" data-i="name"></label>
+      <input id="nameIn" class="w-full bg-white/5 rounded-xl px-4 py-3 outline-none border border-white/10">
+      <label class="block text-sm muted" data-i="budgetQ"></label>
+      <input id="budgetIn" type="number" min="0" class="num w-full bg-white/5 rounded-xl px-4 py-3 border border-white/10 outline-none">
+      <label class="block text-sm muted" data-i="lang"></label>
+      <select id="langSel" class="w-full panel-bg rounded-xl px-4 py-3 border border-white/10 outline-none">
+        <option value="ar">العربية</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+    <div class="glass rounded-3xl p-5 space-y-3">
+      <p class="text-sm muted" data-i="theme"></p>
+      <div id="themes" class="grid grid-cols-2 gap-3"></div>
+    </div>
+    <div class="glass rounded-3xl p-5 space-y-3">
+      <button onclick="exportData()" class="w-full rounded-xl py-3 b-acc text-black font-bold" data-i="export"></button>
+      <button onclick="document.getElementById('importIn').click()" class="w-full rounded-xl py-3 border border-white/10" data-i="imp"></button>
+      <input type="file" accept="application/json" id="importIn" class="hide">
+      <button onclick="clearAll()" class="w-full rounded-xl py-3 text-rose-400 border border-rose-400/20" data-i="clear"></button>
+    </div>
+  </section>
+</div>
+
+<!-- BOTTOM DOCK -->
+<nav class="fixed bottom-4 left-4 right-4 max-w-md mx-auto glass rounded-3xl h-16 flex justify-around items-center backdrop-blur-md z-40">
+  <button data-tab="home" onclick="showTab('home')" class="flex flex-col items-center text-[11px] w-14"><span class="text-lg">⌂</span><span data-i="home"></span></button>
+  <button data-tab="archive" onclick="showTab('archive')" class="flex flex-col items-center text-[11px] w-14"><span class="text-lg">▤</span><span data-i="archive"></span></button>
+  <button onclick="openAdd()" class="-mt-8 w-14 h-14 rounded-full b-acc text-black text-3xl font-bold glow flex items-center justify-center">+</button>
+  <button data-tab="debts" onclick="showTab('debts')" class="flex flex-col items-center text-[11px] w-14"><span class="text-lg">⇄</span><span data-i="debts"></span></button>
+  <button data-tab="settings" onclick="showTab('settings')" class="flex flex-col items-center text-[11px] w-14"><span class="text-lg">⚙</span><span data-i="settings"></span></button>
+</nav>
+
+<!-- WELCOME -->
+<div id="welcome" onclick="closeWelcome()" class="hide fixed inset-0 z-[70] flex flex-col items-center justify-center gap-6 p-6 text-center" style="background:var(--bg)">
+  <div id="wlAvatar" class="w-32 h-32 rounded-full overflow-hidden glow flex items-center justify-center font-extrabold text-black text-4xl" style="background:linear-gradient(135deg,var(--accent),#92400e)"></div>
+  <div>
+    <p class="muted text-sm" data-i="wlGreet"></p>
+    <p id="wlName" class="text-3xl font-extrabold gold mt-1"></p>
+    <p class="muted text-sm mt-3" data-i="wlSub"></p>
+  </div>
+</div>
+
+<!-- TRANSACTION MODAL -->
+<div id="modal" class="hide fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4">
+  <div class="glass panel-bg rounded-3xl p-6 w-full max-w-md space-y-4">
+    <h3 id="modalTitle" class="font-bold text-lg gold"></h3>
+    <div><label class="text-xs muted" data-i="type"></label>
+      <select id="f-type" class="w-full panel-bg rounded-xl px-3 py-3 border border-white/10">
+        <option value="out" data-i="exp"></option><option value="in" data-i="inc"></option>
+      </select></div>
+    <div><label class="text-xs muted" data-i="title"></label><input id="f-title" class="w-full bg-white/5 rounded-xl px-4 py-3 border border-white/10 outline-none"></div>
+    <div class="grid grid-cols-2 gap-3">
+      <div><label class="text-xs muted" data-i="amount"></label><input id="f-amt" type="number" min="0" step="0.01" class="num w-full bg-white/5 rounded-xl px-4 py-3 border border-white/10 outline-none"></div>
+      <div><label class="text-xs muted" data-i="qty"></label><input id="f-qty" type="number" min="1" value="1" class="num w-full bg-white/5 rounded-xl px-4 py-3 border border-white/10 outline-none"></div>
+    </div>
+    <div><label class="text-xs muted" data-i="date"></label><input id="f-date" type="datetime-local" class="num w-full bg-white/5 rounded-xl px-4 py-3 border border-white/10 outline-none"></div>
+    <div class="flex gap-3 pt-2">
+      <button onclick="saveItem()" class="flex-1 rounded-xl py-3 b-acc text-black font-bold" data-i="save"></button>
+      <button onclick="closeModal()" class="flex-1 rounded-xl py-3 border border-white/10" data-i="cancel"></button>
+    </div>
+    <button id="delBtn" onclick="deleteItem()" class="w-full text-rose-400 text-sm py-2" data-i="del"></button>
+  </div>
+</div>
+
+<!-- DIALOG (replaces blocked prompt / confirm / alert) -->
+<div id="dlg" class="hide fixed inset-0 bg-black/70 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
+  <div class="glass panel-bg rounded-3xl p-6 w-full max-w-sm space-y-4">
+    <p id="dlgMsg" class="font-bold"></p>
+    <input id="dlgIn" class="hide w-full bg-white/5 rounded-xl px-4 py-3 border border-white/10 outline-none">
+    <div class="flex gap-3">
+      <button id="dlgOk" class="flex-1 rounded-xl py-3 b-acc text-black font-bold"></button>
+      <button id="dlgNo" class="flex-1 rounded-xl py-3 border border-white/10"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+const KEY='obsidian_expenses_v1';
+const D={text:'#f5f5f4',muted:'#a8a29e',glass:'rgba(255,255,255,.04)',line:'rgba(255,255,255,.08)',panel:'#0b1020'};
+const THEMES={
+  obsidian:{n:['ذهبي','golden'],bg:'#030712',accent:'#facc15'},
+  midnight:{n:['ازرق','blue'],bg:'#0a1128',accent:'#60a5fa'},
+  emerald:{n:['زمردي','Emerald'],bg:'#03140e',accent:'#34d399'},
+  rose:{n:['وردي','Rose'],bg:'#170811',accent:'#fb7185'},
+  violet:{n:['بنفسجي','Violet'],bg:'#110823',accent:'#c084fc'},
+  ocean:{n:['لبني','Brown'],bg:'#04202b',accent:'#22d3ee'},
+  graphite:{n:['فضي','Silver'],bg:'#121214',accent:'#e5e5e5',panel:'#1c1c20'},
+  ivory:{n:['أبيض','White'],bg:'#f7f5ef',accent:'#a16207',text:'#1c1917',muted:'#57534e',glass:'rgba(0,0,0,.035)',line:'rgba(0,0,0,.08)',panel:'#ffffff'}
+};
+let S=Object.assign({name:'',lang:'ar',theme:'obsidian',hidden:false,items:[],debts:[],budget:0},JSON.parse(localStorage.getItem(KEY)||'{}'));
+let editId=null;
+const $=id=>document.getElementById(id);
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const T={
+ar:{home:'الرئيسية',archive:'الأرشيف',debts:'الديون',settings:'الإعدادات',balance:'الرصيد المتاح',monthSpent:'مصروفات الشهر',todaySpent:'مصروفات اليوم',carried:'مُرحَّل من الشهر السابق',recent:'آخر المعاملات',none:'لا توجد معاملات بعد',title:'الوصف',amount:'المبلغ',qty:'الكمية',date:'التاريخ',type:'النوع',exp:'مصروف',inc:'دخل',save:'حفظ',cancel:'إلغاء',del:'حذف',add:'إضافة معاملة',edit:'تعديل معاملة',name:'اسمك',lang:'اللغة',theme:'الثيم',export:'تصدير البيانات',imp:'استيراد البيانات',clear:'مسح كل البيانات',clearQ:'سيتم حذف كل المعاملات والديون نهائياً. متأكد؟',delQ:'حذف هذه المعاملة؟',removeDebtQ:'حذف هذا الدين من القائمة؟ المعاملات السابقة تبقى.',newDebt:'+ دين جديد',nameQ:'اسم الشخص؟',ownQ:'من المدين ومن الدائن؟',iOwe:'عليّا فلوس',owedToMe:'ليا فلوس',amtQ:'المبلغ؟',payQ:'كم ستدفع؟',collectQ:'كم استلمت منه؟',addQ:'كم تُضيف للدين؟',exceeds:'المبلغ أكبر من المتبقي',borrowed:'اقتراض من ',lent:'إقراض ',paid:'سداد لـ ',recvd:'تسديد من ',pay:'سدّد',collect:'استلم',addMore:'زيادة',archTitle:'سجل الأشهر',greet:'مرحباً،',guest:'ضيف',badAmt:'أدخل مبلغاً صحيحاً',badFile:'ملف غير صالح',ok:'تم بنجاح',currency:'ج.م',transaction:'معاملة',cur:'ج.م',amountErr:'أدخل مبلغاً صحيحاً',yes:'موافق',sumOwe:'عليّ (مدين)',sumOwed:'ليا (دائن)',sortNewest:'أحدث إضافة',sortOldest:'أقدم إضافة',sortBig:'أكبر مبلغ',sortSmall:'أصغر مبلغ',fAll:'الكل',fIn:'دخل',fOut:'مصروفات',changePhoto:'تغيير الصورة',removePhoto:'حذف الصورة',budget:'الحد الشهري',budgetLbl:'الحد الشهري للمصروفات',budgetQ:'الحد الأقصى للمصروفات في الشهر (0 = بدون حد)',dueQ:'تاريخ الاستحقاق (سيبو فاضي لو مفيش)',due:'الاستحقاق',overdue:'متأخر',dueSoon:'قريب',dueIn:'بعد',days:'يوم',warnBudget:'قربت من الحد الشهري!',overBudget:'تجاوزت الحد الشهري!',setDue:'موعد',wlGreet:'أهلاً بعودتك',wlSub:'😊ما تُصرفش كتير😊',devLbl:'تم التطوير بواسطة : رؤوف',devRole:'تم التطوير بواسطة : رؤوف'},
+en:{home:'Home',archive:'Archive',debts:'Debts',settings:'Settings',balance:'Available balance',monthSpent:'Spent this month',todaySpent:'Spent today',carried:'Rolled over from last month',recent:'Recent transactions',none:'Nothing here yet',title:'Description',amount:'Amount',qty:'Quantity',date:'Date',type:'Type',exp:'Expense',inc:'Income',save:'Save',cancel:'Cancel',del:'Delete',add:'Add transaction',edit:'Edit transaction',name:'Your name',lang:'Language',theme:'Theme',export:'Export data',imp:'Import data',clear:'Erase all data',clearQ:'All transactions and debts will be permanently erased. Are you sure?',delQ:'Delete this transaction?',removeDebtQ:'Remove this debt from the list? Past transactions stay.',newDebt:'+ New debt',nameQ:'Person name?',ownQ:'Who is the debtor and who is the creditor?',iOwe:'I owe',owedToMe:'Owed to me',amtQ:'Amount?',payQ:'How much will you pay?',collectQ:'How much did you receive?',addQ:'How much to add?',exceeds:'Amount exceeds the remaining balance',borrowed:'Borrowed from ',lent:'Lent to ',paid:'Paid ',recvd:'Received from ',pay:'Pay',collect:'Collect',addMore:'Add more',archTitle:'Monthly archive',greet:'Welcome,',guest:'guest',badAmt:'Enter a valid amount',badFile:'Invalid file',ok:'Done',currency:'EGP',transaction:'Transaction',cur:'EGP',amountErr:'Enter a valid amount',yes:'OK',sumOwe:'I owe',sumOwed:'Owed to me',sortNewest:'Newest added',sortOldest:'Oldest added',sortBig:'Largest amount',sortSmall:'Smallest amount',fAll:'All',fIn:'Income',fOut:'Expenses',changePhoto:'Change photo',removePhoto:'Remove photo',budget:'Monthly budget',budgetLbl:'Monthly spending limit',budgetQ:'Maximum monthly spending (0 = no limit)',dueQ:'Due date (leave empty for none)',due:'Due',overdue:'Overdue',dueSoon:'Due soon',dueIn:'in',days:'days',warnBudget:'Close to your monthly limit!',overBudget:'Over your monthly limit!',setDue:'Due date',wlGreet:'Welcome back',wlSub:"😊Don't spend too much😊",devLbl:'developed by : Raouf',devRole:'developed by : Raouf'}
+};
+const t=k=>(T[S.lang]&&T[S.lang][k])||k;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const nowLocal=()=>{const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`};
+const curMonth=()=>nowLocal().slice(0,7);
+const fmt=v=>new Intl.NumberFormat(S.lang==='ar'?'ar-EG':'en-US',{maximumFractionDigits:2}).format(v)+' '+t('currency');
+const amt=v=>`<span class="${S.hidden?'blur-amt':''}">${fmt(v)}</span>`;
+const when=d=>new Date(d).toLocaleString(S.lang==='ar'?'ar-EG':'en-GB',{day:'numeric',month:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
+const monthLabel=m=>{const[y,mo]=m.split('-');return `${+mo}/${y}`};
+const sumOf=(arr,type)=>arr.filter(i=>i.type===type).reduce((a,b)=>a+b.total,0);
+
+// In-app dialog. Returns string|null for input, true/false for buttons.
+function dialog({msg,input=false,type='text',okTxt,noTxt,hideNo=false}){
+  return new Promise(res=>{
+    $('dlgMsg').textContent=msg;
+    const i=$('dlgIn'); i.classList.toggle('hide',!input); i.type=type; i.value='';
+    $('dlgOk').textContent=okTxt||t('save');
+    $('dlgNo').textContent=noTxt||t('cancel');
+    $('dlgNo').classList.toggle('hide',hideNo);
+    $('dlg').classList.remove('hide');
+    if(input) setTimeout(()=>i.focus(),50);
+    const done=v=>{$('dlg').classList.add('hide');$('dlgOk').onclick=null;$('dlgNo').onclick=null;res(v)};
+    $('dlgOk').onclick=()=>done(input?i.value:true);
+    $('dlgNo').onclick=()=>done(input?null:false);
+  });
+}
+
+// Month-rollover engine: each month's leftover carries into the next
+function ledger(){
+  const now=curMonth(), per={};
+  S.items.forEach(i=>{const m=i.date.slice(0,7);per[m]=per[m]||{in:0,out:0};per[m][i.type]+=i.total});
+  const keys=[...new Set([...Object.keys(per),now])].sort();
+  let carry=0, cur={in:0,out:0,start:0};
+  for(const m of keys){
+    const p=per[m]||{in:0,out:0}, start=carry;
+    carry=start+p.in-p.out;
+    if(m===now) cur={in:p.in,out:p.out,start};
+  }
+  return {...cur,end:carry};
+}
+
+function showTab(name){
+  ['home','archive','debts','settings'].forEach(n=>$('v-'+n).classList.toggle('hide',n!==name));
+  document.querySelectorAll('nav [data-tab]').forEach(b=>{
+    const on=b.dataset.tab===name;
+    b.classList.toggle('gold',on); b.classList.toggle('muted',!on);
+  });
+  render(); window.scrollTo({top:0});
+}
+
+function row(i){
+  const inc=i.type==='in';
+  return `<div onclick="openEdit('${i.id}')" class="glass rounded-2xl p-3 flex items-center gap-3 cursor-pointer">
+    <div class="w-10 h-10 rounded-xl flex items-center justify-center ${inc?'bg-emerald-500/15 text-emerald-400':'gold'} bg-white/5">${inc?'↓':'↑'}</div>
+    <div class="flex-1 min-w-0"><p class="font-semibold truncate">${esc(i.title)}</p>
+      <p class="text-xs muted">${when(i.date)}${i.qty>1?` · ${amt(i.amount)} × ${i.qty}`:''}</p></div>
+    <p class="font-bold num ${inc?'text-emerald-400':'gold'}">${inc?'+':'−'}${amt(i.total)}</p></div>`;
+}
+
+function renderDebts(){
+  const act=S.debts.filter(d=>d.amount>0);
+  const owe=act.filter(d=>d.dir==='owe'), owed=act.filter(d=>d.dir==='owed');
+  const card=d=>`<div class="glass rounded-2xl p-4 space-y-3">
+    <div class="flex justify-between items-center gap-2">
+      <div><p class="font-bold">${esc(d.name)}</p><p class="text-xs muted">${d.dir==='owe'?t('iOwe'):t('owedToMe')}</p></div>
+      <p class="font-extrabold num ${d.dir==='owe'?'text-rose-400':'text-emerald-400'}">${amt(d.amount)}</p></div>
+    ${dueLine(d)}<div class="grid grid-cols-4 gap-2 text-xs">
+      <button onclick="debtMove('${d.id}','pay')" class="rounded-xl py-2 b-acc text-black font-bold">${d.dir==='owe'?t('pay'):t('collect')}</button>
+      <button onclick="debtMove('${d.id}','add')" class="rounded-xl py-2 border border-white/10">${t('addMore')}</button>
+      <button onclick="setDue('${d.id}')" class="rounded-xl py-2 border border-white/10">${t('setDue')}</button>
+      <button onclick="deleteDebt('${d.id}')" class="rounded-xl py-2 text-rose-400 border border-rose-400/20">${t('del')}</button>
+    </div></div>`;
+  const sec=(title,arr)=>`<div class="space-y-3">
+    <div class="flex justify-between text-sm"><span class="font-bold">${title}</span><span class="num">${amt(arr.reduce((a,d)=>a+d.amount,0))}</span></div>
+    ${arr.length?arr.map(card).join(''):`<p class="muted text-sm text-center py-3">${t('none')}</p>`}</div>`;
+  const html=sec(t('sumOwe'),owe)+sec(t('sumOwed'),owed);
+  $('debtList').innerHTML=html;
+}
+
+function renderHome(){
+  const L=ledger(), today=nowLocal().slice(0,10);
+  const todayOut=S.items.filter(i=>i.type==='out'&&i.date.slice(0,10)===today).reduce((a,b)=>a+b.total,0);
+  $('bal').innerHTML=amt(L.end);
+  $('monthSpent').innerHTML=amt(L.out);
+  $('todaySpent').innerHTML=amt(todayOut);
+  $('carried').innerHTML=amt(L.start);
+  const budgetExp=S.items.filter(i=>i.type==='out'&&!i.debtId&&i.date.slice(0,7)===curMonth()).reduce((a,b)=>a+b.total,0);
+  renderBudget(budgetExp); renderDueAlerts();
+  const ct=i=>i.created||new Date(i.date).getTime()||0;
+  const ORD={newest:(a,b)=>ct(b)-ct(a),oldest:(a,b)=>ct(a)-ct(b),big:(a,b)=>b.total-a.total,small:(a,b)=>a.total-b.total};
+  $('sortSel').innerHTML=[['newest','sortNewest'],['oldest','sortOldest'],['big','sortBig'],['small','sortSmall']].map(([v,k])=>`<option value="${v}" ${(S.sort||'newest')===v?'selected':''}>${t(k)}</option>`).join('');
+  if($('typeSel'))$('typeSel').innerHTML=[['all','fAll'],['in','fIn'],['out','fOut']].map(([v,k])=>`<option value="${v}" ${(S.ftype||'all')===v?'selected':''}>${t(k)}</option>`).join('');
+  const recent=[...S.items].sort(ORD[S.sort||'newest']);
+  $('recent').innerHTML=recent.length?recent.map(row).join(''):`<p class="text-center muted py-8">${t('none')}</p>`;
+}
+
+function renderArchive(){
+  const groups={};
+  S.items.forEach(i=>{const m=i.date.slice(0,7);(groups[m]=groups[m]||[]).push(i)});
+  const months=Object.keys(groups).sort().reverse();
+  $('archList').innerHTML=months.length?months.map(m=>{
+    const items=groups[m].sort((a,b)=>b.date.localeCompare(a.date));
+    return `<div class="glass rounded-3xl p-4 space-y-3">
+      <div class="flex justify-between items-center gap-2 flex-wrap"><p class="font-bold">${monthLabel(m)}</p>
+      <p class="text-xs muted num">+${amt(sumOf(items,'in'))} / −${amt(sumOf(items,'out'))}</p></div>
+      ${items.map(row).join('')}</div>`;
+  }).join(''):`<p class="text-center muted py-8">${t('none')}</p>`;
+}
+
+function renderSettings(){
+  $('nameIn').value=S.name;
+  $('budgetIn').value=S.budget||0;
+  $('langSel').value=S.lang;
+  $('themes').innerHTML=Object.keys(THEMES).map(k=>{
+    const th=THEMES[k], on=S.theme===k;
+    return `<button onclick="setTheme('${k}')" class="rounded-2xl p-3 text-start border-2 ${on?'':'border-transparent'}" style="background:${th.bg};color:${th.text||'#f5f5f4'};${on?'border-color:'+th.accent:''}">
+      <span class="block w-6 h-6 rounded-full mb-2" style="background:${th.accent}"></span>
+      <span class="text-sm font-bold">${th.n[S.lang==='ar'?0:1]}</span></button>`;
+  }).join('');
+}
+
+function render(){
+  renderHome(); renderDebts(); renderArchive(); renderSettings();
+  $('userName').textContent=S.name||t('guest');
+  $('avatar').style.overflow='hidden';$('avatar').innerHTML=av();$('setAvatar').innerHTML=av();
+  $('privacyBtn').textContent=S.hidden?'🙈':'👁';
+  $('langBtn').textContent=S.lang==='ar'?'EN':'ع';
+  $('devName').textContent=DEV.name[S.lang]; $('devRole').textContent=DEV.role[S.lang];
+  $('devBio').innerHTML=DEV.bio[S.lang].map(l=>`<span class="block ps-3 border-s-2 mb-2" style="border-color:var(--accent)">${esc(l)}</span>`).join('');
+  $('devPhoto').innerHTML=`<img src="${DEV.photo}" alt="" class="w-full h-full object-cover" onerror="this.parentNode.textContent='م'">`;
+}
+
+function applyTheme(){
+  const th=Object.assign({},D,THEMES[S.theme]||THEMES.obsidian), s=document.documentElement.style;
+  s.setProperty('--bg',th.bg); s.setProperty('--accent',th.accent); s.setProperty('--text',th.text||D.text);
+  s.setProperty('--muted',th.muted||D.muted); s.setProperty('--glass',th.glass||D.glass);
+  s.setProperty('--line',th.line||D.line); s.setProperty('--panel',th.panel||D.panel);
+  document.querySelector('meta[name=theme-color]')?.setAttribute('content',th.bg);
+}
+function setTheme(k){S.theme=k;save();applyTheme();render()}
+
+function applyLang(){
+  document.documentElement.lang=S.lang;
+  document.documentElement.dir=S.lang==='ar'?'rtl':'ltr';
+  document.body.style.fontFamily=S.lang==='ar'?"'Cairo',system-ui,sans-serif":"'Inter',system-ui,sans-serif";
+  document.querySelectorAll('[data-i]').forEach(e=>e.textContent=t(e.dataset.i));
+  document.querySelector('option[value="out"]').textContent=t('exp');
+  document.querySelector('option[value="in"]').textContent=t('inc');
+  document.querySelectorAll('[onclick^="newDebt"]').forEach(e=>e.textContent=t('newDebt'));
+  render();
+}
+function setLang(l){S.lang=l;save();applyLang()}
+
+function openAdd(){
+  editId=null;
+  $('modalTitle').textContent=t('add');
+  $('f-type').value='out'; $('f-title').value=''; $('f-amt').value=''; $('f-qty').value=1; $('f-date').value=nowLocal();
+  $('delBtn').classList.add('hide');
+  $('modal').classList.remove('hide');
+  setTimeout(()=>$('f-title').focus(),50);
+}
+function openEdit(id){
+  const i=S.items.find(x=>x.id===id); if(!i) return;
+  editId=id;
+  $('modalTitle').textContent=t('edit');
+  $('f-type').value=i.type; $('f-title').value=i.title; $('f-amt').value=i.amount; $('f-qty').value=i.qty; $('f-date').value=i.date;
+  $('delBtn').classList.remove('hide');
+  $('modal').classList.remove('hide');
+}
+function closeModal(){$('modal').classList.add('hide')}
+
+function saveItem(){
+  const amount=parseFloat($('f-amt').value);
+  if(!(amount>0)){dialog({msg:t('badAmt'),hideNo:true});return}
+  const qty=Math.max(1,parseInt($('f-qty').value)||1);
+  const old=editId?S.items.find(x=>x.id===editId):null;
+  const item={id:editId||uid(),created:old?old.created:Date.now(),type:$('f-type').value,title:$('f-title').value.trim()||t('transaction'),amount,qty,total:Math.round(amount*qty*100)/100,date:$('f-date').value||nowLocal(),debtId:old?old.debtId:undefined};
+  S.items=editId?S.items.map(x=>x.id===editId?item:x):[...S.items,item];
+  save(); closeModal(); render();
+}
+async function deleteItem(){
+  if(!editId) return;
+  if((await dialog({msg:t('delQ'),okTxt:t('del')}))!==true) return;
+  S.items=S.items.filter(x=>x.id!==editId);
+  save(); closeModal(); render();
+}
+
+function pushTx(type,title,amount,debtId){
+  S.items.push({id:uid(),created:Date.now(),type,title,amount,qty:1,total:amount,date:nowLocal(),debtId});
+}
+
+async function newDebt(){
+  const name=((await dialog({msg:t('nameQ'),input:true}))||'').trim();
+  if(!name) return;
+  const dir=(await dialog({msg:t('ownQ'),okTxt:t('iOwe'),noTxt:t('owedToMe')}))===true?'owe':'owed';
+  const v=parseFloat(await dialog({msg:t('amtQ'),input:true,type:'number'}));
+  if(!(v>0)) return;
+  const d={id:uid(),name,dir,amount:v};
+  S.debts.push(d);
+  pushTx(dir==='owe'?'in':'out',(dir==='owe'?t('borrowed'):t('lent'))+name,v,d.id);
+  save(); render();
+}
+
+async function debtMove(id,kind){
+  const d=S.debts.find(x=>x.id===id); if(!d) return;
+  const pay=kind==='pay';
+  const v=parseFloat(await dialog({msg:pay?(d.dir==='owe'?t('payQ'):t('collectQ')):t('addQ'),input:true,type:'number'}));
+  if(!(v>0)) return;
+  if(pay&&v>d.amount){await dialog({msg:t('exceeds'),hideNo:true});return}
+  const inflow=d.dir==='owe'?!pay:pay;
+  const title=pay?(d.dir==='owe'?t('paid'):t('recvd'))+d.name:(d.dir==='owe'?t('borrowed'):t('lent'))+d.name;
+  pushTx(inflow?'in':'out',title,v,id);
+  d.amount=Math.round((pay?d.amount-v:d.amount+v)*100)/100;
+  save(); render();
+}
+
+async function deleteDebt(id){
+  if((await dialog({msg:t('removeDebtQ'),okTxt:t('del')}))!==true) return;
+  S.debts=S.debts.filter(d=>d.id!==id);
+  save(); render();
+}
+
+async function exportData(){
+  const data=JSON.stringify({app:'obsidian',version:2,exported:new Date().toISOString(),...S},null,2);
+  const filename='expenses-'+curMonth()+'.json';
+  try{
+    const dl=await claude.use('downloads');
+    if(dl){await dl.save({filename,data});return}
+  }catch(e){}
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([data],{type:'application/json'}));
+  a.download=filename; document.body.appendChild(a); a.click(); a.remove();
+}
+
+$('importIn').addEventListener('change',e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=async()=>{
+    try{
+      const d=JSON.parse(r.result);
+      if(!Array.isArray(d.items)) throw 0;
+      S.items=d.items.filter(i=>i&&i.id&&i.date&&(i.type==='in'||i.type==='out'));
+      if(Array.isArray(d.debts)) S.debts=d.debts;
+      save(); render();
+      await dialog({msg:t('ok'),hideNo:true});
+    }catch(x){await dialog({msg:t('badFile'),hideNo:true})}
+    e.target.value='';
+  };
+  r.readAsText(f);
+});
+
+async function clearAll(){
+  if((await dialog({msg:t('clearQ'),okTxt:t('del')}))!==true) return;
+  S.items=[]; S.debts=[]; save(); render();
+}
+
+function av(){return S.photo?`<img src="${S.photo}" alt="" class="w-full h-full object-cover">`:esc(((S.name||'؟').trim().charAt(0)||'؟').toUpperCase())}
+function showWelcome(){$('wlName').textContent=S.name||t('guest');$('wlAvatar').innerHTML=av();$('welcome').classList.remove('hide');$('welcome').classList.add('show');setTimeout(closeWelcome,2000)}
+function closeWelcome(){$('welcome').classList.remove('show');$('welcome').classList.add('hide')}
+function removePhoto(){delete S.photo;save();render()}
+$('photoIn').addEventListener('change',e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=256;const x=c.getContext('2d');const s=Math.min(im.width,im.height);x.drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,256,256);S.photo=c.toDataURL('image/jpeg',0.85);save();render()};im.src=r.result};
+  r.readAsDataURL(f); e.target.value='';
+});
+
+function renderBudget(out){
+  const b=S.budget||0, box=$('budgetBox');
+  box.classList.toggle('hide',!b);
+  if(!b) return;
+  const p=out/b*100, col=p>=100?'#f43f5e':p>=80?'#f59e0b':'#34d399';
+  $('budgetBar').style.width=Math.min(100,p)+'%';
+  $('budgetBar').style.background=col;
+  $('budgetPct').textContent=Math.round(p)+'%';
+  $('budgetMsg').textContent=p>=100?t('overBudget'):p>=80?t('warnBudget'):'';
+  $('budgetMsg').style.color=col;
+}
+function dueInfo(d){
+  if(!d.due||!(d.amount>0)) return null;
+  const now=new Date(); now.setHours(0,0,0,0);
+  const days=Math.round((new Date(d.due+'T00:00')-now)/864e5);
+  if(days<0) return {c:'text-rose-400',l:t('overdue')};
+  if(days<=3) return {c:'text-amber-400',l:t('dueSoon')+' · '+(days===0?(S.lang==='ar'?'النهارده':'today'):t('dueIn')+' '+days+' '+t('days'))};
+  return {c:'muted',l:d.due};
+}
+function dueLine(d){const i=dueInfo(d);return i?`<p class="text-xs ${i.c}">${t('due')}: ${i.l}</p>`:''}
+function renderDueAlerts(){
+  const items=S.debts.map(d=>({d,i:dueInfo(d)})).filter(x=>x.i&&x.i.c!=='muted');
+  const b=$('dueBox');
+  b.classList.toggle('hide',!items.length);
+  b.innerHTML=items.map(({d,i})=>`<div class="glass rounded-2xl p-3 mb-2 flex justify-between gap-2 text-sm"><span>${esc(d.name)}</span><span class="${i.c} font-bold">${i.l}</span></div>`).join('');
+}
+async function setDue(id){
+  const d=S.debts.find(x=>x.id===id); if(!d) return;
+  const v=await dialog({msg:t('dueQ'),input:true,type:'date'});
+  if(v===null) return;
+  d.due=v||undefined;
+  save(); render();
+}
+
+// Developer card: put your photo file (e.g. developer.jpg) next to this page, or set photo to a data: URL
+const DEV={
+  name:{ar:'تطبيق Waffarha',en:'Waffarha App'},
+  role:{ar:'شكراً لأنك تستخدم التطبيق!',en:'Thank you for using the app!'},
+  photo:'developer.png',
+  bio:{
+    ar:["صُمم التطبيق خصيصاً ليكون شريكك المالي الأسهل والأسرع في تنظيم وإدارة مصاريفك, بفضل واجهته البسيطة والسريعة يمكنك متابعة ميزانيتك و تتبع مصروفاتك بدقة والتحكم في أموالك بكل سهولة وبدون أي تعقيد"],
+    en:["The app is designed to be your simplest and fastest financial partner for organizing and managing your expenses. With its straightforward and responsive interface, you can easily monitor your budget, track your spending with precision, and take control of your finances all without any complexity."]
+  }
+};
+function togglePrivacy(){S.hidden=!S.hidden;save();render()}
+
+$('budgetIn').addEventListener('change',e=>{S.budget=Math.max(0,parseFloat(e.target.value)||0);save();render()});
+$('nameIn').addEventListener('change',e=>{S.name=e.target.value.trim();save();render()});
+$('langSel').addEventListener('change',e=>setLang(e.target.value));
+$('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+
+applyTheme();
+applyLang();
+showTab('home');
+showWelcome();
+</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js"))}</script>
+</body>
+</html>
