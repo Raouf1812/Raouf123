@@ -81,6 +81,7 @@ input,select{color:var(--text)}
   <!-- ARCHIVE -->
   <section id="v-archive" class="hide space-y-5">
     <h2 class="font-bold text-lg" data-i="archive"></h2>
+    <div id="stats" class="space-y-4"></div>
     <div id="archList" class="space-y-4"></div>
   </section>
 
@@ -206,8 +207,8 @@ let editId=null;
 const $=id=>document.getElementById(id);
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 const T={
-ar:{home:'الرئيسية',archive:'الأرشيف',debts:'الديون',settings:'الإعدادات',balance:'الرصيد المتاح',monthSpent:'مصروفات الشهر',todaySpent:'مصروفات اليوم',carried:'مُرحَّل من الشهر السابق',recent:'آخر المعاملات',none:'لا توجد معاملات بعد',title:'الوصف',amount:'المبلغ',qty:'الكمية',date:'التاريخ',type:'النوع',exp:'مصروف',inc:'دخل',save:'حفظ',cancel:'إلغاء',del:'حذف',add:'إضافة معاملة',edit:'تعديل معاملة',name:'اسمك',lang:'اللغة',theme:'الثيم',export:'تصدير البيانات',imp:'استيراد البيانات',clear:'مسح كل البيانات',clearQ:'سيتم حذف كل المعاملات والديون نهائياً. متأكد؟',delQ:'حذف هذه المعاملة؟',removeDebtQ:'حذف هذا الدين من القائمة؟ المعاملات السابقة تبقى.',newDebt:'+ دين جديد',nameQ:'اسم الشخص؟',ownQ:'من المدين ومن الدائن؟',iOwe:'عليّا فلوس',owedToMe:'ليا فلوس',amtQ:'المبلغ؟',payQ:'كم ستدفع؟',collectQ:'كم استلمت منه؟',addQ:'كم تُضيف للدين؟',exceeds:'المبلغ أكبر من المتبقي',borrowed:'اقتراض من ',lent:'إقراض ',paid:'سداد لـ ',recvd:'تسديد من ',pay:'سدّد',collect:'استلم',addMore:'زيادة',archTitle:'سجل الأشهر',greet:'مرحباً،',guest:'ضيف',badAmt:'أدخل مبلغاً صحيحاً',badFile:'ملف غير صالح',ok:'تم بنجاح',currency:'ج.م',transaction:'معاملة',cur:'ج.م',amountErr:'أدخل مبلغاً صحيحاً',yes:'موافق',sumOwe:'عليّ (مدين)',sumOwed:'ليا (دائن)',sortNewest:'أحدث إضافة',sortOldest:'أقدم إضافة',sortBig:'أكبر مبلغ',sortSmall:'أصغر مبلغ',fAll:'الكل',fIn:'دخل',fOut:'مصروفات',changePhoto:'تغيير الصورة',removePhoto:'حذف الصورة',budget:'الحد الشهري',budgetLbl:'الحد الشهري للمصروفات',budgetQ:'الحد الأقصى للمصروفات في الشهر (0 = بدون حد)',dueQ:'تاريخ الاستحقاق (سيبو فاضي لو مفيش)',due:'الاستحقاق',overdue:'متأخر',dueSoon:'قريب',dueIn:'بعد',days:'يوم',warnBudget:'قربت من الحد الشهري!',overBudget:'تجاوزت الحد الشهري!',setDue:'موعد',wlGreet:'أهلاً بعودتك',wlSub:'😊ما تُصرفش كتير😊',devLbl:'تم التطوير بواسطة : رؤوف',devRole:'تم التطوير بواسطة : رؤوف'},
-en:{home:'Home',archive:'Archive',debts:'Debts',settings:'Settings',balance:'Available balance',monthSpent:'Spent this month',todaySpent:'Spent today',carried:'Rolled over from last month',recent:'Recent transactions',none:'Nothing here yet',title:'Description',amount:'Amount',qty:'Quantity',date:'Date',type:'Type',exp:'Expense',inc:'Income',save:'Save',cancel:'Cancel',del:'Delete',add:'Add transaction',edit:'Edit transaction',name:'Your name',lang:'Language',theme:'Theme',export:'Export data',imp:'Import data',clear:'Erase all data',clearQ:'All transactions and debts will be permanently erased. Are you sure?',delQ:'Delete this transaction?',removeDebtQ:'Remove this debt from the list? Past transactions stay.',newDebt:'+ New debt',nameQ:'Person name?',ownQ:'Who is the debtor and who is the creditor?',iOwe:'I owe',owedToMe:'Owed to me',amtQ:'Amount?',payQ:'How much will you pay?',collectQ:'How much did you receive?',addQ:'How much to add?',exceeds:'Amount exceeds the remaining balance',borrowed:'Borrowed from ',lent:'Lent to ',paid:'Paid ',recvd:'Received from ',pay:'Pay',collect:'Collect',addMore:'Add more',archTitle:'Monthly archive',greet:'Welcome,',guest:'guest',badAmt:'Enter a valid amount',badFile:'Invalid file',ok:'Done',currency:'EGP',transaction:'Transaction',cur:'EGP',amountErr:'Enter a valid amount',yes:'OK',sumOwe:'I owe',sumOwed:'Owed to me',sortNewest:'Newest added',sortOldest:'Oldest added',sortBig:'Largest amount',sortSmall:'Smallest amount',fAll:'All',fIn:'Income',fOut:'Expenses',changePhoto:'Change photo',removePhoto:'Remove photo',budget:'Monthly budget',budgetLbl:'Monthly spending limit',budgetQ:'Maximum monthly spending (0 = no limit)',dueQ:'Due date (leave empty for none)',due:'Due',overdue:'Overdue',dueSoon:'Due soon',dueIn:'in',days:'days',warnBudget:'Close to your monthly limit!',overBudget:'Over your monthly limit!',setDue:'Due date',wlGreet:'Welcome back',wlSub:"😊Don't spend too much😊",devLbl:'developed by : Raouf',devRole:'developed by : Raouf'}
+ar:{home:'الرئيسية',archive:'الأرشيف',debts:'الديون',settings:'الإعدادات',balance:'الرصيد المتاح',monthSpent:'مصروفات الشهر',todaySpent:'مصروفات اليوم',carried:'مُرحَّل من الشهر السابق',recent:'آخر المعاملات',none:'لا توجد معاملات بعد',title:'الوصف',amount:'المبلغ',qty:'الكمية',date:'التاريخ',type:'النوع',exp:'مصروف',inc:'دخل',save:'حفظ',cancel:'إلغاء',del:'حذف',add:'إضافة معاملة',edit:'تعديل معاملة',name:'اسمك',lang:'اللغة',theme:'الثيم',export:'تصدير البيانات',imp:'استيراد البيانات',clear:'مسح كل البيانات',clearQ:'سيتم حذف كل المعاملات والديون نهائياً. متأكد؟',delQ:'حذف هذه المعاملة؟',removeDebtQ:'حذف هذا الدين من القائمة؟ المعاملات السابقة تبقى.',newDebt:'+ دين جديد',nameQ:'اسم الشخص؟',ownQ:'من المدين ومن الدائن؟',iOwe:'عليّا فلوس',owedToMe:'ليا فلوس',amtQ:'المبلغ؟',payQ:'كم ستدفع؟',collectQ:'كم استلمت منه؟',addQ:'كم تُضيف للدين؟',exceeds:'المبلغ أكبر من المتبقي',borrowed:'اقتراض من ',lent:'إقراض ',paid:'سداد لـ ',recvd:'تسديد من ',pay:'سدّد',collect:'استلم',addMore:'زيادة',archTitle:'سجل الأشهر',greet:'مرحباً،',guest:'ضيف',badAmt:'أدخل مبلغاً صحيحاً',badFile:'ملف غير صالح',ok:'تم بنجاح',currency:'ج.م',transaction:'معاملة',cur:'ج.م',amountErr:'أدخل مبلغاً صحيحاً',yes:'موافق',sumOwe:'عليّ (مدين)',sumOwed:'ليا (دائن)',sortNewest:'أحدث إضافة',sortOldest:'أقدم إضافة',sortBig:'أكبر مبلغ',sortSmall:'أصغر مبلغ',fAll:'الكل',fIn:'دخل',fOut:'مصروفات',dayPeak:'أكتر يوم صرفت فيه هذا الشهر',monthPeak:'أكتر شهر صرفت فيه هذه السنة',dailyChart:'المصاريف اليووميه خلال الشهر',monthlyChart:'المصاريف الشهريه خلال السنه',noSpend:'لا توجد مصروفات بعد',changePhoto:'تغيير الصورة',removePhoto:'حذف الصورة',budget:'الحد الشهري',budgetLbl:'الحد الشهري للمصروفات',budgetQ:'الحد الأقصى للمصروفات في الشهر (0 = بدون حد)',dueQ:'تاريخ الاستحقاق (سيبو فاضي لو مفيش)',due:'الاستحقاق',overdue:'متأخر',dueSoon:'قريب',dueIn:'بعد',days:'يوم',warnBudget:'قربت من الحد الشهري!',overBudget:'تجاوزت الحد الشهري!',setDue:'موعد',wlGreet:'أهلاً بعودتك',wlSub:'😊ما تُصرفش كتير😊',devLbl:'تم التطوير بواسطة : رؤوف',devRole:'تم التطوير بواسطة : رؤوف'},
+en:{home:'Home',archive:'Archive',debts:'Debts',settings:'Settings',balance:'Available balance',monthSpent:'Spent this month',todaySpent:'Spent today',carried:'Rolled over from last month',recent:'Recent transactions',none:'Nothing here yet',title:'Description',amount:'Amount',qty:'Quantity',date:'Date',type:'Type',exp:'Expense',inc:'Income',save:'Save',cancel:'Cancel',del:'Delete',add:'Add transaction',edit:'Edit transaction',name:'Your name',lang:'Language',theme:'Theme',export:'Export data',imp:'Import data',clear:'Erase all data',clearQ:'All transactions and debts will be permanently erased. Are you sure?',delQ:'Delete this transaction?',removeDebtQ:'Remove this debt from the list? Past transactions stay.',newDebt:'+ New debt',nameQ:'Person name?',ownQ:'Who is the debtor and who is the creditor?',iOwe:'I owe',owedToMe:'Owed to me',amtQ:'Amount?',payQ:'How much will you pay?',collectQ:'How much did you receive?',addQ:'How much to add?',exceeds:'Amount exceeds the remaining balance',borrowed:'Borrowed from ',lent:'Lent to ',paid:'Paid ',recvd:'Received from ',pay:'Pay',collect:'Collect',addMore:'Add more',archTitle:'Monthly archive',greet:'Welcome,',guest:'guest',badAmt:'Enter a valid amount',badFile:'Invalid file',ok:'Done',currency:'EGP',transaction:'Transaction',cur:'EGP',amountErr:'Enter a valid amount',yes:'OK',sumOwe:'I owe',sumOwed:'Owed to me',sortNewest:'Newest added',sortOldest:'Oldest added',sortBig:'Largest amount',sortSmall:'Smallest amount',fAll:'All',fIn:'Income',fOut:'Expenses',dayPeak:'Highest spending day this month',monthPeak:'Highest spending month this year',dailyChart:'Spending day by day (this month)',monthlyChart:'Spending month by month (this year)',noSpend:'No spending yet',changePhoto:'Change photo',removePhoto:'Remove photo',budget:'Monthly budget',budgetLbl:'Monthly spending limit',budgetQ:'Maximum monthly spending (0 = no limit)',dueQ:'Due date (leave empty for none)',due:'Due',overdue:'Overdue',dueSoon:'Due soon',dueIn:'in',days:'days',warnBudget:'Close to your monthly limit!',overBudget:'Over your monthly limit!',setDue:'Due date',wlGreet:'Welcome back',wlSub:"😊Don't spend too much😊",devLbl:'developed by : Raouf',devRole:'developed by : Raouf'}
 };
 const t=k=>(T[S.lang]&&T[S.lang][k])||k;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -291,9 +292,10 @@ function renderDebts(){
 
 function renderHome(){
   const L=ledger(), today=nowLocal().slice(0,10);
-  const todayOut=S.items.filter(i=>i.type==='out'&&i.date.slice(0,10)===today).reduce((a,b)=>a+b.total,0);
+  const todayOut=S.items.filter(i=>i.type==='out'&&!i.debtId&&i.date.slice(0,10)===today).reduce((a,b)=>a+b.total,0);
   $('bal').innerHTML=amt(L.end);
-  $('monthSpent').innerHTML=amt(L.out);
+  const monthOut=S.items.filter(i=>i.type==='out'&&!i.debtId&&i.date.slice(0,7)===curMonth()).reduce((a,b)=>a+b.total,0);
+  $('monthSpent').innerHTML=amt(monthOut);
   $('todaySpent').innerHTML=amt(todayOut);
   $('carried').innerHTML=amt(L.start);
   const budgetExp=S.items.filter(i=>i.type==='out'&&!i.debtId&&i.date.slice(0,7)===curMonth()).reduce((a,b)=>a+b.total,0);
@@ -314,7 +316,7 @@ function renderArchive(){
     const items=groups[m].sort((a,b)=>b.date.localeCompare(a.date));
     return `<div class="glass rounded-3xl p-4 space-y-3">
       <div class="flex justify-between items-center gap-2 flex-wrap"><p class="font-bold">${monthLabel(m)}</p>
-      <p class="text-xs muted num">+${amt(sumOf(items,'in'))} / −${amt(sumOf(items,'out'))}</p></div>
+      <p class="text-xs muted num">+${amt(sumOf(items.filter(i=>!i.debtId),'in'))} / −${amt(sumOf(items.filter(i=>!i.debtId),'out'))}</p></div>
       ${items.map(row).join('')}</div>`;
   }).join(''):`<p class="text-center muted py-8">${t('none')}</p>`;
 }
@@ -332,7 +334,7 @@ function renderSettings(){
 }
 
 function render(){
-  renderHome(); renderDebts(); renderArchive(); renderSettings();
+  renderHome(); renderDebts(); renderArchive(); renderStats(); renderSettings();
   $('userName').textContent=S.name||t('guest');
   $('avatar').style.overflow='hidden';$('avatar').innerHTML=av();$('setAvatar').innerHTML=av();
   $('privacyBtn').textContent=S.hidden?'🙈':'👁';
@@ -366,7 +368,7 @@ function setLang(l){S.lang=l;save();applyLang()}
 function openAdd(){
   editId=null;
   $('modalTitle').textContent=t('add');
-  $('f-type').value='out'; $('f-title').value=''; $('f-amt').value=''; $('f-qty').value=1; $('f-date').value=nowLocal();
+  $('f-type').disabled=false; $('f-type').value='out'; $('f-title').value=''; $('f-amt').value=''; $('f-qty').value=1; $('f-date').value=nowLocal();
   $('delBtn').classList.add('hide');
   $('modal').classList.remove('hide');
   setTimeout(()=>$('f-title').focus(),50);
@@ -375,24 +377,40 @@ function openEdit(id){
   const i=S.items.find(x=>x.id===id); if(!i) return;
   editId=id;
   $('modalTitle').textContent=t('edit');
+  $('f-type').disabled=!!i.debtId;
   $('f-type').value=i.type; $('f-title').value=i.title; $('f-amt').value=i.amount; $('f-qty').value=i.qty; $('f-date').value=i.date;
   $('delBtn').classList.remove('hide');
   $('modal').classList.remove('hide');
 }
 function closeModal(){$('modal').classList.add('hide')}
 
+// How much a debt movement changed the remaining debt (positive = debt grew)
+function debtEffect(item,d){const sign=(d.dir==='owe')===(item.type==='in')?1:-1;return sign*item.total}
 function saveItem(){
   const amount=parseFloat($('f-amt').value);
   if(!(amount>0)){dialog({msg:t('badAmt'),hideNo:true});return}
   const qty=Math.max(1,parseInt($('f-qty').value)||1);
   const old=editId?S.items.find(x=>x.id===editId):null;
-  const item={id:editId||uid(),created:old?old.created:Date.now(),type:$('f-type').value,title:$('f-title').value.trim()||t('transaction'),amount,qty,total:Math.round(amount*qty*100)/100,date:$('f-date').value||nowLocal(),debtId:old?old.debtId:undefined};
+  const item={id:editId||uid(),created:old?old.created:Date.now(),type:old&&old.debtId?old.type:$('f-type').value,title:$('f-title').value.trim()||t('transaction'),amount,qty,total:Math.round(amount*qty*100)/100,date:$('f-date').value||nowLocal(),debtId:old?old.debtId:undefined};
+  if(old&&old.debtId){
+    const d=S.debts.find(x=>x.id===old.debtId);
+    if(d){
+      const left=Math.round((d.amount-debtEffect(old,d)+debtEffect(item,d))*100)/100;
+      if(left<0){dialog({msg:t('exceeds'),hideNo:true});return}
+      d.amount=left;
+    }
+  }
   S.items=editId?S.items.map(x=>x.id===editId?item:x):[...S.items,item];
   save(); closeModal(); render();
 }
 async function deleteItem(){
   if(!editId) return;
   if((await dialog({msg:t('delQ'),okTxt:t('del')}))!==true) return;
+  const old=S.items.find(x=>x.id===editId);
+  if(old&&old.debtId){
+    const d=S.debts.find(x=>x.id===old.debtId);
+    if(d) d.amount=Math.round((d.amount-debtEffect(old,d))*100)/100;
+  }
   S.items=S.items.filter(x=>x.id!==editId);
   save(); closeModal(); render();
 }
@@ -521,6 +539,28 @@ const DEV={
     en:["The app is designed to be your simplest and fastest financial partner for organizing and managing your expenses. With its straightforward and responsive interface, you can easily monitor your budget, track your spending with precision, and take control of your finances all without any complexity."]
   }
 };
+function renderStats(){
+  const exp=S.items.filter(i=>i.type==='out'&&!i.debtId);
+  const now=new Date(), y=now.getFullYear(), m=now.getMonth();
+  const dim=new Date(y,m+1,0).getDate();
+  const perDay=Array(dim).fill(0), perMonth=Array(12).fill(0);
+  exp.forEach(i=>{const d=new Date(i.date); if(d.getFullYear()!==y) return; perMonth[d.getMonth()]+=i.total; if(d.getMonth()===m) perDay[d.getDate()-1]+=i.total;});
+  const bars=(arr,labelFn)=>{
+    const max=Math.max(1,...arr);
+    return `<div class="flex items-end gap-1 h-36">${arr.map((v,k)=>`<div class="flex-1 h-full flex flex-col justify-end items-center min-w-0" title="${labelFn(k)}: ${fmt(v)}"><div class="w-full rounded-t-md" style="height:${Math.max(v/max*100,v>0?4:0)}%;background:${v===max&&v>0?'var(--accent)':'color-mix(in srgb,var(--accent) 30%,transparent)'}"></div><span class="text-[9px] muted mt-1 num">${labelFn(k,true)}</span></div>`).join('')}</div>`;
+  };
+  const peak=(arr)=>{const mx=Math.max(...arr);return mx>0?arr.indexOf(mx):-1};
+  const dIdx=peak(perDay), mIdx=peak(perMonth);
+  const dayTxt=dIdx<0?t('noSpend'):`${dIdx+1}/${m+1}/${y} · ${amt(perDay[dIdx])}`;
+  const monTxt=mIdx<0?t('noSpend'):`${mIdx+1}/${y} · ${amt(perMonth[mIdx])}`;
+  $('stats').innerHTML=`
+    <div class="grid grid-cols-1 gap-3">
+      <div class="glass rounded-2xl p-4"><p class="text-xs muted">${t('dayPeak')}</p><p class="font-bold mt-1 num">${dayTxt}</p></div>
+      <div class="glass rounded-2xl p-4"><p class="text-xs muted">${t('monthPeak')}</p><p class="font-bold mt-1 num">${monTxt}</p></div>
+    </div>
+    <div class="glass rounded-3xl p-4 space-y-3"><p class="text-sm font-bold">${t('dailyChart')}</p>${bars(perDay,(k,short)=>short?(k+1):`${k+1}/${m+1}`)}</div>
+    <div class="glass rounded-3xl p-4 space-y-3"><p class="text-sm font-bold">${t('monthlyChart')}</p>${bars(perMonth,(k,short)=>short?(k+1):`${k+1}/${y}`)}</div>`;
+}
 function togglePrivacy(){S.hidden=!S.hidden;save();render()}
 
 $('budgetIn').addEventListener('change',e=>{S.budget=Math.max(0,parseFloat(e.target.value)||0);save();render()});
