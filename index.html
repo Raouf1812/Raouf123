@@ -16,6 +16,17 @@
 :root{--bg:#030712;--accent:#facc15;--text:#f5f5f4;--muted:#a8a29e;--glass:rgba(255,255,255,.04);--line:rgba(255,255,255,.08);--panel:#0b1020;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body{background:var(--bg);color:var(--text);font-family:'Cairo','Inter',system-ui,sans-serif;min-height:100vh;transition:background .3s,color .3s}
 .glass{background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.glass{background-image:linear-gradient(180deg,var(--shine),transparent 45%);box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+.glass:active{background-image:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.16) 50%,transparent 65%),linear-gradient(180deg,var(--shine),transparent 45%);background-size:250% 100%,100% 100%;animation:sheen .8s ease}
+@keyframes sheen{from{background-position:150% 0,0 0}to{background-position:-150% 0,0 0}}
+#okFx{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:80}
+#okFx div{width:84px;height:84px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px color-mix(in srgb,var(--accent) 50%,transparent);animation:okPop 1s ease both}
+#okFx .fail-box{width:auto!important;height:auto!important;flex-direction:column;gap:10px;padding:18px 22px;border-radius:20px;background:#f43f5e!important;animation-duration:2.4s!important;max-width:80vw}
+#okFx path{stroke-dasharray:30;stroke-dashoffset:30;animation:draw .5s .15s ease forwards}
+@keyframes okPop{0%{transform:scale(.4);opacity:0}25%{transform:scale(1.08);opacity:1}40%{transform:scale(1)}80%{opacity:1}100%{transform:scale(1.1);opacity:0}}
+@keyframes draw{to{stroke-dashoffset:0}}
+.delta{animation:deltaIn 2.2s ease both}
+@keyframes deltaIn{0%{opacity:0;transform:translateY(6px)}12%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0}}
 .gold{color:var(--accent)!important}
 .b-acc{background-color:var(--accent)!important}
 .muted{color:var(--muted)!important}
@@ -29,6 +40,29 @@ body{background:var(--bg);color:var(--text);font-family:'Cairo','Inter',system-u
 #welcome.show>div{animation:wrise 2s ease-in-out forwards}
 .num{font-family:'Inter',sans-serif;direction:ltr;unicode-bidi:isolate}
 input,select{color:var(--text)}
+button{transition:transform .15s ease}
+button:active{transform:scale(.95)}
+.glass,.panel-bg,body{transition:background-color .4s ease,border-color .4s ease,color .4s ease}
+@keyframes slideIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes modalIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+@keyframes fall{from{transform:translate3d(0,0,0)}to{transform:translate3d(var(--dx),110vh,0)}}
+.view-in{animation:slideIn .35s ease both}
+.anim-in>*{animation:rise .45s ease both}
+.anim-in>*:nth-child(2){animation-delay:.06s}
+.anim-in>*:nth-child(3){animation-delay:.12s}
+.anim-in>*:nth-child(4){animation-delay:.18s}
+.anim-in>*:nth-child(n+5){animation-delay:.24s}
+#modal:not(.hide)>div,#dlg:not(.hide)>div{animation:modalIn .25s ease both}
+.sw-track{background:rgba(255,255,255,.12);transition:background-color .3s ease}
+.sw-knob{transition:left .3s cubic-bezier(.4,0,.2,1)}
+#snowIn:checked ~ .sw-track{background:var(--accent)}
+#snowIn:checked ~ .sw-knob,#soundIn:checked ~ .sw-knob{left:1.5rem}
+#soundIn:checked ~ .sw-track{background:var(--accent)}
+#snow{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
+#snow i{position:absolute;top:-12px;border-radius:50%;background:var(--snow);opacity:.6;animation-name:fall;animation-timing-function:linear;animation-iteration-count:infinite}
+body.pg-hidden #snow i{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}#snow{display:none}}
 </style>
 </head>
 <body class="pb-36">
@@ -124,6 +158,22 @@ input,select{color:var(--text)}
       </select>
     </div>
     <div class="glass rounded-3xl p-5 space-y-3">
+      <label class="flex items-center justify-between gap-3 p-3 rounded-2xl bg-white/5 cursor-pointer select-none">
+        <span class="flex items-center gap-3 text-sm"><span class="text-xl">❄</span><span data-i="snowLbl"></span></span>
+        <span class="relative inline-block w-12 h-7 shrink-0">
+          <input type="checkbox" id="snowIn" class="sr-only">
+          <span class="sw-track absolute inset-0 rounded-full border border-white/10"></span>
+          <span class="sw-knob absolute top-1 left-1 w-5 h-5 rounded-full bg-white shadow-md"></span>
+        </span>
+      </label>
+      <label class="flex items-center justify-between gap-3 p-3 rounded-2xl bg-white/5 cursor-pointer select-none">
+        <span class="flex items-center gap-3 text-sm"><span class="text-xl">🔊</span><span data-i="soundLbl"></span></span>
+        <span class="relative inline-block w-12 h-7 shrink-0">
+          <input type="checkbox" id="soundIn" class="sr-only">
+          <span class="sw-track absolute inset-0 rounded-full border border-white/10"></span>
+          <span class="sw-knob absolute top-1 left-1 w-5 h-5 rounded-full bg-white shadow-md"></span>
+        </span>
+      </label>
       <p class="text-sm muted" data-i="theme"></p>
       <div id="themes" class="grid grid-cols-2 gap-3"></div>
     </div>
@@ -143,6 +193,7 @@ input,select{color:var(--text)}
   <button onclick="openAdd()" class="-mt-8 w-14 h-14 rounded-full b-acc text-black text-3xl font-bold glow flex items-center justify-center">+</button>
   <button data-tab="debts" onclick="showTab('debts')" class="flex flex-col items-center text-[11px] w-14"><span class="text-lg">⇄</span><span data-i="debts"></span></button>
   <button data-tab="settings" onclick="showTab('settings')" class="flex flex-col items-center text-[11px] w-14"><span class="text-lg">⚙</span><span data-i="settings"></span></button>
+  <span id="navDot" class="absolute bottom-1 w-1.5 h-1.5 rounded-full b-acc transition-all duration-300"></span>
 </nav>
 
 <!-- WELCOME -->
@@ -202,13 +253,30 @@ const THEMES={
   graphite:{n:['فضي','Silver'],bg:'#121214',accent:'#e5e5e5',panel:'#1c1c20'},
   ivory:{n:['أبيض','White'],bg:'#f7f5ef',accent:'#a16207',text:'#1c1917',muted:'#57534e',glass:'rgba(0,0,0,.035)',line:'rgba(0,0,0,.08)',panel:'#ffffff'}
 };
-let S=Object.assign({name:'',lang:'ar',theme:'obsidian',hidden:false,items:[],debts:[],budget:0},JSON.parse(localStorage.getItem(KEY)||'{}'));
+let S=Object.assign({name:'',lang:'ar',theme:'obsidian',hidden:false,items:[],debts:[],budget:0,snow:false},JSON.parse(localStorage.getItem(KEY)||'{}'));
 let editId=null;
 const $=id=>document.getElementById(id);
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+let DB=null;
+function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open('wafferha',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+async function idbPut(){
+  DB=DB||await openDB();
+  return new Promise((res,rej)=>{const tx=DB.transaction('kv','readwrite');tx.objectStore('kv').put(JSON.stringify(S),'state');tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);tx.onabort=()=>rej(tx.error)});
+}
+async function save(){
+  try{await idbPut();return true}catch(e){failFx();return false}
+}
+async function loadState(){
+  try{
+    DB=await openDB();
+    const v=await new Promise((res,rej)=>{const r=DB.transaction('kv').objectStore('kv').get('state');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
+    if(v){Object.assign(S,JSON.parse(v));return}
+  }catch(e){}
+  const old=localStorage.getItem(KEY);
+  if(old){Object.assign(S,JSON.parse(old)); await save();}
+}
 const T={
-ar:{home:'الرئيسية',archive:'الأرشيف',debts:'الديون',settings:'الإعدادات',balance:'الرصيد المتاح',monthSpent:'مصروفات الشهر',todaySpent:'مصروفات اليوم',carried:'مُرحَّل من الشهر السابق',recent:'آخر المعاملات',none:'لا توجد معاملات بعد',title:'الوصف',amount:'المبلغ',qty:'الكمية',date:'التاريخ',type:'النوع',exp:'مصروف',inc:'دخل',save:'حفظ',cancel:'إلغاء',del:'حذف',add:'إضافة معاملة',edit:'تعديل معاملة',name:'اسمك',lang:'اللغة',theme:'الثيم',export:'تصدير البيانات',imp:'استيراد البيانات',clear:'مسح كل البيانات',clearQ:'سيتم حذف كل المعاملات والديون نهائياً. متأكد؟',delQ:'حذف هذه المعاملة؟',removeDebtQ:'حذف هذا الدين من القائمة؟ المعاملات السابقة تبقى.',newDebt:'+ دين جديد',nameQ:'اسم الشخص؟',ownQ:'من المدين ومن الدائن؟',iOwe:'عليّا فلوس',owedToMe:'ليا فلوس',amtQ:'المبلغ؟',payQ:'كم ستدفع؟',collectQ:'كم استلمت منه؟',addQ:'كم تُضيف للدين؟',exceeds:'المبلغ أكبر من المتبقي',borrowed:'اقتراض من ',lent:'إقراض ',paid:'سداد لـ ',recvd:'تسديد من ',pay:'سدّد',collect:'استلم',addMore:'زيادة',archTitle:'سجل الأشهر',greet:'مرحباً،',guest:'ضيف',badAmt:'أدخل مبلغاً صحيحاً',badFile:'ملف غير صالح',ok:'تم بنجاح',currency:'ج.م',transaction:'معاملة',cur:'ج.م',amountErr:'أدخل مبلغاً صحيحاً',yes:'موافق',sumOwe:'عليّ (مدين)',sumOwed:'ليا (دائن)',sortNewest:'أحدث إضافة',sortOldest:'أقدم إضافة',sortBig:'أكبر مبلغ',sortSmall:'أصغر مبلغ',fAll:'الكل',fIn:'دخل',fOut:'مصروفات',dayPeak:'أكتر يوم صرفت فيه هذا الشهر',monthPeak:'أكتر شهر صرفت فيه هذه السنة',dailyChart:'المصاريف اليووميه خلال الشهر',monthlyChart:'المصاريف الشهريه خلال السنه',noSpend:'لا توجد مصروفات بعد',changePhoto:'تغيير الصورة',removePhoto:'حذف الصورة',budget:'الحد الشهري',budgetLbl:'الحد الشهري للمصروفات',budgetQ:'الحد الأقصى للمصروفات في الشهر (0 = بدون حد)',dueQ:'تاريخ الاستحقاق (سيبو فاضي لو مفيش)',due:'الاستحقاق',overdue:'متأخر',dueSoon:'قريب',dueIn:'بعد',days:'يوم',warnBudget:'قربت من الحد الشهري!',overBudget:'تجاوزت الحد الشهري!',setDue:'موعد',wlGreet:'أهلاً بعودتك',wlSub:'😊ما تُصرفش كتير😊',devLbl:'تم التطوير بواسطة : رؤوف',devRole:'تم التطوير بواسطة : رؤوف'},
-en:{home:'Home',archive:'Archive',debts:'Debts',settings:'Settings',balance:'Available balance',monthSpent:'Spent this month',todaySpent:'Spent today',carried:'Rolled over from last month',recent:'Recent transactions',none:'Nothing here yet',title:'Description',amount:'Amount',qty:'Quantity',date:'Date',type:'Type',exp:'Expense',inc:'Income',save:'Save',cancel:'Cancel',del:'Delete',add:'Add transaction',edit:'Edit transaction',name:'Your name',lang:'Language',theme:'Theme',export:'Export data',imp:'Import data',clear:'Erase all data',clearQ:'All transactions and debts will be permanently erased. Are you sure?',delQ:'Delete this transaction?',removeDebtQ:'Remove this debt from the list? Past transactions stay.',newDebt:'+ New debt',nameQ:'Person name?',ownQ:'Who is the debtor and who is the creditor?',iOwe:'I owe',owedToMe:'Owed to me',amtQ:'Amount?',payQ:'How much will you pay?',collectQ:'How much did you receive?',addQ:'How much to add?',exceeds:'Amount exceeds the remaining balance',borrowed:'Borrowed from ',lent:'Lent to ',paid:'Paid ',recvd:'Received from ',pay:'Pay',collect:'Collect',addMore:'Add more',archTitle:'Monthly archive',greet:'Welcome,',guest:'guest',badAmt:'Enter a valid amount',badFile:'Invalid file',ok:'Done',currency:'EGP',transaction:'Transaction',cur:'EGP',amountErr:'Enter a valid amount',yes:'OK',sumOwe:'I owe',sumOwed:'Owed to me',sortNewest:'Newest added',sortOldest:'Oldest added',sortBig:'Largest amount',sortSmall:'Smallest amount',fAll:'All',fIn:'Income',fOut:'Expenses',dayPeak:'Highest spending day this month',monthPeak:'Highest spending month this year',dailyChart:'Spending day by day (this month)',monthlyChart:'Spending month by month (this year)',noSpend:'No spending yet',changePhoto:'Change photo',removePhoto:'Remove photo',budget:'Monthly budget',budgetLbl:'Monthly spending limit',budgetQ:'Maximum monthly spending (0 = no limit)',dueQ:'Due date (leave empty for none)',due:'Due',overdue:'Overdue',dueSoon:'Due soon',dueIn:'in',days:'days',warnBudget:'Close to your monthly limit!',overBudget:'Over your monthly limit!',setDue:'Due date',wlGreet:'Welcome back',wlSub:"😊Don't spend too much😊",devLbl:'developed by : Raouf',devRole:'developed by : Raouf'}
+ar:{home:'الرئيسية',archive:'الأرشيف',debts:'الديون',settings:'الإعدادات',balance:'الرصيد المتاح',monthSpent:'مصروفات الشهر',todaySpent:'مصروفات اليوم',carried:'مُرحَّل من الشهر السابق',recent:'آخر المعاملات',none:'لا توجد معاملات بعد',title:'الوصف',amount:'المبلغ',qty:'الكمية',date:'التاريخ',type:'النوع',exp:'مصروف',inc:'دخل',save:'حفظ',cancel:'إلغاء',del:'حذف',add:'إضافة معاملة',edit:'تعديل معاملة',name:'اسمك',lang:'اللغة',theme:'الثيم',export:'تصدير البيانات',imp:'استيراد البيانات',clear:'مسح كل البيانات',clearQ:'سيتم حذف كل المعاملات والديون نهائياً. متأكد؟',delQ:'حذف هذه المعاملة؟',removeDebtQ:'حذف هذا الدين من القائمة؟ المعاملات السابقة تبقى.',newDebt:'+ دين جديد',nameQ:'اسم الشخص؟',ownQ:'من المدين ومن الدائن؟',iOwe:'عليّا فلوس',owedToMe:'ليا فلوس',amtQ:'المبلغ؟',payQ:'كم ستدفع؟',collectQ:'كم استلمت منه؟',addQ:'كم تُضيف للدين؟',exceeds:'المبلغ أكبر من المتبقي',borrowed:'اقتراض من ',lent:'إقراض ',paid:'سداد لـ ',recvd:'تسديد من ',pay:'سدّد',collect:'استلم',addMore:'زيادة',archTitle:'سجل الأشهر',greet:'مرحباً،',guest:'ضيف',badAmt:'أدخل مبلغاً صحيحاً',badFile:'ملف غير صالح',ok:'تم بنجاح',currency:'ج.م',transaction:'معاملة',cur:'ج.م',amountErr:'أدخل مبلغاً صحيحاً',yes:'موافق',sumOwe:'عليّ (مدين)',sumOwed:'ليا (دائن)',sortNewest:'أحدث إضافة',sortOldest:'أقدم إضافة',sortBig:'أكبر مبلغ',sortSmall:'أصغر مبلغ',fAll:'الكل',fIn:'دخل',fOut:'مصروفات',debtTag:'دين',snowLbl:'تساقط الثلج',soundLbl:'الأصوات',saveFail:'فشل الحفظ: مساحة الجهاز ممتلئة أو المتصفح منعها',dayPeak:'أكتر يوم صرفت فيه هذا الشهر',monthPeak:'أكتر شهر صرفت فيه هذه السنة',dailyChart:'المصاريف اليووميه خلال الشهر',monthlyChart:'المصاريف الشهريه خلال السنه',noSpend:'لا توجد مصروفات بعد',changePhoto:'تغيير الصورة',removePhoto:'حذف الصورة',budget:'الحد الشهري',budgetLbl:'الحد الشهري للمصروفات',budgetQ:'الحد الأقصى للمصروفات في الشهر (0 = بدون حد)',dueQ:'تاريخ الاستحقاق (سيبو فاضي لو مفيش)',due:'الاستحقاق',overdue:'متأخر',dueSoon:'قريب',dueIn:'بعد',days:'يوم',warnBudget:'قربت من الحد الشهري!',overBudget:'تجاوزت الحد الشهري!',setDue:'موعد',wlGreet:'أهلاً بعودتك',wlSub:'😊ما تُصرفش كتير😊',devLbl:'تم التطوير بواسطة : رؤوف',devRole:'تم التطوير بواسطة : رؤوف'},
+en:{home:'Home',archive:'Archive',debts:'Debts',settings:'Settings',balance:'Available balance',monthSpent:'Spent this month',todaySpent:'Spent today',carried:'Rolled over from last month',recent:'Recent transactions',none:'Nothing here yet',title:'Description',amount:'Amount',qty:'Quantity',date:'Date',type:'Type',exp:'Expense',inc:'Income',save:'Save',cancel:'Cancel',del:'Delete',add:'Add transaction',edit:'Edit transaction',name:'Your name',lang:'Language',theme:'Theme',export:'Export data',imp:'Import data',clear:'Erase all data',clearQ:'All transactions and debts will be permanently erased. Are you sure?',delQ:'Delete this transaction?',removeDebtQ:'Remove this debt from the list? Past transactions stay.',newDebt:'+ New debt',nameQ:'Person name?',ownQ:'Who is the debtor and who is the creditor?',iOwe:'I owe',owedToMe:'Owed to me',amtQ:'Amount?',payQ:'How much will you pay?',collectQ:'How much did you receive?',addQ:'How much to add?',exceeds:'Amount exceeds the remaining balance',borrowed:'Borrowed from ',lent:'Lent to ',paid:'Paid ',recvd:'Received from ',pay:'Pay',collect:'Collect',addMore:'Add more',archTitle:'Monthly archive',greet:'Welcome,',guest:'guest',badAmt:'Enter a valid amount',badFile:'Invalid file',ok:'Done',currency:'EGP',transaction:'Transaction',cur:'EGP',amountErr:'Enter a valid amount',yes:'OK',sumOwe:'I owe',sumOwed:'Owed to me',sortNewest:'Newest added',sortOldest:'Oldest added',sortBig:'Largest amount',sortSmall:'Smallest amount',fAll:'All',fIn:'Income',fOut:'Expenses',debtTag:'Debt',snowLbl:'Falling snow',soundLbl:'Sounds',saveFail:'Save failed: device storage is full or blocked',dayPeak:'Highest spending day this month',monthPeak:'Highest spending month this year',dailyChart:'Spending day by day (this month)',monthlyChart:'Spending month by month (this year)',noSpend:'No spending yet',changePhoto:'Change photo',removePhoto:'Remove photo',budget:'Monthly budget',budgetLbl:'Monthly spending limit',budgetQ:'Maximum monthly spending (0 = no limit)',dueQ:'Due date (leave empty for none)',due:'Due',overdue:'Overdue',dueSoon:'Due soon',dueIn:'in',days:'days',warnBudget:'Close to your monthly limit!',overBudget:'Over your monthly limit!',setDue:'Due date',wlGreet:'Welcome back',wlSub:"😊Don't spend too much😊",devLbl:'developed by : Raouf',devRole:'developed by : Raouf'}
 };
 const t=k=>(T[S.lang]&&T[S.lang][k])||k;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -258,13 +326,17 @@ function showTab(name){
     const on=b.dataset.tab===name;
     b.classList.toggle('gold',on); b.classList.toggle('muted',!on);
   });
+  const v=$('v-'+name); v.classList.remove('view-in','anim-in'); void v.offsetWidth; v.classList.add('view-in','anim-in'); clearTimeout(v._t); v._t=setTimeout(()=>v.classList.remove('anim-in'),1200);
   render(); window.scrollTo({top:0});
+  if(name==='home'){const from=window._before??0; window._before=undefined; countUp($('bal'),from,ledger().end);}
+  const act=document.querySelector(`nav [data-tab="${name}"]`), dot=$('navDot');
+  if(act&&dot){const r=act.getBoundingClientRect(),n=act.closest('nav').getBoundingClientRect();dot.style.left=(r.left-n.left+r.width/2-3)+'px';}
 }
 
 function row(i){
   const inc=i.type==='in';
-  return `<div onclick="openEdit('${i.id}')" class="glass rounded-2xl p-3 flex items-center gap-3 cursor-pointer">
-    <div class="w-10 h-10 rounded-xl flex items-center justify-center ${inc?'bg-emerald-500/15 text-emerald-400':'gold'} bg-white/5">${inc?'↓':'↑'}</div>
+  return `<div onclick="openEdit('${i.id}')" class="glass rounded-2xl p-3 flex items-center gap-3 cursor-pointer ${i.debtId?(inc?'bg-emerald-500/10':'bg-rose-500/10'):''}">
+    <div class="w-10 h-10 rounded-xl flex items-center justify-center ${inc?'bg-emerald-500/15 text-emerald-400':'gold'}">${i.debtId?`<span class="text-[10px] font-bold">${t('debtTag')}</span>`:(inc?'↓':'↑')}</div>
     <div class="flex-1 min-w-0"><p class="font-semibold truncate">${esc(i.title)}</p>
       <p class="text-xs muted">${when(i.date)}${i.qty>1?` · ${amt(i.amount)} × ${i.qty}`:''}</p></div>
     <p class="font-bold num ${inc?'text-emerald-400':'gold'}">${inc?'+':'−'}${amt(i.total)}</p></div>`;
@@ -294,6 +366,7 @@ function renderHome(){
   const L=ledger(), today=nowLocal().slice(0,10);
   const todayOut=S.items.filter(i=>i.type==='out'&&!i.debtId&&i.date.slice(0,10)===today).reduce((a,b)=>a+b.total,0);
   $('bal').innerHTML=amt(L.end);
+  const dlt=Math.round((L.end-(window._lastBal??L.end))*100)/100; window._lastBal=L.end; if(dlt!==0) showDelta(dlt); else if(window._pendingDelta) showDelta(window._pendingDelta);
   const monthOut=S.items.filter(i=>i.type==='out'&&!i.debtId&&i.date.slice(0,7)===curMonth()).reduce((a,b)=>a+b.total,0);
   $('monthSpent').innerHTML=amt(monthOut);
   $('todaySpent').innerHTML=amt(todayOut);
@@ -324,6 +397,8 @@ function renderArchive(){
 function renderSettings(){
   $('nameIn').value=S.name;
   $('budgetIn').value=S.budget||0;
+  $('snowIn').checked=!!S.snow;
+  $('soundIn').checked=S.sound!==false;
   $('langSel').value=S.lang;
   $('themes').innerHTML=Object.keys(THEMES).map(k=>{
     const th=THEMES[k], on=S.theme===k;
@@ -334,7 +409,7 @@ function renderSettings(){
 }
 
 function render(){
-  renderHome(); renderDebts(); renderArchive(); renderStats(); renderSettings();
+  renderHome(); renderDebts(); renderArchive(); renderStats(); hookScrollHint(); renderSettings();
   $('userName').textContent=S.name||t('guest');
   $('avatar').style.overflow='hidden';$('avatar').innerHTML=av();$('setAvatar').innerHTML=av();
   $('privacyBtn').textContent=S.hidden?'🙈':'👁';
@@ -348,7 +423,7 @@ function applyTheme(){
   const th=Object.assign({},D,THEMES[S.theme]||THEMES.obsidian), s=document.documentElement.style;
   s.setProperty('--bg',th.bg); s.setProperty('--accent',th.accent); s.setProperty('--text',th.text||D.text);
   s.setProperty('--muted',th.muted||D.muted); s.setProperty('--glass',th.glass||D.glass);
-  s.setProperty('--line',th.line||D.line); s.setProperty('--panel',th.panel||D.panel);
+  s.setProperty('--line',th.line||D.line); s.setProperty('--panel',th.panel||D.panel); s.setProperty('--snow',S.theme==='ivory'?'#64748b':'#ffffff'); s.setProperty('--shine',S.theme==='ivory'?'rgba(0,0,0,.02)':'rgba(255,255,255,.03)');
   document.querySelector('meta[name=theme-color]')?.setAttribute('content',th.bg);
 }
 function setTheme(k){S.theme=k;save();applyTheme();render()}
@@ -386,7 +461,7 @@ function closeModal(){$('modal').classList.add('hide')}
 
 // How much a debt movement changed the remaining debt (positive = debt grew)
 function debtEffect(item,d){const sign=(d.dir==='owe')===(item.type==='in')?1:-1;return sign*item.total}
-function saveItem(){
+async function saveItem(){
   const amount=parseFloat($('f-amt').value);
   if(!(amount>0)){dialog({msg:t('badAmt'),hideNo:true});return}
   const qty=Math.max(1,parseInt($('f-qty').value)||1);
@@ -400,8 +475,9 @@ function saveItem(){
       d.amount=left;
     }
   }
+  window._before=ledger().end;
   S.items=editId?S.items.map(x=>x.id===editId?item:x):[...S.items,item];
-  save(); closeModal(); render();
+  closeModal(); render(); if(await save()){flashCheck(); afterChange();}
 }
 async function deleteItem(){
   if(!editId) return;
@@ -411,8 +487,9 @@ async function deleteItem(){
     const d=S.debts.find(x=>x.id===old.debtId);
     if(d) d.amount=Math.round((d.amount-debtEffect(old,d))*100)/100;
   }
+  window._before=ledger().end;  sfx('del');
   S.items=S.items.filter(x=>x.id!==editId);
-  save(); closeModal(); render();
+  save(); closeModal(); afterChange();
 }
 
 function pushTx(type,title,amount,debtId){
@@ -426,9 +503,10 @@ async function newDebt(){
   const v=parseFloat(await dialog({msg:t('amtQ'),input:true,type:'number'}));
   if(!(v>0)) return;
   const d={id:uid(),name,dir,amount:v};
+  window._before=ledger().end;
   S.debts.push(d);
   pushTx(dir==='owe'?'in':'out',(dir==='owe'?t('borrowed'):t('lent'))+name,v,d.id);
-  save(); render();
+  render(); if(await save()){flashCheck(); afterChange();}
 }
 
 async function debtMove(id,kind){
@@ -439,13 +517,15 @@ async function debtMove(id,kind){
   if(pay&&v>d.amount){await dialog({msg:t('exceeds'),hideNo:true});return}
   const inflow=d.dir==='owe'?!pay:pay;
   const title=pay?(d.dir==='owe'?t('paid'):t('recvd'))+d.name:(d.dir==='owe'?t('borrowed'):t('lent'))+d.name;
+  window._before=ledger().end;
   pushTx(inflow?'in':'out',title,v,id);
   d.amount=Math.round((pay?d.amount-v:d.amount+v)*100)/100;
-  save(); render();
+  render(); if(await save()){flashCheck(); afterChange();}
 }
 
 async function deleteDebt(id){
   if((await dialog({msg:t('removeDebtQ'),okTxt:t('del')}))!==true) return;
+  sfx('del');
   S.debts=S.debts.filter(d=>d.id!==id);
   save(); render();
 }
@@ -545,9 +625,12 @@ function renderStats(){
   const dim=new Date(y,m+1,0).getDate();
   const perDay=Array(dim).fill(0), perMonth=Array(12).fill(0);
   exp.forEach(i=>{const d=new Date(i.date); if(d.getFullYear()!==y) return; perMonth[d.getMonth()]+=i.total; if(d.getMonth()===m) perDay[d.getDate()-1]+=i.total;});
-  const bars=(arr,labelFn)=>{
+  const bars=(arr,labelFn,scroll=false)=>{
     const max=Math.max(1,...arr);
-    return `<div class="flex items-end gap-1 h-36">${arr.map((v,k)=>`<div class="flex-1 h-full flex flex-col justify-end items-center min-w-0" title="${labelFn(k)}: ${fmt(v)}"><div class="w-full rounded-t-md" style="height:${Math.max(v/max*100,v>0?4:0)}%;background:${v===max&&v>0?'var(--accent)':'color-mix(in srgb,var(--accent) 30%,transparent)'}"></div><span class="text-[9px] muted mt-1 num">${labelFn(k,true)}</span></div>`).join('')}</div>`;
+    const cell=scroll?'w-5 shrink-0':'flex-1 min-w-0';
+    const inner=`<div dir="ltr" class="flex items-end gap-1 h-36">${arr.map((v,k)=>`<div class="${cell} h-full flex flex-col justify-end items-center" title="${labelFn(k)}: ${fmt(v)}"><div class="w-full rounded-t-md" style="height:${Math.max(v/max*100,v>0?4:0)}%;background:${v===max&&v>0?'var(--accent)':'color-mix(in srgb,var(--accent) 30%,transparent)'}"></div><span class="text-[9px] muted mt-1 num">${labelFn(k,true)}</span></div>`).join('')}</div>`;
+    if(!scroll) return inner;
+    return `<div class="relative"><div id="dayScroll" dir="ltr" class="overflow-x-auto pb-1">${inner}</div><div id="scrollHint" class="pointer-events-none absolute inset-y-0 right-0 w-10 flex items-center justify-center" style="background:linear-gradient(to right,color-mix(in srgb,var(--panel) 85%,transparent),transparent)"><span class="text-xl opacity-70">${S.lang==='ar'?'‹':'›'}</span></div></div>`;
   };
   const peak=(arr)=>{const mx=Math.max(...arr);return mx>0?arr.indexOf(mx):-1};
   const dIdx=peak(perDay), mIdx=peak(perMonth);
@@ -558,20 +641,96 @@ function renderStats(){
       <div class="glass rounded-2xl p-4"><p class="text-xs muted">${t('dayPeak')}</p><p class="font-bold mt-1 num">${dayTxt}</p></div>
       <div class="glass rounded-2xl p-4"><p class="text-xs muted">${t('monthPeak')}</p><p class="font-bold mt-1 num">${monTxt}</p></div>
     </div>
-    <div class="glass rounded-3xl p-4 space-y-3"><p class="text-sm font-bold">${t('dailyChart')}</p>${bars(perDay,(k,short)=>short?(k+1):`${k+1}/${m+1}`)}</div>
+    <div class="glass rounded-3xl p-4 space-y-3"><p class="text-sm font-bold">${t('dailyChart')}</p>${bars(perDay,(k,short)=>short?(k+1):`${k+1}/${m+1}`,true)}</div>
     <div class="glass rounded-3xl p-4 space-y-3"><p class="text-sm font-bold">${t('monthlyChart')}</p>${bars(perMonth,(k,short)=>short?(k+1):`${k+1}/${y}`)}</div>`;
+}
+function hookScrollHint(){
+  const ds=$('dayScroll'), hint=$('scrollHint');
+  if(!ds||!hint) return;
+  const upd=()=>hint.classList.toggle('hide',Math.abs(ds.scrollLeft)+ds.clientWidth>=ds.scrollWidth-4);
+  ds.addEventListener('scroll',upd); upd();
+}
+function setSnow(on){
+  let c=$('snow');
+  if(!on){if(c)c.remove();return}
+  if(c)return;
+  c=document.createElement('div'); c.id='snow'; document.body.prepend(c);
+  for(let k=0;k<40;k++){
+    const f=document.createElement('i'), sz=2+Math.random()*4;
+    f.style.cssText=`left:${Math.random()*100}%;width:${sz}px;height:${sz}px;animation-duration:${8+Math.random()*10}s;animation-delay:-${Math.random()*15}s;--dx:${Math.random()*40-20}vw`;
+    c.appendChild(f);
+  }
+}
+function countUp(el,from,to){
+  const sp=el.firstElementChild, start=performance.now(), dur=900;
+  sp.textContent=fmt(from);
+  const step=now=>{const k=Math.min(1,(now-start)/dur),e=1-Math.pow(1-k,3);sp.textContent=fmt(from+(to-from)*e);if(k<1)requestAnimationFrame(step)};
+  requestAnimationFrame(step);
+}
+document.addEventListener('visibilitychange',()=>document.body.classList.toggle('pg-hidden',document.hidden));
+function failFx(){
+  $('okFx')?.remove();
+  const o=document.createElement('div'); o.id='okFx';
+  o.innerHTML='<div class="fail-box"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg><p class="text-sm font-bold text-white text-center">'+t('saveFail')+'</p></div>';
+  document.body.appendChild(o); setTimeout(()=>o.remove(),2600);
+}
+function flashCheck(){
+  sfx('ok');
+  $('okFx')?.remove();
+  const o=document.createElement('div'); o.id='okFx';
+  o.innerHTML='<div><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>';
+  document.body.appendChild(o); setTimeout(()=>o.remove(),1000);
+}
+function showDelta(d){
+  window._pendingDelta=d;
+  const el=document.createElement('span');
+  el.className='delta text-base font-bold ms-2 num '+(d>0?'text-emerald-400':'text-rose-400');
+  el.textContent=(d>0?'+':'−')+fmt(Math.abs(d));
+  $('bal').appendChild(el);
+  clearTimeout(window._dt);
+  window._dt=setTimeout(()=>{window._pendingDelta=undefined;el.remove()},2200);
+}
+function afterChange(){
+  const onHome=!$('v-home').classList.contains('hide');
+  if(!onHome){showTab('home');return}
+  render();
+  const from=window._before??ledger().end; window._before=undefined;
+  countUp($('bal'),from,ledger().end);
+  const end=ledger().end; if(Math.abs(end-from)>0.001) setTimeout(()=>sfx(end>from?'up':'down'),250);
+}
+let AC=null;
+function tone(freq,dur,type,vol,when,attack){
+  if(S.sound===false) return;
+  try{
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    const t0=AC.currentTime+(when||0), o=AC.createOscillator(), g=AC.createGain(), a=attack||.12;
+    o.type=type||'sine'; o.frequency.setValueAtTime(freq,t0);
+    g.gain.setValueAtTime(0.0001,t0);
+    g.gain.exponentialRampToValueAtTime(vol||.05,t0+a);
+    g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+    o.connect(g); g.connect(AC.destination); o.start(t0); o.stop(t0+dur+.05);
+  }catch(e){}
+}
+let lastSfx=0;
+function sfx(kind){
+  const now=performance.now();
+  if(now-lastSfx<700) return;
+  lastSfx=now;
+  if(kind==='ok'){tone(523,.6,'sine',.05,0,.12);tone(659,.7,'sine',.04,.1,.14)}
+  else if(kind==='del'){tone(392,.5,'sine',.04,0,.1);tone(294,.6,'sine',.035,.12,.15)}
+  else if(kind==='up'){tone(587,.35,'sine',.03,0,.1)}
+  else if(kind==='down'){tone(440,.35,'sine',.03,0,.1)}
 }
 function togglePrivacy(){S.hidden=!S.hidden;save();render()}
 
 $('budgetIn').addEventListener('change',e=>{S.budget=Math.max(0,parseFloat(e.target.value)||0);save();render()});
 $('nameIn').addEventListener('change',e=>{S.name=e.target.value.trim();save();render()});
+$('snowIn').addEventListener('change',e=>{S.snow=e.target.checked;save();setSnow(S.snow)});
+$('soundIn').addEventListener('change',e=>{S.sound=e.target.checked;save();if(S.sound)sfx('ok')});
 $('langSel').addEventListener('change',e=>setLang(e.target.value));
 $('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
 
-applyTheme();
-applyLang();
-showTab('home');
-showWelcome();
+loadState().then(()=>{applyTheme();applyLang();showTab('home');setSnow(S.snow);showWelcome();});
 </script>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js"))}</script>
 </body>
