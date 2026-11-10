@@ -19,6 +19,12 @@ body{background:var(--bg);color:var(--text);font-family:'Cairo','Inter',system-u
 .glass{background-image:linear-gradient(180deg,var(--shine),transparent 45%);box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
 .glass:active{background-image:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.16) 50%,transparent 65%),linear-gradient(180deg,var(--shine),transparent 45%);background-size:250% 100%,100% 100%;animation:sheen .8s ease}
 @keyframes sheen{from{background-position:150% 0,0 0}to{background-position:-150% 0,0 0}}
+.balcard{border-color:color-mix(in srgb,var(--accent) 35%,transparent)!important}
+.fab{animation:spinR 5s linear infinite}
+.fab:active{scale:.9}
+.fab-ico{display:inline-block;animation:spinR 5s linear infinite reverse}
+.vortex{position:absolute;inset:-9px;border-radius:50%;pointer-events:none;filter:blur(3px);opacity:.9;background:conic-gradient(from 0deg,transparent 0deg,var(--accent) 55deg,transparent 110deg,transparent 190deg,color-mix(in srgb,var(--accent) 70%,transparent) 245deg,transparent 300deg);animation:spinR 1.8s linear infinite reverse;-webkit-mask:radial-gradient(circle,transparent 58%,#000 60%,#000 100%);mask:radial-gradient(circle,transparent 58%,#000 60%,#000 100%)}
+@keyframes spinR{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 #okFx{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:80}
 #okFx div{width:84px;height:84px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px color-mix(in srgb,var(--accent) 50%,transparent);animation:okPop 1s ease both}
 #okFx .fail-box{width:auto!important;height:auto!important;flex-direction:column;gap:10px;padding:18px 22px;border-radius:20px;background:#f43f5e!important;animation-duration:2.4s!important;max-width:80vw}
@@ -82,14 +88,14 @@ body.pg-hidden #snow i{animation-play-state:paused}
   </header>
 
   <!-- HOME -->
-  <section id="v-home" class="space-y-6">
+  <section id="v-home" class="space-y-3">
     <div id="dueBox" class="hide"></div>
-    <div class="glass rounded-3xl p-6 glow">
+    <div class="glass balcard rounded-3xl px-5 py-8 glow relative overflow-hidden isolate"><div id="balBg" class="absolute inset-0 -z-10 pointer-events-none"></div>
       <p class="text-sm muted" data-i="balance"></p>
       <p id="bal" class="text-4xl font-extrabold gold mt-2 num"></p>
       <div class="grid grid-cols-2 gap-3 mt-5 text-sm">
-        <div class="bg-white/5 rounded-2xl p-3"><p class="muted text-xs" data-i="monthSpent"></p><p id="monthSpent" class="font-bold mt-1 num"></p></div>
-        <div class="bg-white/5 rounded-2xl p-3"><p class="muted text-xs" data-i="todaySpent"></p><p id="todaySpent" class="font-bold mt-1 num"></p></div>
+        <div class="bg-black/25 backdrop-blur-sm border border-white/10 rounded-2xl p-3"><p class="muted text-xs" data-i="monthSpent"></p><p id="monthSpent" class="font-bold mt-1 num"></p></div>
+        <div class="bg-black/25 backdrop-blur-sm border border-white/10 rounded-2xl p-3"><p class="muted text-xs" data-i="todaySpent"></p><p id="todaySpent" class="font-bold mt-1 num"></p></div>
       </div>
       <p class="text-xs muted mt-4" data-i="carried"></p>
       <p id="carried" class="text-sm text-emerald-400 num"></p>
@@ -108,7 +114,7 @@ body.pg-hidden #snow i{animation-play-state:paused}
     </div>
     <div>
       <h2 class="font-bold mb-3" data-i="recent"></h2>
-      <div class="flex gap-2 mb-3"><select id="sortSel" onchange="S.sort=this.value;save();render()" class="flex-1 panel-bg rounded-xl px-3 py-2 border border-white/10 text-sm"></select></div><div id="recent" class="space-y-3"></div>
+      <div class="flex gap-2 mb-3"><select id="sortSel" onchange="S.sort=this.value;save();render()" class="flex-1 panel-bg rounded-xl px-3 py-2 border border-white/10 text-sm"></select></div><div id="recent" class="space-y-2"></div>
     </div>
   </section>
 
@@ -149,6 +155,7 @@ body.pg-hidden #snow i{animation-play-state:paused}
       <div class="flex items-center gap-3"><div id="setAvatar" class="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center font-extrabold text-black text-xl shrink-0" style="background:linear-gradient(135deg,var(--accent),#92400e)"></div><input type="file" accept="image/*" id="photoIn" class="hide"><button onclick="document.getElementById('photoIn').click()" class="flex-1 rounded-xl py-2 border border-white/10 text-sm" data-i="changePhoto"></button><button onclick="removePhoto()" class="rounded-xl px-3 py-2 text-rose-400 border border-rose-400/20 text-sm" data-i="removePhoto"></button></div>
       <label class="block text-sm muted" data-i="name"></label>
       <input id="nameIn" class="w-full bg-white/5 rounded-xl px-4 py-3 outline-none border border-white/10">
+      <div class="flex items-center gap-3"><input type="file" accept="image/*" id="balImgIn" class="hide"><button onclick="document.getElementById('balImgIn').click()" class="flex-1 rounded-xl py-2 border border-white/10 text-sm" data-i="balImg"></button><button onclick="removeBalImg()" class="rounded-xl px-3 py-2 text-rose-400 border border-rose-400/20 text-sm" data-i="removePhoto"></button></div>
       <label class="block text-sm muted" data-i="budgetQ"></label>
       <input id="budgetIn" type="number" min="0" class="num w-full bg-white/5 rounded-xl px-4 py-3 border border-white/10 outline-none">
       <label class="block text-sm muted" data-i="lang"></label>
@@ -190,7 +197,7 @@ body.pg-hidden #snow i{animation-play-state:paused}
 <nav class="fixed bottom-4 left-4 right-4 max-w-md mx-auto glass rounded-3xl h-16 flex justify-around items-center backdrop-blur-md z-40">
   <button data-tab="home" onclick="showTab('home')" class="flex flex-col items-center text-[11px] w-14"><span class="text-lg">⌂</span><span data-i="home"></span></button>
   <button data-tab="archive" onclick="showTab('archive')" class="flex flex-col items-center text-[11px] w-14"><span class="text-lg">▤</span><span data-i="archive"></span></button>
-  <button onclick="openAdd()" class="-mt-8 w-14 h-14 rounded-full b-acc text-black text-3xl font-bold glow flex items-center justify-center">+</button>
+  <div class="relative -mt-8 w-14 h-14"><span class="vortex"></span><button onclick="openAdd()" class="fab relative w-14 h-14 rounded-full b-acc text-black text-3xl font-bold glow flex items-center justify-center"><span class="fab-ico">+</span></button></div>
   <button data-tab="debts" onclick="showTab('debts')" class="flex flex-col items-center text-[11px] w-14"><span class="text-lg">⇄</span><span data-i="debts"></span></button>
   <button data-tab="settings" onclick="showTab('settings')" class="flex flex-col items-center text-[11px] w-14"><span class="text-lg">⚙</span><span data-i="settings"></span></button>
   <span id="navDot" class="absolute bottom-1 w-1.5 h-1.5 rounded-full b-acc transition-all duration-300"></span>
@@ -275,8 +282,8 @@ async function loadState(){
   if(old){Object.assign(S,JSON.parse(old)); await save();}
 }
 const T={
-ar:{home:'الرئيسية',archive:'الأرشيف',debts:'الديون',settings:'الإعدادات',balance:'الرصيد المتاح',monthSpent:'مصروفات الشهر',todaySpent:'مصروفات اليوم',carried:'مُرحَّل من الشهر السابق',recent:'آخر المعاملات',none:'لا توجد معاملات بعد',title:'الوصف',amount:'المبلغ',qty:'الكمية',date:'التاريخ',type:'النوع',exp:'مصروف',inc:'دخل',save:'حفظ',cancel:'إلغاء',del:'حذف',add:'إضافة معاملة',edit:'تعديل معاملة',name:'اسمك',lang:'اللغة',theme:'الثيم',export:'تصدير البيانات',imp:'استيراد البيانات',clear:'مسح كل البيانات',clearQ:'سيتم حذف كل المعاملات والديون نهائياً. متأكد؟',delQ:'حذف هذه المعاملة؟',removeDebtQ:'حذف هذا الدين من القائمة؟ المعاملات السابقة تبقى.',newDebt:'+ دين جديد',nameQ:'اسم الشخص؟',ownQ:'من المدين ومن الدائن؟',iOwe:'عليّا فلوس',owedToMe:'ليا فلوس',amtQ:'المبلغ؟',payQ:'كم ستدفع؟',collectQ:'كم استلمت منه؟',addQ:'كم تُضيف للدين؟',exceeds:'المبلغ أكبر من المتبقي',borrowed:'اقتراض من ',lent:'إقراض ',paid:'سداد لـ ',recvd:'تسديد من ',pay:'سدّد',collect:'استلم',addMore:'زيادة',archTitle:'سجل الأشهر',greet:'مرحباً،',guest:'ضيف',badAmt:'أدخل مبلغاً صحيحاً',badFile:'ملف غير صالح',ok:'تم بنجاح',currency:'ج.م',transaction:'معاملة',cur:'ج.م',amountErr:'أدخل مبلغاً صحيحاً',yes:'موافق',sumOwe:'عليّ (مدين)',sumOwed:'ليا (دائن)',sortNewest:'أحدث إضافة',sortOldest:'أقدم إضافة',sortBig:'أكبر مبلغ',sortSmall:'أصغر مبلغ',fAll:'الكل',fIn:'دخل',fOut:'مصروفات',debtTag:'دين',snowLbl:'تساقط الثلج',soundLbl:'الأصوات',saveFail:'فشل الحفظ: مساحة الجهاز ممتلئة أو المتصفح منعها',dayPeak:'أكتر يوم صرفت فيه هذا الشهر',monthPeak:'أكتر شهر صرفت فيه هذه السنة',dailyChart:'تحليل المصاريف اليومية خلال الشهر',monthlyChart:'تحليل المصاريف الشهرية خلال السنة',noSpend:'لا توجد مصروفات بعد',changePhoto:'تغيير الصورة',removePhoto:'حذف الصورة',budget:'الحد الشهري',budgetLbl:'الحد الشهري للمصروفات',budgetQ:'الحد الأقصى للمصروفات في الشهر (0 = بدون حد)',dueQ:'تاريخ الاستحقاق (سيبو فاضي لو مفيش)',due:'الاستحقاق',overdue:'متأخر',dueSoon:'قريب',dueIn:'بعد',days:'يوم',warnBudget:'قربت من الحد الشهري!',overBudget:'تجاوزت الحد الشهري!',setDue:'موعد',wlGreet:'أهلاً بعودتك',wlSub:'😊ما تُصرفش كتير😊',devLbl:'تم التطوير بواسطة : رؤوف',devRole:'تم التطوير بواسطة : رؤوف'},
-en:{home:'Home',archive:'Archive',debts:'Debts',settings:'Settings',balance:'Available balance',monthSpent:'Spent this month',todaySpent:'Spent today',carried:'Rolled over from last month',recent:'Recent transactions',none:'Nothing here yet',title:'Description',amount:'Amount',qty:'Quantity',date:'Date',type:'Type',exp:'Expense',inc:'Income',save:'Save',cancel:'Cancel',del:'Delete',add:'Add transaction',edit:'Edit transaction',name:'Your name',lang:'Language',theme:'Theme',export:'Export data',imp:'Import data',clear:'Erase all data',clearQ:'All transactions and debts will be permanently erased. Are you sure?',delQ:'Delete this transaction?',removeDebtQ:'Remove this debt from the list? Past transactions stay.',newDebt:'+ New debt',nameQ:'Person name?',ownQ:'Who is the debtor and who is the creditor?',iOwe:'I owe',owedToMe:'Owed to me',amtQ:'Amount?',payQ:'How much will you pay?',collectQ:'How much did you receive?',addQ:'How much to add?',exceeds:'Amount exceeds the remaining balance',borrowed:'Borrowed from ',lent:'Lent to ',paid:'Paid ',recvd:'Received from ',pay:'Pay',collect:'Collect',addMore:'Add more',archTitle:'Monthly archive',greet:'Welcome,',guest:'guest',badAmt:'Enter a valid amount',badFile:'Invalid file',ok:'Done',currency:'EGP',transaction:'Transaction',cur:'EGP',amountErr:'Enter a valid amount',yes:'OK',sumOwe:'I owe',sumOwed:'Owed to me',sortNewest:'Newest added',sortOldest:'Oldest added',sortBig:'Largest amount',sortSmall:'Smallest amount',fAll:'All',fIn:'Income',fOut:'Expenses',debtTag:'Debt',snowLbl:'Falling snow',soundLbl:'Sounds',saveFail:'Save failed: device storage is full or blocked',dayPeak:'Highest spending day this month',monthPeak:'Highest spending month this year',dailyChart:'Spending day by day (this month)',monthlyChart:'Spending month by month (this year)',noSpend:'No spending yet',changePhoto:'Change photo',removePhoto:'Remove photo',budget:'Monthly budget',budgetLbl:'Monthly spending limit',budgetQ:'Maximum monthly spending (0 = no limit)',dueQ:'Due date (leave empty for none)',due:'Due',overdue:'Overdue',dueSoon:'Due soon',dueIn:'in',days:'days',warnBudget:'Close to your monthly limit!',overBudget:'Over your monthly limit!',setDue:'Due date',wlGreet:'Welcome back',wlSub:"😊Don't spend too much😊",devLbl:'developed by : Raouf',devRole:'developed by : Raouf'}
+ar:{home:'الرئيسية',archive:'الأرشيف',debts:'الديون',settings:'الإعدادات',balance:'الرصيد المتاح',monthSpent:'مصروفات الشهر',todaySpent:'مصروفات اليوم',carried:'مُرحَّل من الشهر السابق',recent:'آخر المعاملات',none:'لا توجد معاملات بعد',title:'الوصف',amount:'المبلغ',qty:'الكمية',date:'التاريخ',type:'النوع',exp:'مصروف',inc:'دخل',save:'حفظ',cancel:'إلغاء',del:'حذف',add:'إضافة معاملة',edit:'تعديل معاملة',name:'اسمك',lang:'اللغة',theme:'الثيم',export:'تصدير البيانات',imp:'استيراد البيانات',clear:'مسح كل البيانات',clearQ:'سيتم حذف كل المعاملات والديون نهائياً. متأكد؟',delQ:'حذف هذه المعاملة؟',removeDebtQ:'حذف هذا الدين من القائمة؟ المعاملات السابقة تبقى.',newDebt:'+ دين جديد',nameQ:'اسم الشخص؟',ownQ:'من المدين ومن الدائن؟',iOwe:'عليّ فلوس',owedToMe:'ليا فلوس',amtQ:'المبلغ؟',payQ:'كم ستدفع؟',collectQ:'كم استلمت منه؟',addQ:'كم تُضيف للدين؟',exceeds:'المبلغ أكبر من المتبقي',borrowed:'اقتراض من ',lent:'إقراض ',paid:'سداد لـ ',recvd:'تسديد من ',pay:'سدّد',collect:'استلم',addMore:'زيادة',archTitle:'سجل الأشهر',greet:'مرحباً،',guest:'ضيف',badAmt:'أدخل مبلغاً صحيحاً',badFile:'ملف غير صالح',ok:'تم بنجاح',currency:'ج.م',transaction:'معاملة',cur:'ج.م',amountErr:'أدخل مبلغاً صحيحاً',yes:'موافق',sumOwe:'عليّ (مدين)',sumOwed:'ليا (دائن)',sortNewest:'أحدث إضافة',sortOldest:'أقدم إضافة',sortBig:'أكبر مبلغ',sortSmall:'أصغر مبلغ',fAll:'الكل',fIn:'دخل',fOut:'مصروفات',debtTag:'دين',snowLbl:'تساقط الثلج',soundLbl:'الأصوات',saveFail:'فشل الحفظ: مساحة الجهاز ممتلئة أو المتصفح منعها',balImg:'صورة الخلفية',dayPeak:'أكتر يوم صرفت فيه هذا الشهر',monthPeak:'أكتر شهر صرفت فيه هذه السنة',dailyChart:'تحليل المصاريف اليومية خلال الشهر',monthlyChart:'تحليل المصاريف الشهرية خلال السنة',noSpend:'لا توجد مصروفات بعد',changePhoto:'تغيير الصورة',removePhoto:'حذف الصورة',budget:'الحد الشهري',budgetLbl:'الحد الشهري للمصروفات',budgetQ:'الحد الأقصى للمصروفات في الشهر (0 = بدون حد)',dueQ:'تاريخ الاستحقاق (سيبه فاضي لو مفيش)',due:'الاستحقاق',overdue:'متأخر',dueSoon:'قريب',dueIn:'بعد',days:'يوم',warnBudget:'قربت من الحد الشهري!',overBudget:'تجاوزت الحد الشهري!',setDue:'موعد',wlGreet:'أهلاً بعودتك',wlSub:'😊 ما تُصرفش كتير 😊',devLbl:'تم التطوير بواسطة: رؤوف',devRole:'تم التطوير بواسطة: رؤوف'},
+en:{home:'Home',archive:'Archive',debts:'Debts',settings:'Settings',balance:'Available balance',monthSpent:'Spent this month',todaySpent:'Spent today',carried:'Rolled over from last month',recent:'Recent transactions',none:'Nothing here yet',title:'Description',amount:'Amount',qty:'Quantity',date:'Date',type:'Type',exp:'Expense',inc:'Income',save:'Save',cancel:'Cancel',del:'Delete',add:'Add transaction',edit:'Edit transaction',name:'Your name',lang:'Language',theme:'Theme',export:'Export data',imp:'Import data',clear:'Erase all data',clearQ:'All transactions and debts will be permanently erased. Are you sure?',delQ:'Delete this transaction?',removeDebtQ:'Remove this debt from the list? Past transactions stay.',newDebt:'+ New debt',nameQ:'Person name?',ownQ:'Who is the debtor and who is the creditor?',iOwe:'I owe',owedToMe:'Owed to me',amtQ:'Amount?',payQ:'How much will you pay?',collectQ:'How much did you receive?',addQ:'How much to add?',exceeds:'Amount exceeds the remaining balance',borrowed:'Borrowed from ',lent:'Lent to ',paid:'Paid ',recvd:'Received from ',pay:'Pay',collect:'Collect',addMore:'Add more',archTitle:'Monthly archive',greet:'Welcome,',guest:'guest',badAmt:'Enter a valid amount',badFile:'Invalid file',ok:'Done',currency:'EGP',transaction:'Transaction',cur:'EGP',amountErr:'Enter a valid amount',yes:'OK',sumOwe:'I owe',sumOwed:'Owed to me',sortNewest:'Newest added',sortOldest:'Oldest added',sortBig:'Largest amount',sortSmall:'Smallest amount',fAll:'All',fIn:'Income',fOut:'Expenses',debtTag:'Debt',snowLbl:'Falling snow',soundLbl:'Sounds',saveFail:'Save failed: device storage is full or blocked',balImg:'Balance card image',dayPeak:'Highest spending day this month',monthPeak:'Highest spending month this year',dailyChart:'Spending day by day (this month)',monthlyChart:'Spending month by month (this year)',noSpend:'No spending yet',changePhoto:'Change photo',removePhoto:'Remove photo',budget:'Monthly budget',budgetLbl:'Monthly spending limit',budgetQ:'Maximum monthly spending (0 = no limit)',dueQ:'Due date (leave empty for none)',due:'Due',overdue:'Overdue',dueSoon:'Due soon',dueIn:'in',days:'days',warnBudget:'Close to your monthly limit!',overBudget:'Over your monthly limit!',setDue:'Due date',wlGreet:'Welcome back',wlSub:"😊Don't spend too much😊",devLbl:'developed by : Raouf',devRole:'developed by : Raouf'}
 };
 const t=k=>(T[S.lang]&&T[S.lang][k])||k;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -335,7 +342,7 @@ function showTab(name){
 
 function row(i){
   const inc=i.type==='in';
-  return `<div onclick="openEdit('${i.id}')" class="glass rounded-2xl p-3 flex items-center gap-3 cursor-pointer ${i.debtId?(inc?'bg-emerald-500/10':'bg-rose-500/10'):''}">
+  return `<div onclick="openEdit('${i.id}')" class="glass rounded-2xl px-3 py-2 flex items-center gap-3 cursor-pointer ${i.debtId?(inc?'bg-emerald-500/10':'bg-rose-500/10'):''}">
     <div class="w-10 h-10 rounded-xl flex items-center justify-center ${inc?'bg-emerald-500/15 text-emerald-400':'gold'}">${i.debtId?`<span class="text-[10px] font-bold">${t('debtTag')}</span>`:(inc?'↓':'↑')}</div>
     <div class="flex-1 min-w-0"><p class="font-semibold break-words leading-snug">${esc(i.title)}</p>
       <p class="text-xs muted">${when(i.date)}${i.qty>1?` · ${amt(i.amount)} × ${i.qty}`:''}</p></div>
@@ -366,6 +373,7 @@ function renderHome(){
   const L=ledger(), today=nowLocal().slice(0,10);
   const todayOut=S.items.filter(i=>i.type==='out'&&!i.debtId&&i.date.slice(0,10)===today).reduce((a,b)=>a+b.total,0);
   $('bal').innerHTML=amt(L.end);
+  renderBalBg();
   const dlt=Math.round((L.end-(window._lastBal??L.end))*100)/100; window._lastBal=L.end; if(dlt!==0) showDelta(dlt); else if(window._pendingDelta) showDelta(window._pendingDelta);
   const monthOut=S.items.filter(i=>i.type==='out'&&!i.debtId&&i.date.slice(0,7)===curMonth()).reduce((a,b)=>a+b.total,0);
   $('monthSpent').innerHTML=amt(monthOut);
@@ -630,7 +638,7 @@ function renderStats(){
     const cell=scroll?'w-5 shrink-0':'flex-1 min-w-0';
     const inner=`<div dir="ltr" class="flex items-end gap-1 h-36">${arr.map((v,k)=>`<div class="${cell} h-full flex flex-col justify-end items-center" title="${labelFn(k)}: ${fmt(v)}"><div class="w-full rounded-t-md" style="height:${Math.max(v/max*100,v>0?4:0)}%;background:${v===max&&v>0?'var(--accent)':'color-mix(in srgb,var(--accent) 30%,transparent)'}"></div><span class="text-[9px] muted mt-1 num">${labelFn(k,true)}</span></div>`).join('')}</div>`;
     if(!scroll) return inner;
-    return `<div class="relative"><div id="dayScroll" dir="ltr" class="overflow-x-auto pb-1">${inner}</div><div id="scrollHint" class="pointer-events-none absolute inset-y-0 right-0 w-10 flex items-center justify-center" style="background:linear-gradient(to right,color-mix(in srgb,var(--panel) 85%,transparent),transparent)"><span class="text-xl opacity-70">${S.lang==='ar'?'‹':'›'}</span></div></div>`;
+    return `<div class="relative"><div id="dayScroll" dir="ltr" class="overflow-x-auto pb-1">${inner}</div><div id="scrollHint" class="pointer-events-none absolute inset-y-0 right-0 w-10 flex items-center justify-center"><span class="text-xl opacity-70">${S.lang==='ar'?'‹':'›'}</span></div></div>`;
   };
   const peak=(arr)=>{const mx=Math.max(...arr);return mx>0?arr.indexOf(mx):-1};
   const dIdx=peak(perDay), mIdx=peak(perMonth);
@@ -660,6 +668,12 @@ function setSnow(on){
     f.style.cssText=`left:${Math.random()*100}%;width:${sz}px;height:${sz}px;animation-duration:${8+Math.random()*10}s;animation-delay:-${Math.random()*15}s;--dx:${Math.random()*40-20}vw`;
     c.appendChild(f);
   }
+}
+let lastTick=0;
+function tick(){
+  if(S.sound===false) return;
+  const n=performance.now(); if(n-lastTick<60) return; lastTick=n;
+  tone(1400,.03,'sine',.012,0,.004);
 }
 function countUp(el,from,to){
   const sp=el.firstElementChild, start=performance.now(), dur=900;
@@ -696,7 +710,7 @@ function afterChange(){
   render();
   const from=window._before??ledger().end; window._before=undefined;
   countUp($('bal'),from,ledger().end);
-  const end=ledger().end; if(Math.abs(end-from)>0.001) setTimeout(()=>sfx(end>from?'up':'down'),250);
+  const end=ledger().end; if(Math.abs(end-from)>0.001) setTimeout(()=>sfx(end>from?'up':'down'),950);
 }
 let AC=null;
 function tone(freq,dur,type,vol,when,attack){
@@ -721,6 +735,26 @@ function sfx(kind){
   else if(kind==='up'){tone(587,.35,'sine',.03,0,.1)}
   else if(kind==='down'){tone(440,.35,'sine',.03,0,.1)}
 }
+function renderBalBg(){
+  const b=$('balBg'); if(!b) return;
+  b.style.backgroundImage=S.balImg
+    ?`linear-gradient(to top,color-mix(in srgb,var(--bg) 88%,transparent),color-mix(in srgb,var(--bg) 35%,transparent)),url(${S.balImg})`
+    :`radial-gradient(circle at 90% 0%,color-mix(in srgb,var(--accent) 38%,transparent),transparent 60%),linear-gradient(160deg,color-mix(in srgb,var(--panel) 70%,transparent),var(--bg))`;
+  b.style.backgroundSize='cover'; b.style.backgroundPosition='center';
+}
+function removeBalImg(){delete S.balImg;save();render()}
+$('balImgIn').addEventListener('change',e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{const im=new Image();im.onload=()=>{
+    const k=Math.min(1,800/Math.max(im.width,im.height));
+    const c=document.createElement('canvas'); c.width=Math.round(im.width*k); c.height=Math.round(im.height*k);
+    c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+    S.balImg=c.toDataURL('image/jpeg',0.8); save(); render();
+  };im.src=r.result};
+  r.readAsDataURL(f); e.target.value='';
+});
+document.addEventListener('click',e=>{if(e.target.closest('button,label,[onclick]'))tick();});
 function togglePrivacy(){S.hidden=!S.hidden;save();render()}
 
 $('budgetIn').addEventListener('change',e=>{S.budget=Math.max(0,parseFloat(e.target.value)||0);save();render()});
