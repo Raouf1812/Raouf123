@@ -337,7 +337,7 @@ function row(i){
   const inc=i.type==='in';
   return `<div onclick="openEdit('${i.id}')" class="glass rounded-2xl p-3 flex items-center gap-3 cursor-pointer ${i.debtId?(inc?'bg-emerald-500/10':'bg-rose-500/10'):''}">
     <div class="w-10 h-10 rounded-xl flex items-center justify-center ${inc?'bg-emerald-500/15 text-emerald-400':'gold'}">${i.debtId?`<span class="text-[10px] font-bold">${t('debtTag')}</span>`:(inc?'↓':'↑')}</div>
-    <div class="flex-1 min-w-0"><p class="font-semibold truncate">${esc(i.title)}</p>
+    <div class="flex-1 min-w-0"><p class="font-semibold break-words leading-snug">${esc(i.title)}</p>
       <p class="text-xs muted">${when(i.date)}${i.qty>1?` · ${amt(i.amount)} × ${i.qty}`:''}</p></div>
     <p class="font-bold num ${inc?'text-emerald-400':'gold'}">${inc?'+':'−'}${amt(i.total)}</p></div>`;
 }
